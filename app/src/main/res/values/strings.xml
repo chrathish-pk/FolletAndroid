@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Follett Destiny</string>
+
+    <!-- Custom Alert Text-->
+    <string name="alert_wait">Loading. Please wait</string>
+    <string name="alert_text">Alert Message!</string>
+    <string name="ok">OK</string>
+    <string name="net">Net</string>
+    <string name="cancel">Cancel</string>
+    <string name="yes">Yes</string>
+    <string name="update">UPDATE</string>
+    <string name="no">No</string>
+    <string name="alert_warning">Information</string>
+    <string name="alert_success">Alert</string>
+    <string name="back">Back</string>
+</resources>
