@@ -1,14 +1,12 @@
 /*
  * Copyright (c) 2018 Follett. All rights reserved.
  */
-package com.follett.fsc.mobile.circdesk.ui.activity;
+package com.follett.fsc.mobile.circdesk.view.activity;
 
 import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.ui.base.BaseActivity;
-import com.follett.fsc.mobile.circdesk.utils.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.view.base.BaseActivity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 public class MainActivity extends BaseActivity {
     

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2018 Follett. All rights reserved.
  */
-package com.follett.fsc.mobile.circdesk.ui.base;
+package com.follett.fsc.mobile.circdesk.view.base;
 
 import com.follett.fsc.mobile.circdesk.R;
 

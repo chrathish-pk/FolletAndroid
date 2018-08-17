@@ -5,7 +5,7 @@
 package com.follett.fsc.mobile.circdesk.utils;
 
 import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.listeners.AlertDialogListener;
+import com.follett.fsc.mobile.circdesk.interfaces.AlertDialogListener;
 
 import android.app.Activity;
 import android.app.AlertDialog;
