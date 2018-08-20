@@ -4,45 +4,41 @@
 package com.follett.fsc.mobile.circdesk.view.base;
 
 import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.databinding.ActivityBaseBinding;
 
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
 
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity<V extends BaseViewModel> extends AppCompatActivity {
+    
+    private TextView titleBarTextView;
+    
+    private ActivityBaseBinding baseBinding;
     
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.base);
+        baseBinding = DataBindingUtil.setContentView(this, R.layout.activity_base);
+        initToolBar();
     }
     
-    public void pushFragment(Fragment fragment, String tag, boolean shouldAdd) {
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.fragmentContainer, fragment);
-        if (shouldAdd) {
-            ft.addToBackStack(tag);
-        }
-        ft.commit();
+    protected <T extends ViewDataBinding> T putContentView(@LayoutRes int resId) {
+        return DataBindingUtil.inflate(getLayoutInflater(), resId, baseBinding.baseContainer, true);
     }
     
-    public void popFragment(Fragment fragment) {
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.remove(fragment);
-        ft.commit();
+    private void initToolBar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        titleBarTextView = findViewById(R.id.titleBar);
+        setSupportActionBar(toolbar);
     }
     
-    public void finishActivity() {
-        this.finish();
-    }
-    
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
+    protected void setTitleBar(String titleBarText) {
+        titleBarTextView.setText(titleBarText);
     }
 }

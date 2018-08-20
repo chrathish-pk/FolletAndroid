@@ -13,4 +13,6 @@
     <string name="alert_warning">Information</string>
     <string name="alert_success">Alert</string>
     <string name="back">Back</string>
+    <string name="app_status_title">Follett DESTINY</string>
+    <string name="connect_your_school_label">Connect to Your School</string>
 </resources>
