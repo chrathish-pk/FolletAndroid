@@ -36,4 +36,5 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:${retrofit_lib}"
     implementation "com.squareup.retrofit2:converter-gson:${retrofit_lib}"
     implementation "com.squareup.okhttp3:logging-interceptor:${okhttp3_lib}"
+    implementation 'com.android.support:design:27.1.1'
 }

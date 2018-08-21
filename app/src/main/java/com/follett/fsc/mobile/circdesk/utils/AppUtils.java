@@ -20,6 +20,7 @@ import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -230,5 +231,16 @@ public class AppUtils {
     public void showShortToastMessages(Context context, String message) {
         Toast.makeText(context, !TextUtils.isEmpty(message) ? message + "" : "", Toast.LENGTH_SHORT)
                 .show();
+    }
+    
+    public boolean isEditTextEmpty(EditText editText) {
+        
+        if (TextUtils.isEmpty(editText.getText()
+                .toString()
+                .trim())) {
+            return false;
+        }
+        return true;
+        
     }
 }
