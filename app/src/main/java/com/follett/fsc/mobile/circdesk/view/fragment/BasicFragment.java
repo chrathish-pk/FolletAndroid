@@ -8,25 +8,30 @@ package com.follett.fsc.mobile.circdesk.view.fragment;
 
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentBasicLayoutBinding;
 import com.follett.fsc.mobile.circdesk.interfaces.BasicNavigator;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.view.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.viewmodel.BasicViewModel;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, BasicViewModel> implements BasicNavigator {
     
     private FragmentBasicLayoutBinding mBasicLayoutBinding;
     
     private BasicViewModel mBasicViewModel;
+    
+    private AppRemoteRepository appRemoteRepository;
     
     public static BasicFragment newInstance() {
         Bundle args = new Bundle();
@@ -42,8 +47,8 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
     
     @Override
     public BasicViewModel getViewModel() {
-        mBasicViewModel = ViewModelProviders.of(this)
-                .get(BasicViewModel.class);
+        appRemoteRepository = new AppRemoteRepository();
+        mBasicViewModel = new BasicViewModel(getBaseActivity().getApplication(), appRemoteRepository);
         return mBasicViewModel;
     }
     
@@ -63,7 +68,6 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
         super.onViewCreated(view, savedInstanceState);
         mBasicLayoutBinding = getViewDataBinding();
         inItView(mBasicLayoutBinding);
-        mBasicViewModel.setNavigator(this);
     }
     
     @Override
@@ -71,15 +75,51 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
         
         if (AppUtils.getInstance()
                 .isEditTextEmpty(mBasicLayoutBinding.libraryEditText)) {
-            AppUtils.getInstance()
-                    .hideKeyBoard(getBaseActivity(), mBasicLayoutBinding.libraryEditText);
+            savePreference();
         } else {
             AppUtils.getInstance()
                     .showShortToastMessages(getBaseActivity(), getString(R.string.url_empty_label));
         }
     }
-
+    
+    @Override
+    public void asyncTaskResult(boolean result) {
+        if (result) {
+            mBasicViewModel.getVersion();
+        }
+    }
+    
+    @Override
+    public void displayErrorDialog(final String message) {
+        getBaseActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                AppUtils.getInstance()
+                        .showShortToastMessages(getBaseActivity(), message);
+            }
+        });
+    }
+    
+    private void savePreference() {
+        AppUtils.getInstance()
+                .hideKeyBoard(getBaseActivity(), mBasicLayoutBinding.libraryEditText);
+        mBasicViewModel.savePreference(mBasicLayoutBinding.libraryEditText.getText()
+                .toString()
+                .trim(), null, null);
+    }
+    
     private void inItView(final FragmentBasicLayoutBinding basicLayoutBinding) {
+        
+        basicLayoutBinding.libraryEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                
+                if (i == EditorInfo.IME_ACTION_DONE) {
+                    savePreference();
+                }
+                return true;
+            }
+        });
         
         basicLayoutBinding.libraryEditText.addTextChangedListener(new TextWatcher() {
             @Override

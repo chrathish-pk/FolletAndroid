@@ -241,6 +241,5 @@ public class AppUtils {
             return false;
         }
         return true;
-        
     }
 }

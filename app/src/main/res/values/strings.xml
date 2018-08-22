@@ -15,6 +15,8 @@
     <string name="back">Back</string>
     <string name="app_status_title">Follett DESTINY</string>
     <string name="connect_your_school_label">Connect to Your School</string>
+    <string name="loading_label">Please wait...</string>
+
 
     <!--Login-->
     <string name="basic_label">BASIC</string>
@@ -24,4 +26,12 @@
     <string name="ssl_port_label">SSL Port Number (e.g. 443)</string>
     <string name="connect_label">connect</string>
     <string name="url_empty_label">URL cannot be empty.</string>
+    <string name="error_invalid_servername">Server name is invalid.</string>
+    <string name="error_sorry_school_not_setup">This app requires your school to have Destiny version 10.5 or higher installed.</string>
+    <string name="error_unable_to_communicate">Unable to communicate with server.</string>
+    <string name="error_load_prefs">Unable to load preferences.</string>
+
+
+
+
 </resources>

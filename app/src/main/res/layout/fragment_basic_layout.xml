@@ -28,6 +28,7 @@
             style="@style/EditTextTheme"
             android:layout_marginTop="50dp"
             android:hint="@string/library_label"
+            android:imeOptions="actionDone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
