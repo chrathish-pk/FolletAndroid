@@ -34,6 +34,7 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull HomeMenuViewHolder holder, int position) {
         holder.rowHomeMenuBinding.setMenuItem(homeViewModel.homeMenuItems.get(position));
+        holder.rowHomeMenuBinding.itemMenuImg.setImageResource(homeViewModel.homeMenuItems.get(position).getMenuImg());
 
         ItemClickListener itemClickListener = new ItemClickListener() {
             @Override

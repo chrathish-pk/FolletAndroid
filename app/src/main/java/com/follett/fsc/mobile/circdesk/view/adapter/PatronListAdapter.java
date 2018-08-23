@@ -10,16 +10,16 @@ import android.view.ViewGroup;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.databinding.RowPatronListBinding;
 import com.follett.fsc.mobile.circdesk.view.viewholder.PatronListViewHolder;
-import com.follett.fsc.mobile.circdesk.viewmodel.PatronListViewModel;
+import com.follett.fsc.mobile.circdesk.viewmodel.CheckoutViewModel;
 
 public class PatronListAdapter extends RecyclerView.Adapter<PatronListViewHolder> {
 
     private Context context;
-    private PatronListViewModel patronListViewModel;
+    private CheckoutViewModel checkoutViewModel;
 
-    public PatronListAdapter(Context context, PatronListViewModel patronListViewModel) {
+    public PatronListAdapter(Context context, CheckoutViewModel checkoutViewModel) {
         this.context = context;
-        this.patronListViewModel = patronListViewModel;
+        this.checkoutViewModel = checkoutViewModel;
     }
 
     @NonNull
@@ -31,7 +31,7 @@ public class PatronListAdapter extends RecyclerView.Adapter<PatronListViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull PatronListViewHolder holder, int position) {
-
+        //holder.rowPatronListBinding.setPatronItem(checkoutViewModel);
     }
 
     @Override

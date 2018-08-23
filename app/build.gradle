@@ -39,5 +39,8 @@ dependencies {
     implementation "com.google.code.gson:gson:${gson_lib}"
     implementation "com.squareup.retrofit2:retrofit:${retrofit_lib}"
     implementation "com.squareup.retrofit2:converter-gson:${retrofit_lib}"
+    implementation "com.squareup.retrofit2:converter-simplexml:${retrofit_lib}"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${retrofit_lib}"
+    implementation "io.reactivex.rxjava2:rxandroid:${rxandroid}"
     implementation "com.squareup.okhttp3:logging-interceptor:${okhttp3_lib}"
 }

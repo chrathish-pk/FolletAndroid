@@ -10,10 +10,9 @@
             type="com.follett.fsc.mobile.circdesk.viewmodel.CheckoutViewModel" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
         <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:id="@+id/card_view"
@@ -31,7 +30,7 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/checkoutPatron"
+                    android:id="@+id/patronEntry"
                     style="@style/EditTextTheme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -52,8 +51,10 @@
                         android:gravity="center">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:id="@+id/patronGoBtn"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:padding="10dp"
                             android:text="@string/Go"
                             android:textColor="@color/white"
@@ -77,6 +78,14 @@
 
         </android.support.v7.widget.CardView>
 
-    </LinearLayout>
+
+        <include
+            layout="@layout/library_resource"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="20dp" />
+
+    </RelativeLayout>
 
 </layout>

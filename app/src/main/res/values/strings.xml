@@ -34,9 +34,12 @@
     <string name="findPatron">Find Patron</string>
     <string name="scan">SCAN</string>
     <string name="Go">GO</string>
+    <string name="library">LIBRARY</string>
+    <string name="resource">RESOURCE</string>
 
     <!--Patron Screen-->
     <string name="selectPatron">Select Patron</string>
+    <string name="errorPatronEntry">You must enter a patron barcode or name.</string>
 
 
 </resources>

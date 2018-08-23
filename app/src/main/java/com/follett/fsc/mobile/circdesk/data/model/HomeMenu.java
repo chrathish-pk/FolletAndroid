@@ -1,11 +1,11 @@
-package com.follett.fsc.mobile.circdesk.model;
+package com.follett.fsc.mobile.circdesk.data.model;
 
-public class HomeMenuModel {
+public class HomeMenu {
 
     private String menuName;
     private int menuImg;
 
-    public HomeMenuModel(String menuName, int menuImg) {
+    public HomeMenu(String menuName, int menuImg) {
         this.menuName = menuName;
         this.menuImg = menuImg;
     }

@@ -5,7 +5,7 @@
 
         <variable
             name="patronItem"
-            type="com.follett.fsc.mobile.circdesk.model.PatronListItemModel" />
+            type="com.follett.fsc.mobile.circdesk.data.model.Patron" />
 
         <variable
             name="listener"
@@ -35,7 +35,7 @@
                 android:id="@+id/patronName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cambell"
+                android:text="@"
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold" />

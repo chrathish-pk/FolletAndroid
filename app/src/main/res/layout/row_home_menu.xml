@@ -5,7 +5,7 @@
 
         <variable
             name="menuItem"
-            type="com.follett.fsc.mobile.circdesk.model.HomeMenuModel" />
+            type="com.follett.fsc.mobile.circdesk.data.model.HomeMenu" />
 
         <variable
             name="listener"
@@ -23,10 +23,9 @@
 
         <ImageView
             android:id="@+id/itemMenuImg"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/receive" />
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/itemMenuName"
@@ -34,9 +33,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="2dp"
-            android:text="@string/checkInCheckout"
+            android:text="@{menuItem.menuName}"
             android:textColor="@color/blueLable"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
     </LinearLayout>

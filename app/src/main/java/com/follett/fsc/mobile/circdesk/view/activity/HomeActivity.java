@@ -1,7 +1,6 @@
 package com.follett.fsc.mobile.circdesk.view.activity;
 
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -27,7 +26,7 @@ public class HomeActivity extends BaseActivity<HomeViewModel> {
 
         setTitleBar(getString(R.string.home));
 
-        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+        homeViewModel = new HomeViewModel(getApplication());
         homeViewModel.loadHomeMenuItems(this);
 
         activityHomeBinding.menuRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
