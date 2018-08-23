@@ -7,4 +7,8 @@
     <color name="actionButtonColor">#2C5B9F</color>
     <color name="editTextBorderColor">#D3D3D3</color>
     <color name="white">#FFFFFF</color>
+
+    <color name="black">#000000</color>
+    <color name="editTextBgColor">#B4B4B4</color>
+    <color name="blueLable">#3a65a0</color>
 </resources>

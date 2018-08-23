@@ -15,4 +15,28 @@
     <string name="back">Back</string>
     <string name="app_status_title">Follett DESTINY</string>
     <string name="connect_your_school_label">Connect to Your School</string>
+
+
+    <!--Home screen-->
+    <string name="home">HOME</string>
+    <string name="checkInCheckout">" Check In\nCheck Out"</string>
+    <string name="patronStatus">"Patron\nStatus"</string>
+    <string name="itemStatus">Item Status</string>
+    <string name="inventory">Inventory</string>
+    <string name="receive">Receive</string>
+
+    <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
+
+    <!-- Checkin Checkout Screen-->
+    <string name="checkin">Check In</string>
+    <string name="checkout">Check Out</string>
+    <string name="checkinChecoutTitle">Check In/Check Out</string>
+    <string name="findPatron">Find Patron</string>
+    <string name="scan">SCAN</string>
+    <string name="Go">GO</string>
+
+    <!--Patron Screen-->
+    <string name="selectPatron">Select Patron</string>
+
+
 </resources>

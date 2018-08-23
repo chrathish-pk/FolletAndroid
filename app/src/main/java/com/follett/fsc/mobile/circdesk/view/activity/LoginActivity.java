@@ -3,12 +3,12 @@
  */
 package com.follett.fsc.mobile.circdesk.view.activity;
 
+import android.os.Bundle;
+
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityLoginBinding;
 import com.follett.fsc.mobile.circdesk.view.base.BaseActivity;
 import com.follett.fsc.mobile.circdesk.viewmodel.LoginViewModel;
-
-import android.os.Bundle;
 
 public class LoginActivity extends BaseActivity<LoginViewModel> {
     
@@ -19,6 +19,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel> {
         super.onCreate(savedInstanceState);
         loginBinding = putContentView(R.layout.activity_login);
         setTitleBar(getString(R.string.connect_your_school_label));
+
     }
 }
 
