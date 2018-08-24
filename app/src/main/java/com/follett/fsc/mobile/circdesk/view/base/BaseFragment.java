@@ -9,6 +9,7 @@ package com.follett.fsc.mobile.circdesk.view.base;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
@@ -70,6 +71,10 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     
     protected Activity getBaseActivity() {
         return mActivity;
+    }
+    
+    protected Application getBaseApplication() {
+        return mActivity.getApplication();
     }
 
     public T getViewDataBinding() {

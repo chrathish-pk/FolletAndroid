@@ -6,9 +6,8 @@
 
 package com.follett.fsc.mobile.circdesk.interfaces;
 
-public interface BasicNavigator {
+public interface SchoolListNavigator {
     public void connectOnClick();
-    public void asyncTaskResult(boolean result);
     public void displayErrorDialog(String message);
     public void navigationToNextFragment(int fragmentNumber);
 }

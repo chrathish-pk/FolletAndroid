@@ -11,6 +11,7 @@ import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentBasicLayoutBinding;
 import com.follett.fsc.mobile.circdesk.interfaces.BasicNavigator;
+import com.follett.fsc.mobile.circdesk.interfaces.NavigationListener;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.view.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.viewmodel.BasicViewModel;
@@ -33,6 +34,8 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
     
     private AppRemoteRepository appRemoteRepository;
     
+    private NavigationListener navigationListener;
+    
     public static BasicFragment newInstance() {
         Bundle args = new Bundle();
         BasicFragment fragment = new BasicFragment();
@@ -48,7 +51,7 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
     @Override
     public BasicViewModel getViewModel() {
         appRemoteRepository = new AppRemoteRepository();
-        mBasicViewModel = new BasicViewModel(getBaseActivity().getApplication(), appRemoteRepository);
+        mBasicViewModel = new BasicViewModel(getBaseApplication(), appRemoteRepository);
         return mBasicViewModel;
     }
     
@@ -100,6 +103,11 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
         });
     }
     
+    @Override
+    public void navigationToNextFragment(int fragmentNumber) {
+        navigationListener.onNavigation(0);
+    }
+    
     private void savePreference() {
         AppUtils.getInstance()
                 .hideKeyBoard(getBaseActivity(), mBasicLayoutBinding.libraryEditText);
@@ -110,12 +118,13 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
     
     private void inItView(final FragmentBasicLayoutBinding basicLayoutBinding) {
         
+        navigationListener = (NavigationListener) getBaseActivity();
         basicLayoutBinding.libraryEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 
                 if (i == EditorInfo.IME_ACTION_DONE) {
-                    savePreference();
+                    connectOnClick();
                 }
                 return true;
             }

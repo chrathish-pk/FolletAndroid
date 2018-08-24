@@ -1,51 +1,57 @@
 /*
- * Copyright (c) 2018 Follett. All rights reserved.
+ *
+ *  * Copyright (c) 2018 Follett. All rights reserved.
+ *
  */
+
 package com.follett.fsc.mobile.circdesk.viewmodel;
 
-
-import com.follett.fsc.mobile.circdesk.data.model.LoginResults;
+import com.follett.fsc.mobile.circdesk.data.model.SiteRecord;
+import com.follett.fsc.mobile.circdesk.data.model.SiteResults;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
-import com.follett.fsc.mobile.circdesk.interfaces.LoginNavigator;
+import com.follett.fsc.mobile.circdesk.interfaces.SchoolListNavigator;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.view.base.BaseViewModel;
 
 import android.app.Application;
+import android.arch.lifecycle.MutableLiveData;
+import android.databinding.ObservableArrayList;
+import android.databinding.ObservableList;
 
-import io.reactivex.Observer;
+import java.util.List;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class LoginViewModel extends BaseViewModel<LoginNavigator> {
+public class SchoolListViewModel extends BaseViewModel<SchoolListNavigator> {
+    
+    public final ObservableList<SiteRecord> schoolArrayList = new ObservableArrayList<>();
+    
+    private final MutableLiveData<List<SiteRecord>> schoolMutableLiveData;
+    
     
     private Application mApplication;
     
     private AppRemoteRepository mAppRemoteRepository;
     
-    public LoginViewModel(Application application, AppRemoteRepository appRemoteRepository) {
+    public SchoolListViewModel(Application application, AppRemoteRepository appRemoteRepository) {
         super(application);
+        schoolMutableLiveData = new MutableLiveData<>();
         mApplication = application;
         mAppRemoteRepository = appRemoteRepository;
+        fetSchoolList();
     }
     
-    public void connectToServerOnClick() {
-        getNavigator().loginOnClick();
-    }
-    
-    public void getLoginResults() {
-        
-        mAppRemoteRepository.getLoginResults()
+    public void fetSchoolList() {
+        mAppRemoteRepository.getSchoolList()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribeWith(new Observer<LoginResults>() {
+                .subscribeWith(new DisposableObserver<SiteResults>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-                    
-                    }
-                    
-                    @Override
-                    public void onNext(LoginResults value) {
-                        getNavigator().navigationToNextFragment();
+                    public void onNext(SiteResults value) {
+                        AppUtils.getInstance()
+                                .showShortToastMessages(mApplication, value.toString());
                     }
                     
                     @Override
@@ -60,9 +66,6 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                 });
 
 
-//        mAppRemoteRepository.getVersion()
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.io())
 //                .subscribeWith(new DisposableObserver<Version>() {
 //                    @Override
 //                    public void onNext(Version value) {

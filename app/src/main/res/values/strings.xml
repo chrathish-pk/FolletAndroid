@@ -15,6 +15,8 @@
     <string name="back">Back</string>
     <string name="app_status_title">Follett DESTINY</string>
     <string name="connect_your_school_label">Connect to Your School</string>
+    <string name="select_school_label">Select School</string>
+    <string name="get_started_label">Get Started</string>
     <string name="loading_label">Please wait...</string>
 
 
@@ -30,6 +32,12 @@
     <string name="error_sorry_school_not_setup">This app requires your school to have Destiny version 10.5 or higher installed.</string>
     <string name="error_unable_to_communicate">Unable to communicate with server.</string>
     <string name="error_load_prefs">Unable to load preferences.</string>
+    <string name="school_noschoollist">No School Listed</string>
+    <string name="dont_see_your_school">DON`T SEE YOUR SCHOOL?</string>
+    <string name="user_id">User ID</string>
+    <string name="password">Password</string>
+    <string name="login">LOG IN</string>
+
 
 
 

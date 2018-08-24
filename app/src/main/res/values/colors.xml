@@ -8,4 +8,6 @@
     <color name="editTextBorderColor">#D3D3D3</color>
     <color name="white">#FFFFFF</color>
     <color name="editTextBgColor">#B4B4B4</color>
+    <color name="bottom_bar">#F3F3F3</color>
+
 </resources>

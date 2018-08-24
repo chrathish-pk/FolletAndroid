@@ -92,7 +92,7 @@ public class BasicViewModel extends BaseViewModel<BasicNavigator> {
                             url = URLHelper.getFinalizedURL(serverName + ":" + port);
                         }
                     } catch (IllegalArgumentException ex) {
-                        getNavigator().displayErrorDialog(AppConstants.INVALID_SERVER_ERROR);
+                        getNavigator().displayErrorDialog(AppConstants.SSL_ERROR);
                     }
                     AppSharedPreferences.getInstance(mApplication)
                             .populateInfoFromURL(new URL(url));
@@ -105,10 +105,10 @@ public class BasicViewModel extends BaseViewModel<BasicNavigator> {
 //                        result = Boolean.TRUE;
 //                    }
                 } catch (IOException e) {
-                    getNavigator().displayErrorDialog(AppConstants.DISPLAY_ERROR);
+                    getNavigator().displayErrorDialog(AppConstants.SSL_ERROR);
                 }
             } catch (Exception ex) {
-                getNavigator().displayErrorDialog(AppConstants.DISPLAY_ERROR);
+                getNavigator().displayErrorDialog(AppConstants.SSL_ERROR);
             }
             return result;
         }
@@ -129,10 +129,16 @@ public class BasicViewModel extends BaseViewModel<BasicNavigator> {
                 .subscribeWith(new DisposableObserver<Version>() {
                     @Override
                     public void onNext(Version value) {
+                        if (Integer.parseInt(value.getVersion()) < AppConstants.MIN_API_VERSION_SUPPORTED) {
+                            getNavigator().displayErrorDialog(AppConstants.SCHOOL_NOT_SETUP_ERROR);
+                        } else {
+                            getNavigator().navigationToNextFragment(0);
+                        }
                     }
                     
                     @Override
                     public void onError(Throwable e) {
+                    
                     }
                     
                     @Override
