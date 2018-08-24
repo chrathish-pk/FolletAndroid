@@ -29,7 +29,7 @@ public class PatronListActivity extends BaseActivity<CheckoutViewModel> {
 
 
         if (getIntent().getExtras() != null) {
-            scanPatron = getIntent().getParcelableExtra("scanPatron");
+            scanPatron = (ScanPatron) getIntent().getSerializableExtra("scanPatron");
         }
 
         setTitleBar(getString(R.string.selectPatron));
