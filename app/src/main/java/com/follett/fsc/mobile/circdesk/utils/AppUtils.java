@@ -4,9 +4,6 @@
 
 package com.follett.fsc.mobile.circdesk.utils;
 
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.interfaces.AlertDialogListener;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -23,6 +20,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.interfaces.AlertDialogListener;
 
 public class AppUtils {
     
@@ -232,9 +232,9 @@ public class AppUtils {
         Toast.makeText(context, !TextUtils.isEmpty(message) ? message + "" : "", Toast.LENGTH_SHORT)
                 .show();
     }
-    
-    public boolean isEditTextEmpty(EditText editText) {
-        
+
+    public boolean isEditTextNotEmpty(EditText editText) {
+
         if (TextUtils.isEmpty(editText.getText()
                 .toString()
                 .trim())) {
@@ -242,9 +242,19 @@ public class AppUtils {
         }
         return true;
     }
-    
+
+    public boolean isEditTextEmpty(EditText editText) {
+
+        if (TextUtils.isEmpty(editText.getText()
+                .toString()
+                .trim())) {
+            return false;
+        }
+        return true;
+    }
+
     public String getEditTextValue(EditText editText) {
-        
+
         if (null != editText) {
             return editText.getText()
                     .toString()

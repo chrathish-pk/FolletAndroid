@@ -24,12 +24,15 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:appcompat-v7:${android_support_lib}"
+    implementation "com.android.support:design:${android_support_lib}"
     implementation "com.android.support.constraint:constraint-layout:${constraint_layout_lib}"
     implementation "com.android.support:recyclerview-v7:${android_support_lib}"
+    implementation "com.android.support:cardview-v7:${android_support_lib}"
     implementation "android.arch.lifecycle:extensions:${android_arch_lib}"
     // ViewModel and LiveData
     implementation "android.arch.lifecycle:runtime:${android_arch_lib}"
     // Support Lifecycles only (no ViewModel or LiveData)
+
     testImplementation "junit:junit:${junit_lib}"
     implementation "com.google.code.gson:gson:${gson_lib}"
     implementation "com.squareup.retrofit2:retrofit:${retrofit_lib}"

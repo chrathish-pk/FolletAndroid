@@ -27,7 +27,7 @@ public class APIClient {
     private static OkHttpClient okHttpClient;
     
     public static Retrofit getClient(String baseUrl) {
-        
+
         if (okHttpClient == null) { initOkHttp(); }
         
         if (retrofit == null) {
@@ -38,12 +38,12 @@ public class APIClient {
                     .build();
         }
         Log.d("TAG", "Response = " + retrofit);
-        
+
         return retrofit;
     }
     
     public static Retrofit getGeoClient(String baseUrl) {
-        
+
         if (okHttpClient == null) { initOkHttp(); }
         
         Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl)
@@ -61,6 +61,7 @@ public class APIClient {
                 .readTimeout(70, TimeUnit.SECONDS)
                 .writeTimeout(100, TimeUnit.SECONDS)
                 .addInterceptor(logging);
+        
         okHttpClient = httpClient.build();
     }
 }

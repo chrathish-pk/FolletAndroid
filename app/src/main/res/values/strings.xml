@@ -19,6 +19,30 @@
     <string name="get_started_label">Get Started</string>
     <string name="loading_label">Please wait...</string>
 
+    <!--Home screen-->
+    <string name="home">HOME</string>
+    <string name="checkInCheckout">" Check In\nCheck Out"</string>
+    <string name="patronStatus">"Patron\nStatus"</string>
+    <string name="itemStatus">Item Status</string>
+    <string name="inventory">Inventory</string>
+    <string name="receive">Receive</string>
+
+    <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
+
+    <!-- Checkin Checkout Screen-->
+    <string name="checkin">Check In</string>
+    <string name="checkout">Check Out</string>
+    <string name="checkinChecoutTitle">Check In/Check Out</string>
+    <string name="findPatron">Find Patron</string>
+    <string name="scan">SCAN</string>
+    <string name="Go">GO</string>
+    <string name="library">LIBRARY</string>
+    <string name="resource">RESOURCE</string>
+
+    <!--Patron Screen-->
+    <string name="selectPatron">Select Patron</string>
+    <string name="errorPatronEntry">You must enter a patron barcode or name.</string>
+
 
     <!--Login-->
     <string name="basic_label">BASIC</string>

@@ -18,9 +18,9 @@ import android.support.design.widget.TabLayout;
 public class LoginActivity extends BaseActivity<LoginViewModel> implements NavigationListener {
     
     private ActivityLoginBinding mLoginBinding;
-    
+
     private SchoolListFragment mSchoolListFragment;
-    
+
     private LoginFragment mLoginFragment;
     
     @Override
@@ -29,16 +29,16 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Navig
         mLoginBinding = putContentView(R.layout.activity_login);
         inItView();
     }
-    
+
     private void inItView() {
-        
+
         setToolBarTitle(getString(R.string.connect_your_school_label));
         final TabLayout tabLayout = mLoginBinding.tabLayout;
         tabLayout.addTab(tabLayout.newTab()
                 .setText(getString(R.string.basic_label)));
         tabLayout.addTab(tabLayout.newTab()
                 .setText(getString(R.string.advanced_label)));
-        
+
         mLoginBinding.viewPager.setOffscreenPageLimit(tabLayout.getTabCount());
         mLoginBinding.viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mLoginBinding.tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -46,25 +46,25 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Navig
             public void onTabSelected(TabLayout.Tab tab) {
                 mLoginBinding.viewPager.setCurrentItem(tab.getPosition());
             }
-            
+
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-            
+
             }
-            
+
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-            
+
             }
         });
         SiteViewPagerAdapter adapter = new SiteViewPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         mLoginBinding.viewPager.setAdapter(adapter);
     }
-    
+
     public void navigationToNextFragment() {
-    
+
     }
-    
+
     @Override
     public void onNavigation(int position) {
         if (position == 0) { // Navigate to School list
@@ -82,25 +82,14 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Navig
                     .addToBackStack(null)
                     .commit();
         } else if (position == 2) { // Navigate to Home Screen
-        
+
         }
     }
-    
+
     @Override
     public void setToolBarTitle(String titleText) {
         setTitleBar(titleText);
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        if (mSchoolListFragment.isVisible() && mSchoolListFragment.isAdded()) {
-//            setTitleBar(getString(R.string.select_school_label));
-//            super.onBackPressed();
-//        } else if (mLoginFragment.isVisible() && mLoginFragment.isAdded()) {
-//
-//        } else {
-//
-//        }
-//    }
 }
 
