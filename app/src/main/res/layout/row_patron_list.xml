@@ -5,7 +5,7 @@
 
         <variable
             name="patronItem"
-            type="com.follett.fsc.mobile.circdesk.data.model.Patron" />
+            type="com.follett.fsc.mobile.circdesk.data.model.ScanPatron" />
 
         <variable
             name="listener"
@@ -14,7 +14,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
@@ -35,7 +35,7 @@
                 android:id="@+id/patronName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@"
+                android:text="patronName"
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold" />

@@ -1,10 +1,11 @@
 package com.follett.fsc.mobile.circdesk.view.activity;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 
 import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.data.model.ScanPatron;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityPatronListBinding;
 import com.follett.fsc.mobile.circdesk.view.adapter.PatronListAdapter;
 import com.follett.fsc.mobile.circdesk.view.base.BaseActivity;
@@ -15,17 +16,26 @@ public class PatronListActivity extends BaseActivity<CheckoutViewModel> {
     ActivityPatronListBinding activityPatronListBinding;
     private CheckoutViewModel checkoutViewModel;
     private PatronListAdapter patronListAdapter;
+    private ScanPatron scanPatron;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityPatronListBinding = putContentView(R.layout.activity_patron_list);
-        checkoutViewModel = ViewModelProviders.of(this).get(CheckoutViewModel.class);
+        //checkoutViewModel = new CheckoutViewModel(getApplication(), new AppRemoteRepository());
+        activityPatronListBinding.patronListView.setLayoutManager(new LinearLayoutManager(this));
+
+
+
+        if (getIntent().getExtras() != null) {
+            scanPatron = getIntent().getParcelableExtra("scanPatron");
+        }
 
         setTitleBar(getString(R.string.selectPatron));
 
-
+        patronListAdapter = new PatronListAdapter(this, scanPatron);
+        activityPatronListBinding.patronListView.setAdapter(patronListAdapter);
 
        /* checkoutViewModel.getScanPatron().observe(this, new Observer<ScanPatron>() {
             @Override

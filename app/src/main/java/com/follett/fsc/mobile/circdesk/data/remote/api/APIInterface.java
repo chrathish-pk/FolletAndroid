@@ -7,6 +7,7 @@
 package com.follett.fsc.mobile.circdesk.data.remote.api;
 
 
+import com.follett.fsc.mobile.circdesk.data.model.LoginResults;
 import com.follett.fsc.mobile.circdesk.data.model.ScanPatron;
 import com.follett.fsc.mobile.circdesk.data.model.Version;
 
@@ -29,6 +30,15 @@ public interface APIInterface {
     Observable<ScanPatron> getScanPatron(@Query("contextName") String contextName, @Query("site") String site, @Query("client") String client,
                                          @Query("barcode") String barcode, @Query("appID") String appID, @Query("device") String device,
                                          @Query("appVersion") String appVersion, @Query("appLanguage") String appLanguage);
+
+    @GET("rest/v4/district/login")
+    Observable<LoginResults> getLoginResult(@Query("contextName") String contextName, @Query("site") String site,
+                                            @Query("client") String client, @Query("password") String password,
+                                            @Query("userName") String userName,
+                                            @Query("appID") String appID, @Query("device") String device,
+                                            @Query("appVersion") String appVersion, @Query("appLanguage") String appLanguage);
+
+
 
 
 }

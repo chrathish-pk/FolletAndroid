@@ -8,18 +8,19 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.data.model.Patron;
+import com.follett.fsc.mobile.circdesk.data.model.ScanPatron;
 import com.follett.fsc.mobile.circdesk.databinding.RowPatronListBinding;
 import com.follett.fsc.mobile.circdesk.view.viewholder.PatronListViewHolder;
-import com.follett.fsc.mobile.circdesk.viewmodel.CheckoutViewModel;
 
 public class PatronListAdapter extends RecyclerView.Adapter<PatronListViewHolder> {
 
     private Context context;
-    private CheckoutViewModel checkoutViewModel;
+    private ScanPatron scanPatron;
 
-    public PatronListAdapter(Context context, CheckoutViewModel checkoutViewModel) {
+    public PatronListAdapter(Context context, ScanPatron scanPatron) {
         this.context = context;
-        this.checkoutViewModel = checkoutViewModel;
+        this.scanPatron = scanPatron;
     }
 
     @NonNull
@@ -31,11 +32,14 @@ public class PatronListAdapter extends RecyclerView.Adapter<PatronListViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull PatronListViewHolder holder, int position) {
-        //holder.rowPatronListBinding.setPatronItem(checkoutViewModel);
+//        holder.rowPatronListBinding.setPatronItem();
+        Patron patron = scanPatron.getScanPatronResult().getPatronList().getPatron().get(position);
+        holder.rowPatronListBinding.patronName.setText(patron.getLastFirstMiddleName());
+        holder.rowPatronListBinding.patronBarcode.setText(patron.getBarcode());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return scanPatron.getScanPatronResult().getPatronList().getPatron().size();
     }
 }

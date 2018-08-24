@@ -5,16 +5,12 @@ import android.app.Application;
 import com.follett.fsc.mobile.circdesk.data.model.ScanPatron;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.view.base.BaseViewModel;
-
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
+import com.google.gson.Gson;
 
 public class CheckoutViewModel extends BaseViewModel {
 
     //this is the data that we will fetch asynchronously
-    private ScanPatron scanPatron;
+    public ScanPatron scanPatron;
 
     private Application mApplication;
 
@@ -40,19 +36,27 @@ public class CheckoutViewModel extends BaseViewModel {
     }*/
 
 
-    public void getScanPatron() {
-        mAppRemoteRepository.getScanPatron()
+    public ScanPatron getScanPatron() {
+
+        try {
+            scanPatron = new Gson().fromJson(mAppRemoteRepository.scanPatronString, ScanPatron.class);
+            return scanPatron;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        /*mAppRemoteRepository.getLoginResult()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribeWith(new Observer<ScanPatron>() {
+                .subscribeWith(new Observer<LoginResults>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(ScanPatron value) {
-                        scanPatron = value;
+                    public void onNext(LoginResults value) {
+
+
                     }
 
                     @Override
@@ -65,6 +69,8 @@ public class CheckoutViewModel extends BaseViewModel {
 
                     }
                 });
+*/
+        return null;
     }
 
 }

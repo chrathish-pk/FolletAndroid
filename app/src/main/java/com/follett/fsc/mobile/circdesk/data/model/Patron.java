@@ -1,23 +1,45 @@
+
 package com.follett.fsc.mobile.circdesk.data.model;
 
-import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Root;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-@Root(name = "patron")
-public class Patron {
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-    @Element(name = "barcode")
+public class Patron implements Parcelable{
+
+    @SerializedName("barcode")
+    @Expose
     private String barcode;
-
-    @Element(name = "lastFirstMiddleName")
+    @SerializedName("lastFirstMiddleName")
+    @Expose
     private String lastFirstMiddleName;
-
-    @Element(name = "patronID")
+    @SerializedName("patronID")
+    @Expose
     private String patronID;
-
-    @Element(name = "patronPictureFileName")
+    @SerializedName("patronPictureFileName")
+    @Expose
     private String patronPictureFileName;
 
+    protected Patron(Parcel in) {
+        barcode = in.readString();
+        lastFirstMiddleName = in.readString();
+        patronID = in.readString();
+        patronPictureFileName = in.readString();
+    }
+
+    public static final Creator<Patron> CREATOR = new Creator<Patron>() {
+        @Override
+        public Patron createFromParcel(Parcel in) {
+            return new Patron(in);
+        }
+
+        @Override
+        public Patron[] newArray(int size) {
+            return new Patron[size];
+        }
+    };
 
     public String getBarcode() {
         return barcode;
@@ -49,5 +71,18 @@ public class Patron {
 
     public void setPatronPictureFileName(String patronPictureFileName) {
         this.patronPictureFileName = patronPictureFileName;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(barcode);
+        dest.writeString(lastFirstMiddleName);
+        dest.writeString(patronID);
+        dest.writeString(patronPictureFileName);
     }
 }

@@ -1,5 +1,6 @@
 package com.follett.fsc.mobile.circdesk.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -9,6 +10,7 @@ import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentCheckoutBinding;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
+import com.follett.fsc.mobile.circdesk.view.activity.PatronListActivity;
 import com.follett.fsc.mobile.circdesk.viewmodel.CheckoutViewModel;
 
 public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, CheckoutViewModel> implements View.OnClickListener {
@@ -55,7 +57,11 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
             AppUtils.getInstance()
                     .hideKeyBoard(getBaseActivity(), fragmentCheckoutBinding.patronEntry);
             if (AppUtils.getInstance().isEditTextNotEmpty(fragmentCheckoutBinding.patronEntry)) {
-                checkoutViewModel.getScanPatron();
+                //checkoutViewModel.getScanPatron();
+
+                Intent patronListIntent = new Intent(getActivity(), PatronListActivity.class);
+                patronListIntent.putExtra("scanPatron", checkoutViewModel.getScanPatron());
+                startActivity(patronListIntent);
             } else {
                 AppUtils.getInstance()
                         .showShortToastMessages(getBaseActivity(), getString(R.string.errorPatronEntry));

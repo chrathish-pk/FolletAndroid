@@ -21,6 +21,9 @@
         </activity>
 
         <activity android:name=".view.activity.CheckinCheckoutActivity" />
+
+        <activity android:name=".view.activity.PatronListActivity" />
+
     </application>
 
 </manifest>
