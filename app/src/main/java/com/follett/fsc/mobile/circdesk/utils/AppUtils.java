@@ -242,4 +242,14 @@ public class AppUtils {
         }
         return true;
     }
+    
+    public String getEditTextValue(EditText editText) {
+        
+        if (null != editText) {
+            return editText.getText()
+                    .toString()
+                    .trim();
+        }
+        return "";
+    }
 }

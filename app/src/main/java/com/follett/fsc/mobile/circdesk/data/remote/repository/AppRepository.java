@@ -21,5 +21,5 @@ public interface AppRepository {
     
     Observable<SiteResults> getSchoolList();
     
-    Observable<LoginResults> getLoginResults();
+    Observable<LoginResults> getLoginResults(String userName, String password);
 }

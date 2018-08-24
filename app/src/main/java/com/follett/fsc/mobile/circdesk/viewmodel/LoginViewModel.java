@@ -32,9 +32,9 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
         getNavigator().loginOnClick();
     }
     
-    public void getLoginResults() {
+    public void getLoginResults(String userName, String password) {
         
-        mAppRemoteRepository.getLoginResults()
+        mAppRemoteRepository.getLoginResults(userName, password)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribeWith(new Observer<LoginResults>() {

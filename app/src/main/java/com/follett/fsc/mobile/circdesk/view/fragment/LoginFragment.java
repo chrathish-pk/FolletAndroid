@@ -94,7 +94,8 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
         if (AppUtils.getInstance()
                 .isEditTextEmpty(mLayoutBinding.useridEditText) && AppUtils.getInstance()
                 .isEditTextEmpty(mLayoutBinding.passwordEditText)) {
-            mLoginViewModel.getLoginResults();
+            mLoginViewModel.getLoginResults(AppUtils.getInstance().getEditTextValue(mLayoutBinding.useridEditText),
+                    AppUtils.getInstance().getEditTextValue(mLayoutBinding.passwordEditText));
         }
     }
     

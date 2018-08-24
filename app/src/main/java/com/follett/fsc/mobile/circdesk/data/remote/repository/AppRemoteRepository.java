@@ -36,8 +36,8 @@ public class AppRemoteRepository implements AppRepository {
     }
     
     @Override
-    public Observable<LoginResults> getLoginResults() {
-        return apiService.getLoginResults("dvpdt_devprodtest", "FDPSA", "COGNITE", "pk", "pk", "DestinyCirc", "Android_24_7.0_lge_lucye_LG-H870DS",
+    public Observable<LoginResults> getLoginResults(String userName, String password) {
+        return apiService.getLoginResults("dvpdt_devprodtest", "FDPSA", "COGNITE", password, userName, "DestinyCirc", "Android_24_7.0_lge_lucye_LG-H870DS",
                 "1_Android", "English");
     }
 
