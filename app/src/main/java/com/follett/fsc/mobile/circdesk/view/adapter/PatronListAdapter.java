@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.data.model.Patron;
 import com.follett.fsc.mobile.circdesk.data.model.ScanPatron;
+import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.RowPatronListBinding;
+import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import com.follett.fsc.mobile.circdesk.view.viewholder.PatronListViewHolder;
 
 public class PatronListAdapter extends RecyclerView.Adapter<PatronListViewHolder> {
@@ -36,6 +38,11 @@ public class PatronListAdapter extends RecyclerView.Adapter<PatronListViewHolder
         Patron patron = scanPatron.getScanPatronResult().getPatronList().getPatron().get(position);
         holder.rowPatronListBinding.patronName.setText(patron.getLastFirstMiddleName());
         holder.rowPatronListBinding.patronBarcode.setText(patron.getBarcode());
+
+        FollettLog.d("patronImg", AppRemoteRepository.BASE_URL + "/" + patron.getPatronPictureFileName());
+        /*Glide.with(context)
+                .load(AppRemoteRepository.BASE_URL + "/" + patron.getPatronPictureFileName())
+                .into(holder.rowPatronListBinding.patronImg);*/
     }
 
     @Override

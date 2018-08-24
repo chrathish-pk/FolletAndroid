@@ -6,8 +6,9 @@
 
 package com.follett.fsc.mobile.circdesk.data.remote.repository;
 
-import com.follett.fsc.mobile.circdesk.data.model.SiteResults;
+import com.follett.fsc.mobile.circdesk.data.model.LoginResults;
 import com.follett.fsc.mobile.circdesk.data.model.ScanPatron;
+import com.follett.fsc.mobile.circdesk.data.model.SiteResults;
 import com.follett.fsc.mobile.circdesk.data.model.Version;
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIClient;
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
@@ -15,11 +16,6 @@ import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
 import io.reactivex.Observable;
 
 public class AppRemoteRepository implements AppRepository {
-
-    private APIInterface apiService;
-
-    public static final String BASE_URL = "https://devprodtest.follettdestiny.com";
-
 
     private APIInterface apiService;
 
@@ -91,12 +87,6 @@ public class AppRemoteRepository implements AppRepository {
                 "1_Android", "English");
     }
 
-    @Override
-    public Observable<LoginResults> getLoginResult() {
-        return apiService.getLoginResult("dvpdt_devprodtest", "FDPSA", "COGNITE",
-                "pk", "pk", "DestinyCirc",
-                "Android_24_7.0_lge_lucye_LG-H870DS", "1_Android", "English");
-    }
 
 
 }

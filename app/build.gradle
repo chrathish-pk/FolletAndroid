@@ -41,6 +41,7 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava2:${retrofit_lib}"
     implementation "io.reactivex.rxjava2:rxandroid:${rxandroid}"
     implementation "com.squareup.okhttp3:logging-interceptor:${okhttp3_lib}"
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
     implementation 'com.android.support:design:27.1.1'
     android {
         useLibrary 'org.apache.http.legacy'

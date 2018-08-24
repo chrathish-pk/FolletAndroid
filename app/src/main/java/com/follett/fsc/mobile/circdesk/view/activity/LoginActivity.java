@@ -3,6 +3,10 @@
  */
 package com.follett.fsc.mobile.circdesk.view.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityLoginBinding;
 import com.follett.fsc.mobile.circdesk.interfaces.NavigationListener;
@@ -12,17 +16,14 @@ import com.follett.fsc.mobile.circdesk.view.fragment.LoginFragment;
 import com.follett.fsc.mobile.circdesk.view.fragment.SchoolListFragment;
 import com.follett.fsc.mobile.circdesk.viewmodel.LoginViewModel;
 
-import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-
 public class LoginActivity extends BaseActivity<LoginViewModel> implements NavigationListener {
-    
+
     private ActivityLoginBinding mLoginBinding;
 
     private SchoolListFragment mSchoolListFragment;
 
     private LoginFragment mLoginFragment;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +83,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Navig
                     .addToBackStack(null)
                     .commit();
         } else if (position == 2) { // Navigate to Home Screen
-
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
         }
     }
 

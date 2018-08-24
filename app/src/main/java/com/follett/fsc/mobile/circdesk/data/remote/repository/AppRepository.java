@@ -6,8 +6,9 @@
 
 package com.follett.fsc.mobile.circdesk.data.remote.repository;
 
-import com.follett.fsc.mobile.circdesk.data.model.SiteResults;
+import com.follett.fsc.mobile.circdesk.data.model.LoginResults;
 import com.follett.fsc.mobile.circdesk.data.model.ScanPatron;
+import com.follett.fsc.mobile.circdesk.data.model.SiteResults;
 import com.follett.fsc.mobile.circdesk.data.model.Version;
 
 import io.reactivex.Observable;

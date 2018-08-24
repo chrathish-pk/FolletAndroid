@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.follett.fsc.mobile.circdesk.R;
@@ -38,8 +39,13 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuViewHolder> {
 
         ItemClickListener itemClickListener = new ItemClickListener() {
             @Override
-            public void OnItemClick() {
+            public void OnItemClicked() {
                 homeViewModel.getOpenTaskEvent().call();
+            }
+
+            @Override
+            public void OnItemClick(View view, int position) {
+
             }
         };
 

@@ -26,10 +26,10 @@ public class HomeViewModel extends BaseViewModel<BasicNavigator> {
     }
 
     public void loadHomeMenuItems(Context context) {
-        homeMenuItems.add(new HomeMenu("", R.drawable.out));
-        homeMenuItems.add(new HomeMenu("", R.drawable.patron));
-        homeMenuItems.add(new HomeMenu("", R.drawable.status));
-        homeMenuItems.add(new HomeMenu("", R.drawable.inventory));
+        homeMenuItems.add(new HomeMenu(context.getString(R.string.checkInCheckout), R.drawable.out));
+        homeMenuItems.add(new HomeMenu(context.getString(R.string.patronStatus), R.drawable.patron));
+        homeMenuItems.add(new HomeMenu(context.getString(R.string.itemStatus), R.drawable.status));
+        homeMenuItems.add(new HomeMenu(context.getString(R.string.inventory), R.drawable.inventory));
         //homeMenuItems.add(new HomeMenu(context.getString(R.string.receive), R.drawable.receive));
     }
 
