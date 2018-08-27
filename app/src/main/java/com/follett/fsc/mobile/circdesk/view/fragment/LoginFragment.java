@@ -91,10 +91,15 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
     @Override
     public void loginOnClick() {
         
-        if (AppUtils.getInstance()
-                .isEditTextNotEmpty(mLayoutBinding.useridEditText) && AppUtils.getInstance()
+        if (!AppUtils.getInstance()
+                .isEditTextNotEmpty(mLayoutBinding.useridEditText)) {
+            AppUtils.getInstance()
+                    .showShortToastMessages(getBaseActivity(), getString(R.string.username_empty_lebel));
+        } else if (!AppUtils.getInstance()
                 .isEditTextNotEmpty(mLayoutBinding.passwordEditText)) {
-            
+            AppUtils.getInstance()
+                    .showShortToastMessages(getBaseActivity(), getString(R.string.password_empty_lebel));
+        } else {
             if (!isNetworkConnected()) {
                 AppUtils.getInstance()
                         .showNoInternetAlertDialog(getBaseActivity());

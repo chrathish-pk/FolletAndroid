@@ -54,6 +54,10 @@
     <string name="ssl_port_label">SSL Port Number (e.g. 443)</string>
     <string name="connect_label">connect</string>
     <string name="url_empty_label">URL cannot be empty.</string>
+    <string name="port_empty_lable">Port cannot be empty</string>
+    <string name="ssl_port_empty_lable">SSL port cannot be empty.</string>
+    <string name="username_empty_lebel">User ID cannot be empty.</string>
+    <string name="password_empty_lebel">Password cannot be empty.</string>
     <string name="error_invalid_servername">Server name is invalid.</string>
     <string name="error_sorry_school_not_setup">This app requires your school to have Destiny version 10.5 or higher installed.</string>
     <string name="error_unable_to_communicate">Unable to communicate with server.</string>
