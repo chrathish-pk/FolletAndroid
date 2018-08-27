@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ /*
+  ~  * Copyright (c) 2018 Follett. All rights reserved.
+  ~  */
+  -->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ripple_effect_un_selector" android:state_selected="false" />
+    <item android:drawable="@drawable/ripple_effect_selector" android:state_selected="true" />
+
+</selector>

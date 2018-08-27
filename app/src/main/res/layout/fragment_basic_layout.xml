@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /*
+  ~  * Copyright (c) 2018 Follett. All rights reserved.
+  ~  */
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="viewModel"
+            type="com.follett.fsc.mobile.circdesk.viewmodel.BasicViewModel"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <EditText
+            android:id="@+id/libraryEditText"
+            style="@style/EditTextTheme"
+            android:layout_marginTop="50dp"
+            android:hint="@string/library_label"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/connectTextview"
+            style="@style/ActionButtonTheme"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="32dp"
+            android:onClick="@{() -> viewModel.connectToServerOnClick()}"
+            android:text="@string/connect_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/libraryEditText"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

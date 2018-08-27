@@ -3,8 +3,25 @@
  */
 package com.follett.fsc.mobile.circdesk.view.base;
 
+import android.app.Application;
 import android.arch.lifecycle.ViewModel;
 
+import java.lang.ref.WeakReference;
+
 public abstract class BaseViewModel<N> extends ViewModel {
+
+    public BaseViewModel(Application application) {
+    }
+
+    private WeakReference<N> mNavigator;
+
+    public N getNavigator() {
+        return mNavigator.get();
+    }
+
+    public void setNavigator(N navigator) {
+        this.mNavigator = new WeakReference<>(navigator);
+    }
+
 
 }

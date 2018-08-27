@@ -15,4 +15,55 @@
     <string name="back">Back</string>
     <string name="app_status_title">Follett DESTINY</string>
     <string name="connect_your_school_label">Connect to Your School</string>
+    <string name="select_school_label">Select School</string>
+    <string name="get_started_label">Get Started</string>
+    <string name="loading_label">Please wait...</string>
+
+    <!--Home screen-->
+    <string name="home">HOME</string>
+    <string name="checkInCheckout">" Check In\nCheck Out"</string>
+    <string name="patronStatus">"Patron\nStatus"</string>
+    <string name="itemStatus">Item Status</string>
+    <string name="inventory">Inventory</string>
+    <string name="receive">Receive</string>
+
+    <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
+
+    <!-- Checkin Checkout Screen-->
+    <string name="checkin">Check In</string>
+    <string name="checkout">Check Out</string>
+    <string name="checkinChecoutTitle">Check In/Check Out</string>
+    <string name="findPatron">Find Patron</string>
+    <string name="scan">SCAN</string>
+    <string name="Go">GO</string>
+    <string name="library">LIBRARY</string>
+    <string name="resource">RESOURCE</string>
+
+    <!--Patron Screen-->
+    <string name="selectPatron">Select Patron</string>
+    <string name="errorPatronEntry">You must enter a patron barcode or name.</string>
+
+
+    <!--Login-->
+    <string name="basic_label">BASIC</string>
+    <string name="advanced_label">ADVANCED</string>
+    <string name="library_label">Enter Library URL or IP Address</string>
+    <string name="port_label">Port Number (e.g. 80)</string>
+    <string name="ssl_port_label">SSL Port Number (e.g. 443)</string>
+    <string name="connect_label">connect</string>
+    <string name="url_empty_label">URL cannot be empty.</string>
+    <string name="error_invalid_servername">Server name is invalid.</string>
+    <string name="error_sorry_school_not_setup">This app requires your school to have Destiny version 10.5 or higher installed.</string>
+    <string name="error_unable_to_communicate">Unable to communicate with server.</string>
+    <string name="error_load_prefs">Unable to load preferences.</string>
+    <string name="school_noschoollist">No School Listed</string>
+    <string name="dont_see_your_school">DON`T SEE YOUR SCHOOL?</string>
+    <string name="user_id">User ID</string>
+    <string name="password">Password</string>
+    <string name="login">LOG IN</string>
+
+
+
+
+
 </resources>
