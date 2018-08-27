@@ -47,12 +47,13 @@ public class BasicViewModel extends BaseViewModel<BasicNavigator> {
     }
     
     public void savePreference(String serverName, String port, String sslPort) {
+        setIsLoding(true);
         SaveContextTask saveTask = new SaveContextTask();
         saveTask.execute(serverName, port, sslPort);
     }
     
     
-    public class SaveContextTask extends AsyncTask<String, Void, Boolean> {
+    private class SaveContextTask extends AsyncTask<String, Void, Boolean> {
         
         @Override
         protected void onPreExecute() {
@@ -92,6 +93,7 @@ public class BasicViewModel extends BaseViewModel<BasicNavigator> {
                             url = URLHelper.getFinalizedURL(serverName + ":" + port);
                         }
                     } catch (IllegalArgumentException ex) {
+                        setIsLoding(false);
                         getNavigator().displayErrorDialog(AppConstants.SSL_ERROR);
                     }
                     AppSharedPreferences.getInstance(mApplication)
@@ -105,9 +107,11 @@ public class BasicViewModel extends BaseViewModel<BasicNavigator> {
 //                        result = Boolean.TRUE;
 //                    }
                 } catch (IOException e) {
+                    setIsLoding(false);
                     getNavigator().displayErrorDialog(AppConstants.SSL_ERROR);
                 }
             } catch (Exception ex) {
+                setIsLoding(false);
                 getNavigator().displayErrorDialog(AppConstants.SSL_ERROR);
             }
             return result;
@@ -118,6 +122,8 @@ public class BasicViewModel extends BaseViewModel<BasicNavigator> {
             super.onPostExecute(result);
             if (result) {
                 getNavigator().asyncTaskResult(result);
+            } else {
+                setIsLoding(false);
             }
         }
     }
@@ -129,6 +135,7 @@ public class BasicViewModel extends BaseViewModel<BasicNavigator> {
                 .subscribeWith(new DisposableObserver<Version>() {
                     @Override
                     public void onNext(Version value) {
+                        setIsLoding(false);
                         if (Integer.parseInt(value.getVersion()) < AppConstants.MIN_API_VERSION_SUPPORTED) {
                             getNavigator().displayErrorDialog(AppConstants.SCHOOL_NOT_SETUP_ERROR);
                         } else {
@@ -138,11 +145,12 @@ public class BasicViewModel extends BaseViewModel<BasicNavigator> {
                     
                     @Override
                     public void onError(Throwable e) {
-                    
+                        setIsLoding(false);
                     }
                     
                     @Override
                     public void onComplete() {
+                        setIsLoding(false);
                     }
                 });
     }

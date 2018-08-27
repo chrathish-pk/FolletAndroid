@@ -77,7 +77,7 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
     public void connectOnClick() {
         
         if (AppUtils.getInstance()
-                .isEditTextEmpty(mBasicLayoutBinding.libraryEditText)) {
+                .isEditTextNotEmpty(mBasicLayoutBinding.libraryEditText)) {
             savePreference();
         } else {
             AppUtils.getInstance()
@@ -111,6 +111,12 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
     private void savePreference() {
         AppUtils.getInstance()
                 .hideKeyBoard(getBaseActivity(), mBasicLayoutBinding.libraryEditText);
+        if (!isNetworkConnected()) {
+            AppUtils.getInstance()
+                    .showNoInternetAlertDialog(getBaseActivity());
+            return;
+        }
+        
         mBasicViewModel.savePreference(mBasicLayoutBinding.libraryEditText.getText()
                 .toString()
                 .trim(), null, null);

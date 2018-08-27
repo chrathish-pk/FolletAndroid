@@ -92,10 +92,18 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
     public void loginOnClick() {
         
         if (AppUtils.getInstance()
-                .isEditTextEmpty(mLayoutBinding.useridEditText) && AppUtils.getInstance()
-                .isEditTextEmpty(mLayoutBinding.passwordEditText)) {
-            mLoginViewModel.getLoginResults(AppUtils.getInstance().getEditTextValue(mLayoutBinding.useridEditText),
-                    AppUtils.getInstance().getEditTextValue(mLayoutBinding.passwordEditText));
+                .isEditTextNotEmpty(mLayoutBinding.useridEditText) && AppUtils.getInstance()
+                .isEditTextNotEmpty(mLayoutBinding.passwordEditText)) {
+            
+            if (!isNetworkConnected()) {
+                AppUtils.getInstance()
+                        .showNoInternetAlertDialog(getBaseActivity());
+                return;
+            }
+            
+            mLoginViewModel.getLoginResults(AppUtils.getInstance()
+                    .getEditTextValue(mLayoutBinding.useridEditText), AppUtils.getInstance()
+                    .getEditTextValue(mLayoutBinding.passwordEditText));
         }
     }
     
@@ -175,8 +183,8 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
     
     public void onTextChangedInEditText() {
         if (AppUtils.getInstance()
-                .isEditTextEmpty(mLayoutBinding.useridEditText) && AppUtils.getInstance()
-                .isEditTextEmpty(mLayoutBinding.passwordEditText)) {
+                .isEditTextNotEmpty(mLayoutBinding.useridEditText) && AppUtils.getInstance()
+                .isEditTextNotEmpty(mLayoutBinding.passwordEditText)) {
             mLayoutBinding.loginTextview.setSelected(true);
         } else {
             mLayoutBinding.loginTextview.setSelected(false);

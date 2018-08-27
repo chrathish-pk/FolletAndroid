@@ -33,32 +33,35 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
     }
 
     public void getLoginResults(String userName, String password) {
-
+        setIsLoding(true);
         mAppRemoteRepository.getLoginResults(userName, password)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribeWith(new Observer<LoginResults>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        cancelProgressBar();
                     }
 
                     @Override
                     public void onNext(LoginResults value) {
+                        cancelProgressBar();
                         getNavigator().navigationToNextFragment();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        cancelProgressBar();
                     }
 
                     @Override
                     public void onComplete() {
-
+                        cancelProgressBar();
                     }
                 });
-
-
+    }
+    
+    private void cancelProgressBar () {
+        setIsLoding(false);
     }
 }
