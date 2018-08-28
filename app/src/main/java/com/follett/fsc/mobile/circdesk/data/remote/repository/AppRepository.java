@@ -28,6 +28,6 @@ public interface AppRepository {
     /**
      * Get scan patron result
      */
-    Observable<ScanPatron> getScanPatron();
+    Observable<ScanPatron> getScanPatron(String patronBarcodeID);
 
 }

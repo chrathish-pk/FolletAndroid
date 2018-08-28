@@ -7,7 +7,6 @@ import android.view.View;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
-import com.follett.fsc.mobile.circdesk.data.model.Patron;
 import com.follett.fsc.mobile.circdesk.data.model.ScanPatron;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityPatronListBinding;
 import com.follett.fsc.mobile.circdesk.interfaces.ItemClickListener;
@@ -20,13 +19,14 @@ public class PatronListActivity extends BaseActivity<CheckoutViewModel> implemen
     ActivityPatronListBinding activityPatronListBinding;
     private CheckoutViewModel checkoutViewModel;
     private PatronListAdapter patronListAdapter;
-    private com.follett.fsc.mobile.circdesk.data.model.ScanPatron scanPatron;
+    private ScanPatron scanPatron;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityPatronListBinding = putContentView(R.layout.activity_patron_list);
+        //checkoutViewModel = new CheckoutViewModel(getApplication(), new AppRemoteRepository());
         activityPatronListBinding.patronListView.setLayoutManager(new LinearLayoutManager(this));
 
 
@@ -49,6 +49,8 @@ public class PatronListActivity extends BaseActivity<CheckoutViewModel> implemen
                 activityPatronListBinding.patronListView.setAdapter(patronListAdapter);
             }
         });*/
+
+
     }
 
     @Override
@@ -58,8 +60,7 @@ public class PatronListActivity extends BaseActivity<CheckoutViewModel> implemen
 
     @Override
     public void OnItemClick(View view, int position) {
-        Patron patron = scanPatron.getPatronList().get(position);
-        AppSharedPreferences.getInstance(this).setString(AppSharedPreferences.KEY_SELECTED_PATRON_ID, patron.getPatronID());
+        AppSharedPreferences.getInstance(this).setString(AppSharedPreferences.KEY_SELECTED_PATRON_ID, scanPatron.getPatronList().get(position).getPatronID());
         finish();
     }
 }

@@ -5,9 +5,11 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityLoginBinding;
 import com.follett.fsc.mobile.circdesk.view.adapter.TabLayoutViewPagerAdapter;
 import com.follett.fsc.mobile.circdesk.view.base.BaseActivity;
@@ -63,7 +65,9 @@ public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewMod
     @Override
     protected void onResume() {
         super.onResume();
-        Fragment page = getSupportFragmentManager().findFragmentByTag(getString(R.string.checkout));
-        ((CheckoutFragment) page).getPatronID();
+        if (!TextUtils.isEmpty(AppSharedPreferences.getInstance(this).getString(AppSharedPreferences.KEY_SELECTED_PATRON_ID))) {
+            Fragment fragment = adapter.getItem(1);
+            ((CheckoutFragment) fragment).getPatronID();
+        }
     }
 }

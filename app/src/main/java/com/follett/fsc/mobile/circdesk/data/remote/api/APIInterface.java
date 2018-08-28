@@ -56,4 +56,7 @@ public interface APIInterface {
                                          @Query("barcode") String barcode, @Query("appID") String appID, @Query("device") String device,
                                          @Query("appVersion") String appVersion, @Query("appLanguage") String appLanguage);
 
+
+
+
 }

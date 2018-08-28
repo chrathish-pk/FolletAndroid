@@ -21,6 +21,7 @@ public class ScanPatron implements Serializable {
     @SerializedName("assetOverdues")
     @Expose
     private String assetOverdues;
+
     @SerializedName("libraryCheckouts")
     @Expose
     private String libraryCheckouts;
@@ -29,13 +30,13 @@ public class ScanPatron implements Serializable {
     private String libraryOverdues;
     @SerializedName("messages")
     @Expose
-    private String messages;
+    private List<Message> messages = null;
     @SerializedName("patronList")
     @Expose
     private List<Patron> patronList;
     @SerializedName("patronNotes")
     @Expose
-    private String patronNotes;
+    private List<Notes> patronNotes;
     @SerializedName("success")
     @Expose
     private String success;
@@ -45,6 +46,38 @@ public class ScanPatron implements Serializable {
     @SerializedName("textbookOverdues")
     @Expose
     private String textbookOverdues;
+
+    @SerializedName("patronPictureFileName")
+    @Expose
+    private String patronPictureFileName;
+
+    @SerializedName("libraryFines")
+    @Expose
+    private String libraryFines;
+
+    @SerializedName("textbookFines")
+    @Expose
+    private String textbookFines;
+
+    @SerializedName("assetFines")
+    @Expose
+    private String assetFines;
+
+    @SerializedName("patronID")
+    @Expose
+    private String patronID;
+
+    @SerializedName("lastFirstMiddleName")
+    @Expose
+    private String lastFirstMiddleName;
+
+    @SerializedName("barcode")
+    @Expose
+    private String barcode;
+
+    @SerializedName("patronType")
+    @Expose
+    private String patronType;
 
     public String getAssetCheckouts() {
         return assetCheckouts;
@@ -78,11 +111,11 @@ public class ScanPatron implements Serializable {
         this.libraryOverdues = libraryOverdues;
     }
 
-    public String getMessages() {
+    public List<Message> getMessages() {
         return messages;
     }
 
-    public void setMessages(String messages) {
+    public void setMessages(List<Message> messages) {
         this.messages = messages;
     }
 
@@ -94,11 +127,11 @@ public class ScanPatron implements Serializable {
         this.patronList = patronList;
     }
 
-    public String getPatronNotes() {
+    public List<Notes> getPatronNotes() {
         return patronNotes;
     }
 
-    public void setPatronNotes(String patronNotes) {
+    public void setPatronNotes(List<Notes> patronNotes) {
         this.patronNotes = patronNotes;
     }
 
@@ -126,4 +159,67 @@ public class ScanPatron implements Serializable {
         this.textbookOverdues = textbookOverdues;
     }
 
+    public String getPatronPictureFileName() {
+        return patronPictureFileName;
+    }
+
+    public void setPatronPictureFileName(String patronPictureFileName) {
+        this.patronPictureFileName = patronPictureFileName;
+    }
+
+    public String getLibraryFines() {
+        return libraryFines;
+    }
+
+    public void setLibraryFines(String libraryFines) {
+        this.libraryFines = libraryFines;
+    }
+
+    public String getTextbookFines() {
+        return textbookFines;
+    }
+
+    public void setTextbookFines(String textbookFines) {
+        this.textbookFines = textbookFines;
+    }
+
+    public String getAssetFines() {
+        return assetFines;
+    }
+
+    public void setAssetFines(String assetFines) {
+        this.assetFines = assetFines;
+    }
+
+    public String getPatronID() {
+        return patronID;
+    }
+
+    public void setPatronID(String patronID) {
+        this.patronID = patronID;
+    }
+
+    public String getLastFirstMiddleName() {
+        return lastFirstMiddleName;
+    }
+
+    public void setLastFirstMiddleName(String lastFirstMiddleName) {
+        this.lastFirstMiddleName = lastFirstMiddleName;
+    }
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
+    }
+
+    public String getPatronType() {
+        return patronType;
+    }
+
+    public void setPatronType(String patronType) {
+        this.patronType = patronType;
+    }
 }
