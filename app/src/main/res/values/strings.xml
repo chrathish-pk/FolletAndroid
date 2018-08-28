@@ -49,7 +49,7 @@
     <!--Login-->
     <string name="basic_label">BASIC</string>
     <string name="advanced_label">ADVANCED</string>
-    <string name="library_label">Enter Library URL or IP Address</string>
+    <string name="library_label">Enter Destiny URL or IP Address</string>
     <string name="port_label">Port Number (e.g. 80)</string>
     <string name="ssl_port_label">SSL Port Number (e.g. 443)</string>
     <string name="connect_label">connect</string>

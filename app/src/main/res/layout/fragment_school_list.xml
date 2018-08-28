@@ -73,13 +73,15 @@
 
             <Button
                 android:id="@+id/button7"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_size_36"
+                android:layout_marginHorizontal="@dimen/layout_size_16"
+                android:layout_marginVertical="@dimen/layout_size_18"
                 android:background="@drawable/rounded_corners_button"
                 android:gravity="center"
                 android:text="@string/dont_see_your_school"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_14sp"/>
         </LinearLayout>
 
 

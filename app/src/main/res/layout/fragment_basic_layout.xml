@@ -56,7 +56,7 @@
             android:id="@+id/connectTextview"
             style="@style/ActionButtonTheme"
             android:layout_marginBottom="24dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="@dimen/layout_size_16"
             android:onClick="@{(v)->basicListener.ctaButtonOnClick()}"
             android:text="@string/connect_label"
             app:layout_constraintEnd_toEndOf="parent"
