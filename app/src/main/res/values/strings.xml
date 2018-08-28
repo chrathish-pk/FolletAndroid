@@ -59,6 +59,7 @@
     <string name="username_empty_lebel">User ID cannot be empty.</string>
     <string name="password_empty_lebel">Password cannot be empty.</string>
     <string name="error_invalid_servername">Server name is invalid.</string>
+    <string name="ssl_error">An SSL Error has occurred and the secure connection to the server cannot be made</string>
     <string name="error_sorry_school_not_setup">This app requires your school to have Destiny version 10.5 or higher installed.</string>
     <string name="error_unable_to_communicate">Unable to communicate with server.</string>
     <string name="error_load_prefs">Unable to load preferences.</string>

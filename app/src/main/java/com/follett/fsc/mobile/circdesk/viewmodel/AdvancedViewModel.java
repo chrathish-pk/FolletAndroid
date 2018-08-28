@@ -6,12 +6,12 @@
 
 package com.follett.fsc.mobile.circdesk.viewmodel;
 
-import com.follett.fsc.mobile.circdesk.interfaces.BasicNavigator;
+import com.follett.fsc.mobile.circdesk.interfaces.CTAButtonListener;
 import com.follett.fsc.mobile.circdesk.view.base.BaseViewModel;
 
 import android.app.Application;
 
-public class AdvancedViewModel extends BaseViewModel<BasicNavigator> {
+public class AdvancedViewModel extends BaseViewModel<CTAButtonListener> {
     
     
     public AdvancedViewModel(Application application) {
@@ -19,6 +19,6 @@ public class AdvancedViewModel extends BaseViewModel<BasicNavigator> {
     }
     
     public void connectToServerOnClick () {
-        getNavigator().connectOnClick();
+        getNavigator().ctaButtonOnClick();
     }
 }

@@ -9,8 +9,9 @@ package com.follett.fsc.mobile.circdesk.viewmodel;
 import com.follett.fsc.mobile.circdesk.common.AppConstants;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.model.Version;
+import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
-import com.follett.fsc.mobile.circdesk.interfaces.BasicNavigator;
+import com.follett.fsc.mobile.circdesk.interfaces.CTAButtonListener;
 import com.follett.fsc.mobile.circdesk.view.base.BaseViewModel;
 import com.follett.fsc.mobile.commons.android.URLHelper;
 
@@ -30,7 +31,7 @@ import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferen
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SERVER_PORT;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SERVER_SSL_PORT;
 
-public class BasicViewModel extends BaseViewModel<BasicNavigator> {
+public class BasicViewModel extends BaseViewModel<CTAButtonListener> {
     
     private Application mApplication;
     
@@ -40,10 +41,7 @@ public class BasicViewModel extends BaseViewModel<BasicNavigator> {
         super(application);
         mApplication = application;
         mAppRemoteRepository = appRemoteRepository;
-    }
-    
-    public void connectToServerOnClick() {
-        getNavigator().connectOnClick();
+        
     }
     
     public void savePreference(String serverName, String port, String sslPort) {
@@ -94,25 +92,19 @@ public class BasicViewModel extends BaseViewModel<BasicNavigator> {
                         }
                     } catch (IllegalArgumentException ex) {
                         setIsLoding(false);
-                        getNavigator().displayErrorDialog(AppConstants.SSL_ERROR);
+                        setStatus(com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status.ERROR);
                     }
                     AppSharedPreferences.getInstance(mApplication)
                             .populateInfoFromURL(new URL(url));
                     result = Boolean.TRUE;
-
-//                    int version = API.getInstance().getVersion(AppInfo.mPrefs);
-//                    if (version < API.MIN_API_VERSION_SUPPORTED) {
-//                        throw new APIException(new Exception(), R.string.error_sorry_school_not_setup);
-//                    } else {
-//                        result = Boolean.TRUE;
-//                    }
+                    
                 } catch (IOException e) {
                     setIsLoding(false);
-                    getNavigator().displayErrorDialog(AppConstants.SSL_ERROR);
+                    setStatus(com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status.ERROR);
                 }
             } catch (Exception ex) {
                 setIsLoding(false);
-                getNavigator().displayErrorDialog(AppConstants.SSL_ERROR);
+                setStatus(com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status.ERROR);
             }
             return result;
         }
@@ -121,7 +113,7 @@ public class BasicViewModel extends BaseViewModel<BasicNavigator> {
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
             if (result) {
-                getNavigator().asyncTaskResult(result);
+                getVersion();
             } else {
                 setIsLoding(false);
             }
@@ -137,9 +129,9 @@ public class BasicViewModel extends BaseViewModel<BasicNavigator> {
                     public void onNext(Version value) {
                         setIsLoding(false);
                         if (Integer.parseInt(value.getVersion()) < AppConstants.MIN_API_VERSION_SUPPORTED) {
-                            getNavigator().displayErrorDialog(AppConstants.SCHOOL_NOT_SETUP_ERROR);
+                            setStatus(Status.SCHOOL_NOT_SETUP_ERROR);
                         } else {
-                            getNavigator().navigationToNextFragment(0);
+                            setStatus(Status.SUCCESS);
                         }
                     }
                     
