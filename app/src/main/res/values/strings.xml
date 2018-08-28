@@ -18,6 +18,8 @@
     <string name="select_school_label">Select School</string>
     <string name="get_started_label">Get Started</string>
     <string name="loading_label">Please wait...</string>
+    <string name="no_internet_title">No Internet Connection</string>
+    <string name="no_internet_des">Please try again when you have a better connection.</string>
 
     <!--Home screen-->
     <string name="home">HOME</string>
@@ -47,12 +49,17 @@
     <!--Login-->
     <string name="basic_label">BASIC</string>
     <string name="advanced_label">ADVANCED</string>
-    <string name="library_label">Enter Library URL or IP Address</string>
+    <string name="library_label">Enter Destiny URL or IP Address</string>
     <string name="port_label">Port Number (e.g. 80)</string>
     <string name="ssl_port_label">SSL Port Number (e.g. 443)</string>
     <string name="connect_label">connect</string>
     <string name="url_empty_label">URL cannot be empty.</string>
+    <string name="port_empty_lable">Port cannot be empty</string>
+    <string name="ssl_port_empty_lable">SSL port cannot be empty.</string>
+    <string name="username_empty_lebel">User ID cannot be empty.</string>
+    <string name="password_empty_lebel">Password cannot be empty.</string>
     <string name="error_invalid_servername">Server name is invalid.</string>
+    <string name="ssl_error">An SSL Error has occurred and the secure connection to the server cannot be made</string>
     <string name="error_sorry_school_not_setup">This app requires your school to have Destiny version 10.5 or higher installed.</string>
     <string name="error_unable_to_communicate">Unable to communicate with server.</string>
     <string name="error_load_prefs">Unable to load preferences.</string>

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#2C5B9F</color>
+    <color name="colorPrimary">#2d5ba0</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="alto">#D3D3D3</color>
     <color name="titleBar">#202F72</color>
     <color name="actionButtonColor">#2C5B9F</color>
     <color name="editTextBorderColor">#D3D3D3</color>
-    <color name="white">#FFFFFF</color>
+    <color name="white">#ffffff</color>
     <color name="editTextBgColor">#B4B4B4</color>
     <color name="bottom_bar">#F3F3F3</color>
 

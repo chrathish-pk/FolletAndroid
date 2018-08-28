@@ -7,11 +7,11 @@ import android.databinding.ObservableList;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.data.model.HomeMenu;
-import com.follett.fsc.mobile.circdesk.interfaces.BasicNavigator;
+import com.follett.fsc.mobile.circdesk.interfaces.CTAButtonListener;
 import com.follett.fsc.mobile.circdesk.interfaces.SingleLiveEvent;
 import com.follett.fsc.mobile.circdesk.view.base.BaseViewModel;
 
-public class HomeViewModel extends BaseViewModel<BasicNavigator> {
+public class HomeViewModel extends BaseViewModel<CTAButtonListener> {
 
 
     public final ObservableList<HomeMenu> homeMenuItems = new ObservableArrayList<>();
