@@ -4,12 +4,13 @@
 package com.follett.fsc.mobile.circdesk.viewmodel;
 
 
+import android.app.Application;
+
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.model.LoginResults;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.interfaces.LoginNavigator;
 import com.follett.fsc.mobile.circdesk.view.base.BaseViewModel;
-
-import android.app.Application;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -45,6 +46,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
 
                     @Override
                     public void onNext(LoginResults value) {
+                        AppSharedPreferences.getInstance(mApplication).setString(AppSharedPreferences.KEY_SESSION_ID, value.getSessionID());
                         getNavigator().navigationToNextFragment();
                     }
 

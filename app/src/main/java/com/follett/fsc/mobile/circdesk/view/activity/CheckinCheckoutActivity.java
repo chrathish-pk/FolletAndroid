@@ -3,6 +3,7 @@ package com.follett.fsc.mobile.circdesk.view.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
@@ -16,10 +17,13 @@ import com.follett.fsc.mobile.circdesk.viewmodel.CheckinCheckoutViewModel;
 
 public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewModel> implements View.OnClickListener {
 
+    TabLayoutViewPagerAdapter adapter;
+    ActivityLoginBinding activityLoginBinding;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityLoginBinding activityLoginBinding = putContentView(R.layout.activity_login);
+        activityLoginBinding = putContentView(R.layout.activity_login);
 
         setTitleBar(getString(R.string.checkinChecoutTitle));
         setBackBtnVisible();
@@ -34,7 +38,7 @@ public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewMod
 
     private void setupViewPager(ViewPager checkinCheckoutViewPager) {
         try {
-            TabLayoutViewPagerAdapter adapter = new TabLayoutViewPagerAdapter(this.getSupportFragmentManager());
+            adapter = new TabLayoutViewPagerAdapter(this.getSupportFragmentManager());
             adapter.addFragment(new CheckinFragment(), getString(R.string.checkin));
             adapter.addFragment(new CheckoutFragment(), getString(R.string.checkout));
 
@@ -54,5 +58,12 @@ public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewMod
             default:
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Fragment page = getSupportFragmentManager().findFragmentByTag(getString(R.string.checkout));
+        ((CheckoutFragment) page).getPatronID();
     }
 }

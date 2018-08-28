@@ -1,11 +1,15 @@
 package com.follett.fsc.mobile.circdesk.viewmodel;
 
 import android.app.Application;
+import android.content.Intent;
 
 import com.follett.fsc.mobile.circdesk.data.model.ScanPatron;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
+import com.follett.fsc.mobile.circdesk.view.activity.PatronListActivity;
 import com.follett.fsc.mobile.circdesk.view.base.BaseViewModel;
-import com.google.gson.Gson;
+
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 public class CheckoutViewModel extends BaseViewModel {
 
@@ -38,38 +42,43 @@ public class CheckoutViewModel extends BaseViewModel {
 
     public ScanPatron getScanPatron() {
 
-        try {
+        /*try {
             scanPatron = new Gson().fromJson(mAppRemoteRepository.scanPatronString, ScanPatron.class);
             return scanPatron;
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        /*mAppRemoteRepository.getLoginResult()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribeWith(new Observer<LoginResults>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
+        }*/
+        mAppRemoteRepository.getScanPatron().subscribeWith(new Observer<ScanPatron>() {
+            @Override
+            public void onSubscribe(Disposable d) {
 
-                    }
+            }
 
-                    @Override
-                    public void onNext(LoginResults value) {
+            @Override
+            public void onNext(ScanPatron value) {
+                try {
+                    scanPatron = value;
+                    Intent patronListIntent = new Intent(mApplication, PatronListActivity.class);
+                    patronListIntent.putExtra("scanPatron", scanPatron);
+                    mApplication.startActivity(patronListIntent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
 
-                    }
+            }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                    }
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
 
-                    @Override
-                    public void onComplete() {
+            @Override
+            public void onComplete() {
 
-                    }
-                });
-*/
+            }
+        });
+
         return null;
     }
 

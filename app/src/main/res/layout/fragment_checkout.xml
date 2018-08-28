@@ -14,10 +14,79 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <RelativeLayout
+            android:id="@+id/patronDetailLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/checkoutPatronImg"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/checkin" />
+
+            <LinearLayout
+                android:id="@+id/checkoutPatronLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/checkoutPatronImg"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/checkoutPatronName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="patronName" />
+
+                <TextView
+                    android:id="@+id/checkoutPatronType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="patronName" />
+
+                <TextView
+                    android:id="@+id/checkoutPatronID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="patronName" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/checkoutCloseBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/close" />
+
+            <TextView
+                android:id="@+id/checkedOutCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/checkoutPatronImg"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:text="Checkout Out:1" />
+
+            <TextView
+                android:id="@+id/overdue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/checkoutPatronImg"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="30dp"
+                android:text="Overdue:0" />
+        </RelativeLayout>
+
         <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:id="@+id/card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/patronDetailLayout"
             card_view:cardCornerRadius="2dp"
             card_view:cardElevation="10dp"
             card_view:cardUseCompatPadding="true">
@@ -77,7 +146,6 @@
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
-
 
         <include
             layout="@layout/library_resource"
