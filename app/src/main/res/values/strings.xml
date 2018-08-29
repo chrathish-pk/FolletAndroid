@@ -76,7 +76,7 @@
 
     //Additional Info and More Details
 
-    <string name="item_description">Description</string>
+    <string name="item_description">Description </string>
     <string name="item_availability">Availability</string>
     <string name="item_rating">Rating : </string>
     <string name="item_status">Status</string>
