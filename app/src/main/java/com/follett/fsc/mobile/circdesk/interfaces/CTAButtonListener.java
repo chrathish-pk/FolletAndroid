@@ -6,8 +6,6 @@
 
 package com.follett.fsc.mobile.circdesk.interfaces;
 
-public interface LoginNavigator {
-    public void loginOnClick();
-    public void navigationToNextFragment();
-    
+public interface CTAButtonListener {
+    public void ctaButtonOnClick();
 }

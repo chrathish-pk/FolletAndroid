@@ -8,14 +8,16 @@ package com.follett.fsc.mobile.circdesk.view.fragment;
 
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentBasicLayoutBinding;
-import com.follett.fsc.mobile.circdesk.interfaces.BasicNavigator;
+import com.follett.fsc.mobile.circdesk.interfaces.CTAButtonListener;
 import com.follett.fsc.mobile.circdesk.interfaces.NavigationListener;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.view.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.viewmodel.BasicViewModel;
 
+import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,7 +28,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
-public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, BasicViewModel> implements BasicNavigator {
+public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, BasicViewModel> implements CTAButtonListener {
     
     private FragmentBasicLayoutBinding mBasicLayoutBinding;
     
@@ -74,10 +76,10 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
     }
     
     @Override
-    public void connectOnClick() {
+    public void ctaButtonOnClick() {
         
         if (AppUtils.getInstance()
-                .isEditTextEmpty(mBasicLayoutBinding.libraryEditText)) {
+                .isEditTextNotEmpty(mBasicLayoutBinding.libraryEditText)) {
             savePreference();
         } else {
             AppUtils.getInstance()
@@ -85,15 +87,8 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
         }
     }
     
-    @Override
-    public void asyncTaskResult(boolean result) {
-        if (result) {
-            mBasicViewModel.getVersion();
-        }
-    }
     
-    @Override
-    public void displayErrorDialog(final String message) {
+    public void displayErrorToast(final String message) {
         getBaseActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -103,28 +98,30 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
         });
     }
     
-    @Override
-    public void navigationToNextFragment(int fragmentNumber) {
-        navigationListener.onNavigation(0);
-    }
     
     private void savePreference() {
         AppUtils.getInstance()
                 .hideKeyBoard(getBaseActivity(), mBasicLayoutBinding.libraryEditText);
+        if (!isNetworkConnected()) {
+            AppUtils.getInstance()
+                    .showNoInternetAlertDialog(getBaseActivity());
+            return;
+        }
+        
         mBasicViewModel.savePreference(mBasicLayoutBinding.libraryEditText.getText()
                 .toString()
                 .trim(), null, null);
     }
     
     private void inItView(final FragmentBasicLayoutBinding basicLayoutBinding) {
-        
+        basicLayoutBinding.setBasicListener(this);
         navigationListener = (NavigationListener) getBaseActivity();
         basicLayoutBinding.libraryEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 
                 if (i == EditorInfo.IME_ACTION_DONE) {
-                    connectOnClick();
+                    ctaButtonOnClick();
                 }
                 return true;
             }
@@ -151,7 +148,25 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
             
             }
         });
+        
+        mBasicViewModel.getStatus()
+                .observe(this, new Observer<Status>() {
+                    @Override
+                    public void onChanged(@Nullable Status status) {
+                        handleStatus(status);
+                    }
+                });
     }
     
+    private void handleStatus(Status status) {
+        
+        if (Status.SUCCESS.equals(status)) {
+            navigationListener.onNavigation(0);
+        } else if (Status.ERROR.equals(status)) {
+            displayErrorToast(getString(R.string.ssl_error));
+        } else if (Status.SCHOOL_NOT_SETUP_ERROR.equals(status)) {
+            displayErrorToast(getString(R.string.error_sorry_school_not_setup));
+        }
+    }
     
 }
