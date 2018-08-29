@@ -22,7 +22,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 public class APIClient {
 
@@ -39,9 +38,10 @@ public class APIClient {
             retrofit = new Retrofit.Builder().addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
                     .baseUrl(baseUrl)
                     .client(okHttpClient)
-                    .addConverterFactory(new JsonAndXmlConverters.QualifiedTypeConverterFactory(
+                    .addConverterFactory(GsonConverterFactory.create())
+                    /*.addConverterFactory(new JsonAndXmlConverters.QualifiedTypeConverterFactory(
                             GsonConverterFactory.create(),
-                            SimpleXmlConverterFactory.create()))
+                            SimpleXmlConverterFactory.create()))*/
                     .build();
         }
         Log.d("TAG", "Response = " + retrofit);

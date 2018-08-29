@@ -46,6 +46,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
 
                     @Override
                     public void onNext(LoginResults value) {
+                        //AppConstants.SESSION_ID = value.getSessionID();
                         AppSharedPreferences.getInstance(mApplication).setString(AppSharedPreferences.KEY_SESSION_ID, value.getSessionID());
                         getNavigator().navigationToNextFragment();
                     }

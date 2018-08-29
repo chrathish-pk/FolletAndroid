@@ -60,7 +60,7 @@ public class PatronListActivity extends BaseActivity<CheckoutViewModel> implemen
 
     @Override
     public void OnItemClick(View view, int position) {
-        AppSharedPreferences.getInstance(this).setString(AppSharedPreferences.KEY_SELECTED_PATRON_ID, scanPatron.getPatronList().get(position).getPatronID());
+        AppSharedPreferences.getInstance(this).setString(AppSharedPreferences.KEY_SELECTED_BARCODE, scanPatron.getPatronList().get(position).getBarcode());
         finish();
     }
 }

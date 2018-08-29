@@ -35,6 +35,7 @@ dependencies {
 
     testImplementation "junit:junit:${junit_lib}"
     implementation "com.google.code.gson:gson:${gson_lib}"
+    implementation "com.squareup.retrofit2:converter-gson:${retrofit_lib}"
     implementation "com.squareup.retrofit2:retrofit:${retrofit_lib}"
     implementation "com.squareup.retrofit2:converter-gson:${retrofit_lib}"
 //    implementation "com.squareup.retrofit2:converter-simplexml:${retrofit_lib}"

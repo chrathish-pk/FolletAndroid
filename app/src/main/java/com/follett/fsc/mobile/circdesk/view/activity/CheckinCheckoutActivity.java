@@ -65,7 +65,7 @@ public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewMod
     @Override
     protected void onResume() {
         super.onResume();
-        if (!TextUtils.isEmpty(AppSharedPreferences.getInstance(this).getString(AppSharedPreferences.KEY_SELECTED_PATRON_ID))) {
+        if (!TextUtils.isEmpty(AppSharedPreferences.getInstance(this).getString(AppSharedPreferences.KEY_SELECTED_BARCODE))) {
             Fragment fragment = adapter.getItem(1);
             ((CheckoutFragment) fragment).getPatronID();
         }

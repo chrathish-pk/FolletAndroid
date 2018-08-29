@@ -80,6 +80,12 @@
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="30dp"
                 android:text="Overdue:0" />
+
+           <!-- <view
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/rounded_border_edittext" />-->
+
         </RelativeLayout>
 
         <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -157,9 +163,47 @@
             android:visibility="gone" />
 
         <RelativeLayout
+            android:id="@+id/checkedoutDetailLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/checkoutPatronErrorMsg"
+            android:visibility="gone">
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/checkedoutLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/checkedoutName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/checkedoutType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/checkedoutDue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/checkedoutInfoBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="10dp"
+                android:src="@drawable/checkedout_info" />
 
         </RelativeLayout>
 
@@ -168,7 +212,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_margin="20dp" />
+            android:layout_margin="30dp" />
 
     </RelativeLayout>
 

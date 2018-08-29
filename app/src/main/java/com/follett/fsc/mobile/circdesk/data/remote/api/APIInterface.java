@@ -11,6 +11,7 @@ import com.follett.fsc.mobile.circdesk.data.model.LoginResults;
 import com.follett.fsc.mobile.circdesk.data.model.ScanPatron;
 import com.follett.fsc.mobile.circdesk.data.model.SiteResults;
 import com.follett.fsc.mobile.circdesk.data.model.Version;
+import com.follett.fsc.mobile.circdesk.data.model.checkout.CheckoutResult;
 
 import io.reactivex.Observable;
 import retrofit2.Call;
@@ -20,20 +21,10 @@ import retrofit2.http.Query;
 
 public interface APIInterface {
 
-//    @GET("/rest/v4/district/sites")
-//    Call<SiteResults> getSchoolList(@Query("contextName") String contextName, @Query("client") String client, @Query("productTypes") String productTypes,
-//            @Query("appID") String appID, @Query("device") String device, @Query("appVersion") String appVersion, @Query("appLanguage") String appLanguage);
-//
-
     @GET("/rest/version")
     @JsonAndXmlConverters.Xml
     Observable<Version> getVersion(@Query("contextName") String contextName, @Query("client") String client, @Query("appID") String appId, @Query("device")
             String device, @Query("appVersion") String appVersion, @Query("appLanguage") String appLanguage);
-
-//    @GET("/rest/v4/district/sites")
-//    Observable<SiteResults> getSchoolList(@Query("contextName") String contextName, @Query("client") String client, @Query("productTypes") String
-//            productTypes, @Query("appID") String appID, @Query("device") String device, @Query("appVersion") String appVersion, @Query("appLanguage") String
-//            appLanguage);
 
     @GET("/rest/v4/district/sites")
     @JsonAndXmlConverters.Xml
@@ -47,7 +38,7 @@ public interface APIInterface {
                                                      ("appVersion") String appVersion, @Query("appLanguage") String appLanguage);
 
     @Headers({
-            "Cookie: JSESSIONID=zsX-V2pbla8sCH4kTrpuSaqgWRAx_gOhRBq75gcX",
+            "Cookie: JSESSIONID=9A659y8TEgwy7Djw-2ad7oV1re7cTGSwhWyFeASg",
             "text/xml: gzip"
     })
     @GET("rest/v4/circulation/scanpatron")
@@ -56,7 +47,15 @@ public interface APIInterface {
                                          @Query("barcode") String barcode, @Query("appID") String appID, @Query("device") String device,
                                          @Query("appVersion") String appVersion, @Query("appLanguage") String appLanguage);
 
-
+    @Headers({
+            "Cookie: JSESSIONID=9A659y8TEgwy7Djw-2ad7oV1re7cTGSwhWyFeASg",
+            "Accept: application/json",
+            "text/xml: gzip"
+    })
+    @GET("rest/v4/circulation/checkout")
+    Observable<CheckoutResult> getCheckoutResult(@Query("contextName") String contextName, @Query("site") String site,
+                                                 @Query("barcode") String barcode, @Query("patronID") String patronID,
+                                                 @Query("collectionType") String collectionType, @Query("overrideBlocks") String overrideBlocks);
 
 
 }

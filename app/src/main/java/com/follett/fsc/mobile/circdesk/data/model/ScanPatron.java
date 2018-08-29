@@ -36,7 +36,7 @@ public class ScanPatron implements Serializable {
     private List<Patron> patronList;
     @SerializedName("patronNotes")
     @Expose
-    private List<Notes> patronNotes;
+    private List<Note> patronNotes;
     @SerializedName("success")
     @Expose
     private String success;
@@ -127,11 +127,11 @@ public class ScanPatron implements Serializable {
         this.patronList = patronList;
     }
 
-    public List<Notes> getPatronNotes() {
+    public List<Note> getPatronNotes() {
         return patronNotes;
     }
 
-    public void setPatronNotes(List<Notes> patronNotes) {
+    public void setPatronNotes(List<Note> patronNotes) {
         this.patronNotes = patronNotes;
     }
 

@@ -10,6 +10,7 @@ import com.follett.fsc.mobile.circdesk.data.model.LoginResults;
 import com.follett.fsc.mobile.circdesk.data.model.ScanPatron;
 import com.follett.fsc.mobile.circdesk.data.model.SiteResults;
 import com.follett.fsc.mobile.circdesk.data.model.Version;
+import com.follett.fsc.mobile.circdesk.data.model.checkout.CheckoutResult;
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIClient;
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
 
@@ -48,6 +49,12 @@ public class AppRemoteRepository implements AppRepository {
         return apiService.getScanPatron("dvpdt_devprodtest", "FDPSA", "COGNITE",
                 patronBarcodeID, "DestinyCirc", "Android_24_7.0_lge_lucye_LG-H870DS",
                 "1_Android", "English");
+    }
+
+    @Override
+    public Observable<CheckoutResult> getCheckoutResult(String patronID, String barcode) {
+        return apiService.getCheckoutResult("dvpdt_devprodtest", "FDPSA",
+                barcode, patronID, "0", "false");
     }
 
 
