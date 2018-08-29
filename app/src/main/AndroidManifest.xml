@@ -21,13 +21,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".view.activity.CheckinCheckoutActivity" />
-
         <activity android:name=".view.activity.PatronListActivity" />
-
         <activity android:name=".view.activity.HomeActivity" />
-
+        <activity android:name=".view.activity.TitleInfoActivity" />
+        <activity android:name=".view.activity.AdditionalInfoActivity"></activity>
     </application>
 
 </manifest>
