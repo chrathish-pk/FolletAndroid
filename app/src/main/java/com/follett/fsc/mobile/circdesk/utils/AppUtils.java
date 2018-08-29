@@ -4,14 +4,16 @@
 
 package com.follett.fsc.mobile.circdesk.utils;
 
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.interfaces.AlertDialogListener;
+import com.follett.fsc.mobile.circdesk.view.alert.Alert;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.text.TextUtils;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
@@ -20,9 +22,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.interfaces.AlertDialogListener;
 
 public class AppUtils {
     
@@ -35,37 +34,6 @@ public class AppUtils {
             mInstance = new AppUtils();
         }
         return mInstance;
-    }
-    
-    /**
-     * This method is used for checking internet reachable
-     *
-     * @param context application context
-     * @return if internet is available it return true else false.
-     */
-    public boolean isInternetReachable(Context context) {
-        if (context != null) {
-            ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            try {
-                if (connectivity == null) {
-                    return false;
-                } else {
-                    NetworkInfo[] info = connectivity.getAllNetworkInfo();
-                    if (info != null) {
-                        for (NetworkInfo anInfo : info) {
-                            if (anInfo.getState() == NetworkInfo.State.CONNECTED) {
-                                return true;
-                            }
-                        }
-                    }
-                }
-            } catch (NullPointerException e) {
-                e.printStackTrace();
-                return false;
-                
-            }
-        }
-        return false;
     }
     
     /**
@@ -232,9 +200,9 @@ public class AppUtils {
         Toast.makeText(context, !TextUtils.isEmpty(message) ? message + "" : "", Toast.LENGTH_SHORT)
                 .show();
     }
-
+    
     public boolean isEditTextNotEmpty(EditText editText) {
-
+        
         if (TextUtils.isEmpty(editText.getText()
                 .toString()
                 .trim())) {
@@ -242,24 +210,36 @@ public class AppUtils {
         }
         return true;
     }
-
-    public boolean isEditTextEmpty(EditText editText) {
-
-        if (TextUtils.isEmpty(editText.getText()
-                .toString()
-                .trim())) {
-            return false;
-        }
-        return true;
-    }
-
+    
     public String getEditTextValue(EditText editText) {
-
+        
         if (null != editText) {
             return editText.getText()
                     .toString()
                     .trim();
         }
         return "";
+    }
+    
+    public void showNoInternetAlertDialog(Activity activity) {
+        
+        DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        dialog.dismiss();
+                        break;
+                    default:
+                        break;
+                }
+                
+            }
+        };
+        if (null != activity) {
+            Alert.showDialog(activity, activity.getString(R.string.no_internet_title), activity.getString(R.string.no_internet_des), activity.getString(R
+                    .string.ok), onClickListener, null, onClickListener);
+        }
     }
 }

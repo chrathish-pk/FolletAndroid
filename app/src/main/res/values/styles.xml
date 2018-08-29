@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:windowBackground">@color/white</item>
     </style>
 
@@ -17,34 +17,42 @@
     </style>
 
     <style name="TabTheme" parent="Widget.Design.TabLayout">
-        <item name="android:minHeight">?attr/actionBarSize</item>
         <item name="tabIndicatorHeight">1dp</item>
         <item name="tabSelectedTextColor">@color/colorPrimary</item>
-        <item name="tabTextColor">@color/editTextBorderColor</item>
+        <item name="tabTextColor">@color/alto</item>
         <item name="tabMode">fixed</item>
+        <item name="tabTextAppearance">@style/Follett_Tab_Style</item>
     </style>
 
     <style name="EditTextTheme">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">45dp</item>
-        <item name="android:layout_marginEnd">16dp</item>
-        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_height">@dimen/layout_size_56</item>
+        <item name="android:layout_marginEnd">@dimen/layout_size_16</item>
+        <item name="android:layout_marginStart">@dimen/layout_size_16</item>
         <item name="android:background">@drawable/rounded_border_edittext</item>
-        <item name="android:padding">10dp</item>
+        <item name="android:padding">@dimen/layout_size_16</item>
         <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">@dimen/text_size_16sp</item>
+        <item name="android:fontFamily">@font/opensans_regular</item>
     </style>
 
     <style name="ActionButtonTheme">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginEnd">16dp</item>
-        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_height">@dimen/layout_size_36</item>
+        <item name="android:layout_marginEnd">@dimen/layout_size_16</item>
+        <item name="android:layout_marginStart">@dimen/layout_size_16</item>
         <item name="android:background">@drawable/text_view_bg_selector</item>
         <item name="android:gravity">center</item>
         <item name="android:padding">10dp</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@drawable/text_color_selector</item>
+        <item name="android:fontFamily">@font/opensans_regular</item>
+        <item name="android:textSize">@dimen/text_size_14sp</item>
     </style>
 
+    <style name="Follett_Tab_Style" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">@dimen/text_size_14sp</item>
+        <item name="android:fontFamily">@font/opensans_regular</item>
+    </style>
 
 </resources>

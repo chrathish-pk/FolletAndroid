@@ -13,6 +13,8 @@ import android.app.Application;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -66,6 +68,7 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mViewDataBinding.setVariable(getBindingVariable(), mViewModel);
+        mViewDataBinding.setLifecycleOwner(this);
         mViewDataBinding.executePendingBindings();
     }
     
@@ -76,8 +79,17 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     protected Application getBaseApplication() {
         return mActivity.getApplication();
     }
-
+    
     public T getViewDataBinding() {
         return mViewDataBinding;
+    }
+    
+    protected boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getBaseActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm != null) {
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        }
+        return false;
     }
 }

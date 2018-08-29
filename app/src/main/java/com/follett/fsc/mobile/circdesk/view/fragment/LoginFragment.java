@@ -8,15 +8,17 @@ package com.follett.fsc.mobile.circdesk.view.fragment;
 
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentLoginLayoutBinding;
-import com.follett.fsc.mobile.circdesk.interfaces.LoginNavigator;
+import com.follett.fsc.mobile.circdesk.interfaces.CTAButtonListener;
 import com.follett.fsc.mobile.circdesk.interfaces.NavigationListener;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import com.follett.fsc.mobile.circdesk.view.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.viewmodel.LoginViewModel;
 
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,7 +30,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
-public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, LoginViewModel> implements LoginNavigator {
+public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, LoginViewModel> implements CTAButtonListener {
     
     private static final String TAG = LoginFragment.class.getSimpleName();
     
@@ -78,7 +80,6 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        mLoginViewModel.setNavigator(this);
     }
     
     @Override
@@ -89,47 +90,36 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
     }
     
     @Override
-    public void loginOnClick() {
+    public void ctaButtonOnClick() {
         
-        if (AppUtils.getInstance()
-                .isEditTextEmpty(mLayoutBinding.useridEditText) && AppUtils.getInstance()
-                .isEditTextEmpty(mLayoutBinding.passwordEditText)) {
-            mLoginViewModel.getLoginResults(AppUtils.getInstance().getEditTextValue(mLayoutBinding.useridEditText),
-                    AppUtils.getInstance().getEditTextValue(mLayoutBinding.passwordEditText));
+        if (!AppUtils.getInstance()
+                .isEditTextNotEmpty(mLayoutBinding.useridEditText)) {
+            AppUtils.getInstance()
+                    .showShortToastMessages(getBaseActivity(), getString(R.string.username_empty_lebel));
+        } else if (!AppUtils.getInstance()
+                .isEditTextNotEmpty(mLayoutBinding.passwordEditText)) {
+            AppUtils.getInstance()
+                    .showShortToastMessages(getBaseActivity(), getString(R.string.password_empty_lebel));
+        } else {
+            if (!isNetworkConnected()) {
+                AppUtils.getInstance()
+                        .showNoInternetAlertDialog(getBaseActivity());
+                return;
+            }
+            
+            mLoginViewModel.getLoginResults(AppUtils.getInstance()
+                    .getEditTextValue(mLayoutBinding.useridEditText), AppUtils.getInstance()
+                    .getEditTextValue(mLayoutBinding.passwordEditText));
         }
     }
-    
-    @Override
-    public void navigationToNextFragment() {
-        navigationListener.onNavigation(2);
-    }
 
-//    @Override
-//    public void asyncTaskResult(boolean result) {
-//        if (result) {
-//            mLoginViewModel.getVersion();
-//        }
-//    }
-//
-//    @Override
-//    public void displayErrorDialog(final String message) {
-//        getBaseActivity().runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                AppUtils.getInstance()
-//                        .showShortToastMessages(getBaseActivity(), message);
-//            }
-//        });
-//    }
 
-//    @Override
-//    public void navigationToNextFragment(int fragmentNumber) {
-//        navigationListener.onNavigation(0);
-//    }
+
     
     
     private void inItView(final FragmentLoginLayoutBinding basicLayoutBinding) {
         
+        basicLayoutBinding.setLoginListener(this);
         basicLayoutBinding.passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
@@ -171,12 +161,21 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
             
             }
         });
+        mLoginViewModel.getStatus()
+                .observe(this, new Observer<Status>() {
+                    @Override
+                    public void onChanged(@Nullable Status status) {
+                        if (Status.SUCCESS.equals(status)) {
+                            navigationListener.onNavigation(2);
+                        }
+                    }
+                });
     }
     
     public void onTextChangedInEditText() {
         if (AppUtils.getInstance()
-                .isEditTextEmpty(mLayoutBinding.useridEditText) && AppUtils.getInstance()
-                .isEditTextEmpty(mLayoutBinding.passwordEditText)) {
+                .isEditTextNotEmpty(mLayoutBinding.useridEditText) && AppUtils.getInstance()
+                .isEditTextNotEmpty(mLayoutBinding.passwordEditText)) {
             mLayoutBinding.loginTextview.setSelected(true);
         } else {
             mLayoutBinding.loginTextview.setSelected(false);

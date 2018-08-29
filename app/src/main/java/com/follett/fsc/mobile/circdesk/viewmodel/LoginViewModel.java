@@ -8,8 +8,9 @@ import android.app.Application;
 
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.model.LoginResults;
+import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
-import com.follett.fsc.mobile.circdesk.interfaces.LoginNavigator;
+import com.follett.fsc.mobile.circdesk.interfaces.CTAButtonListener;
 import com.follett.fsc.mobile.circdesk.view.base.BaseViewModel;
 
 import io.reactivex.Observer;
@@ -17,7 +18,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class LoginViewModel extends BaseViewModel<LoginNavigator> {
+public class LoginViewModel extends BaseViewModel<CTAButtonListener> {
 
     private Application mApplication;
 
@@ -29,19 +30,16 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
         mAppRemoteRepository = appRemoteRepository;
     }
 
-    public void connectToServerOnClick() {
-        getNavigator().loginOnClick();
-    }
 
     public void getLoginResults(String userName, String password) {
-
+        setIsLoding(true);
         mAppRemoteRepository.getLoginResults(userName, password)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribeWith(new Observer<LoginResults>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        cancelProgressBar();
                     }
 
                     @Override
@@ -49,19 +47,23 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                         //AppConstants.SESSION_ID = value.getSessionID();
                         AppSharedPreferences.getInstance(mApplication).setString(AppSharedPreferences.KEY_SESSION_ID, value.getSessionID());
                         getNavigator().navigationToNextFragment();
+                        cancelProgressBar();
+                        setStatus(Status.SUCCESS);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        cancelProgressBar();
                     }
 
                     @Override
                     public void onComplete() {
-
+                        cancelProgressBar();
                     }
                 });
+    }
 
-
+    private void cancelProgressBar() {
+        setIsLoding(false);
     }
 }
