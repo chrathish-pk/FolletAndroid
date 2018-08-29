@@ -7,6 +7,8 @@
 package com.follett.fsc.mobile.circdesk.data.remote.api;
 
 
+import com.follett.fsc.mobile.circdesk.data.model.AdditionalInfo.AdditionalInfoRecord;
+import com.follett.fsc.mobile.circdesk.data.model.AdditionalInfo.TitleDetails;
 import com.follett.fsc.mobile.circdesk.data.model.LoginResults;
 import com.follett.fsc.mobile.circdesk.data.model.ScanPatron;
 import com.follett.fsc.mobile.circdesk.data.model.SiteResults;
@@ -47,4 +49,7 @@ public interface APIInterface {
                                          @Query("barcode") String barcode, @Query("appID") String appID, @Query("device") String device,
                                          @Query("appVersion") String appVersion, @Query("appLanguage") String appLanguage);
 
+    @GET("rest/v4/catalog/titledetail")
+    Observable<TitleDetails> getTitleDetails(@Query("contextName") String contextName, @Query("site") String site, @Query("client") String client,
+                                             @Query("bibID") String bibid, @Query("appID") String appID, @Query("device") String device, @Query("appVersion") String appVersion, @Query("appLanguage") String appLanguage);
 }

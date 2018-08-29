@@ -73,10 +73,9 @@
     <string name="password">Password</string>
     <string name="login">LOG IN</string>
 
-
     //Additional Info and More Details
 
-    <string name="item_description">Description </string>
+    <string name="item_description">Description</string>
     <string name="item_availability">Availability</string>
     <string name="item_rating">Rating : </string>
     <string name="item_status">Status</string>
@@ -87,7 +86,6 @@
     <string name="item_isbn">ISBN</string>
     <string name="item_target">Target</string>
     <string name="item_accelerated">Accelerated</string>
-
 
 
 </resources>

@@ -10,7 +10,7 @@
     <color name="white">#ffffff</color>
     <color name="editTextBgColor">#B4B4B4</color>
     <color name="bottom_bar">#F3F3F3</color>
-
+    <color name="dark_slate_blue">#202f72</color>
 
     <color name="black">#000000</color>
     <color name="blueLable">#2d5ba0</color>
