@@ -36,7 +36,7 @@ public class HomeActivity extends BaseActivity<HomeViewModel> {
         homeViewModel.getOpenTaskEvent().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                startActivity(new Intent(HomeActivity.this, CheckinCheckoutActivity.class));
+                startActivity(new Intent(HomeActivity.this, AdditionalInfoActivity.class));
             }
         });
 
