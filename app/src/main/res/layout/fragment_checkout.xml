@@ -14,205 +14,43 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:id="@+id/patronDetailLayout"
+        <include
+            android:id="@+id/patronDetailIncludeLayout"
+            layout="@layout/patron_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include
+            android:id="@+id/patronEntryIncludeLayout"
+            layout="@layout/patron_entry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/checkoutPatronImg"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_centerVertical="true"
-                android:src="@drawable/checkin" />
-
-            <LinearLayout
-                android:id="@+id/checkoutPatronLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/checkoutPatronImg"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/checkoutPatronName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="patronName" />
-
-                <TextView
-                    android:id="@+id/checkoutPatronType"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="patronName" />
-
-                <TextView
-                    android:id="@+id/checkoutPatronID"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="patronName" />
-
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/checkoutCloseBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/close" />
-
-            <TextView
-                android:id="@+id/checkedOutCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/checkoutPatronImg"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="30dp"
-                android:text="Checkout Out:1" />
-
-            <TextView
-                android:id="@+id/overdue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/checkoutPatronImg"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="30dp"
-                android:text="Overdue:0" />
-
-           <!-- <view
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@drawable/rounded_border_edittext" />-->
-
-        </RelativeLayout>
-
-        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/card_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/patronDetailLayout"
-            card_view:cardCornerRadius="2dp"
-            card_view:cardElevation="10dp"
-            card_view:cardUseCompatPadding="true">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
-                android:orientation="vertical">
-
-                <EditText
-                    android:id="@+id/patronEntry"
-                    style="@style/EditTextTheme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/findPatron"
-                    android:padding="15dp" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="20dp">
-
-                    <LinearLayout
-                        android:id="@+id/checkoutPatronSubmit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:background="@drawable/rounded_solid_blue"
-                        android:gravity="center">
-
-                        <TextView
-                            android:id="@+id/patronGoBtn"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:text="@string/Go"
-                            android:textColor="@color/white"
-                            android:textSize="18sp" />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="20dp"
-                        android:layout_toLeftOf="@+id/checkoutPatronSubmit"
-                        android:text="@string/scan"
-                        android:textColor="@color/blueLable"
-                        android:textSize="18sp" />
-
-                </RelativeLayout>
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
+            android:layout_below="@+id/patronDetailIncludeLayout" />
 
         <TextView
             android:id="@+id/checkoutPatronErrorMsg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/card_view"
+            android:layout_below="@+id/patronEntryIncludeLayout"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/opensans_regular"
             android:visibility="gone" />
 
-        <RelativeLayout
-            android:id="@+id/checkedoutDetailLayout"
+        <include
+            android:id="@+id/checkoutDetailIncludeLayout"
+            layout="@layout/checkout_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/checkoutPatronErrorMsg"
-            android:visibility="gone">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/checkedoutLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/checkedoutName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/checkedoutType"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/checkedoutDue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/checkedoutInfoBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:padding="10dp"
-                android:src="@drawable/checkedout_info" />
-
-        </RelativeLayout>
+            android:layout_below="@+id/checkoutPatronErrorMsg" />
 
         <include
+            android:id="@+id/libraryResourceIncludeLayout"
             layout="@layout/library_resource"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_margin="30dp" />
+            android:layout_margin="10dp" />
 
     </RelativeLayout>
 

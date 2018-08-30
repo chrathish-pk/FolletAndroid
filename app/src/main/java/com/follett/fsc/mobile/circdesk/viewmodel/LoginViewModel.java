@@ -46,7 +46,7 @@ public class LoginViewModel extends BaseViewModel<CTAButtonListener> {
                     public void onNext(LoginResults value) {
                         //AppConstants.SESSION_ID = value.getSessionID();
                         AppSharedPreferences.getInstance(mApplication).setString(AppSharedPreferences.KEY_SESSION_ID, value.getSessionID());
-                        getNavigator().navigationToNextFragment();
+                        //getNavigator().navigationToNextFragment();
                         cancelProgressBar();
                         setStatus(Status.SUCCESS);
                     }

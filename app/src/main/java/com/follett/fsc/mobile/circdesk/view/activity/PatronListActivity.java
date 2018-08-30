@@ -16,9 +16,7 @@ import com.follett.fsc.mobile.circdesk.viewmodel.CheckoutViewModel;
 
 public class PatronListActivity extends BaseActivity<CheckoutViewModel> implements ItemClickListener {
 
-    ActivityPatronListBinding activityPatronListBinding;
-    private CheckoutViewModel checkoutViewModel;
-    private PatronListAdapter patronListAdapter;
+    private ActivityPatronListBinding activityPatronListBinding;
     private ScanPatron scanPatron;
 
 
@@ -26,21 +24,17 @@ public class PatronListActivity extends BaseActivity<CheckoutViewModel> implemen
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityPatronListBinding = putContentView(R.layout.activity_patron_list);
-        //checkoutViewModel = new CheckoutViewModel(getApplication(), new AppRemoteRepository());
         activityPatronListBinding.patronListView.setLayoutManager(new LinearLayoutManager(this));
 
 
         if (getIntent().getExtras() != null) {
-            scanPatron = (ScanPatron) getIntent().getSerializableExtra("scanPatron");
+            scanPatron = (ScanPatron) getIntent().getSerializableExtra(getString(R.string.scanPatron));
         }
 
         setTitleBar(getString(R.string.selectPatron));
 
-        patronListAdapter = new PatronListAdapter(this, scanPatron, this);
+        PatronListAdapter patronListAdapter = new PatronListAdapter(this, scanPatron, this);
         activityPatronListBinding.patronListView.setAdapter(patronListAdapter);
-
-
-
 
        /* checkoutViewModel.getScanPatron().observe(this, new Observer<ScanPatron>() {
             @Override

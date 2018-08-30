@@ -7,7 +7,6 @@
 package com.follett.fsc.mobile.circdesk.data.remote.api;
 
 
-import com.follett.fsc.mobile.circdesk.data.model.AdditionalInfo.AdditionalInfoRecord;
 import com.follett.fsc.mobile.circdesk.data.model.AdditionalInfo.TitleDetails;
 import com.follett.fsc.mobile.circdesk.data.model.LoginResults;
 import com.follett.fsc.mobile.circdesk.data.model.ScanPatron;
@@ -23,16 +22,28 @@ import retrofit2.http.Query;
 
 public interface APIInterface {
 
+    @Headers({
+            "Accept: application/json",
+            "text/xml: gzip"
+    })
     @GET("/rest/version")
     @JsonAndXmlConverters.Xml
     Observable<Version> getVersion(@Query("contextName") String contextName, @Query("client") String client, @Query("appID") String appId, @Query("device")
             String device, @Query("appVersion") String appVersion, @Query("appLanguage") String appLanguage);
 
+    @Headers({
+            "Accept: application/json",
+            "text/xml: gzip"
+    })
     @GET("/rest/v4/district/sites")
     @JsonAndXmlConverters.Xml
     Call<SiteResults> getSchoolList(@Query("contextName") String contextName, @Query("client") String client, @Query("productTypes") String productTypes,
                                     @Query("appID") String appID, @Query("device") String device, @Query("appVersion") String appVersion, @Query("appLanguage") String appLanguage);
 
+    @Headers({
+            "Accept: application/json",
+            "text/xml: gzip"
+    })
     @GET("rest/v4/district/login")
     @JsonAndXmlConverters.Xml
     Observable<LoginResults> getLoginResults(@Query("contextName") String contextName, @Query("site") String site, @Query("client") String client, @Query
@@ -41,6 +52,7 @@ public interface APIInterface {
 
     @Headers({
             "Cookie: JSESSIONID=9A659y8TEgwy7Djw-2ad7oV1re7cTGSwhWyFeASg",
+            "Accept: application/json",
             "text/xml: gzip"
     })
     @GET("rest/v4/circulation/scanpatron")
@@ -61,6 +73,11 @@ public interface APIInterface {
 
 
     @GET("rest/v4/catalog/titledetail")
+    @Headers({
+            "Cookie: JSESSIONID=9A659y8TEgwy7Djw-2ad7oV1re7cTGSwhWyFeASg",
+            "Accept: application/json",
+            "text/xml: gzip"
+    })
     Observable<TitleDetails> getTitleDetails(@Query("contextName") String contextName, @Query("site") String site, @Query("client") String client,
                                              @Query("bibID") String bibid, @Query("appID") String appID, @Query("device") String device, @Query("appVersion") String appVersion, @Query("appLanguage") String appLanguage);
 }

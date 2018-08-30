@@ -7,7 +7,6 @@
             name="itemClickListener"
             type="com.follett.fsc.mobile.circdesk.interfaces.ItemClickListener" />
 
-
     </data>
 
 

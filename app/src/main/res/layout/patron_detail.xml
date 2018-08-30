@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ /*
+  ~  * Copyright (c) 2018 Follett. All rights reserved.
+  ~  */
+  -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:id="@+id/patronDetailLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:id="@+id/patronInfoLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/checkoutPatronImg"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerVertical="true" />
+
+            <LinearLayout
+                android:id="@+id/checkoutPatronLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/checkoutPatronImg"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/checkoutPatronName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/opensans_regular"
+                    android:textColor="@color/blueLabel"
+                    android:textSize="@dimen/text_size_20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/checkoutPatronType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/opensans_regular"
+                    android:textSize="@dimen/text_size_18sp" />
+
+                <TextView
+                    android:id="@+id/checkoutPatronID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/opensans_regular"
+                    android:textSize="@dimen/text_size_18sp" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/checkoutCloseBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/close" />
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/checkedOutCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/patronInfoLayout"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/opensans_regular"
+            android:textColor="@color/blueLabel"
+            android:textSize="@dimen/text_size_18sp" />
+
+        <TextView
+            android:id="@+id/overdue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/patronInfoLayout"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/opensans_regular"
+            android:textColor="@color/blueLabel"
+            android:textSize="@dimen/text_size_18sp" />
+
+    </RelativeLayout>
+
+</layout>

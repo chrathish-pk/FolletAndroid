@@ -56,6 +56,7 @@ public class CheckoutViewModel extends BaseViewModel {
             public void onNext(ScanPatron value) {
                 try {
                     scanPatron = value;
+
                 } catch (Exception e) {
                     FollettLog.d("Exception", e.getMessage());
                 }
@@ -72,6 +73,7 @@ public class CheckoutViewModel extends BaseViewModel {
                 String selectedPatronID = AppSharedPreferences.getInstance(mApplication).getString(AppSharedPreferences.KEY_SELECTED_BARCODE);
                 if (!TextUtils.isEmpty(selectedPatronID)) {
                     AppSharedPreferences.getInstance(mApplication).setString(AppSharedPreferences.KEY_BARCODE, selectedPatronID);
+                    AppSharedPreferences.getInstance(mApplication).setString(AppSharedPreferences.KEY_PATRON_ID, scanPatron.getPatronID());
                     AppSharedPreferences.getInstance(mApplication).setString(AppSharedPreferences.KEY_SELECTED_BARCODE, null);
                 }
                 updateUIListener.updateUI(scanPatron);
@@ -80,7 +82,7 @@ public class CheckoutViewModel extends BaseViewModel {
     }
 
     public void getCheckoutResult(String patronID, String barcode) {
-        mAppRemoteRepository.getCheckoutResult("861", "8").subscribeWith(new Observer<CheckoutResult>() {
+        mAppRemoteRepository.getCheckoutResult(patronID, barcode).subscribeWith(new Observer<CheckoutResult>() {
             @Override
             public void onSubscribe(Disposable d) {
 

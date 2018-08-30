@@ -9,7 +9,6 @@ package com.follett.fsc.mobile.circdesk.data.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-//@Root(name = "version")
 public class Version {
 
     @SerializedName("version")
@@ -24,13 +23,4 @@ public class Version {
         this.version = version;
     }
 
-    /*@Element(required = false) String version;
-    
-    public String getVersion() {
-        return version;
-    }
-    
-    public void setVersion(String version) {
-        this.version = version;
-    }*/
 }
