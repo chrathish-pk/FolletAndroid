@@ -40,10 +40,17 @@
     <string name="Go">GO</string>
     <string name="library">LIBRARY</string>
     <string name="resource">RESOURCE</string>
+    <string name="titleDetails">Title Details</string>
+    <string name="checkoutLabel">Checked Out: </string>
+    <string name="overdueLabel">Overdue: </string>
+
 
     <!--Patron Screen-->
     <string name="selectPatron">Select Patron</string>
     <string name="errorPatronEntry">You must enter a patron barcode or name.</string>
+    <string name="barcodeLabel">Barcode: </string>
+    <string name="homeRoomLabel">HomeRoom: </string>
+    <string name="gradeLevelLabel">Grade Level: </string>
 
 
     <!--Login-->
@@ -65,12 +72,33 @@
     <string name="error_load_prefs">Unable to load preferences.</string>
     <string name="school_noschoollist">No School Listed</string>
     <string name="dont_see_your_school">DON`T SEE YOUR SCHOOL?</string>
+    <string name="additional_info">ADDITIONAL INFO</string>
+
     <string name="user_id">User ID</string>
     <string name="password">Password</string>
     <string name="login">LOG IN</string>
 
+    <!-- Additional Info and More Details-->
+    <string name="item_description">Description</string>
+    <string name="item_availability">Availability</string>
+    <string name="item_rating">Rating : </string>
+    <string name="item_status">Status</string>
+    <string name="item_titleby">Titles By</string>
+    <string name="item_published">Published</string>
+    <string name="item_edition">Edition</string>
+    <string name="item_format">Format</string>
+    <string name="item_isbn">ISBN</string>
+    <string name="item_target">Target</string>
+    <string name="item_accelerated">Accelerated</string>
+
+    <!-- Intent data passing strings-->
+    <string name="scanPatron">scanPatron</string>
 
 
+    <!-- Log Error Message -->
+    <string name="error">Error</string>
+    <string name="scanPatronError">Scan patron error</string>
+    <string name="noDataFound">no data found from api result</string>
 
 
 </resources>

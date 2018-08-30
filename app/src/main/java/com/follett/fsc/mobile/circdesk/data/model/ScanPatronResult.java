@@ -1,7 +1,11 @@
 
-package com.follett.fsc.mobile.circdesk.data.model;
+/*
+ *
+ *  * Copyright (c) 2018 Follett. All rights reserved.
+ *
+ */
 
-import android.os.Parcel;
+package com.follett.fsc.mobile.circdesk.data.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -40,19 +44,6 @@ public class ScanPatronResult implements Serializable {
     @SerializedName("textbookOverdues")
     @Expose
     private String textbookOverdues;
-
-    protected ScanPatronResult(Parcel in) {
-        assetCheckouts = in.readString();
-        assetOverdues = in.readString();
-        libraryCheckouts = in.readString();
-        libraryOverdues = in.readString();
-        messages = in.readString();
-        patronNotes = in.readString();
-        success = in.readString();
-        textbookCheckouts = in.readString();
-        textbookOverdues = in.readString();
-    }
-
 
     public String getAssetCheckouts() {
         return assetCheckouts;

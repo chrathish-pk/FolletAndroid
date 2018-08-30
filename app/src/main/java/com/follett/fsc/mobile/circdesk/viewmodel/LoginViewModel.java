@@ -4,7 +4,6 @@
 package com.follett.fsc.mobile.circdesk.viewmodel;
 
 
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.model.LoginResults;
 import com.follett.fsc.mobile.circdesk.data.model.LoginResultsData;
 import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
@@ -45,7 +44,7 @@ public class LoginViewModel extends BaseViewModel<CTAButtonListener> {
                     }
                     
                     @Override
-                    public void onNext(LoginResults loginResults) {
+                    public void onNext(LoginResults loginResults) { // KEY_SESSION_ID
                         cancelProgressBar();
                         final LoginResultsData loginResultsData = loginResults.getLoginResults();
                         if (loginResultsData.getSuccess() != null && loginResultsData

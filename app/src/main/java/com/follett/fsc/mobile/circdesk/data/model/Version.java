@@ -6,19 +6,21 @@
 
 package com.follett.fsc.mobile.circdesk.data.model;
 
-import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Root;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-@Root(name = "version")
 public class Version {
-    
-    @Element(required = false) String version;
-    
+
+    @SerializedName("version")
+    @Expose
+    private String version;
+
     public String getVersion() {
         return version;
     }
-    
+
     public void setVersion(String version) {
         this.version = version;
     }
+
 }

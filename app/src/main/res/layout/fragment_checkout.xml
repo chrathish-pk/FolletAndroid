@@ -14,77 +14,43 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/card_view"
+        <include
+            android:id="@+id/patronDetailIncludeLayout"
+            layout="@layout/patron_detail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            card_view:cardCornerRadius="2dp"
-            card_view:cardElevation="10dp"
-            card_view:cardUseCompatPadding="true">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
-                android:orientation="vertical">
-
-                <EditText
-                    android:id="@+id/patronEntry"
-                    style="@style/EditTextTheme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/findPatron"
-                    android:padding="15dp" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="20dp">
-
-                    <LinearLayout
-                        android:id="@+id/checkoutPatronSubmit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:background="@drawable/rounded_solid_blue"
-                        android:gravity="center">
-
-                        <TextView
-                            android:id="@+id/patronGoBtn"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:text="@string/Go"
-                            android:textColor="@color/white"
-                            android:textSize="18sp" />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="20dp"
-                        android:layout_toLeftOf="@+id/checkoutPatronSubmit"
-                        android:text="@string/scan"
-                        android:textColor="@color/blueLable"
-                        android:textSize="18sp" />
-
-                </RelativeLayout>
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
+            android:layout_height="wrap_content" />
 
         <include
+            android:id="@+id/patronEntryIncludeLayout"
+            layout="@layout/patron_entry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/patronDetailIncludeLayout" />
+
+        <TextView
+            android:id="@+id/checkoutPatronErrorMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/patronEntryIncludeLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/opensans_regular"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/checkoutDetailIncludeLayout"
+            layout="@layout/checkout_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/checkoutPatronErrorMsg" />
+
+        <include
+            android:id="@+id/libraryResourceIncludeLayout"
             layout="@layout/library_resource"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_margin="20dp" />
+            android:layout_margin="10dp" />
 
     </RelativeLayout>
 
