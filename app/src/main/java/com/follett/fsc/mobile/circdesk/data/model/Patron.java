@@ -1,7 +1,11 @@
 
-package com.follett.fsc.mobile.circdesk.data.model;
+/*
+ *
+ *  * Copyright (c) 2018 Follett. All rights reserved.
+ *
+ */
 
-import android.os.Parcel;
+package com.follett.fsc.mobile.circdesk.data.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -22,13 +26,6 @@ public class Patron implements Serializable{
     @SerializedName("patronPictureFileName")
     @Expose
     private String patronPictureFileName;
-
-    protected Patron(Parcel in) {
-        barcode = in.readString();
-        lastFirstMiddleName = in.readString();
-        patronID = in.readString();
-        patronPictureFileName = in.readString();
-    }
 
     public String getBarcode() {
         return barcode;

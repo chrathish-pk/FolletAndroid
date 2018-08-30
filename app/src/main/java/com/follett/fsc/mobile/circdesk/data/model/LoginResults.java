@@ -6,42 +6,67 @@
 
 package com.follett.fsc.mobile.circdesk.data.model;
 
-import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Root;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-@Root(name = "loginResults")
 public class LoginResults {
 
-    /*@Element(name = "firstName")
-    private String firstName;*/
+    @SerializedName("firstName")
+    @Expose
+    private String firstName;
+    @SerializedName("guest")
+    @Expose
+    private String guest;
+    @SerializedName("invalidUsernameOrPassword")
+    @Expose
+    private String invalidUsernameOrPassword;
+    @SerializedName("lastName")
+    @Expose
+    private String lastName;
+    @SerializedName("listID")
+    @Expose
+    private String listID;
+    @SerializedName("listSize")
+    @Expose
+    private String listSize;
+    @SerializedName("lockedOut")
+    @Expose
+    private String lockedOut;
+    @SerializedName("middleName")
+    @Expose
+    private String middleName;
+    @SerializedName("myListsTotalSize")
+    @Expose
+    private String myListsTotalSize;
+    @SerializedName("numberOfMyLists")
+    @Expose
+    private String numberOfMyLists;
+    @SerializedName("passwordExpired")
+    @Expose
+    private String passwordExpired;
+    @SerializedName("passwordNotSecure")
+    @Expose
+    private String passwordNotSecure;
+    @SerializedName("permissions")
+    @Expose
+    private Permissions permissions;
+    @SerializedName("sessionID")
+    @Expose
+    private String sessionID;
+    @SerializedName("sessionTimeoutInMillis")
+    @Expose
+    private String sessionTimeoutInMillis;
+    @SerializedName("success")
+    @Expose
+    private String success;
 
-    @Element(name = "guest") private String guest;
+    public String getFirstName() {
+        return firstName;
+    }
 
-    @Element(name = "invalidUsernameOrPassword") private String invalidUsernameOrPassword;
-
-    @Element(name = "lastName") private String lastName;
-
-    @Element(name = "listID") private String listID;
-
-    @Element(name = "listSize") private String listSize;
-
-    @Element(name = "lockedOut") private String lockedOut;
-
-    @Element(name = "middleName") private String middleName;
-
-    @Element(name = "myListsTotalSize") private String myListsTotalSize;
-
-    @Element(name = "numberOfMyLists") private String numberOfMyLists;
-
-    @Element(name = "passwordExpired") private String passwordExpired;
-
-    @Element(name = "passwordNotSecure") private String passwordNotSecure;
-
-    @Element(name = "sessionID") private String sessionID;
-
-    @Element(name = "sessionTimeoutInMillis") private String sessionTimeoutInMillis;
-
-    @Element(name = "success") private String success;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
     public String getGuest() {
         return guest;
@@ -131,6 +156,14 @@ public class LoginResults {
         this.passwordNotSecure = passwordNotSecure;
     }
 
+    public Permissions getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(Permissions permissions) {
+        this.permissions = permissions;
+    }
+
     public String getSessionID() {
         return sessionID;
     }
@@ -154,4 +187,6 @@ public class LoginResults {
     public void setSuccess(String success) {
         this.success = success;
     }
+
+
 }

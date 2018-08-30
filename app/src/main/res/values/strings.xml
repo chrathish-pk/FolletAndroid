@@ -41,11 +41,16 @@
     <string name="library">LIBRARY</string>
     <string name="resource">RESOURCE</string>
     <string name="titleDetails">Title Details</string>
+    <string name="checkoutLabel">Checked Out: </string>
+    <string name="overdueLabel">Overdue: </string>
 
 
     <!--Patron Screen-->
     <string name="selectPatron">Select Patron</string>
     <string name="errorPatronEntry">You must enter a patron barcode or name.</string>
+    <string name="barcodeLabel">Barcode: </string>
+    <string name="homeRoomLabel">HomeRoom: </string>
+    <string name="gradeLevelLabel">Grade Level: </string>
 
 
     <!--Login-->
@@ -73,8 +78,7 @@
     <string name="password">Password</string>
     <string name="login">LOG IN</string>
 
-    //Additional Info and More Details
-
+    <!-- Additional Info and More Details-->
     <string name="item_description">Description</string>
     <string name="item_availability">Availability</string>
     <string name="item_rating">Rating : </string>
@@ -86,6 +90,15 @@
     <string name="item_isbn">ISBN</string>
     <string name="item_target">Target</string>
     <string name="item_accelerated">Accelerated</string>
+
+    <!-- Intent data passing strings-->
+    <string name="scanPatron">scanPatron</string>
+
+
+    <!-- Log Error Message -->
+    <string name="error">Error</string>
+    <string name="scanPatronError">Scan patron error</string>
+    <string name="noDataFound">no data found from api result</string>
 
 
 </resources>

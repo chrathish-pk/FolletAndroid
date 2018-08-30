@@ -1,4 +1,10 @@
 
+/*
+ *
+ *  * Copyright (c) 2018 Follett. All rights reserved.
+ *
+ */
+
 package com.follett.fsc.mobile.circdesk.data.model;
 
 import com.google.gson.annotations.Expose;
@@ -20,4 +26,5 @@ public class PatronList implements Serializable{
     public void setPatron(List<Patron> patron) {
         this.patron = patron;
     }
+
 }
