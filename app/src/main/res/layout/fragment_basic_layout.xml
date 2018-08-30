@@ -48,6 +48,7 @@
             android:hint="@string/library_label"
             android:imeOptions="actionDone"
             android:singleLine="true"
+            android:text="@{viewModel.storedSchoolUri}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>

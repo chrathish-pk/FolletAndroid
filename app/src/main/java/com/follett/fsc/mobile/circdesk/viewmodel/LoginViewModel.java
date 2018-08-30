@@ -4,7 +4,9 @@
 package com.follett.fsc.mobile.circdesk.viewmodel;
 
 
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.model.LoginResults;
+import com.follett.fsc.mobile.circdesk.data.model.LoginResultsData;
 import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.interfaces.CTAButtonListener;
@@ -16,6 +18,8 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.SESSION_ID;
 
 public class LoginViewModel extends BaseViewModel<CTAButtonListener> {
     
@@ -38,13 +42,18 @@ public class LoginViewModel extends BaseViewModel<CTAButtonListener> {
                 .subscribeWith(new Observer<LoginResults>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        cancelProgressBar();
                     }
                     
                     @Override
-                    public void onNext(LoginResults value) {
+                    public void onNext(LoginResults loginResults) {
                         cancelProgressBar();
-                        setStatus(Status.SUCCESS);
+                        final LoginResultsData loginResultsData = loginResults.getLoginResults();
+                        if (loginResultsData.getSuccess() != null && loginResultsData
+                                .getSuccess().equalsIgnoreCase("true")) {
+                            AppSharedPreferences.getInstance(mApplication).setString(SESSION_ID,
+                                    loginResultsData.getSessionID());
+                            setStatus(Status.SUCCESS);
+                        }
                     }
                     
                     @Override

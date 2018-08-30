@@ -46,7 +46,7 @@ public abstract class BaseViewModel<N> extends ViewModel {
     }
     
     public void setStatus(Status status) {
-        mStatus.setValue(status);
+        mStatus.postValue(status);
     }
     
     

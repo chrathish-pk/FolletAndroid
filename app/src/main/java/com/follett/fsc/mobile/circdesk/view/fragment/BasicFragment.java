@@ -8,6 +8,7 @@ package com.follett.fsc.mobile.circdesk.view.fragment;
 
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentBasicLayoutBinding;
@@ -27,6 +28,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
+
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.SERVER_URI_VALUE;
 
 public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, BasicViewModel> implements CTAButtonListener {
     
@@ -116,6 +119,8 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
     private void inItView(final FragmentBasicLayoutBinding basicLayoutBinding) {
         basicLayoutBinding.setBasicListener(this);
         navigationListener = (NavigationListener) getBaseActivity();
+        mBasicViewModel.setStoredSchoolUri(AppSharedPreferences.getInstance(getBaseActivity())
+                .getString(SERVER_URI_VALUE));
         basicLayoutBinding.libraryEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {

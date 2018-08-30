@@ -6,6 +6,7 @@
 
 package com.follett.fsc.mobile.circdesk.data.remote.repository;
 
+import com.follett.fsc.mobile.circdesk.common.AppConstants;
 import com.follett.fsc.mobile.circdesk.data.model.LoginResults;
 import com.follett.fsc.mobile.circdesk.data.model.ScanPatron;
 import com.follett.fsc.mobile.circdesk.data.model.SiteResults;
@@ -70,13 +71,14 @@ public class AppRemoteRepository implements AppRepository {
 
     @Override
     public Observable<SiteResults> getSchoolList() {
-        return null;
+        return  apiService.getSchoolList("dvpdt_devprodtest", "COGNITE", "library,textbook,asset", AppConstants.APP_ID, AppConstants
+                .CLIENT_NAME, "1_Android", AppConstants.APP_LANGUAGE);
     }
-
+    
     @Override
     public Observable<LoginResults> getLoginResults(String userName, String password) {
-        return apiService.getLoginResults("dvpdt_devprodtest", "FDPSA", "COGNITE", password, userName, "DestinyCirc", "Android_24_7.0_lge_lucye_LG-H870DS",
-                "1_Android", "English");
+        return apiService.getLoginResults("dvpdt_devprodtest", "FDPSA", userName, password);
+        
     }
 
 

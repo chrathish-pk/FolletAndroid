@@ -1,47 +1,30 @@
 package com.follett.fsc.mobile.circdesk.view.fragment;
 
+import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.common.AppConstants;
-import com.follett.fsc.mobile.circdesk.data.model.SiteRecord;
 import com.follett.fsc.mobile.circdesk.data.model.SiteResults;
-import com.follett.fsc.mobile.circdesk.data.remote.api.APIClient;
-import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
+import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
+import com.follett.fsc.mobile.circdesk.databinding.FragmentSchoolListBinding;
+import com.follett.fsc.mobile.circdesk.interfaces.CTAButtonListener;
 import com.follett.fsc.mobile.circdesk.interfaces.NavigationListener;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import com.follett.fsc.mobile.circdesk.view.adapter.SchoolListAdapter;
+import com.follett.fsc.mobile.circdesk.view.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.viewmodel.SchoolListViewModel;
 
-import android.app.Fragment;
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class SchoolListFragment extends Fragment {
+public class SchoolListFragment extends BaseFragment<FragmentSchoolListBinding, SchoolListViewModel> implements CTAButtonListener {
     
     private static final String TAG = LoginFragment.class.getSimpleName();
     
-    public static final String BASE_URL = "https://devprodtest.follettdestiny.com";
-    
-    private LayoutInflater mInflater;
-    List<SiteRecord> schoolList;
-    RecyclerView schoolListView;
-    SchoolListAdapter schoolListAdapter;
-    TextView noSchoolListText;
-    ProgressBar schoolListProgressBar;
+    private SchoolListViewModel mViewModel;
     
     private NavigationListener navigationListener;
     
@@ -63,60 +46,41 @@ public class SchoolListFragment extends Fragment {
         }
     }
     
-    /**
-     * base string used in Logger TAG building
-     */
-    
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public int getLayoutId() {
+        return R.layout.fragment_school_list;
+    }
+    
+    @Override
+    public SchoolListViewModel getViewModel() {
+        mViewModel = new SchoolListViewModel(getBaseActivity().getApplication(), new AppRemoteRepository());
+        return mViewModel;
+    }
+    
+    @Override
+    public int getBindingVariable() {
+        return BR.viewModel;
+    }
+    
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        FragmentSchoolListBinding binding = getViewDataBinding();
+        inItView(binding);
+    }
+    
+    public void inItView(final FragmentSchoolListBinding lBinding) {
+    
+        lBinding.setCtaListener(this);
+        lBinding.schoolRecyclerview.setLayoutManager(new LinearLayoutManager(getBaseActivity()));
         
-        this.mInflater = inflater;
-        View view = this.mInflater.inflate(R.layout.fragment_school_list, container, false);
-        
-        APIInterface apiService = APIClient.getClient(BASE_URL)
-                .create(APIInterface.class);
-        
-        schoolListView = (RecyclerView) view.findViewById(R.id.schoolRecyclerview);
-        schoolListView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        noSchoolListText = (TextView) view.findViewById(R.id.noschoollist);
-        schoolListProgressBar = (ProgressBar) view.findViewById(R.id.schoollist_progressbar);
-        schoolListProgressBar.setVisibility(View.VISIBLE);
-        Call<SiteResults> call = apiService.getSchoolList("dvpdt_devprodtest", "COGNITE", "library,textbook,asset", AppConstants.APP_ID, AppConstants
-                .CLIENT_NAME, "1_Android", AppConstants.APP_LANGUAGE);
-        call.enqueue(new Callback<SiteResults>() {
+        mViewModel.siteResult.observe(this, new Observer<SiteResults>() {
             @Override
-            public void onResponse(Call<SiteResults> call, Response<SiteResults> response) {
-                if (response.body() != null) {
-                    SchoolListFragment.this.schoolList = response.body().sites;
-                    Log.d("TAG", "Response = " + SchoolListFragment.this.schoolList);
-                    if (SchoolListFragment.this.schoolList != null) {
-                        schoolListAdapter = new SchoolListAdapter(getActivity(), SchoolListFragment.this.schoolList);
-                        schoolListView.setAdapter(schoolListAdapter);
-                        schoolListProgressBar.setVisibility(View.INVISIBLE);
-                        
-                    } else {
-                        noSchoolListText.setVisibility(View.VISIBLE);
-                        schoolListProgressBar.setVisibility(View.INVISIBLE);
-                        
-                    }
-                } else {
-                    Toast.makeText(getActivity(), "Internal server error", Toast.LENGTH_LONG)
-                            .show();
-                    noSchoolListText.setVisibility(View.VISIBLE);
-                    schoolListProgressBar.setVisibility(View.INVISIBLE);
-                    
-                }
-            }
-            
-            @Override
-            public void onFailure(Call<SiteResults> call, Throwable t) {
-                Log.d("TAG", "Response = " + t.toString());
+            public void onChanged(@Nullable SiteResults siteResults) {
+                SchoolListAdapter adapter = new SchoolListAdapter(getBaseActivity(), siteResults.sites);
+                lBinding.schoolRecyclerview.setAdapter(adapter);
             }
         });
-        
-        
-        return view;
     }
     
     @Override
@@ -124,38 +88,10 @@ public class SchoolListFragment extends Fragment {
         navigationListener.setToolBarTitle(getActivity().getString(R.string.connect_your_school_label));
         super.onDetach();
     }
+    
+    @Override
+    public void ctaButtonOnClick() {
+        getBaseActivity().onBackPressed();
+    }
 }
 
-//    AppRemoteRepository appRemoteRepository = new AppRemoteRepository();
-//        appRemoteRepository.getSchoolList()
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.io())
-//                .subscribeWith(new DisposableObserver<SiteResults>() {
-//@Override
-//public void onNext(SiteResults value) {
-////                        if (response.body() != null) {
-//        SchoolListFragment.this.schoolList = value.sites;
-//        Log.d("TAG", "Response = " + SchoolListFragment.this.schoolList);
-//        if (SchoolListFragment.this.schoolList != null) {
-//        schoolListAdapter = new SchoolListAdapter(getActivity(), SchoolListFragment.this.schoolList);
-//        schoolListView.setAdapter(schoolListAdapter);
-//        schoolListProgressBar.setVisibility(View.INVISIBLE);
-//
-//        } else {
-//        noSchoolListText.setVisibility(View.VISIBLE);
-//        schoolListProgressBar.setVisibility(View.INVISIBLE);
-//
-//        }
-//        }
-//
-//@Override
-//public void onError(Throwable e) {
-//
-//        }
-//
-//@Override
-//public void onComplete() {
-//
-//        }
-//        });
-//

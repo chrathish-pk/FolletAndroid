@@ -25,6 +25,8 @@ public class AppSharedPreferences {
     public static final String KEY_SERVER_PORT = "serverPort";
     public static final String KEY_SERVER_SSL_PORT = "serverSSLPort";
     public static final String KEY_CONTEXT_NAME = "contextName";
+    public static final String SERVER_URI_VALUE = "server_uri_value";
+    
     public static final String KEY_SITE_SHORT_NAME = "site";
     public static final String KEY_SITE_NAME = "siteName";
     public static final String KEY_USERNAME = "username";
@@ -43,6 +45,8 @@ public class AppSharedPreferences {
     public static final String KEY_PATRON_NAME = "patronName";
     
     public static final String KEY_PERMISSIONS = "permissions";
+    
+    public static final String SESSION_ID = "sessionid";
     
     
     private static AppSharedPreferences mSessionInstance = null;
