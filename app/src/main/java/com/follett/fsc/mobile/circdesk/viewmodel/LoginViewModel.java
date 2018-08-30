@@ -4,8 +4,8 @@
 package com.follett.fsc.mobile.circdesk.viewmodel;
 
 
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.model.LoginResults;
-import com.follett.fsc.mobile.circdesk.data.model.LoginResultsData;
 import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.interfaces.CTAButtonListener;
@@ -18,7 +18,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.SESSION_ID;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SESSION_ID;
 
 public class LoginViewModel extends BaseViewModel<CTAButtonListener> {
     
@@ -46,11 +46,10 @@ public class LoginViewModel extends BaseViewModel<CTAButtonListener> {
                     @Override
                     public void onNext(LoginResults loginResults) { // KEY_SESSION_ID
                         cancelProgressBar();
-                        final LoginResultsData loginResultsData = loginResults.getLoginResults();
-                        if (loginResultsData.getSuccess() != null && loginResultsData
+                        if (loginResults.getSuccess() != null && loginResults
                                 .getSuccess().equalsIgnoreCase("true")) {
-                            AppSharedPreferences.getInstance(mApplication).setString(SESSION_ID,
-                                    loginResultsData.getSessionID());
+                            AppSharedPreferences.getInstance(mApplication).setString(KEY_SESSION_ID,
+                                    loginResults.getSessionID());
                             setStatus(Status.SUCCESS);
                         }
                     }

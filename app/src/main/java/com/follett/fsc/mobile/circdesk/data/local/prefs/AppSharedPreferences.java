@@ -45,7 +45,6 @@ public class AppSharedPreferences {
     public static final String KEY_PATRON_NAME = "patronName";
     
     public static final String KEY_PERMISSIONS = "permissions";
-    public static final String SESSION_ID = "sessionid";
     public static final String KEY_SELECTED_BARCODE = "selectedBarcode";
     public static final String KEY_BARCODE = "barcode";
     public static final String KEY_PATRON_ID = "patronID";

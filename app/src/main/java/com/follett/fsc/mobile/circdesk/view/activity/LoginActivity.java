@@ -21,8 +21,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SESSION_ID;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
-import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.SESSION_ID;
 
 public class LoginActivity extends BaseActivity<LoginViewModel> implements NavigationListener {
     
@@ -119,7 +119,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Navig
     private void navigateToFragment() {
         
         if (!TextUtils.isEmpty(AppSharedPreferences.getInstance(this)
-                .getString(SESSION_ID))) {
+                .getString(KEY_SESSION_ID))) {
             AppUtils.getInstance()
                     .hideKeyBoard(this, mLoginBinding.getRoot());
             navigateToHome();
