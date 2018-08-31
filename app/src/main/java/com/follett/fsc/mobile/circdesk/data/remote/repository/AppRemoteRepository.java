@@ -6,6 +6,8 @@
 
 package com.follett.fsc.mobile.circdesk.data.remote.repository;
 
+import android.support.annotation.Nullable;
+
 import com.follett.fsc.mobile.circdesk.data.model.AdditionalInfo.TitleDetails;
 import com.follett.fsc.mobile.circdesk.data.model.LoginResults;
 import com.follett.fsc.mobile.circdesk.data.model.ScanPatron;
@@ -15,8 +17,6 @@ import com.follett.fsc.mobile.circdesk.data.model.checkout.CheckoutResult;
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.api.FollettAPIManager;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
-
-import android.support.annotation.Nullable;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -174,8 +174,8 @@ public class AppRemoteRepository {
                 });
     }
 
-    public void getTitleDetails(@Nullable final NetworkInterface networkInterface) {
-        apiService.getTitleDetails("dvpdt_devprodtest", "FDPSA", "COGNITE", "14130", "DestinyCirc", "Android_24_7.0_lge_lucye_LG-H870DS", "1_Android",
+    public void getTitleDetails(@Nullable final NetworkInterface networkInterface, String bibID) {
+        apiService.getTitleDetails("dvpdt_devprodtest", "FDPSA", "COGNITE", bibID, "DestinyCirc", "Android_24_7.0_lge_lucye_LG-H870DS", "1_Android",
                 "English")
                 .subscribeWith(new Observer<TitleDetails>() {
                     @Override
