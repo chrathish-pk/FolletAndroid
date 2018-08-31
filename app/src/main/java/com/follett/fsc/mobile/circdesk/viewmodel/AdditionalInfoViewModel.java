@@ -16,20 +16,20 @@ import com.follett.fsc.mobile.circdesk.view.base.BaseViewModel;
 import android.app.Application;
 
 public class AdditionalInfoViewModel extends BaseViewModel implements NetworkInterface {
-    
+
     private AppRemoteRepository mAppRemoteRepository;
     private AdditionalInfoListener additionalInfoListener;
-    
+
     public AdditionalInfoViewModel(Application application, AppRemoteRepository appRemoteRepository, AdditionalInfoListener additionalInfoListener) {
         super(application);
         mAppRemoteRepository = appRemoteRepository;
         this.additionalInfoListener = additionalInfoListener;
     }
-    
-    public void getTitleDetails() {
-        mAppRemoteRepository.getTitleDetails(this);
+
+    public void getTitleDetails(String bibID) {
+        mAppRemoteRepository.getTitleDetails(this,bibID);
     }
-    
+
     @Override
     public void onCallCompleted(Object model) {
         try {
@@ -39,7 +39,7 @@ public class AdditionalInfoViewModel extends BaseViewModel implements NetworkInt
             FollettLog.d("Exception", e.getMessage());
         }
     }
-    
+
     @Override
     public void onCallFailed(Throwable throwable) {
         FollettLog.d("Exception", throwable.getMessage());

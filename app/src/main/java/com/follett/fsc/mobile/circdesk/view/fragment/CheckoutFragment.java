@@ -25,6 +25,8 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
 
     private CheckoutViewModel checkoutViewModel;
     private FragmentCheckoutBinding fragmentCheckoutBinding;
+    private ScanPatron scanPatron = null;
+    private CheckoutResult checkoutResult = null;
 
     @Override
     public int getLayoutId() {
@@ -84,20 +86,28 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
             AppSharedPreferences.getInstance(getActivity()).setString(AppSharedPreferences.KEY_PATRON_ID, null);
             AppSharedPreferences.getInstance(getActivity()).setString(AppSharedPreferences.KEY_SELECTED_BARCODE, null);
             fragmentCheckoutBinding.patronDetailIncludeLayout.patronDetailLayout.setVisibility(View.GONE);
+            fragmentCheckoutBinding.checkoutDetailIncludeLayout.checkedoutDetailLayout.setVisibility(View.GONE);
             fragmentCheckoutBinding.checkoutPatronErrorMsg.setVisibility(View.GONE);
             fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.setText("");
         } else if (v.getId() == R.id.checkedoutInfoBtn) {
-            startActivity(new Intent(getActivity(), TitleInfoActivity.class));
+
+            Intent titleIntent = new Intent(getActivity(), TitleInfoActivity.class);
+            titleIntent.putExtra("bibID", checkoutResult.getInfo().getBibID());
+            startActivity(titleIntent);
+
         }
     }
 
     public void getPatronID() {
-        String selectedBarcode = AppSharedPreferences.getInstance(getActivity()).getString(AppSharedPreferences.KEY_SELECTED_BARCODE);
-        if (TextUtils.isEmpty(selectedBarcode))
-            checkoutViewModel.getScanPatron(fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.getText().toString().trim());
-        else
-            checkoutViewModel.getScanPatron(selectedBarcode);
+        if (checkoutViewModel != null) {
+            String selectedBarcode = AppSharedPreferences.getInstance(getActivity()).getString(AppSharedPreferences.KEY_SELECTED_BARCODE);
+            if (TextUtils.isEmpty(selectedBarcode))
+                checkoutViewModel.getScanPatron(fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.getText().toString().trim());
+            else
+                checkoutViewModel.getScanPatron(selectedBarcode);
+        }
     }
+
 
     @Override
     public void updateUI(Object result) {
@@ -105,8 +115,7 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ScanPatron scanPatron = null;
-                CheckoutResult checkoutResult = null;
+
 
                 if (value != null && value instanceof ScanPatron) {
                     scanPatron = (ScanPatron) value;
@@ -114,7 +123,7 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
                         if (scanPatron.getPatronList() != null) {
                             navigateToPatronListScreen(scanPatron);
                         } else {
-                            bindPatronResult(scanPatron);
+                            bindPatronResult();
                         }
                     } else {
                         AppSharedPreferences.getInstance(getActivity()).setString(AppSharedPreferences.KEY_BARCODE, null);
@@ -137,13 +146,20 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
 
         if (checkoutResult != null) {
             fragmentCheckoutBinding.checkoutPatronErrorMsg.setVisibility(View.VISIBLE);
-            fragmentCheckoutBinding.checkoutPatronErrorMsg.setText(checkoutResult.getMessages().get(0).getMessage());
+            if (checkoutResult.getMessages().size() > 1) {
+                String errorMsg = checkoutResult.getMessages().get(0).getMessage() + "\n" + checkoutResult.getMessages().get(1).getMessage();
+                fragmentCheckoutBinding.checkoutPatronErrorMsg.setText(errorMsg);
+            } else {
+                fragmentCheckoutBinding.checkoutPatronErrorMsg.setText(checkoutResult.getMessages().get(0).getMessage());
+            }
         }
 
     }
 
     private void bindCheckoutResult(CheckoutResult checkoutResult) {
         try {
+            if (fragmentCheckoutBinding.checkoutPatronErrorMsg.getVisibility() == View.VISIBLE)
+                fragmentCheckoutBinding.checkoutPatronErrorMsg.setVisibility(View.GONE);
             fragmentCheckoutBinding.checkoutDetailIncludeLayout.checkedoutDetailLayout.setVisibility(View.VISIBLE);
             fragmentCheckoutBinding.checkoutDetailIncludeLayout.checkedoutName.setText(checkoutResult.getInfo().getTitle());
             fragmentCheckoutBinding.checkoutDetailIncludeLayout.checkedoutDue.setText(checkoutResult.getInfo().getDueDate());
@@ -168,17 +184,26 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
         }
     }
 
-    private void bindPatronResult(ScanPatron scanPatron) {
+    public void bindPatronResult() {
         if (scanPatron != null) {
             fragmentCheckoutBinding.patronDetailIncludeLayout.patronDetailLayout.setVisibility(View.VISIBLE);
             fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.setText("");
+            if (fragmentCheckoutBinding.checkoutPatronErrorMsg.getVisibility() == View.VISIBLE)
+                fragmentCheckoutBinding.checkoutPatronErrorMsg.setVisibility(View.GONE);
+            if (AppSharedPreferences.getInstance(getActivity()).getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED)) {
+                String checoutValue = getString(R.string.checkoutLabel) + scanPatron.getLibraryCheckouts();
+                fragmentCheckoutBinding.patronDetailIncludeLayout.checkedOutCount.setText(checoutValue);
+                String overdueValue = getString(R.string.overdueLabel) + scanPatron.getLibraryOverdues();
+                fragmentCheckoutBinding.patronDetailIncludeLayout.overdue.setText(overdueValue);
+            } else {
+                String checoutValue = getString(R.string.checkoutLabel) + scanPatron.getAssetCheckouts();
+                fragmentCheckoutBinding.patronDetailIncludeLayout.checkedOutCount.setText(checoutValue);
+                String overdueValue = getString(R.string.overdueLabel) + scanPatron.getAssetOverdues();
+                fragmentCheckoutBinding.patronDetailIncludeLayout.overdue.setText(overdueValue);
+            }
             fragmentCheckoutBinding.patronDetailIncludeLayout.checkoutPatronName.setText(scanPatron.getLastFirstMiddleName());
             fragmentCheckoutBinding.patronDetailIncludeLayout.checkoutPatronID.setText(scanPatron.getPatronID());
             fragmentCheckoutBinding.patronDetailIncludeLayout.checkoutPatronType.setText(scanPatron.getPatronType());
-            String checoutValue = getString(R.string.checkoutLabel) + scanPatron.getAssetCheckouts();
-            fragmentCheckoutBinding.patronDetailIncludeLayout.checkedOutCount.setText(checoutValue);
-            String overdueValue = getString(R.string.overdueLabel) + scanPatron.getAssetOverdues();
-            fragmentCheckoutBinding.patronDetailIncludeLayout.overdue.setText(overdueValue);
 
             GlideApp.with(this)
                     .load(scanPatron.getPatronPictureFileName())
@@ -188,6 +213,7 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
             fragmentCheckoutBinding.patronDetailIncludeLayout.patronDetailLayout.setVisibility(View.GONE);
         }
     }
+
 
     private void navigateToPatronListScreen(ScanPatron scanPatron) {
         Intent patronListIntent = new Intent(getActivity(), PatronListActivity.class);

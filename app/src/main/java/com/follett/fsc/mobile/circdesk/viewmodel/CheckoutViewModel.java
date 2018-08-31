@@ -13,22 +13,22 @@ import android.app.Application;
 import android.text.TextUtils;
 
 public class CheckoutViewModel extends BaseViewModel implements NetworkInterface {
-    
+
     //this is the data that we will fetch asynchronously
 //    public ScanPatron scanPatron;
 //    public CheckoutResult checkoutResult;
     private Application mApplication;
     private UpdateUIListener updateUIListener;
-    
+
     private AppRemoteRepository mAppRemoteRepository;
-    
+
     public CheckoutViewModel(Application application, AppRemoteRepository appRemoteRepository, UpdateUIListener updateUIListener) {
         super(application);
         this.mApplication = application;
         this.mAppRemoteRepository = appRemoteRepository;
         this.updateUIListener = updateUIListener;
     }
-    
+
     //we will call this method to get the data
    /* public LiveData<ScanPatron> getScanPatronLiveData() {
         //if the list is null
@@ -41,18 +41,21 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
         //finally we will return the list
         return scanPatronMutableLiveData;
     }*/
-    
-    
+
+
     public void getScanPatron(String patronBarcodeID) {
+        setIsLoding(true);
         mAppRemoteRepository.getScanPatron(this, patronBarcodeID);
     }
-    
+
     public void getCheckoutResult(String patronID, String barcode) {
+        setIsLoding(true);
         mAppRemoteRepository.getCheckoutResult(this, patronID, barcode);
     }
-    
+
     @Override
     public void onCallCompleted(Object model) {
+        setIsLoding(false);
         try {
             if (model instanceof ScanPatron) {
                 ScanPatron scanPatron = (ScanPatron) model;
@@ -75,9 +78,11 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
             FollettLog.d("Exception", e.getMessage());
         }
     }
-    
+
     @Override
     public void onCallFailed(Throwable throwable) {
+        setIsLoding(false);
         FollettLog.d("Exception", throwable.getMessage());
     }
+
 }

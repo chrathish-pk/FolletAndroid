@@ -7,22 +7,21 @@
 package com.follett.fsc.mobile.circdesk.view.activity;
 
 import android.content.Intent;
-import android.support.annotation.Nullable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
+import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.data.model.AdditionalInfo.TitleDetails;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityTitleDetailsBinding;
-
-import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.interfaces.AdditionalInfoListener;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import com.follett.fsc.mobile.circdesk.view.base.BaseActivity;
 import com.follett.fsc.mobile.circdesk.viewmodel.AdditionalInfoViewModel;
 
-public class TitleInfoActivity extends BaseActivity<AdditionalInfoViewModel> implements View.OnClickListener,AdditionalInfoListener {
+public class TitleInfoActivity extends BaseActivity<AdditionalInfoViewModel> implements View.OnClickListener, AdditionalInfoListener {
 
     ActivityTitleDetailsBinding activityTitleDetailsBinding;
     TitleDetails additionalInfoDetails;
@@ -34,8 +33,12 @@ public class TitleInfoActivity extends BaseActivity<AdditionalInfoViewModel> imp
         setTitleBar(getString(R.string.titleDetails));
         setBackBtnVisible();
         baseBinding.backBtn.setOnClickListener(this);
-        AdditionalInfoViewModel additionalInfoViewModel = new AdditionalInfoViewModel(this.getApplication(), new AppRemoteRepository(),this);
-        additionalInfoViewModel.getTitleDetails();
+        AdditionalInfoViewModel additionalInfoViewModel = new AdditionalInfoViewModel(this.getApplication(), new AppRemoteRepository(), this);
+
+        if (getIntent() != null) {
+            String bibID = getIntent().getStringExtra("bibID");
+            additionalInfoViewModel.getTitleDetails(bibID);
+        }
 
     }
 
@@ -65,25 +68,22 @@ public class TitleInfoActivity extends BaseActivity<AdditionalInfoViewModel> imp
             public void run() {
                 if (titleDetails != null) {
                     additionalInfoDetails = titleDetails;
-                    FollettLog.i("TAG","Title"+titleDetails.getTitle());
+                    FollettLog.i("TAG", "Title" + titleDetails.getTitle());
 
                     activityTitleDetailsBinding.itemTitleName.setText(titleDetails.getTitle());
                     activityTitleDetailsBinding.itemAuthor.setText(titleDetails.getResponsibility());
-                    activityTitleDetailsBinding.itemInfo.setText("Call#"+titleDetails.getCallNumber());
+                    activityTitleDetailsBinding.itemInfo.setText("Call#" + titleDetails.getCallNumber());
                     activityTitleDetailsBinding.itemRatingBar.setRating(Float.parseFloat(titleDetails.getReviewInfoRecord().getReviewAverage()));
-                    if(titleDetails.getStatus().equals("1"))
-                    {
+                    if (titleDetails.getStatus().equals("1")) {
                         activityTitleDetailsBinding.itemStatus.setText("Status : IN");
-                    }
-                    else
-                    {
+                    } else {
                         activityTitleDetailsBinding.itemStatus.setText("Status : OUT");
                     }
                     activityTitleDetailsBinding.itemDescription.setText(titleDetails.getSummaryList().getSummary());
-                    activityTitleDetailsBinding.itemAvailability.setText(titleDetails.getAvailableLocal()+" of "+titleDetails.getTotalLocal()+" Available");
+                    activityTitleDetailsBinding.itemAvailability.setText(titleDetails.getAvailableLocal() + " of " + titleDetails.getTotalLocal() + " Available");
                     activityTitleDetailsBinding.additionalInfoBtn.setOnClickListener(TitleInfoActivity.this);
                     Glide.with(TitleInfoActivity.this)
-                            .load(AppRemoteRepository.BASE_URL+titleDetails.getContentImageLink())
+                            .load(AppRemoteRepository.BASE_URL + titleDetails.getContentImageLink())
                             .into(activityTitleDetailsBinding.itemImg);
                 }
             }
