@@ -33,9 +33,10 @@ public interface AppRepository {
 
     /**
      * Get Checkout result
+     *
      * @param patronID selected patron id
-     * @param barcode entered barcode
+     * @param barcode  entered barcode
      * @return Checkout result model data
      */
-    Observable<CheckoutResult> getCheckoutResult(String patronID, String barcode);
+    Observable<CheckoutResult> getCheckoutResult(String patronID, String barcode, String collectionType);
 }

@@ -51,7 +51,7 @@ public interface APIInterface {
                                                      ("appVersion") String appVersion, @Query("appLanguage") String appLanguage);
 
     @Headers({
-            "Cookie: JSESSIONID=9A659y8TEgwy7Djw-2ad7oV1re7cTGSwhWyFeASg",
+            "Cookie: JSESSIONID=eCP3CSHhK4Aydn3OhcM0AGU_2ymRF3r44fSPXuJd",
             "Accept: application/json",
             "text/xml: gzip"
     })
@@ -62,7 +62,7 @@ public interface APIInterface {
                                          @Query("appVersion") String appVersion, @Query("appLanguage") String appLanguage);
 
     @Headers({
-            "Cookie: JSESSIONID=9A659y8TEgwy7Djw-2ad7oV1re7cTGSwhWyFeASg",
+            "Cookie: JSESSIONID=eCP3CSHhK4Aydn3OhcM0AGU_2ymRF3r44fSPXuJd",
             "Accept: application/json",
             "text/xml: gzip"
     })
@@ -74,7 +74,7 @@ public interface APIInterface {
 
     @GET("rest/v4/catalog/titledetail")
     @Headers({
-            "Cookie: JSESSIONID=9A659y8TEgwy7Djw-2ad7oV1re7cTGSwhWyFeASg",
+            "Cookie: JSESSIONID=eCP3CSHhK4Aydn3OhcM0AGU_2ymRF3r44fSPXuJd",
             "Accept: application/json",
             "text/xml: gzip"
     })

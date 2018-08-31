@@ -47,6 +47,7 @@ public class AppSharedPreferences {
     public static final String KEY_SELECTED_BARCODE = "selectedBarcode";
     public static final String KEY_BARCODE = "barcode";
     public static final String KEY_PATRON_ID = "patronID";
+    public static final String KEY_IS_LIBRARY_SELECTED = "isLibrarySelected";
 
 
     private static AppSharedPreferences mSessionInstance = null;

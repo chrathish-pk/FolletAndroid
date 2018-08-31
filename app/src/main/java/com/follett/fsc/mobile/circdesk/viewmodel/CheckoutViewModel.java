@@ -46,6 +46,7 @@ public class CheckoutViewModel extends BaseViewModel {
 
 
     public void getScanPatron(String patronBarcodeID) {
+        setIsLoding(true);
         mAppRemoteRepository.getScanPatron(patronBarcodeID).subscribeWith(new Observer<ScanPatron>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -65,11 +66,13 @@ public class CheckoutViewModel extends BaseViewModel {
 
             @Override
             public void onError(Throwable e) {
+                setIsLoding(false);
                 FollettLog.d("Exception", e.getMessage());
             }
 
             @Override
             public void onComplete() {
+                setIsLoding(false);
                 String selectedPatronID = AppSharedPreferences.getInstance(mApplication).getString(AppSharedPreferences.KEY_SELECTED_BARCODE);
                 if (!TextUtils.isEmpty(selectedPatronID)) {
                     AppSharedPreferences.getInstance(mApplication).setString(AppSharedPreferences.KEY_BARCODE, selectedPatronID);
@@ -82,7 +85,9 @@ public class CheckoutViewModel extends BaseViewModel {
     }
 
     public void getCheckoutResult(String patronID, String barcode) {
-        mAppRemoteRepository.getCheckoutResult(patronID, barcode).subscribeWith(new Observer<CheckoutResult>() {
+        int collectionType = AppSharedPreferences.getInstance(mApplication).getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED) ? 0 : 4;
+        setIsLoding(true);
+        mAppRemoteRepository.getCheckoutResult(patronID, barcode, String.valueOf(collectionType)).subscribeWith(new Observer<CheckoutResult>() {
             @Override
             public void onSubscribe(Disposable d) {
 
@@ -99,12 +104,14 @@ public class CheckoutViewModel extends BaseViewModel {
 
             @Override
             public void onError(Throwable e) {
+                setIsLoding(false);
                 FollettLog.d("Exception", e.getMessage());
 
             }
 
             @Override
             public void onComplete() {
+                setIsLoding(false);
                 updateUIListener.updateUI(checkoutResult);
 
             }

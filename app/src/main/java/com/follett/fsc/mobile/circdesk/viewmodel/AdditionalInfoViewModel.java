@@ -30,9 +30,9 @@ public class AdditionalInfoViewModel extends BaseViewModel {
         this.additionalInfoListener = additionalInfoListener;
     }
 
-    public TitleDetails getTitleDetails() {
+    public TitleDetails getTitleDetails(String bibID) {
 
-        mAppRemoteRepository.getTitleDetails().subscribeWith(new Observer<TitleDetails>() {
+        mAppRemoteRepository.getTitleDetails( bibID).subscribeWith(new Observer<TitleDetails>() {
             @Override
             public void onSubscribe(Disposable d) {
 
