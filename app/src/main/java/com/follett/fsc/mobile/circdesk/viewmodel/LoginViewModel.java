@@ -6,23 +6,18 @@ package com.follett.fsc.mobile.circdesk.viewmodel;
 
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.model.LoginResults;
+import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.interfaces.CTAButtonListener;
+import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import com.follett.fsc.mobile.circdesk.view.base.BaseViewModel;
 
 import android.app.Application;
 
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
-
-import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SESSION_ID;
-import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
 
-public class LoginViewModel extends BaseViewModel<CTAButtonListener> {
+public class LoginViewModel extends BaseViewModel<CTAButtonListener> implements NetworkInterface {
     
     private Application mApplication;
     
@@ -33,42 +28,35 @@ public class LoginViewModel extends BaseViewModel<CTAButtonListener> {
         mApplication = application;
         mAppRemoteRepository = appRemoteRepository;
     }
-
+    
     
     public void getLoginResults(String contextName, String site, String userName, String password) {
         setIsLoding(true);
-        mAppRemoteRepository.getLoginResults(contextName, site, userName, password)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribeWith(new Observer<LoginResults>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
-                    
-                    @Override
-                    public void onNext(LoginResults loginResults) { // KEY_SESSION_ID
-                        cancelProgressBar();
-                        if (loginResults.getSuccess() != null && loginResults
-                                .getSuccess().equalsIgnoreCase("true")) {
-                            AppSharedPreferences.getInstance(mApplication).setString(KEY_SESSION_ID,
-                                    loginResults.getSessionID());
-                            setStatus(Status.SUCCESS);
-                        }
-                    }
-                    
-                    @Override
-                    public void onError(Throwable e) {
-                        cancelProgressBar();
-                    }
-                    
-                    @Override
-                    public void onComplete() {
-                        cancelProgressBar();
-                    }
-                });
+        mAppRemoteRepository.getLoginResults(this, contextName, site, userName, password);
     }
     
     private void cancelProgressBar() {
         setIsLoding(false);
+    }
+    
+    @Override
+    public void onCallCompleted(Object model) {
+        cancelProgressBar();
+        try {
+            LoginResults loginResults = (LoginResults) model;
+            if (loginResults.getSuccess() != null && loginResults.getSuccess()
+                    .equalsIgnoreCase("true")) {
+                AppSharedPreferences.getInstance(mApplication)
+                        .setString(KEY_SESSION_ID, loginResults.getSessionID());
+                setStatus(Status.SUCCESS);
+            }
+        } catch (Exception e) {
+            FollettLog.d("Exception", e.getMessage());
+        }
+    }
+    
+    @Override
+    public void onCallFailed(Throwable throwable) {
+        cancelProgressBar();
     }
 }
