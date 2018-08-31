@@ -5,8 +5,7 @@
 package com.follett.fsc.mobile.circdesk.utils;
 
 import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.interfaces.AlertDialogListener;
-import com.follett.fsc.mobile.circdesk.view.alert.Alert;
+import com.follett.fsc.mobile.circdesk.app.CustomAlert;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -15,12 +14,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
-import android.view.ContextThemeWrapper;
-import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class AppUtils {
@@ -118,84 +114,6 @@ public class AppUtils {
         mProgressDialog = null;
     }
     
-    public void showAlertDialog(boolean isWarning, String buttonName, final String msg, final Context context, final AlertDialogListener alertDialogListener,
-            final int statusCode) {
-        String title, btnName;
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(new ContextThemeWrapper(context, android.R.style.Theme_DeviceDefault_Light_Dialog));
-        if (isWarning) {
-            title = context.getResources()
-                    .getString(R.string.alert_success);
-        } else {
-            title = context.getResources()
-                    .getString(R.string.alert_success);
-        }
-        btnName = buttonName;
-        alertDialogBuilder.setTitle(title);
-        alertDialogBuilder.setMessage(msg);
-        alertDialogBuilder.setCancelable(false);
-        if (buttonName.equals(context.getResources()
-                .getString(R.string.ok)) || buttonName.equals(context.getResources()
-                .getString(R.string.yes)) || buttonName.equals(context.getResources()
-                .getString(R.string.update))) {
-            
-            alertDialogBuilder.setPositiveButton(btnName, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    alertDialogListener.onPositiveButtonClick(statusCode);
-                }
-            });
-        } else if (buttonName.equalsIgnoreCase(context.getResources()
-                .getString(R.string.net))) {
-            alertDialogBuilder.setPositiveButton(context.getResources()
-                    .getString(R.string.ok), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    alertDialogListener.onPositiveButtonClick(statusCode);
-                }
-            });
-        }
-        
-        
-        if (isWarning) {
-            if (buttonName.equals(context.getResources()
-                    .getString(R.string.yes)) || buttonName.equals(context.getResources()
-                    .getString(R.string.update))) {
-                alertDialogBuilder.setNegativeButton(context.getResources()
-                        .getString(R.string.no), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    
-                    }
-                });
-            } else if (buttonName.equalsIgnoreCase(context.getResources()
-                    .getString(R.string.ok))) {
-                alertDialogBuilder.setNegativeButton(context.getResources()
-                        .getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-            }
-        }
-        
-        if (alertDialog != null && alertDialog.isShowing()) {
-            alertDialog.dismiss();
-            alertDialog = alertDialogBuilder.create();
-            alertDialog.show();
-        } else {
-            alertDialog = alertDialogBuilder.create();
-            alertDialog.show();
-        }
-        
-        
-        TextView messageView = (TextView) alertDialog.findViewById(android.R.id.message);
-        messageView.setGravity(Gravity.CENTER_HORIZONTAL);
-        
-        TextView titleView = (TextView) alertDialog.findViewById(context.getResources()
-                .getIdentifier("alertTitle", "id", "android"));
-        if (titleView != null) {
-            titleView.setGravity(Gravity.CENTER_HORIZONTAL);
-        }
-    }
-    
     public void showShortToastMessages(Context context, String message) {
         Toast.makeText(context, !TextUtils.isEmpty(message) ? message + "" : "", Toast.LENGTH_SHORT)
                 .show();
@@ -238,7 +156,7 @@ public class AppUtils {
             }
         };
         if (null != activity) {
-            Alert.showDialog(activity, activity.getString(R.string.no_internet_title), activity.getString(R.string.no_internet_des), activity.getString(R
+            CustomAlert.showDialog(activity, activity.getString(R.string.no_internet_title), activity.getString(R.string.no_internet_des), activity.getString(R
                     .string.ok), onClickListener, null, onClickListener);
         }
     }

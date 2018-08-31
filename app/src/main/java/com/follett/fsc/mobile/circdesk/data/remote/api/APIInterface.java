@@ -7,12 +7,12 @@
 package com.follett.fsc.mobile.circdesk.data.remote.api;
 
 
-import com.follett.fsc.mobile.circdesk.data.model.AdditionalInfo.TitleDetails;
-import com.follett.fsc.mobile.circdesk.data.model.LoginResults;
-import com.follett.fsc.mobile.circdesk.data.model.ScanPatron;
-import com.follett.fsc.mobile.circdesk.data.model.SiteResults;
-import com.follett.fsc.mobile.circdesk.data.model.Version;
-import com.follett.fsc.mobile.circdesk.data.model.checkout.CheckoutResult;
+import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginResults;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.ScanPatron;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.SiteResults;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.Version;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.CheckoutResult;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;

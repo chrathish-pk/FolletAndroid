@@ -14,7 +14,7 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.LoginActivity">
+        <activity android:name=".feature.loginsetup.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,15 +22,15 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.activity.CheckinCheckoutActivity" />
+        <activity android:name=".feature.checkoutcheckin.CheckinCheckoutActivity" />
 
-        <activity android:name=".view.activity.PatronListActivity" />
+        <activity android:name=".feature.checkoutcheckin.PatronListActivity" />
 
-        <activity android:name=".view.activity.HomeActivity" />
+        <activity android:name=".feature.homescreen.HomeActivity" />
 
-        <activity android:name=".view.activity.TitleInfoActivity" />
+        <activity android:name=".feature.iteminfo.TitleInfoActivity" />
 
-        <activity android:name=".view.activity.AdditionalInfoActivity" />
+        <activity android:name=".feature.iteminfo.AdditionalInfoActivity" />
     </application>
 
 </manifest>

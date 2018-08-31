@@ -15,11 +15,11 @@
 
         <variable
             name="ctaListener"
-            type="com.follett.fsc.mobile.circdesk.interfaces.CTAButtonListener"/>
+            type="com.follett.fsc.mobile.circdesk.app.CTAButtonListener"/>
 
         <variable
             name="viewModel"
-            type="com.follett.fsc.mobile.circdesk.viewmodel.SchoolListViewModel"/>
+            type="com.follett.fsc.mobile.circdesk.feature.loginsetup.SchoolListViewModel"/>
 
     </data>
 

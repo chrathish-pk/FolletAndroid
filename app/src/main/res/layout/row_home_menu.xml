@@ -5,11 +5,11 @@
 
         <variable
             name="menuItem"
-            type="com.follett.fsc.mobile.circdesk.data.model.HomeMenu" />
+            type="com.follett.fsc.mobile.circdesk.feature.homescreen.HomeMenu" />
 
         <variable
             name="listener"
-            type="com.follett.fsc.mobile.circdesk.interfaces.ItemClickListener" />
+            type="com.follett.fsc.mobile.circdesk.app.ItemClickListener" />
     </data>
 
     <LinearLayout

@@ -8,7 +8,7 @@
 
         <variable
             name="homeMenuViewModel"
-            type="com.follett.fsc.mobile.circdesk.viewmodel.HomeViewModel" />
+            type="com.follett.fsc.mobile.circdesk.feature.homescreen.HomeViewModel" />
 
     </data>
 

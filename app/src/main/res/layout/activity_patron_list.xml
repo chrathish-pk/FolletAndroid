@@ -5,7 +5,7 @@
 
         <variable
             name="itemClickListener"
-            type="com.follett.fsc.mobile.circdesk.interfaces.ItemClickListener" />
+            type="com.follett.fsc.mobile.circdesk.app.ItemClickListener" />
 
     </data>
 

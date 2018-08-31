@@ -5,11 +5,11 @@
 
         <variable
             name="patronItem"
-            type="com.follett.fsc.mobile.circdesk.data.model.ScanPatron" />
+            type="com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.ScanPatron" />
 
         <variable
             name="listener"
-            type="com.follett.fsc.mobile.circdesk.interfaces.ItemClickListener" />
+            type="com.follett.fsc.mobile.circdesk.app.ItemClickListener" />
     </data>
 
     <LinearLayout
