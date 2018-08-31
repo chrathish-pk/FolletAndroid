@@ -11,10 +11,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-/**
- * Created by muthulakshmi on 28/08/18.
- */
-
 public class Message implements Serializable{
     @SerializedName("message")
     @Expose

@@ -26,9 +26,9 @@ public class SiteViewPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return BasicFragment.newInstance();
+                return BasicFragment.newInstance(true);
             case 1:
-                return AdvancedFragment.newInstance();
+                return BasicFragment.newInstance(false);
             default:
                 return null;
             

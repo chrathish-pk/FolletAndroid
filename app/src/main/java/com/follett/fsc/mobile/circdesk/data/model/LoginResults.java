@@ -187,6 +187,4 @@ public class LoginResults {
     public void setSuccess(String success) {
         this.success = success;
     }
-
-
 }

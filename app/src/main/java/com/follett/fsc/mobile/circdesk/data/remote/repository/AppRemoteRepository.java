@@ -12,56 +12,195 @@ import com.follett.fsc.mobile.circdesk.data.model.ScanPatron;
 import com.follett.fsc.mobile.circdesk.data.model.SiteResults;
 import com.follett.fsc.mobile.circdesk.data.model.Version;
 import com.follett.fsc.mobile.circdesk.data.model.checkout.CheckoutResult;
-import com.follett.fsc.mobile.circdesk.data.remote.api.APIClient;
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
+import com.follett.fsc.mobile.circdesk.data.remote.api.FollettAPIManager;
+import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 
-import io.reactivex.Observable;
+import android.support.annotation.Nullable;
 
-public class AppRemoteRepository implements AppRepository {
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+
+public class AppRemoteRepository {
 
     private APIInterface apiService;
 
     public static final String BASE_URL = "https://devprodtest.follettdestiny.com";
 
     public AppRemoteRepository() {
-        apiService = APIClient.getClient(BASE_URL)
+        apiService = FollettAPIManager.getClient(BASE_URL)
                 .create(APIInterface.class);
     }
 
-    @Override
-    public Observable<Version> getVersion() {
-        return apiService.getVersion("dvpdt_devprodtest", "COGNITE", "CircDeskMobile", "Android_24_7.0_lge_lucye_LG-H870DS", "1_Android", "English");
+    public void getVersion(@Nullable final NetworkInterface networkInterface) {
+        apiService.getVersion()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribeWith(new DisposableObserver<Version>() {
+                    @Override
+                    public void onNext(Version version) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallCompleted(version);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallFailed(throwable);
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
     }
 
-    @Override
-    public Observable<SiteResults> getSchoolList() {
-        return null;
+    public void getSchoolList(@Nullable final NetworkInterface networkInterface, String contextName) {
+        apiService.getSchoolList(contextName)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribeWith(new DisposableObserver<SiteResults>() {
+                    @Override
+                    public void onNext(SiteResults siteResults) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallCompleted(siteResults);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallFailed(throwable);
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
     }
 
-    @Override
-    public Observable<LoginResults> getLoginResults(String userName, String password) {
-        return apiService.getLoginResults("dvpdt_devprodtest", "FDPSA", "COGNITE", password, userName, "DestinyCirc", "Android_24_7.0_lge_lucye_LG-H870DS",
-                "1_Android", "English");
+    public void getLoginResults(@Nullable final NetworkInterface networkInterface, String contextName, String site, String userName, String password) {
+
+        apiService.getLoginResults(contextName, site, userName, password)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribeWith(new Observer<LoginResults>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(LoginResults loginResults) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallCompleted(loginResults);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallFailed(throwable);
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
     }
 
+    public void getScanPatron(@Nullable final NetworkInterface networkInterface, String patronBarcodeID) {
 
-    @Override
-    public Observable<ScanPatron> getScanPatron(String patronBarcodeID) {
-        return apiService.getScanPatron("dvpdt_devprodtest", "FDPSA", "COGNITE",
-                patronBarcodeID, "DestinyCirc", "Android_24_7.0_lge_lucye_LG-H870DS",
-                "1_Android", "English");
+        apiService.getScanPatron("dvpdt_devprodtest", "FDPSA", "COGNITE", patronBarcodeID, "DestinyCirc", "Android_24_7.0_lge_lucye_LG-H870DS", "1_Android",
+                "English")
+                .subscribeWith(new Observer<ScanPatron>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ScanPatron scanPatron) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallCompleted(scanPatron);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallFailed(throwable);
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
     }
 
-    @Override
-    public Observable<CheckoutResult> getCheckoutResult(String patronID, String barcode, String collectionType) {
-        return apiService.getCheckoutResult("dvpdt_devprodtest", "FDPSA",
-                barcode, patronID, collectionType, "false");
+    public void getCheckoutResult(@Nullable final NetworkInterface networkInterface, String patronID, String barcode) {
+
+        apiService.getCheckoutResult("dvpdt_devprodtest", "FDPSA", barcode, patronID, "0", "false")
+                .subscribeWith(new Observer<CheckoutResult>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(CheckoutResult checkoutResult) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallCompleted(checkoutResult);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallFailed(throwable);
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
     }
 
-    public Observable<TitleDetails> getTitleDetails(String bibID) {
-        return apiService.getTitleDetails("dvpdt_devprodtest", "FDPSA", "COGNITE",
-                "14130", "DestinyCirc", "Android_24_7.0_lge_lucye_LG-H870DS",
-                "1_Android", "English");
-    }
+    public void getTitleDetails(@Nullable final NetworkInterface networkInterface) {
+        apiService.getTitleDetails("dvpdt_devprodtest", "FDPSA", "COGNITE", "14130", "DestinyCirc", "Android_24_7.0_lge_lucye_LG-H870DS", "1_Android",
+                "English")
+                .subscribeWith(new Observer<TitleDetails>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
+                    }
+
+                    @Override
+                    public void onNext(TitleDetails titleDetails) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallCompleted(titleDetails);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallFailed(throwable);
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
 }

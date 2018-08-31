@@ -41,16 +41,45 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
 
-        <EditText
+        <android.support.v7.widget.AppCompatEditText
             android:id="@+id/libraryEditText"
             style="@style/EditTextTheme"
             android:layout_marginTop="50dp"
-            android:hint="@string/library_label"
-            android:imeOptions="actionDone"
+            android:inputType="text"
             android:singleLine="true"
+            android:hint="@string/library_label"
+            android:text="@{viewModel.storedSchoolUri}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
+
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/portEditText"
+            style="@style/EditTextTheme"
+            android:layout_marginTop="32dp"
+            android:hint="@string/port_label"
+            android:inputType="number"
+            android:maxLines="1"
+            android:visibility="@{viewModel.advancedTabView ? View.GONE : View.VISIBLE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/libraryEditText"/>
+
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/sslportEditText"
+            style="@style/EditTextTheme"
+            android:layout_marginTop="32dp"
+            android:hint="@string/ssl_port_label"
+            android:inputType="number"
+            android:maxLines="1"
+            android:visibility="@{viewModel.advancedTabView ? View.GONE : View.VISIBLE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/portEditText"/>
 
         <TextView
             android:id="@+id/connectTextview"
@@ -61,7 +90,7 @@
             android:text="@string/connect_label"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/libraryEditText"/>
+            app:layout_constraintTop_toBottomOf="@+id/sslportEditText"/>
 
     </android.support.constraint.ConstraintLayout>
 

@@ -25,6 +25,8 @@ public class AppSharedPreferences {
     public static final String KEY_SERVER_PORT = "serverPort";
     public static final String KEY_SERVER_SSL_PORT = "serverSSLPort";
     public static final String KEY_CONTEXT_NAME = "contextName";
+    public static final String SERVER_URI_VALUE = "server_uri_value";
+
     public static final String KEY_SITE_SHORT_NAME = "site";
     public static final String KEY_SITE_NAME = "siteName";
     public static final String KEY_USERNAME = "username";
@@ -47,7 +49,10 @@ public class AppSharedPreferences {
     public static final String KEY_SELECTED_BARCODE = "selectedBarcode";
     public static final String KEY_BARCODE = "barcode";
     public static final String KEY_PATRON_ID = "patronID";
+    public static final String FOLLETT_API_VERSION = "apiversion";
     public static final String KEY_IS_LIBRARY_SELECTED = "isLibrarySelected";
+
+
 
 
     private static AppSharedPreferences mSessionInstance = null;

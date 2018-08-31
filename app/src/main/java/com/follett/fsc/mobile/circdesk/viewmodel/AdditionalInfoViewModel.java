@@ -6,64 +6,42 @@
 
 package com.follett.fsc.mobile.circdesk.viewmodel;
 
-import android.app.Application;
-
 import com.follett.fsc.mobile.circdesk.data.model.AdditionalInfo.TitleDetails;
+import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.interfaces.AdditionalInfoListener;
+import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import com.follett.fsc.mobile.circdesk.view.base.BaseViewModel;
 
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
+import android.app.Application;
 
-public class AdditionalInfoViewModel extends BaseViewModel {
+public class AdditionalInfoViewModel extends BaseViewModel implements NetworkInterface {
 
-    Application mApplication;
     private AppRemoteRepository mAppRemoteRepository;
-    TitleDetails titleDetails;
-    AdditionalInfoListener additionalInfoListener;
+    private AdditionalInfoListener additionalInfoListener;
 
-    public AdditionalInfoViewModel(Application application,AppRemoteRepository appRemoteRepository,AdditionalInfoListener additionalInfoListener){
+    public AdditionalInfoViewModel(Application application, AppRemoteRepository appRemoteRepository, AdditionalInfoListener additionalInfoListener) {
         super(application);
-        mApplication = application;
         mAppRemoteRepository = appRemoteRepository;
         this.additionalInfoListener = additionalInfoListener;
     }
 
-    public TitleDetails getTitleDetails(String bibID) {
+    public void getTitleDetails(String bibID) {
+        mAppRemoteRepository.getTitleDetails(this,bibID);
+    }
 
-        mAppRemoteRepository.getTitleDetails( bibID).subscribeWith(new Observer<TitleDetails>() {
-            @Override
-            public void onSubscribe(Disposable d) {
+    @Override
+    public void onCallCompleted(Object model) {
+        try {
+            TitleDetails titleDetails = (TitleDetails) model;
+            additionalInfoListener.updateTitleDetails(titleDetails);
+        } catch (Exception e) {
+            FollettLog.d("Exception", e.getMessage());
+        }
+    }
 
-            }
-
-            @Override
-            public void onNext(TitleDetails value) {
-                try {
-
-                    if (value != null) {
-                        titleDetails = value;
-                        additionalInfoListener.updateTitleDetails(titleDetails);
-                    }
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-            e.printStackTrace();
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
-        return null;
+    @Override
+    public void onCallFailed(Throwable throwable) {
+        FollettLog.d("Exception", throwable.getMessage());
     }
 }

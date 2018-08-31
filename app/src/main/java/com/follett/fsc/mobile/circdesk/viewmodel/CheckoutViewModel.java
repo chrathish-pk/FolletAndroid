@@ -1,24 +1,22 @@
 package com.follett.fsc.mobile.circdesk.viewmodel;
 
-import android.app.Application;
-import android.text.TextUtils;
-
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.model.ScanPatron;
 import com.follett.fsc.mobile.circdesk.data.model.checkout.CheckoutResult;
+import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.interfaces.UpdateUIListener;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import com.follett.fsc.mobile.circdesk.view.base.BaseViewModel;
 
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
+import android.app.Application;
+import android.text.TextUtils;
 
-public class CheckoutViewModel extends BaseViewModel {
+public class CheckoutViewModel extends BaseViewModel implements NetworkInterface {
 
     //this is the data that we will fetch asynchronously
-    public ScanPatron scanPatron;
-    public CheckoutResult checkoutResult;
+//    public ScanPatron scanPatron;
+//    public CheckoutResult checkoutResult;
     private Application mApplication;
     private UpdateUIListener updateUIListener;
 
@@ -47,75 +45,44 @@ public class CheckoutViewModel extends BaseViewModel {
 
     public void getScanPatron(String patronBarcodeID) {
         setIsLoding(true);
-        mAppRemoteRepository.getScanPatron(patronBarcodeID).subscribeWith(new Observer<ScanPatron>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(ScanPatron value) {
-                try {
-                    scanPatron = value;
-
-                } catch (Exception e) {
-                    FollettLog.d("Exception", e.getMessage());
-                }
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                setIsLoding(false);
-                FollettLog.d("Exception", e.getMessage());
-            }
-
-            @Override
-            public void onComplete() {
-                setIsLoding(false);
-                String selectedPatronID = AppSharedPreferences.getInstance(mApplication).getString(AppSharedPreferences.KEY_SELECTED_BARCODE);
-                if (!TextUtils.isEmpty(selectedPatronID)) {
-                    AppSharedPreferences.getInstance(mApplication).setString(AppSharedPreferences.KEY_BARCODE, selectedPatronID);
-                    AppSharedPreferences.getInstance(mApplication).setString(AppSharedPreferences.KEY_PATRON_ID, scanPatron.getPatronID());
-                    AppSharedPreferences.getInstance(mApplication).setString(AppSharedPreferences.KEY_SELECTED_BARCODE, null);
-                }
-                updateUIListener.updateUI(scanPatron);
-            }
-        });
+        mAppRemoteRepository.getScanPatron(this, patronBarcodeID);
     }
 
     public void getCheckoutResult(String patronID, String barcode) {
-        int collectionType = AppSharedPreferences.getInstance(mApplication).getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED) ? 0 : 4;
         setIsLoding(true);
-        mAppRemoteRepository.getCheckoutResult(patronID, barcode, String.valueOf(collectionType)).subscribeWith(new Observer<CheckoutResult>() {
-            @Override
-            public void onSubscribe(Disposable d) {
+        mAppRemoteRepository.getCheckoutResult(this, patronID, barcode);
+    }
 
-            }
-
-            @Override
-            public void onNext(CheckoutResult value) {
-                try {
-                    checkoutResult = value;
-                } catch (Exception e) {
-                    FollettLog.d("Exception", e.getMessage());
+    @Override
+    public void onCallCompleted(Object model) {
+        setIsLoding(false);
+        try {
+            if (model instanceof ScanPatron) {
+                ScanPatron scanPatron = (ScanPatron) model;
+                String selectedPatronID = AppSharedPreferences.getInstance(mApplication)
+                        .getString(AppSharedPreferences.KEY_SELECTED_BARCODE);
+                if (!TextUtils.isEmpty(selectedPatronID)) {
+                    AppSharedPreferences.getInstance(mApplication)
+                            .setString(AppSharedPreferences.KEY_BARCODE, selectedPatronID);
+                    AppSharedPreferences.getInstance(mApplication)
+                            .setString(AppSharedPreferences.KEY_PATRON_ID, scanPatron.getPatronID());
+                    AppSharedPreferences.getInstance(mApplication)
+                            .setString(AppSharedPreferences.KEY_SELECTED_BARCODE, null);
                 }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                setIsLoding(false);
-                FollettLog.d("Exception", e.getMessage());
-
-            }
-
-            @Override
-            public void onComplete() {
-                setIsLoding(false);
+                updateUIListener.updateUI(scanPatron);
+            } else if (model instanceof CheckoutResult) {
+                CheckoutResult checkoutResult = (CheckoutResult) model;
                 updateUIListener.updateUI(checkoutResult);
-
             }
-        });
+        } catch (Exception e) {
+            FollettLog.d("Exception", e.getMessage());
+        }
+    }
+
+    @Override
+    public void onCallFailed(Throwable throwable) {
+        setIsLoding(false);
+        FollettLog.d("Exception", throwable.getMessage());
     }
 
 }

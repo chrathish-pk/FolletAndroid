@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
-        <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            app:subtitleTextColor="@color/white"
-            app:title="@string/app_status_title"
-            app:titleTextColor="@color/white" />
+        <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
+                                           android:layout_width="match_parent"
+                                           android:layout_height="?android:attr/actionBarSize"
+                                           android:background="@color/colorPrimary"
+                                           app:subtitleTextColor="@color/white"
+                                           app:title="@string/app_status_title"
+                                           app:titleTextColor="@color/white"/>
 
         <RelativeLayout
             android:id="@+id/titleBarLayout"
@@ -34,7 +33,7 @@
                 android:fontFamily="@font/opensans_semibold"
                 android:text="@string/connect_your_school_label"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_18sp" />
+                android:textSize="@dimen/text_size_18sp"/>
 
 
             <ImageView
@@ -46,7 +45,7 @@
                 android:src="@drawable/back"
                 android:visibility="gone"
                 tools:layout_editor_absoluteX="7dp"
-                tools:layout_editor_absoluteY="56dp" />
+                tools:layout_editor_absoluteY="56dp"/>
         </RelativeLayout>
 
 
@@ -59,7 +58,7 @@
             android:contentDescription="logo"
             android:src="@drawable/info_icon"
             app:layout_constraintEnd_toEndOf="@+id/toolbar"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <FrameLayout
             android:id="@+id/base_container"
