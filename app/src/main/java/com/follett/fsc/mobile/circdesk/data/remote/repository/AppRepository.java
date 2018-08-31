@@ -22,9 +22,9 @@ public interface AppRepository {
      */
     Observable<Version> getVersion();
 
-    Observable<SiteResults> getSchoolList();
+    Observable<SiteResults> getSchoolList(String contextNext);
 
-    Observable<LoginResults> getLoginResults(String userName, String password);
+    Observable<LoginResults> getLoginResults(String contextName, String site, String userName, String password);
 
     /**
      * Get scan patron result

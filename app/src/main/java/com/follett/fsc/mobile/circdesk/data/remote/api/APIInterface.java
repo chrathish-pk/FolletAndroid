@@ -27,8 +27,7 @@ public interface APIInterface {
     })
     @GET("/rest/version")
     @JsonAndXmlConverters.Xml
-    Observable<Version> getVersion(@Query("contextName") String contextName, @Query("client") String client, @Query("appID") String appId, @Query("device")
-            String device, @Query("appVersion") String appVersion, @Query("appLanguage") String appLanguage);
+    Observable<Version> getVersion();
 
     @Headers({
             "Accept: application/json",
@@ -36,8 +35,7 @@ public interface APIInterface {
     })
     @GET("/rest/v4/district/sites")
     @JsonAndXmlConverters.Xml
-    Observable<SiteResults> getSchoolList(@Query("contextName") String contextName, @Query("client") String client, @Query("productTypes") String productTypes,
-                                    @Query("appID") String appID, @Query("device") String device, @Query("appVersion") String appVersion, @Query("appLanguage") String appLanguage);
+    Observable<SiteResults> getSchoolList(@Query("contextName") String contextName);
 
 //    @Headers({
 //            "Accept: application/json",

@@ -30,13 +30,16 @@ import io.reactivex.schedulers.Schedulers;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.DEFAULT_HTTP_PORT;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.DEFAULT_SSL_PORT;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.FOLLETT_API_VERSION;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SERVER_PORT;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SERVER_SSL_PORT;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.SERVER_URI_VALUE;
 
 public class BasicViewModel extends BaseViewModel<CTAButtonListener> {
     
-    ObservableField<String> storedSchoolUri = new ObservableField<>();
+    private ObservableField<String> storedSchoolUri = new ObservableField<>();
+    
+    private ObservableBoolean isAdvancedTabView = new ObservableBoolean();
     
     private Application mApplication;
     
@@ -133,11 +136,14 @@ public class BasicViewModel extends BaseViewModel<CTAButtonListener> {
                 .subscribeOn(Schedulers.io())
                 .subscribeWith(new DisposableObserver<Version>() {
                     @Override
-                    public void onNext(Version value) {
+                    public void onNext(Version version) {
                         setIsLoding(false);
-                        if (Integer.parseInt(value.getVersion()) < AppConstants.MIN_API_VERSION_SUPPORTED) {
+                        String lVersion = version.getVersion();
+                        if (Integer.parseInt(lVersion) < AppConstants.MIN_API_VERSION_SUPPORTED) {
                             setStatus(Status.SCHOOL_NOT_SETUP_ERROR);
                         } else {
+                            AppSharedPreferences.getInstance(mApplication)
+                                    .setString(FOLLETT_API_VERSION, lVersion);
                             setStatus(Status.SUCCESS);
                         }
                     }
@@ -160,5 +166,13 @@ public class BasicViewModel extends BaseViewModel<CTAButtonListener> {
     
     public void setStoredSchoolUri(String storedSchoolUri) {
         this.storedSchoolUri.set(storedSchoolUri);
+    }
+    
+    public ObservableBoolean getAdvancedTabView() {
+        return isAdvancedTabView;
+    }
+    
+    public void setAdvancedTabView(Boolean advancedTabView) {
+        this.isAdvancedTabView.set(advancedTabView);
     }
 }

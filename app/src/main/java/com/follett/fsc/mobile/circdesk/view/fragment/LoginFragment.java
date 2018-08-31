@@ -8,6 +8,7 @@ package com.follett.fsc.mobile.circdesk.view.fragment;
 
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentLoginLayoutBinding;
@@ -30,7 +31,11 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
-public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, LoginViewModel> implements CTAButtonListener {
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
+
+public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, LoginViewModel> implements CTAButtonListener
+                , TextView.OnEditorActionListener {
     
     private static final String TAG = LoginFragment.class.getSimpleName();
     
@@ -92,6 +97,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
     @Override
     public void ctaButtonOnClick() {
         
+        AppUtils.getInstance().hideKeyBoard(getBaseActivity(), mLayoutBinding.getRoot());
         if (!AppUtils.getInstance()
                 .isEditTextNotEmpty(mLayoutBinding.useridEditText)) {
             AppUtils.getInstance()
@@ -107,7 +113,9 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
                 return;
             }
             
-            mLoginViewModel.getLoginResults(AppUtils.getInstance()
+            mLoginViewModel.getLoginResults(AppSharedPreferences.getInstance(getBaseActivity())
+                    .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance(getBaseActivity())
+                    .getString(KEY_SITE_SHORT_NAME), AppUtils.getInstance()
                     .getEditTextValue(mLayoutBinding.useridEditText), AppUtils.getInstance()
                     .getEditTextValue(mLayoutBinding.passwordEditText));
         }
@@ -120,15 +128,8 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
     private void inItView(final FragmentLoginLayoutBinding basicLayoutBinding) {
         
         basicLayoutBinding.setLoginListener(this);
-        basicLayoutBinding.passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                
-                if (i == EditorInfo.IME_ACTION_DONE) {
-                }
-                return true;
-            }
-        });
+        basicLayoutBinding.useridEditText.setOnEditorActionListener(this);
+        basicLayoutBinding.passwordEditText.setOnEditorActionListener(this);
         basicLayoutBinding.useridEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -186,5 +187,16 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
     public void onDetach() {
         navigationListener.setToolBarTitle(getBaseActivity().getString(R.string.select_school_label));
         super.onDetach();
+    }
+    
+    @Override
+    public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+        
+        if (i == EditorInfo.IME_ACTION_NEXT) {
+            mLayoutBinding.passwordEditText.requestFocus();
+        } else if (i == EditorInfo.IME_ACTION_DONE) {
+            ctaButtonOnClick();
+        }
+        return true;
     }
 }

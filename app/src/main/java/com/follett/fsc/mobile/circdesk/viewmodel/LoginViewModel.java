@@ -18,7 +18,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SESSION_ID;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
 
 public class LoginViewModel extends BaseViewModel<CTAButtonListener> {
     
@@ -33,9 +35,9 @@ public class LoginViewModel extends BaseViewModel<CTAButtonListener> {
     }
 
     
-    public void getLoginResults(String userName, String password) {
+    public void getLoginResults(String contextName, String site, String userName, String password) {
         setIsLoding(true);
-        mAppRemoteRepository.getLoginResults(userName, password)
+        mAppRemoteRepository.getLoginResults(contextName, site, userName, password)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribeWith(new Observer<LoginResults>() {

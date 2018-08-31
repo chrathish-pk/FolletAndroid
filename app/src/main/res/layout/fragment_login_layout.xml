@@ -42,7 +42,7 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
 
-        <EditText
+        <android.support.v7.widget.AppCompatEditText
             android:id="@+id/userid_EditText"
             style="@style/EditTextTheme"
             android:layout_marginTop="50dp"
@@ -54,7 +54,7 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
 
-        <EditText
+        <android.support.v7.widget.AppCompatEditText
             android:id="@+id/password_EditText"
             style="@style/EditTextTheme"
             android:layout_marginTop="32dp"

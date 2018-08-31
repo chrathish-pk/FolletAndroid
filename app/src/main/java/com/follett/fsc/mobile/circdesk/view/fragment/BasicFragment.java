@@ -33,6 +33,8 @@ import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferen
 
 public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, BasicViewModel> implements CTAButtonListener {
     
+    private static final String IS_BASIC_FRAGMENT = "isbasicfragment";
+    
     private FragmentBasicLayoutBinding mBasicLayoutBinding;
     
     private BasicViewModel mBasicViewModel;
@@ -41,8 +43,11 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
     
     private NavigationListener navigationListener;
     
-    public static BasicFragment newInstance() {
+    private boolean mIsBaseFragment;
+    
+    public static BasicFragment newInstance(boolean isBasicFragment) {
         Bundle args = new Bundle();
+        args.putBoolean(IS_BASIC_FRAGMENT, isBasicFragment);
         BasicFragment fragment = new BasicFragment();
         fragment.setArguments(args);
         return fragment;
@@ -81,12 +86,28 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
     @Override
     public void ctaButtonOnClick() {
         
-        if (AppUtils.getInstance()
+        
+        if (!AppUtils.getInstance()
                 .isEditTextNotEmpty(mBasicLayoutBinding.libraryEditText)) {
-            savePreference();
-        } else {
             AppUtils.getInstance()
                     .showShortToastMessages(getBaseActivity(), getString(R.string.url_empty_label));
+        } else if (!AppUtils.getInstance()
+                .isEditTextNotEmpty(mBasicLayoutBinding.portEditText) && !mIsBaseFragment) {
+            AppUtils.getInstance()
+                    .showShortToastMessages(getBaseActivity(), getString(R.string.port_empty_lable));
+        } else if (!AppUtils.getInstance()
+                .isEditTextNotEmpty(mBasicLayoutBinding.sslportEditText) && !mIsBaseFragment) {
+            AppUtils.getInstance()
+                    .showShortToastMessages(getBaseActivity(), getString(R.string.ssl_port_empty_lable));
+        } else if (AppUtils.getInstance()
+                .isEditTextNotEmpty(mBasicLayoutBinding.libraryEditText) && mIsBaseFragment) {
+            savePreference(AppUtils.getInstance()
+                    .getEditTextValue(mBasicLayoutBinding.libraryEditText), null, null);
+        } else {
+            savePreference(AppUtils.getInstance()
+                    .getEditTextValue(mBasicLayoutBinding.libraryEditText), AppUtils.getInstance()
+                    .getEditTextValue(mBasicLayoutBinding.portEditText), AppUtils.getInstance()
+                    .getEditTextValue(mBasicLayoutBinding.sslportEditText));
         }
     }
     
@@ -102,7 +123,7 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
     }
     
     
-    private void savePreference() {
+    private void savePreference(String libraryURI, String port, String sslPort) {
         AppUtils.getInstance()
                 .hideKeyBoard(getBaseActivity(), mBasicLayoutBinding.libraryEditText);
         if (!isNetworkConnected()) {
@@ -111,21 +132,41 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
             return;
         }
         
-        mBasicViewModel.savePreference(mBasicLayoutBinding.libraryEditText.getText()
-                .toString()
-                .trim(), null, null);
+        mBasicViewModel.savePreference(libraryURI, port, sslPort);
     }
     
     private void inItView(final FragmentBasicLayoutBinding basicLayoutBinding) {
-        basicLayoutBinding.setBasicListener(this);
-        navigationListener = (NavigationListener) getBaseActivity();
-        mBasicViewModel.setStoredSchoolUri(AppSharedPreferences.getInstance(getBaseActivity())
-                .getString(SERVER_URI_VALUE));
+        final Bundle arguments = getArguments();
+        if (null != arguments) {
+            mIsBaseFragment = arguments.getBoolean(IS_BASIC_FRAGMENT);
+            mBasicViewModel.setAdvancedTabView(mIsBaseFragment);
+        }
+        
+        if (mIsBaseFragment) {
+            basicLayoutBinding.libraryEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        } else {
+            basicLayoutBinding.libraryEditText.setImeOptions(EditorInfo.IME_ACTION_NEXT);
+            basicLayoutBinding.portEditText.setImeOptions(EditorInfo.IME_ACTION_NEXT);
+            basicLayoutBinding.sslportEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        }
         basicLayoutBinding.libraryEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 
                 if (i == EditorInfo.IME_ACTION_DONE) {
+                    AppUtils.getInstance().hideKeyBoard(getBaseActivity(), textView);
+                    ctaButtonOnClick();
+                } else if (i == EditorInfo.IME_ACTION_NEXT) {
+                    basicLayoutBinding.portEditText.requestFocus();
+                }
+                return true;
+            }
+        });
+        basicLayoutBinding.sslportEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_DONE) {
+                    AppUtils.getInstance().hideKeyBoard(getBaseActivity(), textView);
                     ctaButtonOnClick();
                 }
                 return true;
@@ -135,17 +176,11 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
         basicLayoutBinding.libraryEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            
             }
             
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                
-                if (charSequence.length() != 0) {
-                    basicLayoutBinding.connectTextview.setSelected(true);
-                } else {
-                    basicLayoutBinding.connectTextview.setSelected(false);
-                }
+              onTextChangedInEditText();
             }
             
             @Override
@@ -154,6 +189,43 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
             }
         });
         
+        basicLayoutBinding.portEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        
+            }
+    
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                onTextChangedInEditText();
+            }
+    
+            @Override
+            public void afterTextChanged(Editable editable) {
+        
+            }
+        });
+    
+        basicLayoutBinding.sslportEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        
+            }
+    
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                onTextChangedInEditText();
+            }
+    
+            @Override
+            public void afterTextChanged(Editable editable) {
+        
+            }
+        });
+        basicLayoutBinding.setBasicListener(this);
+        navigationListener = (NavigationListener) getBaseActivity();
+        mBasicViewModel.setStoredSchoolUri(AppSharedPreferences.getInstance(getBaseActivity())
+                .getString(SERVER_URI_VALUE));
         mBasicViewModel.getStatus()
                 .observe(this, new Observer<Status>() {
                     @Override
@@ -171,6 +243,20 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
             displayErrorToast(getString(R.string.ssl_error));
         } else if (Status.SCHOOL_NOT_SETUP_ERROR.equals(status)) {
             displayErrorToast(getString(R.string.error_sorry_school_not_setup));
+        }
+    }
+    
+    public void onTextChangedInEditText() {
+        if (AppUtils.getInstance()
+                .isEditTextNotEmpty(mBasicLayoutBinding.libraryEditText) && AppUtils.getInstance()
+                .isEditTextNotEmpty(mBasicLayoutBinding.portEditText) && AppUtils.getInstance()
+                .isEditTextNotEmpty(mBasicLayoutBinding.sslportEditText) && !mIsBaseFragment) {
+            mBasicLayoutBinding.connectTextview.setSelected(true);
+        } else if (AppUtils.getInstance()
+                .isEditTextNotEmpty(mBasicLayoutBinding.libraryEditText) && mIsBaseFragment) {
+            mBasicLayoutBinding.connectTextview.setSelected(true);
+        } else {
+            mBasicLayoutBinding.connectTextview.setSelected(false);
         }
     }
     

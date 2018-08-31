@@ -40,7 +40,8 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Navig
     }
     
     private void inItView() {
-        
+    
+        navigateToFragment();
         setToolBarTitle(getString(R.string.connect_your_school_label));
         final TabLayout tabLayout = mLoginBinding.tabLayout;
         tabLayout.addTab(tabLayout.newTab()
@@ -68,7 +69,6 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Navig
         });
         SiteViewPagerAdapter adapter = new SiteViewPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         mLoginBinding.viewPager.setAdapter(adapter);
-        navigateToFragment();
     }
     
     
@@ -108,6 +108,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Navig
     }
     
     private void navigateToHome() {
+        finish();
         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
     }
     
