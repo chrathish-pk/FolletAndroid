@@ -1,23 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ /*
   ~  * Copyright (c) 2018 Follett. All rights reserved.
   ~  */
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <data>
 
-        <import type="android.view.View" />
+        <import type="android.view.View"/>
 
         <variable
             name="loginListener"
-            type="com.follett.fsc.mobile.circdesk.interfaces.CTAButtonListener" />
+            type="com.follett.fsc.mobile.circdesk.interfaces.CTAButtonListener"/>
 
         <variable
             name="viewModel"
-            type="com.follett.fsc.mobile.circdesk.viewmodel.LoginViewModel" />
+            type="com.follett.fsc.mobile.circdesk.viewmodel.LoginViewModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -37,10 +39,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
 
-        <EditText
+        <android.support.v7.widget.AppCompatEditText
             android:id="@+id/userid_EditText"
             style="@style/EditTextTheme"
             android:layout_marginTop="50dp"
@@ -49,10 +51,10 @@
             android:singleLine="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
 
-        <EditText
+        <android.support.v7.widget.AppCompatEditText
             android:id="@+id/password_EditText"
             style="@style/EditTextTheme"
             android:layout_marginTop="32dp"
@@ -64,7 +66,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/userid_EditText" />
+            app:layout_constraintTop_toBottomOf="@+id/userid_EditText"/>
 
 
         <TextView
@@ -76,7 +78,7 @@
             android:text="@string/login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/password_EditText" />
+            app:layout_constraintTop_toBottomOf="@+id/password_EditText"/>
 
     </android.support.constraint.ConstraintLayout>
 

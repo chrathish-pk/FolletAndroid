@@ -6,63 +6,82 @@
 package com.follett.fsc.mobile.circdesk.view.adapter;
 
 import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.model.SiteRecord;
-import com.follett.fsc.mobile.circdesk.interfaces.ItemClickListener;
+import com.follett.fsc.mobile.circdesk.databinding.SchoolListItemBinding;
 import com.follett.fsc.mobile.circdesk.interfaces.NavigationListener;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.List;
 
-public class SchoolListAdapter extends RecyclerView.Adapter<SchoolListAdapter.SchoolListViewHolder> {
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_ID;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_NAME;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
 
-    Context context;
-    List<SiteRecord> schoolList;
-    private NavigationListener navigationListener;
+public class SchoolListAdapter extends RecyclerView.Adapter<SchoolListAdapter.SchoolListViewHolder> {
+    
+    private List<SiteRecord> mSchoolList;
+    
+    private NavigationListener mNavigationListener;
+    
+    private Context mContext;
+    
     @NonNull
     @Override
     public SchoolListAdapter.SchoolListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.school_list_item,parent,false);
-        return new SchoolListViewHolder(view);
+        SchoolListItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.school_list_item, parent, false);
+        return new SchoolListViewHolder(binding);
     }
-
+    
     public SchoolListAdapter(Context context, List<SiteRecord> schoolList) {
-        this.context = context;
-        this.schoolList = schoolList;
-        navigationListener = (NavigationListener) context;
+        mContext = context;
+        this.mSchoolList = schoolList;
+        mNavigationListener = (NavigationListener) context;
     }
-
+    
     @Override
     public int getItemCount() {
-        if(schoolList != null){
-            return schoolList.size();
+        if (mSchoolList != null) {
+            return mSchoolList.size();
         }
         return 0;
     }
-
+    
     @Override
     public void onBindViewHolder(SchoolListAdapter.SchoolListViewHolder holder, int position) {
-
-        holder.tvSchoolName.setText(schoolList.get(position).getSiteName());
+        SiteRecord siteRecord = mSchoolList.get(position);
+        holder.binding.setSchoolData(siteRecord);
     }
-
-    public class SchoolListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView tvSchoolName;
-        public SchoolListViewHolder(View itemView) {
-            super(itemView);
-            tvSchoolName = (TextView)itemView.findViewById(R.id.schoolname);
-            tvSchoolName.setOnClickListener(this);
-        }
     
+    public class SchoolListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private SchoolListItemBinding binding;
+        
+        public SchoolListViewHolder(SchoolListItemBinding listItemBinding) {
+            super(listItemBinding.getRoot());
+            binding = listItemBinding;
+            binding.schoolname.setOnClickListener(this);
+        }
+        
         @Override
         public void onClick(View view) {
-            navigationListener.onNavigation(1);
+            int position = getAdapterPosition();
+            AppSharedPreferences.getInstance(mContext)
+                    .setString(KEY_SITE_SHORT_NAME, mSchoolList.get(position)
+                            .getSiteShortName());
+            AppSharedPreferences.getInstance(mContext)
+                    .setString(KEY_SITE_ID, mSchoolList.get(position)
+                            .getSiteID());
+            AppSharedPreferences.getInstance(mContext)
+                    .setString(KEY_SITE_NAME, mSchoolList.get(position)
+                            .getSiteName());
+            mNavigationListener.onNavigation(1);
         }
     }
 }

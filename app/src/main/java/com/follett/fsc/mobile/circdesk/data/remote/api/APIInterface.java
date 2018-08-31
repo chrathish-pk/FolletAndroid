@@ -15,7 +15,6 @@ import com.follett.fsc.mobile.circdesk.data.model.Version;
 import com.follett.fsc.mobile.circdesk.data.model.checkout.CheckoutResult;
 
 import io.reactivex.Observable;
-import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Query;
@@ -28,8 +27,7 @@ public interface APIInterface {
     })
     @GET("/rest/version")
     @JsonAndXmlConverters.Xml
-    Observable<Version> getVersion(@Query("contextName") String contextName, @Query("client") String client, @Query("appID") String appId, @Query("device")
-            String device, @Query("appVersion") String appVersion, @Query("appLanguage") String appLanguage);
+    Observable<Version> getVersion();
 
     @Headers({
             "Accept: application/json",
@@ -37,18 +35,17 @@ public interface APIInterface {
     })
     @GET("/rest/v4/district/sites")
     @JsonAndXmlConverters.Xml
-    Call<SiteResults> getSchoolList(@Query("contextName") String contextName, @Query("client") String client, @Query("productTypes") String productTypes,
-                                    @Query("appID") String appID, @Query("device") String device, @Query("appVersion") String appVersion, @Query("appLanguage") String appLanguage);
+    Observable<SiteResults> getSchoolList(@Query("contextName") String contextName);
 
-    @Headers({
-            "Accept: application/json",
-            "text/xml: gzip"
-    })
-    @GET("rest/v4/district/login")
-    @JsonAndXmlConverters.Xml
-    Observable<LoginResults> getLoginResults(@Query("contextName") String contextName, @Query("site") String site, @Query("client") String client, @Query
-            ("password") String password, @Query("userName") String userName, @Query("appID") String appID, @Query("device") String device, @Query
-                                                     ("appVersion") String appVersion, @Query("appLanguage") String appLanguage);
+//    @Headers({
+//            "Accept: application/json",
+//            "text/xml: gzip"
+//    })
+//    @GET("rest/v4/district/login")
+//    @JsonAndXmlConverters.Xml
+//    Observable<LoginResults> getLoginResultsDummy(@Query("contextName") String contextName, @Query("site") String site, @Query("client") String client, @Query
+//            ("password") String password, @Query("userName") String userName, @Query("appID") String appID, @Query("device") String device, @Query
+//                                                     ("appVersion") String appVersion, @Query("appLanguage") String appLanguage);
 
     @Headers({
             "Cookie: JSESSIONID=9A659y8TEgwy7Djw-2ad7oV1re7cTGSwhWyFeASg",
@@ -80,4 +77,11 @@ public interface APIInterface {
     })
     Observable<TitleDetails> getTitleDetails(@Query("contextName") String contextName, @Query("site") String site, @Query("client") String client,
                                              @Query("bibID") String bibid, @Query("appID") String appID, @Query("device") String device, @Query("appVersion") String appVersion, @Query("appLanguage") String appLanguage);
+    
+    
+    @Headers({"Accept: application/json", "text/xml: gzip"})
+    @GET("rest/v4/district/login")
+    @JsonAndXmlConverters.Xml
+    Observable<LoginResults> getLoginResults(@Query("contextName") String contextName, @Query("site") String site, @Query("userName") String userName, @Query
+            ("password") String password);
 }

@@ -7,6 +7,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
 
+    <data>
+
+        <variable
+            name="schoolData"
+            type="com.follett.fsc.mobile.circdesk.data.model.SiteRecord"/>
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,12 +24,12 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/layout_size_60"
             android:layout_weight="1"
+            android:fontFamily="@font/opensans_regular"
             android:gravity="center_vertical"
             android:padding="@dimen/layout_size_16"
-            android:fontFamily="@font/opensans_regular"
-            android:textSize="@dimen/text_size_14sp"
-            android:text="TextView"
-            android:textColor="@color/black"/>
+            android:text="@{schoolData.siteName}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_14sp"/>
 
         <View
             android:layout_width="match_parent"
@@ -31,4 +38,4 @@
             android:background="#D3D3D3	"/>
     </LinearLayout>
 
-    </layout>
+</layout>
