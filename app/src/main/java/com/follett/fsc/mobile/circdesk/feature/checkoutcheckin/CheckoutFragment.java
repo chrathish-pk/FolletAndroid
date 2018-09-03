@@ -19,9 +19,9 @@ import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentCheckoutBinding;
+import com.follett.fsc.mobile.circdesk.feature.iteminfo.TitleInfoActivity;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-import com.follett.fsc.mobile.circdesk.feature.iteminfo.TitleInfoActivity;
 
 public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, CheckoutViewModel> implements View.OnClickListener, UpdateUIListener {
 
@@ -189,6 +189,7 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
     public void bindPatronResult() {
         if (scanPatron != null) {
             fragmentCheckoutBinding.patronDetailIncludeLayout.patronDetailLayout.setVisibility(View.VISIBLE);
+            fragmentCheckoutBinding.checkoutDetailIncludeLayout.checkedoutDetailLayout.setVisibility(View.GONE);
             fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.setText("");
             if (fragmentCheckoutBinding.checkoutPatronErrorMsg.getVisibility() == View.VISIBLE)
                 fragmentCheckoutBinding.checkoutPatronErrorMsg.setVisibility(View.GONE);

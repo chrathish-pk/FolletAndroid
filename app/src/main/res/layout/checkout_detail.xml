@@ -9,8 +9,8 @@
         android:id="@+id/checkedoutDetailLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:visibility="gone">
+        android:padding="5dp"
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/opensans_semibold"
                 android:textColor="@color/blueLabel"
-                android:textSize="@dimen/text_size_20sp" />
+                android:textSize="@dimen/text_size_18sp" />
 
             <TextView
                 android:id="@+id/checkedoutName"
