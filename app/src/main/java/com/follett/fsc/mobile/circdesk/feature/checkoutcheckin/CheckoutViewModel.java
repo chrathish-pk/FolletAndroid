@@ -20,9 +20,6 @@ import java.util.Map;
 
 public class CheckoutViewModel extends BaseViewModel implements NetworkInterface {
 
-    //this is the data that we will fetch asynchronously
-//    public ScanPatron scanPatron;
-//    public CheckoutResult checkoutResult;
     private Application mApplication;
     private UpdateUIListener updateUIListener;
 
@@ -34,20 +31,6 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
         this.mAppRemoteRepository = appRemoteRepository;
         this.updateUIListener = updateUIListener;
     }
-
-    //we will call this method to get the data
-   /* public LiveData<ScanPatron> getScanPatronLiveData() {
-        //if the list is null
-        if (scanPatronMutableLiveData == null) {
-            scanPatronMutableLiveData = new MutableLiveData<ScanPatron>();
-            //we will load it asynchronously from server in this method
-            getScanPatron();
-        }
-
-        //finally we will return the list
-        return scanPatronMutableLiveData;
-    }*/
-
 
     public void getScanPatron(String patronBarcodeID) {
         setIsLoding(true);
@@ -67,7 +50,7 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
         map.put("Accept", "application/json");
         map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance(mApplication).getString(AppSharedPreferences.KEY_SESSION_ID));
         map.put("text/xml", "gzip");
-        mAppRemoteRepository.getCheckoutResult(map,this, patronID, barcode);
+        mAppRemoteRepository.getCheckoutResult(map, this, patronID, barcode);
     }
 
     @Override
@@ -80,11 +63,7 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
                         .getString(AppSharedPreferences.KEY_SELECTED_BARCODE);
                 if (!TextUtils.isEmpty(selectedPatronID)) {
                     AppSharedPreferences.getInstance(mApplication)
-                            .setString(AppSharedPreferences.KEY_BARCODE, selectedPatronID);
-                    AppSharedPreferences.getInstance(mApplication)
                             .setString(AppSharedPreferences.KEY_PATRON_ID, scanPatron.getPatronID());
-                    AppSharedPreferences.getInstance(mApplication)
-                            .setString(AppSharedPreferences.KEY_SELECTED_BARCODE, null);
                 }
                 updateUIListener.updateUI(scanPatron);
             } else if (model instanceof CheckoutResult) {
