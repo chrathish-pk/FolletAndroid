@@ -13,13 +13,14 @@ import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 
 import android.app.Application;
+import android.support.annotation.NonNull;
 
 public class AdditionalInfoViewModel extends BaseViewModel implements NetworkInterface {
 
     private AppRemoteRepository mAppRemoteRepository;
     private AdditionalInfoListener additionalInfoListener;
 
-    public AdditionalInfoViewModel(Application application, AppRemoteRepository appRemoteRepository, AdditionalInfoListener additionalInfoListener) {
+    public AdditionalInfoViewModel(@NonNull Application application, AppRemoteRepository appRemoteRepository, AdditionalInfoListener additionalInfoListener) {
         super(application);
         mAppRemoteRepository = appRemoteRepository;
         this.additionalInfoListener = additionalInfoListener;

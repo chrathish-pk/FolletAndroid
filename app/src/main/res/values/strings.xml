@@ -100,5 +100,8 @@
     <string name="scanPatronError">Scan patron error</string>
     <string name="noDataFound">no data found from api result</string>
 
+    <!--Patron Status-->
+    <string name="patron_status_label">Patron Status</string>
+
 
 </resources>

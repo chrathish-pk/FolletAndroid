@@ -93,7 +93,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
     }
     
     @Override
-    public void ctaButtonOnClick() {
+    public void ctaButtonOnClick(View view) {
         
         AppUtils.getInstance().hideKeyBoard(getBaseActivity(), mLayoutBinding.getRoot());
         if (!AppUtils.getInstance()
@@ -193,7 +193,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
         if (i == EditorInfo.IME_ACTION_NEXT) {
             mLayoutBinding.passwordEditText.requestFocus();
         } else if (i == EditorInfo.IME_ACTION_DONE) {
-            ctaButtonOnClick();
+            ctaButtonOnClick(mLayoutBinding.passwordEditText);
         }
         return true;
     }

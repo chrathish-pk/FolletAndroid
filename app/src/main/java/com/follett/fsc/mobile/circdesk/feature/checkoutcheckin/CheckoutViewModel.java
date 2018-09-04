@@ -13,6 +13,7 @@ import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 
 import android.app.Application;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 public class CheckoutViewModel extends BaseViewModel implements NetworkInterface {
@@ -25,7 +26,7 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
 
     private AppRemoteRepository mAppRemoteRepository;
 
-    public CheckoutViewModel(Application application, AppRemoteRepository appRemoteRepository, UpdateUIListener updateUIListener) {
+    public CheckoutViewModel(@NonNull Application application, AppRemoteRepository appRemoteRepository, UpdateUIListener updateUIListener) {
         super(application);
         this.mApplication = application;
         this.mAppRemoteRepository = appRemoteRepository;

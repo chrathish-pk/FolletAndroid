@@ -24,12 +24,13 @@
                 android:background="@color/white"
                 android:orientation="vertical">
 
-                <EditText
+                <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/patronEntry"
                     style="@style/EditTextTheme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/opensans_regular"
+                    android:imeOptions="actionDone"
                     android:hint="@string/findPatron"
                     android:padding="15dp"
                     android:textSize="@dimen/text_size_16sp" />

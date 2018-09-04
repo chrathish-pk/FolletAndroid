@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /*
+  ~  * Copyright (c) 2018 Follett. All rights reserved.
+  ~  */
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="patronInfo"
+            type="com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo"/>
+
+        <variable
+            name="viewModel"
+            type="com.follett.fsc.mobile.circdesk.feature.patronstatus.PatronStatusViewModel"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.ContentLoadingProgressBar
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <include
+            android:id="@+id/patronEntryIncludeLayout"
+            layout="@layout/patron_entry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+
+        <RelativeLayout
+            android:id="@+id/patronDetailLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/patronEntryIncludeLayout">
+
+            <RelativeLayout
+                android:id="@+id/patronInfoLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/checkoutPatronImg"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerVertical="true"/>
+
+                <LinearLayout
+                    android:id="@+id/checkoutPatronLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/checkoutPatronImg"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/checkoutPatronName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/opensans_regular"
+                        android:text="@{patronInfo.firstName}"
+                        android:textColor="@color/blueLabel"
+                        android:textSize="@dimen/text_size_20sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/checkoutPatronType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/opensans_regular"
+                        android:textSize="@dimen/text_size_18sp"/>
+
+                    <TextView
+                        android:id="@+id/checkoutPatronID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/opensans_regular"
+                        android:textSize="@dimen/text_size_18sp"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/checkoutCloseBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/close"/>
+
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

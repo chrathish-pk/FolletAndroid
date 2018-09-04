@@ -6,17 +6,18 @@
 
 package com.follett.fsc.mobile.circdesk.data.remote.repository;
 
-import android.support.annotation.Nullable;
-
-import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginResults;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.ScanPatron;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.SiteResults;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.Version;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.CheckoutResult;
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.api.FollettAPIManager;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.CheckoutResult;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.ScanPatron;
+import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginResults;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.SiteResults;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.Version;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
+
+import android.support.annotation.Nullable;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -200,6 +201,34 @@ public class AppRemoteRepository {
                     @Override
                     public void onComplete() {
 
+                    }
+                });
+    }
+    
+    public void getPatronStatus(@Nullable final NetworkInterface networkInterface, String contextName, String site, String patronBarcode) {
+        
+        apiService.getPatronStatus(contextName, site, patronBarcode)
+                .subscribeWith(new Observer<PatronInfo>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+                    
+                    @Override
+                    public void onNext(PatronInfo patronInfoResult) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallCompleted(patronInfoResult);
+                        }
+                    }
+                    
+                    @Override
+                    public void onError(Throwable throwable) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallFailed(throwable);
+                        }
+                    }
+                    
+                    @Override
+                    public void onComplete() {
                     }
                 });
     }

@@ -92,7 +92,7 @@ public class SchoolListFragment extends BaseFragment<FragmentSchoolListBinding, 
     }
     
     @Override
-    public void ctaButtonOnClick() {
+    public void ctaButtonOnClick(View view) {
         getBaseActivity().onBackPressed();
     }
 }

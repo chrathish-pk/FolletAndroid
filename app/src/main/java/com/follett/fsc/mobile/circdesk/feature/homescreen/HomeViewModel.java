@@ -29,6 +29,10 @@ public class HomeViewModel extends BaseViewModel<CTAButtonListener> {
     public SingleLiveEvent<String> getOpenTaskEvent() {
         return mOpenCheckinCheckoutView;
     }
+    
+    public void setOpenTaskEvent (String value) {
+        mOpenCheckinCheckoutView.setValue(value);
+    }
 
     public void loadHomeMenuItems(Context context) {
         homeMenuItems.add(new HomeMenu(context.getString(R.string.checkInCheckout), R.drawable.out));
