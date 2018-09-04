@@ -6,6 +6,8 @@
 
 package com.follett.fsc.mobile.circdesk.data.remote.repository;
 
+import android.support.annotation.Nullable;
+
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.api.FollettAPIManager;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
@@ -15,9 +17,10 @@ import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.SiteResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.Version;
+
+import java.util.Map;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 
-import android.support.annotation.Nullable;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -116,9 +119,8 @@ public class AppRemoteRepository {
                 });
     }
 
-    public void getScanPatron(@Nullable final NetworkInterface networkInterface, String patronBarcodeID) {
-
-        apiService.getScanPatron("dvpdt_devprodtest", "FDPSA", "COGNITE", patronBarcodeID, "DestinyCirc", "Android_24_7.0_lge_lucye_LG-H870DS", "1_Android",
+    public void getScanPatron(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String patronBarcodeID) {
+        apiService.getScanPatron(headers, "dvpdt_devprodtest", "FDPSA", "COGNITE", patronBarcodeID, "DestinyCirc", "Android_24_7.0_lge_lucye_LG-H870DS", "1_Android",
                 "English")
                 .subscribeWith(new Observer<ScanPatron>() {
                     @Override
@@ -146,9 +148,9 @@ public class AppRemoteRepository {
                 });
     }
 
-    public void getCheckoutResult(@Nullable final NetworkInterface networkInterface, String patronID, String barcode) {
+    public void getCheckoutResult(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String patronID, String barcode) {
 
-        apiService.getCheckoutResult("dvpdt_devprodtest", "FDPSA", barcode, patronID, "0", "false")
+        apiService.getCheckoutResult(headers, "dvpdt_devprodtest", "FDPSA", barcode, patronID, "0", "false")
                 .subscribeWith(new Observer<CheckoutResult>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -175,8 +177,8 @@ public class AppRemoteRepository {
                 });
     }
 
-    public void getTitleDetails(@Nullable final NetworkInterface networkInterface, String bibID) {
-        apiService.getTitleDetails("dvpdt_devprodtest", "FDPSA", "COGNITE", bibID, "DestinyCirc", "Android_24_7.0_lge_lucye_LG-H870DS", "1_Android",
+    public void getTitleDetails(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String bibID) {
+        apiService.getTitleDetails(headers, "dvpdt_devprodtest", "FDPSA", "COGNITE", bibID, "DestinyCirc", "Android_24_7.0_lge_lucye_LG-H870DS", "1_Android",
                 "English")
                 .subscribeWith(new Observer<TitleDetails>() {
                     @Override

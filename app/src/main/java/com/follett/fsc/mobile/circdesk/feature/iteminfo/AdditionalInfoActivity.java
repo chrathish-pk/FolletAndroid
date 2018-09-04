@@ -10,9 +10,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
-import com.follett.fsc.mobile.circdesk.databinding.ActivityMoreDetailsBinding;
 import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
+import com.follett.fsc.mobile.circdesk.databinding.ActivityMoreDetailsBinding;
+import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 
 public class AdditionalInfoActivity extends BaseActivity<AdditionalInfoViewModel> implements View.OnClickListener {
 
@@ -42,7 +42,7 @@ public class AdditionalInfoActivity extends BaseActivity<AdditionalInfoViewModel
         activityMoreDetailsBinding.itemFormat.setText(titleDetails.getAdditionalInfoRecord().getFormat());
         activityMoreDetailsBinding.itemISBN.setText(titleDetails.getAdditionalInfoRecord().getIsbnList().get(0));
         activityMoreDetailsBinding.itemTarget.setText(titleDetails.getAdditionalInfoRecord().getTargetAudienceList().get(0));
-        activityMoreDetailsBinding.itemAccelerated.setText("Quiz Number: "+titleDetails.getQuizInfoRecord().getQuizList().getQuiz().getQuizNumber()+", Points: "+titleDetails.getQuizInfoRecord().getQuizList().getQuiz().getPoints());
+        activityMoreDetailsBinding.itemAccelerated.setText("Quiz Number: "+titleDetails.getQuizInfoRecord().getQuizList().get(0).getQuizNumber()+", Points: "+titleDetails.getQuizInfoRecord().getQuizList().get(0).getPoints());
     }
 
     @Override

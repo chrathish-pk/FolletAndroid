@@ -9,8 +9,7 @@
         android:id="@+id/patronDetailLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp"
-        >
+        android:visibility="gone">
 
         <RelativeLayout
             android:id="@+id/patronInfoLayout"
@@ -38,7 +37,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/opensans_regular"
                     android:textColor="@color/blueLabel"
-                    android:textSize="@dimen/text_size_20sp"
+                    android:textSize="@dimen/text_size_18sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -46,14 +45,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/opensans_regular"
-                    android:textSize="@dimen/text_size_18sp" />
+                    android:textSize="@dimen/text_size_16sp" />
 
                 <TextView
                     android:id="@+id/checkoutPatronID"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/opensans_regular"
-                    android:textSize="@dimen/text_size_18sp" />
+                    android:textSize="@dimen/text_size_16sp" />
 
             </LinearLayout>
 
@@ -75,10 +74,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/patronInfoLayout"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/opensans_regular"
             android:textColor="@color/blueLabel"
-            android:textSize="@dimen/text_size_18sp" />
+            android:textSize="@dimen/text_size_16sp" />
 
         <TextView
             android:id="@+id/overdue"
@@ -87,10 +86,10 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/patronInfoLayout"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/opensans_regular"
             android:textColor="@color/blueLabel"
-            android:textSize="@dimen/text_size_18sp" />
+            android:textSize="@dimen/text_size_16sp" />
 
     </RelativeLayout>
 

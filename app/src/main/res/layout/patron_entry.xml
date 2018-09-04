@@ -14,13 +14,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             card_view:cardCornerRadius="2dp"
-            card_view:cardElevation="10dp"
+            card_view:cardElevation="7dp"
             card_view:cardUseCompatPadding="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:orientation="vertical">
 
@@ -29,10 +28,11 @@
                     style="@style/EditTextTheme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/opensans_regular"
                     android:imeOptions="actionDone"
                     android:hint="@string/findPatron"
-                    android:padding="15dp"
+                    android:padding="10dp"
                     android:textSize="@dimen/text_size_16sp" />
 
                 <RelativeLayout

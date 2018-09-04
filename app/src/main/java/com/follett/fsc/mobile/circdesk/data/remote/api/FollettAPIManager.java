@@ -74,7 +74,8 @@ public class FollettAPIManager {
         httpClient.addInterceptor(new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
-                Request request = chain.request().newBuilder().build();
+                Request request = chain.request().newBuilder()
+                        .build();
                 FollettLog.d("Response>>>>>>>>>>>>>>>>>>>>>>>", chain.proceed(request).body().string());
                 return chain.proceed(request);
             }

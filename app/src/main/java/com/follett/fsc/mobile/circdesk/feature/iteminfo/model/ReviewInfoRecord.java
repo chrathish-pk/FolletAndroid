@@ -12,35 +12,29 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ReviewInfoRecord implements Serializable {
+public class ReviewInfoRecord implements Serializable
+{
 
     @SerializedName("alreadyReviewedByUser")
     @Expose
-    private String alreadyReviewedByUser;
-    @SerializedName("myRatingApproved")
-    @Expose
-    private String myRatingApproved;
+    private Boolean alreadyReviewedByUser;
     @SerializedName("reviewAverage")
     @Expose
     private String reviewAverage;
+    @SerializedName("myRatingApproved")
+    @Expose
+    private Boolean myRatingApproved;
     @SerializedName("reviewList")
     @Expose
     private List<Object> reviewList = null;
+    private final static long serialVersionUID = 2382812993672654714L;
 
-    public String getAlreadyReviewedByUser() {
+    public Boolean getAlreadyReviewedByUser() {
         return alreadyReviewedByUser;
     }
 
-    public void setAlreadyReviewedByUser(String alreadyReviewedByUser) {
+    public void setAlreadyReviewedByUser(Boolean alreadyReviewedByUser) {
         this.alreadyReviewedByUser = alreadyReviewedByUser;
-    }
-
-    public String getMyRatingApproved() {
-        return myRatingApproved;
-    }
-
-    public void setMyRatingApproved(String myRatingApproved) {
-        this.myRatingApproved = myRatingApproved;
     }
 
     public String getReviewAverage() {
@@ -49,6 +43,14 @@ public class ReviewInfoRecord implements Serializable {
 
     public void setReviewAverage(String reviewAverage) {
         this.reviewAverage = reviewAverage;
+    }
+
+    public Boolean getMyRatingApproved() {
+        return myRatingApproved;
+    }
+
+    public void setMyRatingApproved(Boolean myRatingApproved) {
+        this.myRatingApproved = myRatingApproved;
     }
 
     public List<Object> getReviewList() {

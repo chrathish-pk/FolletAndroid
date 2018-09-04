@@ -6,11 +6,14 @@
 package com.follett.fsc.mobile.circdesk.feature.loginsetup;
 
 
+import android.app.Application;
+
+import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
+import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
-import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 
@@ -20,10 +23,12 @@ import android.support.annotation.NonNull;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SESSION_ID;
 
 public class LoginViewModel extends BaseViewModel<CTAButtonListener> implements NetworkInterface {
-    
+
     private Application mApplication;
-    
+
     private AppRemoteRepository mAppRemoteRepository;
+
+    public LoginViewModel(Application application, AppRemoteRepository appRemoteRepository) {
     
     public LoginViewModel(@NonNull Application application, AppRemoteRepository appRemoteRepository) {
         super(application);

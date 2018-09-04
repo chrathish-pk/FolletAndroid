@@ -7,23 +7,35 @@
 
 package com.follett.fsc.mobile.circdesk.feature.iteminfo.model;
 
+import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
+public class PublicationList implements Serializable
+{
 
-public class PublicationList implements Serializable {
-
-    @SerializedName("publication")
+    @SerializedName("value")
     @Expose
-    private Publication publication;
+    private String value;
+    @SerializedName("prompt")
+    @Expose
+    private String prompt;
+    private final static long serialVersionUID = 2718610145586674836L;
 
-    public Publication getPublication() {
-        return publication;
+    public String getValue() {
+        return value;
     }
 
-    public void setPublication(Publication publication) {
-        this.publication = publication;
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public String getPrompt() {
+        return prompt;
+    }
+
+    public void setPrompt(String prompt) {
+        this.prompt = prompt;
     }
 
 }
