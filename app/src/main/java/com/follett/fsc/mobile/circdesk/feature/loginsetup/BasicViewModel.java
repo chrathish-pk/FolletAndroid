@@ -20,6 +20,7 @@ import android.app.Application;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import java.io.IOException;
@@ -42,7 +43,7 @@ public class BasicViewModel extends BaseViewModel<CTAButtonListener> implements 
     
     private AppRemoteRepository mAppRemoteRepository;
     
-    public BasicViewModel(Application application, AppRemoteRepository appRemoteRepository) {
+    public BasicViewModel(@NonNull Application application, AppRemoteRepository appRemoteRepository) {
         super(application);
         mApplication = application;
         mAppRemoteRepository = appRemoteRepository;

@@ -19,13 +19,15 @@ import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.support.annotation.NonNull;
+
 public class CheckoutViewModel extends BaseViewModel implements NetworkInterface {
 
     private Application mApplication;
     private UpdateUIListener updateUIListener;
     private AppRemoteRepository mAppRemoteRepository;
 
-    public CheckoutViewModel(Application application, AppRemoteRepository appRemoteRepository, UpdateUIListener updateUIListener) {
+    public CheckoutViewModel(@NonNull Application application, AppRemoteRepository appRemoteRepository, UpdateUIListener updateUIListener) {
         super(application);
         this.mApplication = application;
         this.mAppRemoteRepository = appRemoteRepository;
