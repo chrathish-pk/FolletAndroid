@@ -41,16 +41,6 @@ public interface APIInterface {
     @JsonAndXmlConverters.Xml
     Observable<SiteResults> getSchoolList(@Query("contextName") String contextName);
 
-//    @Headers({
-//            "Accept: application/json",
-//            "text/xml: gzip"
-//    })
-//    @GET("rest/v4/district/login")
-//    @JsonAndXmlConverters.Xml
-//    Observable<LoginResults> getLoginResultsDummy(@Query("contextName") String contextName, @Query("site") String site, @Query("client") String client, @Query
-//            ("password") String password, @Query("userName") String userName, @Query("appID") String appID, @Query("device") String device, @Query
-//                                                     ("appVersion") String appVersion, @Query("appLanguage") String appLanguage);
-
     @Headers({
             "Cookie: JSESSIONID=YYXn43oP1_6wRo83mhiiKqAs23x4omFd5QKE-F0q",
             "Accept: application/json",
@@ -78,21 +68,13 @@ public interface APIInterface {
                                                  @Query("barcode") String barcode, @Query("patronID") String patronID,
                                                  @Query("collectionType") String collectionType, @Query("overrideBlocks") String overrideBlocks);
 
-
-    Observable<TitleDetails> getTitleDetails(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site, @Query("client") String client,
     @GET("rest/v4/catalog/titledetail")
-    @Headers({
-            "Cookie: JSESSIONID=YYXn43oP1_6wRo83mhiiKqAs23x4omFd5QKE-F0q",
-            "Accept: application/json",
-            "text/xml: gzip"
-    })
-    Observable<TitleDetails> getTitleDetails(@Query("contextName") String contextName, @Query("site") String site, @Query("client") String client,
-                                             @Query("bibID") String bibid, @Query("appID") String appID, @Query("device") String device, @Query("appVersion") String appVersion, @Query("appLanguage") String appLanguage);
-
+    Observable<TitleDetails> getTitleDetails(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site, @Query("bibID") String bibid);
 
     @Headers({"Accept: application/json", "text/xml: gzip"})
     @GET("rest/v4/district/login")
     @JsonAndXmlConverters.Xml
     Observable<LoginResults> getLoginResults(@Query("contextName") String contextName, @Query("site") String site, @Query("userName") String userName, @Query
             ("password") String password);
+
 }

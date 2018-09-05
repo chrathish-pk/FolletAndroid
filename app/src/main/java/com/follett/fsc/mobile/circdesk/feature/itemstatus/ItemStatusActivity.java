@@ -40,10 +40,7 @@ public class ItemStatusActivity extends BaseActivity<ItemStatusViewModel> implem
             AppUtils.getInstance()
                     .hideKeyBoard(this, activityItemStatusBinding.itemStatusPatronEntry);
             if (AppUtils.getInstance().isEditTextNotEmpty(activityItemStatusBinding.itemStatusPatronEntry)) {
-                String barcode = AppSharedPreferences.getInstance(this).getString(AppSharedPreferences.KEY_BARCODE);
-                if (TextUtils.isEmpty(barcode)) {
                     itemStatusViewModel.getScanItem(activityItemStatusBinding.itemStatusPatronEntry.getText().toString().trim());
-                }
             } else {
                 AppUtils.getInstance()
                         .showShortToastMessages(this, getString(R.string.errorPatronEntry));

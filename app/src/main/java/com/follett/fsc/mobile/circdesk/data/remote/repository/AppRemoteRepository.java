@@ -177,8 +177,7 @@ public class AppRemoteRepository {
     }
 
     public void getTitleDetails(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String bibID) {
-        apiService.getTitleDetails(headers, "dvpdt_devprodtest", "FDPSA", "COGNITE", bibID, "DestinyCirc", "Android_24_7.0_lge_lucye_LG-H870DS", "1_Android",
-                "English")
+        apiService.getTitleDetails(headers, "dvpdt_devprodtest", "FDPSA", bibID)
                 .subscribeWith(new Observer<TitleDetails>() {
                     @Override
                     public void onSubscribe(Disposable d) {
