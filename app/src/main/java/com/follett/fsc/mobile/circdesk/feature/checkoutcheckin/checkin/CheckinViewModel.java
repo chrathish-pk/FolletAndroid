@@ -36,7 +36,7 @@ public class CheckinViewModel extends BaseViewModel implements NetworkInterface 
         this.updateUIListener = updateUIListener;
     }
 
-    public void getCheckinData(String checkinBarcode, String collectionType) {
+    public void getCheckinData(String checkinBarcode, String collectionType, boolean isLibraryUse) {
         setIsLoding(true);
 
         Map<String, String> map = new HashMap<>();
@@ -44,7 +44,7 @@ public class CheckinViewModel extends BaseViewModel implements NetworkInterface 
         map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance(mApplication).getString(AppSharedPreferences.KEY_SESSION_ID));
         map.put("text/xml", "gzip");
 
-        mAppRemoteRepository.getCheckinResult(map, this, checkinBarcode, collectionType);
+        mAppRemoteRepository.getCheckinResult(map, this, checkinBarcode, collectionType, isLibraryUse);
     }
 
 

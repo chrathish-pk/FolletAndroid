@@ -117,7 +117,9 @@ public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewMod
         super.onResume();
         if (!TextUtils.isEmpty(AppSharedPreferences.getInstance(this).getString(AppSharedPreferences.KEY_SELECTED_BARCODE))) {
             Fragment fragment = adapter.getItem(actvityCheckinCheckoutBinding.viewPager.getCurrentItem());
-            ((CheckoutFragment) fragment).getPatronID();
+            if (fragment instanceof CheckoutFragment) {
+                ((CheckoutFragment) fragment).getPatronID();
+            }
         }
     }
 

@@ -18,10 +18,9 @@ import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.SiteResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.Version;
-
-import java.util.Map;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 
+import java.util.Map;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -178,9 +177,9 @@ public class AppRemoteRepository {
                 });
     }
 
-    public void getCheckinResult(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String barcode, String collectionType) {
+    public void getCheckinResult(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String barcode, String collectionType, boolean isLibraryUse) {
 
-        apiService.getCheckinResult(headers, "dvpdt_devprodtest", "FDPSA", barcode, collectionType, "false")
+        apiService.getCheckinResult(headers, "dvpdt_devprodtest", "FDPSA", barcode, collectionType, String.valueOf(isLibraryUse))
                 .subscribeWith(new Observer<CheckinResult>() {
                     @Override
                     public void onSubscribe(Disposable d) {

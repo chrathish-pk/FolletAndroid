@@ -13,7 +13,7 @@
     <string name="alert_warning">Information</string>
     <string name="alert_success">Alert</string>
     <string name="back">Back</string>
-    <string name="app_status_title">Follett DESTINY</string>
+    <string name="app_status_title">DESTINY</string>
     <string name="connect_your_school_label">Connect to Your School</string>
     <string name="select_school_label">Select School</string>
     <string name="get_started_label">Get Started</string>
@@ -45,6 +45,7 @@
     <string name="checkoutLabel">"Checked Out: "</string>
     <string name="overdueLabel">"Overdue: "</string>
     <string name="checkedin">Checked In</string>
+    <string name="checkedOut">Checked Out</string>
 
 
     <!--Patron Screen-->

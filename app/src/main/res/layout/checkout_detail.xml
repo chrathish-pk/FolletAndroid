@@ -3,8 +3,7 @@
   ~  * Copyright (c) 2018 Follett. All rights reserved.
   ~  */
   -->
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:bind="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -14,18 +13,25 @@
             name="checkoutResult"
             type="com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.CheckoutResult" />
 
+        <variable
+            name="checkinResult"
+            type="com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin.CheckinResult" />
+
     </data>
 
     <RelativeLayout
         android:id="@+id/checkedoutDetailLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:visibility="gone">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/checkoutDataLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/checkedoutInfoBtn"
             android:orientation="vertical">
 
             <TextView
@@ -33,7 +39,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/opensans_semibold"
+                android:text="@{checkoutResult!=null ? @string/checkedOut : @string/checkedin}"
                 android:textColor="@color/blueLabel"
+                android:gravity="left"
                 android:textSize="@dimen/text_size_18sp" />
 
             <TextView
@@ -41,8 +49,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
+                android:gravity="left"
                 android:fontFamily="@font/opensans_regular"
-                android:text="@{checkoutResult.info.title}"
+                android:text="@{checkoutResult!=null ? checkoutResult.info.title : checkinResult.info.title}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_16sp" />
 
@@ -50,9 +59,11 @@
                 android:id="@+id/checkedoutType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
                 android:layout_marginTop="2dp"
+                android:gravity="left"
                 android:fontFamily="@font/opensans_regular"
-                android:text="@{checkoutResult.info.materialType}"
+                android:text="@{checkoutResult!=null ? checkoutResult.info.materialType : String.valueOf(checkinResult.info.materialType)}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_16sp" />
 
@@ -61,6 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
+                android:gravity="left"
                 android:fontFamily="@font/opensans_semibold"
                 android:text="@{checkoutResult.info.dueDate}"
                 android:textColor="@color/black"
@@ -75,8 +87,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:padding="10dp"
-            android:src="@drawable/checkedout_info"
-            bind:imageUrl="@{checkoutResult.info.coverURL}" />
+            android:src="@drawable/checkedout_info" />
 
     </RelativeLayout>
 

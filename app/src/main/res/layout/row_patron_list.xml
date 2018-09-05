@@ -12,6 +12,7 @@
             type="com.follett.fsc.mobile.circdesk.app.ItemClickListener" />
     </data>
 
+
     <LinearLayout
         android:id="@+id/patronLayout"
         android:layout_width="match_parent"
@@ -21,9 +22,9 @@
 
         <ImageView
             android:id="@+id/patronImg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center_vertical"
             android:scaleType="fitCenter" />
 
         <LinearLayout
@@ -31,8 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:padding="5dp">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/patronName"
@@ -69,8 +69,14 @@
                 android:fontFamily="@font/opensans_regular"
                 android:text="@string/gradeLevelLabel"
                 android:textSize="@dimen/text_size_16sp" />
-        </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/editTextBgColor" />
+        </LinearLayout>
     </LinearLayout>
+
 
 </layout>

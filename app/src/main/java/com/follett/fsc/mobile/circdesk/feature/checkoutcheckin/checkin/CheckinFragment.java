@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.CompoundButton;
 
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
@@ -22,11 +23,12 @@ import com.follett.fsc.mobile.circdesk.feature.iteminfo.TitleInfoActivity;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
-public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, CheckinViewModel> implements UpdateUIListener, View.OnClickListener {
+public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, CheckinViewModel> implements UpdateUIListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     private CheckinViewModel checkinViewModel;
     private FragmentCheckinBinding fragmentCheckinBinding;
     private CheckinResult checkinResult;
+    private boolean isLibraryUse;
 
     @Override
     public int getLayoutId() {
@@ -51,6 +53,7 @@ public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, Checki
 
         fragmentCheckinBinding.checkinEntryIncludeLayout.patronGoBtn.setOnClickListener(this);
         fragmentCheckinBinding.checkinDetailIncludeLayout.checkedoutInfoBtn.setOnClickListener(this);
+        fragmentCheckinBinding.checkinEntryIncludeLayout.checkinLibRecordSwitch.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -65,9 +68,8 @@ public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, Checki
                         if (checkinResult.getSuccess()) {
                             fragmentCheckinBinding.checkinPatronErrorMsg.setVisibility(View.GONE);
                             fragmentCheckinBinding.checkinDetailIncludeLayout.checkedoutDetailLayout.setVisibility(View.VISIBLE);
+                            fragmentCheckinBinding.setCheckinResult(checkinResult);
                             fragmentCheckinBinding.checkinDetailIncludeLayout.checkedoutLabel.setText(getString(R.string.checkedin));
-                            fragmentCheckinBinding.checkinDetailIncludeLayout.checkedoutName.setText(checkinResult.getInfo().getTitle());
-                            fragmentCheckinBinding.checkinDetailIncludeLayout.checkedoutType.setText(checkinResult.getInfo().getBarcode());
                         } else {
                             fragmentCheckinBinding.checkinPatronErrorMsg.setVisibility(View.VISIBLE);
                             fragmentCheckinBinding.checkinDetailIncludeLayout.checkedoutDetailLayout.setVisibility(View.GONE);
@@ -98,7 +100,7 @@ public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, Checki
                         .hideKeyBoard(getBaseActivity(), fragmentCheckinBinding.checkinEntryIncludeLayout.patronEntry);
                 if (AppUtils.getInstance().isEditTextNotEmpty(fragmentCheckinBinding.checkinEntryIncludeLayout.patronEntry)) {
                     int collectionType = AppSharedPreferences.getInstance(getActivity()).getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED) ? 0 : 4;
-                    checkinViewModel.getCheckinData(fragmentCheckinBinding.checkinEntryIncludeLayout.patronEntry.getText().toString().trim(), String.valueOf(collectionType));
+                    checkinViewModel.getCheckinData(fragmentCheckinBinding.checkinEntryIncludeLayout.patronEntry.getText().toString().trim(), String.valueOf(collectionType), isLibraryUse);
                 } else {
                     AppUtils.getInstance()
                             .showShortToastMessages(getBaseActivity(), getString(R.string.errorPatronEntry));
@@ -110,5 +112,10 @@ public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, Checki
                 startActivity(titleIntent);
                 break;
         }
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        isLibraryUse = isChecked;
     }
 }

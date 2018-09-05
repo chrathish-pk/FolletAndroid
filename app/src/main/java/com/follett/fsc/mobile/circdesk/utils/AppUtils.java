@@ -168,7 +168,6 @@ public class AppUtils {
         }
     }
 
-    //    @BindingAdapter("android:src")
     @BindingAdapter({"bind:imageUrl"})
     public static void loadImage(ImageView view, String imageUrl) {
         Context context = view.getContext();

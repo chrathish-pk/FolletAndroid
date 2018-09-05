@@ -14,7 +14,6 @@ import android.view.View;
 
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.GlideApp;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
@@ -160,9 +159,10 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
             if (fragmentCheckoutBinding.checkoutPatronErrorMsg.getVisibility() == View.VISIBLE)
                 fragmentCheckoutBinding.checkoutPatronErrorMsg.setVisibility(View.GONE);
             fragmentCheckoutBinding.checkoutDetailIncludeLayout.checkedoutDetailLayout.setVisibility(View.VISIBLE);
-            fragmentCheckoutBinding.checkoutDetailIncludeLayout.checkedoutName.setText(checkoutResult.getInfo().getTitle());
-            fragmentCheckoutBinding.checkoutDetailIncludeLayout.checkedoutDue.setText(checkoutResult.getInfo().getDueDate());
-            fragmentCheckoutBinding.checkoutDetailIncludeLayout.checkedoutType.setText(checkoutResult.getInfo().getBarcode());
+            fragmentCheckoutBinding.checkoutDetailIncludeLayout.setCheckoutResult(checkoutResult);
+//            fragmentCheckoutBinding.checkoutDetailIncludeLayout.checkedoutName.setText(checkoutResult.getInfo().getTitle());
+//            fragmentCheckoutBinding.checkoutDetailIncludeLayout.checkedoutDue.setText(checkoutResult.getInfo().getDueDate());
+//            fragmentCheckoutBinding.checkoutDetailIncludeLayout.checkedoutType.setText(checkoutResult.getInfo().getBarcode());
         } catch (Exception e) {
             FollettLog.e(getString(R.string.error), e.getMessage());
         }
@@ -193,29 +193,10 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
 
             scanPatron.setLibrarySelected(AppSharedPreferences.getInstance(getActivity()).getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED));
             fragmentCheckoutBinding.setScanPatron(scanPatron);
-            /*if (AppSharedPreferences.getInstance(getActivity()).getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED)) {
-                String checoutValue = getString(R.string.checkoutLabel) + scanPatron.getLibraryCheckouts();
-                fragmentCheckoutBinding.patronDetailIncludeLayout.checkedOutCount.setText(checoutValue);
-                String overdueValue = getString(R.string.overdueLabel) + scanPatron.getLibraryOverdues();
-                fragmentCheckoutBinding.patronDetailIncludeLayout.overdue.setText(overdueValue);
-            } else {
-                String checoutValue = getString(R.string.checkoutLabel) + scanPatron.getAssetCheckouts();
-                fragmentCheckoutBinding.patronDetailIncludeLayout.checkedOutCount.setText(checoutValue);
-                String overdueValue = getString(R.string.overdueLabel) + scanPatron.getAssetOverdues();
-                fragmentCheckoutBinding.patronDetailIncludeLayout.overdue.setText(overdueValue);
-            }*/
-//            fragmentCheckoutBinding.patronDetailIncludeLayout.checkoutPatronName.setText(scanPatron.getLastFirstMiddleName());
-//            fragmentCheckoutBinding.patronDetailIncludeLayout.checkoutPatronID.setText(scanPatron.getPatronID());
-//            fragmentCheckoutBinding.patronDetailIncludeLayout.checkoutPatronType.setText(scanPatron.getPatronType());
 
-            FollettLog.d("image url?>>>>>", AppRemoteRepository.BASE_URL + scanPatron.getPatronPictureFileName());
-
-            GlideApp.with(this)
-                    .load("https://devprodtest.follettdestiny.com/imagestore/patrons/1534778744727_screenshot20180816at12.43.54pm.jpg")
-                    .placeholder(R.drawable.inventory)
-                    .into(fragmentCheckoutBinding.patronDetailIncludeLayout.checkoutPatronImg);
         } else {
-            fragmentCheckoutBinding.patronDetailIncludeLayout.patronDetailLayout.setVisibility(View.GONE);
+            if (fragmentCheckoutBinding != null)
+                fragmentCheckoutBinding.patronDetailIncludeLayout.patronDetailLayout.setVisibility(View.GONE);
         }
     }
 

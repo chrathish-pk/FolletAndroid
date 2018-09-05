@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
@@ -52,13 +54,14 @@ public class PatronListAdapter extends RecyclerView.Adapter<PatronListViewHolder
 
         FollettLog.d("patronImg", AppRemoteRepository.BASE_URL + patron.getPatronPictureFileName());
 
-        RequestOptions options = new RequestOptions()
-                .centerCrop()
-                .placeholder(R.drawable.inventory);
+        RequestOptions requestOptions = new RequestOptions()
+                .fitCenter()
+                .placeholder(R.drawable.inventory)
+                .transforms(new CenterCrop(), new RoundedCorners(500));
 
         Glide.with(context)
-                .load(AppRemoteRepository.BASE_URL + patron.getPatronPictureFileName())
-                //.apply(options)
+                .load(AppRemoteRepository.BASE_URL + patron.getPatronPictureFileName() + "?contextName=dvpdt_devprodtest")
+                .apply(requestOptions)
                 .into(holder.rowPatronListBinding.patronImg);
     }
 
