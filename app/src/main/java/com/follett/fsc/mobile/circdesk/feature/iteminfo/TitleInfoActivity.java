@@ -13,11 +13,11 @@ import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityTitleDetailsBinding;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
 
 public class TitleInfoActivity extends BaseActivity<AdditionalInfoViewModel> implements View.OnClickListener, AdditionalInfoListener {
 
@@ -79,6 +79,8 @@ public class TitleInfoActivity extends BaseActivity<AdditionalInfoViewModel> imp
                     }
                     activityTitleDetailsBinding.itemDescription.setText(titleDetails.getSummaryList().get(0));
                     activityTitleDetailsBinding.itemAvailability.setText(titleDetails.getAvailableLocal()+" "+getString(R.string.of)+" "+titleDetails.getTotalLocal()+" "+getString(R.string.available_txt));
+                    activityTitleDetailsBinding.itemDescription.setText(titleDetails.getSummaryList().get(0));
+                    activityTitleDetailsBinding.itemAvailability.setText(titleDetails.getAvailableLocal() + " of " + titleDetails.getTotalLocal() + " Available");
                     activityTitleDetailsBinding.additionalInfoBtn.setOnClickListener(TitleInfoActivity.this);
                     Glide.with(TitleInfoActivity.this)
                             .load(AppRemoteRepository.BASE_URL + titleDetails.getContentImageLink())

@@ -7,16 +7,19 @@
 package com.follett.fsc.mobile.circdesk.data.remote.api;
 
 
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.CheckoutResult;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.ScanPatron;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.ItemDetails;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginResults;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.ScanPatron;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.SiteResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.Version;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.CheckoutResult;
+
+import java.util.Map;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.HeaderMap;
 import retrofit2.http.Headers;
 import retrofit2.http.Query;
 
@@ -66,21 +69,17 @@ public interface APIInterface {
     })
     @GET("rest/v4/circulation/scanpatron")
     @JsonAndXmlConverters.Xml
-    Observable<ScanPatron> getScanPatron(@Query("contextName") String contextName, @Query("site") String site, @Query("client") String client,
+    Observable<ScanPatron> getScanPatron(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site, @Query("client") String client,
                                          @Query("barcode") String barcode, @Query("appID") String appID, @Query("device") String device,
                                          @Query("appVersion") String appVersion, @Query("appLanguage") String appLanguage);
 
-    @Headers({
-            "Cookie: JSESSIONID=YYXn43oP1_6wRo83mhiiKqAs23x4omFd5QKE-F0q",
-            "Accept: application/json",
-            "text/xml: gzip"
-    })
     @GET("rest/v4/circulation/checkout")
-    Observable<CheckoutResult> getCheckoutResult(@Query("contextName") String contextName, @Query("site") String site,
+    Observable<CheckoutResult> getCheckoutResult(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site,
                                                  @Query("barcode") String barcode, @Query("patronID") String patronID,
                                                  @Query("collectionType") String collectionType, @Query("overrideBlocks") String overrideBlocks);
 
 
+    Observable<TitleDetails> getTitleDetails(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site, @Query("client") String client,
     @GET("rest/v4/catalog/titledetail")
     @Headers({
             "Cookie: JSESSIONID=YYXn43oP1_6wRo83mhiiKqAs23x4omFd5QKE-F0q",
@@ -89,8 +88,8 @@ public interface APIInterface {
     })
     Observable<TitleDetails> getTitleDetails(@Query("contextName") String contextName, @Query("site") String site, @Query("client") String client,
                                              @Query("bibID") String bibid, @Query("appID") String appID, @Query("device") String device, @Query("appVersion") String appVersion, @Query("appLanguage") String appLanguage);
-    
-    
+
+
     @Headers({"Accept: application/json", "text/xml: gzip"})
     @GET("rest/v4/district/login")
     @JsonAndXmlConverters.Xml

@@ -13,6 +13,8 @@ import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityMoreDetailsBinding;
 import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
+import com.follett.fsc.mobile.circdesk.databinding.ActivityMoreDetailsBinding;
+import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 
 public class AdditionalInfoActivity extends BaseActivity<AdditionalInfoViewModel> implements View.OnClickListener {
 

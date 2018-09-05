@@ -15,10 +15,10 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityCheckinCheckoutBinding;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
 
 public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewModel> implements View.OnClickListener {
 
@@ -76,9 +76,6 @@ public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewMod
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.backBtn:
-                AppSharedPreferences.getInstance(this).setString(AppSharedPreferences.KEY_BARCODE, null);
-                AppSharedPreferences.getInstance(this).setString(AppSharedPreferences.KEY_PATRON_ID, null);
-                AppSharedPreferences.getInstance(this).setString(AppSharedPreferences.KEY_SELECTED_BARCODE, null);
                 finish();
                 break;
             case R.id.libraryBtn:
@@ -111,5 +108,10 @@ public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewMod
             Fragment fragment = adapter.getItem(actvityCheckinCheckoutBinding.viewPager.getCurrentItem());
             ((CheckoutFragment) fragment).getPatronID();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
