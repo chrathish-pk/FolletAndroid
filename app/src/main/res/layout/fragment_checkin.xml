@@ -1,20 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-   <!-- <data>
+    <data>
 
         <import type="android.view.View" />
 
         <variable
             name="checkinViewModel"
-            type="com.follett.fsc.mobile.circdesk.viewmodel.CheckinViewModel" />
-    </data>-->
+            type="com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin.CheckinViewModel" />
+    </data>
 
-    <android.support.constraint.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </android.support.constraint.ConstraintLayout>
+        <include
+            android:id="@+id/checkinEntryIncludeLayout"
+            layout="@layout/patron_entry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
+        <TextView
+            android:id="@+id/checkinPatronErrorMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/checkinEntryIncludeLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/opensans_regular"
+            android:padding="10dp"
+            android:visibility="gone" />
+
+        <android.support.v4.widget.ContentLoadingProgressBar
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:visibility="@{checkinViewModel.isLoading ? View.VISIBLE : View.GONE}" />
+
+        <include
+            android:id="@+id/checkinDetailIncludeLayout"
+            layout="@layout/checkout_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/checkinPatronErrorMsg" />
+
+
+    </RelativeLayout>
 
 </layout>

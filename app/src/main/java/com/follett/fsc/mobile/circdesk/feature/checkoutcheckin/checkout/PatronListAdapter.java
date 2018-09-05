@@ -4,7 +4,7 @@
  *
  */
 
-package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin;
+package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -57,8 +57,8 @@ public class PatronListAdapter extends RecyclerView.Adapter<PatronListViewHolder
                 .placeholder(R.drawable.inventory);
 
         Glide.with(context)
-                .load(AppRemoteRepository.BASE_URL + "/" + patron.getPatronPictureFileName())
-                .apply(options)
+                .load(AppRemoteRepository.BASE_URL + patron.getPatronPictureFileName())
+                //.apply(options)
                 .into(holder.rowPatronListBinding.patronImg);
     }
 

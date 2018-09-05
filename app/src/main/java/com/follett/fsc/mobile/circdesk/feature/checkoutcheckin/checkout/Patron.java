@@ -5,7 +5,7 @@
  *
  */
 
-package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin;
+package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

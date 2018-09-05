@@ -4,7 +4,7 @@
  *
  */
 
-package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin;
+package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

@@ -43,6 +43,7 @@
     <string name="titleDetails">Title Details</string>
     <string name="checkoutLabel">Checked Out: </string>
     <string name="overdueLabel">Overdue: </string>
+    <string name="checkedin">Checked In</string>
 
 
     <!--Patron Screen-->

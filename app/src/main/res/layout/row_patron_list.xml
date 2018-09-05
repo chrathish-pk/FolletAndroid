@@ -5,7 +5,7 @@
 
         <variable
             name="patronItem"
-            type="com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.ScanPatron" />
+            type="com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.ScanPatron" />
 
         <variable
             name="listener"
@@ -21,9 +21,10 @@
 
         <ImageView
             android:id="@+id/patronImg"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="10dp" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:scaleType="fitCenter" />
 
         <LinearLayout
             android:layout_width="match_parent"
