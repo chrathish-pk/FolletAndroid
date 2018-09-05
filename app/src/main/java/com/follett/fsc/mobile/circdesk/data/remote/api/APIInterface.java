@@ -74,9 +74,7 @@ public interface APIInterface {
     Observable<LoginResults> getLoginResults(@Query("contextName") String contextName, @Query("site") String site, @Query("userName") String userName, @Query
             ("password") String password);
     
-    @Headers({"Cookie: jJg9v-BUa6Wp74RYvU9zJAKxLGR8LFeksVeuNv5R",
-            "Accept: application/json",
-            "text/xml: gzip"})
     @GET("rest/v4/circulation/patronstatus")
-    Observable<PatronInfo> getPatronStatus(@Query("contextName") String contextName, @Query("site") String site, @Query("barcode") String barcode);
+    Observable<PatronInfo> getPatronStatus(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site,
+            @Query("barcode") String barcode);
 }

@@ -10,7 +10,10 @@ package com.follett.fsc.mobile.circdesk.feature.patronstatus.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class PatronList {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class PatronList implements Parcelable {
     
     @SerializedName("patronPictureFileName") @Expose private Object patronPictureFileName;
     @SerializedName("patronID") @Expose private Integer patronID;
@@ -18,6 +21,24 @@ public class PatronList {
     @SerializedName("lastFirstMiddleName") @Expose private String lastFirstMiddleName;
     @SerializedName("barcode") @Expose private String barcode;
     @SerializedName("homeroom") @Expose private Object homeroom;
+    
+    protected PatronList(Parcel in) {
+        if (in.readByte() == 0) { patronID = null; } else { patronID = in.readInt(); }
+        lastFirstMiddleName = in.readString();
+        barcode = in.readString();
+    }
+    
+    public static final Creator<PatronList> CREATOR = new Creator<PatronList>() {
+        @Override
+        public PatronList createFromParcel(Parcel in) {
+            return new PatronList(in);
+        }
+        
+        @Override
+        public PatronList[] newArray(int size) {
+            return new PatronList[size];
+        }
+    };
     
     public Object getPatronPictureFileName() {
         return patronPictureFileName;
@@ -67,4 +88,19 @@ public class PatronList {
         this.homeroom = homeroom;
     }
     
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+    
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+    
+        if (patronID == null) { parcel.writeByte((byte) 0); } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(patronID);
+        }
+        parcel.writeString(lastFirstMiddleName);
+        parcel.writeString(barcode);
+    }
 }

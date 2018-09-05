@@ -10,13 +10,35 @@ package com.follett.fsc.mobile.circdesk.feature.patronstatus.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Fine {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Fine implements Parcelable {
     
     @SerializedName("siteName") @Expose private Object siteName;
     @SerializedName("description") @Expose private String description;
     @SerializedName("reason") @Expose private String reason;
     @SerializedName("fineID") @Expose private Integer fineID;
     @SerializedName("amountOwed") @Expose private String amountOwed;
+    
+    protected Fine(Parcel in) {
+        description = in.readString();
+        reason = in.readString();
+        if (in.readByte() == 0) { fineID = null; } else { fineID = in.readInt(); }
+        amountOwed = in.readString();
+    }
+    
+    public static final Creator<Fine> CREATOR = new Creator<Fine>() {
+        @Override
+        public Fine createFromParcel(Parcel in) {
+            return new Fine(in);
+        }
+        
+        @Override
+        public Fine[] newArray(int size) {
+            return new Fine[size];
+        }
+    };
     
     public Object getSiteName() {
         return siteName;
@@ -58,4 +80,20 @@ public class Fine {
         this.amountOwed = amountOwed;
     }
     
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+    
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+    
+        parcel.writeString(description);
+        parcel.writeString(reason);
+        if (fineID == null) { parcel.writeByte((byte) 0); } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(fineID);
+        }
+        parcel.writeString(amountOwed);
+    }
 }

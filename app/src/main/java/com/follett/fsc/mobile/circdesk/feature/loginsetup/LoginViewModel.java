@@ -27,8 +27,6 @@ public class LoginViewModel extends BaseViewModel<CTAButtonListener> implements 
     private Application mApplication;
 
     private AppRemoteRepository mAppRemoteRepository;
-
-    public LoginViewModel(Application application, AppRemoteRepository appRemoteRepository) {
     
     public LoginViewModel(@NonNull Application application, AppRemoteRepository appRemoteRepository) {
         super(application);

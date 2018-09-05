@@ -207,9 +207,9 @@ public class AppRemoteRepository {
                 });
     }
     
-    public void getPatronStatus(@Nullable final NetworkInterface networkInterface, String contextName, String site, String patronBarcode) {
+    public void getPatronStatus(@Nullable final NetworkInterface networkInterface, Map<String, String> headerMap, String contextName, String site, String patronBarcode) {
         
-        apiService.getPatronStatus(contextName, site, patronBarcode)
+        apiService.getPatronStatus(headerMap, contextName, site, patronBarcode)
                 .subscribeWith(new Observer<PatronInfo>() {
                     @Override
                     public void onSubscribe(Disposable d) {
