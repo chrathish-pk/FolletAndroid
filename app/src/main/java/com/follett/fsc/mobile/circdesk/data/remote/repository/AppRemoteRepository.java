@@ -9,6 +9,7 @@ package com.follett.fsc.mobile.circdesk.data.remote.repository;
 import android.support.annotation.Nullable;
 
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
+import com.follett.fsc.mobile.circdesk.feature.itemstatus.ItemDetails;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginResults;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.ScanPatron;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.SiteResults;
@@ -202,5 +203,36 @@ public class AppRemoteRepository {
 
                     }
                 });
+    }
+
+    public void getItemStatus(@Nullable final NetworkInterface networkInterface,String itemBarcodeID) {
+
+        apiService.getScanItem("dvpdt_devprodtest","FDPSA",itemBarcodeID,"0")
+               .subscribeWith(new Observer<ItemDetails>() {
+                   @Override
+                   public void onSubscribe(Disposable d) {
+
+                   }
+
+                   @Override
+                   public void onNext(ItemDetails itemDetails) {
+                       if(networkInterface!=null)
+                       {
+                           networkInterface.onCallCompleted(itemDetails);
+                       }
+                   }
+
+                   @Override
+                   public void onError(Throwable throwable) {
+                       if (networkInterface != null) {
+                           networkInterface.onCallFailed(throwable);
+                       }
+                   }
+
+                   @Override
+                   public void onComplete() {
+
+                   }
+               });
     }
 }

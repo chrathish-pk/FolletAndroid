@@ -6,9 +6,9 @@
 
 package com.follett.fsc.mobile.circdesk.feature.iteminfo;
 
-import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
+import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 

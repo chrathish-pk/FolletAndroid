@@ -13,9 +13,9 @@ import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityTitleDetailsBinding;
+import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
 
@@ -37,10 +37,7 @@ public class TitleInfoActivity extends BaseActivity<AdditionalInfoViewModel> imp
             String bibID = getIntent().getStringExtra("bibID");
             additionalInfoViewModel.getTitleDetails(bibID);
         }
-
     }
-
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -70,15 +67,18 @@ public class TitleInfoActivity extends BaseActivity<AdditionalInfoViewModel> imp
 
                     activityTitleDetailsBinding.itemTitleName.setText(titleDetails.getTitle());
                     activityTitleDetailsBinding.itemAuthor.setText(titleDetails.getResponsibility());
-                    activityTitleDetailsBinding.itemInfo.setText("Call#" + titleDetails.getCallNumber());
+                    activityTitleDetailsBinding.itemInfo.setText(getString(R.string.item_callno)+titleDetails.getCallNumber());
                     activityTitleDetailsBinding.itemRatingBar.setRating(Float.parseFloat(titleDetails.getReviewInfoRecord().getReviewAverage()));
-                    if (titleDetails.getStatus().equals("1")) {
-                        activityTitleDetailsBinding.itemStatus.setText("Status : IN");
-                    } else {
-                        activityTitleDetailsBinding.itemStatus.setText("Status : OUT");
+                    if(titleDetails.getStatus().equals(getString(R.string.one)))
+                    {
+                        activityTitleDetailsBinding.itemStatus.setText(getString(R.string.item_status_in));
                     }
-                    activityTitleDetailsBinding.itemDescription.setText(titleDetails.getSummaryList().getSummary());
-                    activityTitleDetailsBinding.itemAvailability.setText(titleDetails.getAvailableLocal() + " of " + titleDetails.getTotalLocal() + " Available");
+                    else
+                    {
+                        activityTitleDetailsBinding.itemStatus.setText(getString(R.string.item_status_out));
+                    }
+                    activityTitleDetailsBinding.itemDescription.setText(titleDetails.getSummaryList().get(0));
+                    activityTitleDetailsBinding.itemAvailability.setText(titleDetails.getAvailableLocal()+" "+getString(R.string.of)+" "+titleDetails.getTotalLocal()+" "+getString(R.string.available_txt));
                     activityTitleDetailsBinding.additionalInfoBtn.setOnClickListener(TitleInfoActivity.this);
                     Glide.with(TitleInfoActivity.this)
                             .load(AppRemoteRepository.BASE_URL + titleDetails.getContentImageLink())

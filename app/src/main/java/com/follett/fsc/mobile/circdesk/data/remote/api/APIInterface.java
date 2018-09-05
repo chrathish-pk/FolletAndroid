@@ -8,6 +8,7 @@ package com.follett.fsc.mobile.circdesk.data.remote.api;
 
 
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
+import com.follett.fsc.mobile.circdesk.feature.itemstatus.ItemDetails;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginResults;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.ScanPatron;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.SiteResults;
@@ -48,7 +49,18 @@ public interface APIInterface {
 //                                                     ("appVersion") String appVersion, @Query("appLanguage") String appLanguage);
 
     @Headers({
-            "Cookie: JSESSIONID=eCP3CSHhK4Aydn3OhcM0AGU_2ymRF3r44fSPXuJd",
+            "Cookie: JSESSIONID=YYXn43oP1_6wRo83mhiiKqAs23x4omFd5QKE-F0q",
+            "Accept: application/json",
+            "text/xml: gzip"
+    })
+    @GET("rest/v4/circulation/copystatus")
+    @JsonAndXmlConverters.Xml
+    Observable<ItemDetails> getScanItem(@Query("contextName") String contextName, @Query("site") String site,
+                                        @Query("barcode") String barcode, @Query("collectionType") String collectionType);
+
+
+    @Headers({
+            "Cookie: JSESSIONID=0gIrZDwrc5zvd0Rur4Do7w1LbUT9Phn30pcq9YnE",
             "Accept: application/json",
             "text/xml: gzip"
     })
@@ -59,7 +71,7 @@ public interface APIInterface {
                                          @Query("appVersion") String appVersion, @Query("appLanguage") String appLanguage);
 
     @Headers({
-            "Cookie: JSESSIONID=eCP3CSHhK4Aydn3OhcM0AGU_2ymRF3r44fSPXuJd",
+            "Cookie: JSESSIONID=YYXn43oP1_6wRo83mhiiKqAs23x4omFd5QKE-F0q",
             "Accept: application/json",
             "text/xml: gzip"
     })
@@ -71,7 +83,7 @@ public interface APIInterface {
 
     @GET("rest/v4/catalog/titledetail")
     @Headers({
-            "Cookie: JSESSIONID=eCP3CSHhK4Aydn3OhcM0AGU_2ymRF3r44fSPXuJd",
+            "Cookie: JSESSIONID=YYXn43oP1_6wRo83mhiiKqAs23x4omFd5QKE-F0q",
             "Accept: application/json",
             "text/xml: gzip"
     })
