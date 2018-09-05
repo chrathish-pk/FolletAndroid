@@ -3,7 +3,18 @@
   ~  * Copyright (c) 2018 Follett. All rights reserved.
   ~  */
   -->
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="scanPatron"
+            type="com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.ScanPatron" />
+
+    </data>
 
     <RelativeLayout
         android:id="@+id/patronDetailLayout"
@@ -20,7 +31,8 @@
                 android:id="@+id/checkoutPatronImg"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_centerVertical="true" />
+                android:layout_centerVertical="true"
+                bind:imageUrl="@{scanPatron.patronPictureFileName}" />
 
             <LinearLayout
                 android:id="@+id/checkoutPatronLayout"
@@ -36,6 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/opensans_regular"
+                    android:text="@{scanPatron.lastFirstMiddleName}"
                     android:textColor="@color/blueLabel"
                     android:textSize="@dimen/text_size_18sp"
                     android:textStyle="bold" />
@@ -45,6 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/opensans_regular"
+                    android:text="@{scanPatron.patronType}"
                     android:textSize="@dimen/text_size_16sp" />
 
                 <TextView
@@ -52,6 +66,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/opensans_regular"
+                    android:text="@{scanPatron.patronID}"
                     android:textSize="@dimen/text_size_16sp" />
 
             </LinearLayout>
@@ -76,6 +91,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/opensans_regular"
+            android:text="@{scanPatron.librarySelected ? @string/checkoutLabel +scanPatron.libraryCheckouts : @string/checkoutLabel +scanPatron.assetCheckouts}"
             android:textColor="@color/blueLabel"
             android:textSize="@dimen/text_size_16sp" />
 
@@ -88,6 +104,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/opensans_regular"
+            android:text="@{scanPatron.librarySelected ? @string/overdueLabel +scanPatron.libraryOverdues : @string/overdueLabel +scanPatron.assetOverdues}"
             android:textColor="@color/blueLabel"
             android:textSize="@dimen/text_size_16sp" />
 

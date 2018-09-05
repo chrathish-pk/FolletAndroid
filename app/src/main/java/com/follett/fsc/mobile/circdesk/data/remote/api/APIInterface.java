@@ -14,10 +14,9 @@ import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.SiteResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.Version;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 
 import java.util.Map;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.CheckoutResult;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -43,16 +42,6 @@ public interface APIInterface {
     @JsonAndXmlConverters.Xml
     Observable<SiteResults> getSchoolList(@Query("contextName") String contextName);
 
-//    @Headers({
-//            "Accept: application/json",
-//            "text/xml: gzip"
-//    })
-//    @GET("rest/v4/district/login")
-//    @JsonAndXmlConverters.Xml
-//    Observable<LoginResults> getLoginResultsDummy(@Query("contextName") String contextName, @Query("site") String site, @Query("client") String client, @Query
-//            ("password") String password, @Query("userName") String userName, @Query("appID") String appID, @Query("device") String device, @Query
-//                                                     ("appVersion") String appVersion, @Query("appLanguage") String appLanguage);
-
     @GET("rest/v4/circulation/scanpatron")
     @JsonAndXmlConverters.Xml
     Observable<ScanPatron> getScanPatron(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site, @Query("client") String client,
@@ -67,21 +56,18 @@ public interface APIInterface {
     @GET("rest/v4/catalog/titledetail")
     Observable<TitleDetails> getTitleDetails(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site, @Query("bibID") String bibid);
 
-
     @Headers({"Accept: application/json", "text/xml: gzip"})
     @GET("rest/v4/district/login")
     @JsonAndXmlConverters.Xml
     Observable<LoginResults> getLoginResults(@Query("contextName") String contextName, @Query("site") String site, @Query("userName") String userName, @Query
             ("password") String password);
 
-
     @GET("rest/v4/circulation/checkin")
     Observable<CheckinResult> getCheckinResult(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site,
                                                @Query("barcode") String barcode, @Query("collectionType") String collectionType,
                                                @Query("inLibraryUse") String inLibraryUse);
 
-
     @GET("rest/v4/circulation/patronstatus")
     Observable<PatronInfo> getPatronStatus(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site,
-            @Query("barcode") String barcode);
+                                           @Query("barcode") String barcode);
 }

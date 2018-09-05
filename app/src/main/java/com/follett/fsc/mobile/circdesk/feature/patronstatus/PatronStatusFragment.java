@@ -6,28 +6,24 @@
 
 package com.follett.fsc.mobile.circdesk.feature.patronstatus;
 
+import android.arch.lifecycle.Observer;
+import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentPatronStatusBinding;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.CheckoutResult;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.PatronListActivity;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.CheckoutResult;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronList;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-
-import android.arch.lifecycle.Observer;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
 
 import java.util.List;
 

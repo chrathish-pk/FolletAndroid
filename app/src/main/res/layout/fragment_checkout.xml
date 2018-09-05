@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <import type="android.view.View" />
+
+        <variable
+            name="scanPatron"
+            type="com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.ScanPatron" />
 
         <variable
             name="checkoutViewModel"
@@ -18,7 +23,8 @@
             android:id="@+id/patronDetailIncludeLayout"
             layout="@layout/patron_detail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            bind:scanPatron="@{scanPatron}" />
 
         <include
             android:id="@+id/patronEntryIncludeLayout"

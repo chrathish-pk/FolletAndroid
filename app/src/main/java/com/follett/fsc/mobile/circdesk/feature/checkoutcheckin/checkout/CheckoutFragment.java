@@ -143,11 +143,13 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
 
         if (checkoutResult != null) {
             fragmentCheckoutBinding.checkoutPatronErrorMsg.setVisibility(View.VISIBLE);
-            if (checkoutResult.getMessages().size() > 1) {
-                String errorMsg = checkoutResult.getMessages().get(0).getMessage() + "\n" + checkoutResult.getMessages().get(1).getMessage();
+            if (!checkoutResult.getMessages().isEmpty()) {
+                String errorMsg = (checkoutResult.getMessages().size() > 1) ?
+                        checkoutResult.getMessages().get(0).getMessage() + "\n" + checkoutResult.getMessages().get(1).getMessage() :
+                        checkoutResult.getMessages().get(0).getMessage();
                 fragmentCheckoutBinding.checkoutPatronErrorMsg.setText(errorMsg);
             } else {
-                fragmentCheckoutBinding.checkoutPatronErrorMsg.setText(checkoutResult.getMessages().get(0).getMessage());
+                FollettLog.e(getString(R.string.error), "Empty Error Message from api result");
             }
         }
 
@@ -188,7 +190,10 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
             fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.setText("");
             if (fragmentCheckoutBinding.checkoutPatronErrorMsg.getVisibility() == View.VISIBLE)
                 fragmentCheckoutBinding.checkoutPatronErrorMsg.setVisibility(View.GONE);
-            if (AppSharedPreferences.getInstance(getActivity()).getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED)) {
+
+            scanPatron.setLibrarySelected(AppSharedPreferences.getInstance(getActivity()).getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED));
+            fragmentCheckoutBinding.setScanPatron(scanPatron);
+            /*if (AppSharedPreferences.getInstance(getActivity()).getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED)) {
                 String checoutValue = getString(R.string.checkoutLabel) + scanPatron.getLibraryCheckouts();
                 fragmentCheckoutBinding.patronDetailIncludeLayout.checkedOutCount.setText(checoutValue);
                 String overdueValue = getString(R.string.overdueLabel) + scanPatron.getLibraryOverdues();
@@ -198,10 +203,10 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
                 fragmentCheckoutBinding.patronDetailIncludeLayout.checkedOutCount.setText(checoutValue);
                 String overdueValue = getString(R.string.overdueLabel) + scanPatron.getAssetOverdues();
                 fragmentCheckoutBinding.patronDetailIncludeLayout.overdue.setText(overdueValue);
-            }
-            fragmentCheckoutBinding.patronDetailIncludeLayout.checkoutPatronName.setText(scanPatron.getLastFirstMiddleName());
-            fragmentCheckoutBinding.patronDetailIncludeLayout.checkoutPatronID.setText(scanPatron.getPatronID());
-            fragmentCheckoutBinding.patronDetailIncludeLayout.checkoutPatronType.setText(scanPatron.getPatronType());
+            }*/
+//            fragmentCheckoutBinding.patronDetailIncludeLayout.checkoutPatronName.setText(scanPatron.getLastFirstMiddleName());
+//            fragmentCheckoutBinding.patronDetailIncludeLayout.checkoutPatronID.setText(scanPatron.getPatronID());
+//            fragmentCheckoutBinding.patronDetailIncludeLayout.checkoutPatronType.setText(scanPatron.getPatronType());
 
             FollettLog.d("image url?>>>>>", AppRemoteRepository.BASE_URL + scanPatron.getPatronPictureFileName());
 

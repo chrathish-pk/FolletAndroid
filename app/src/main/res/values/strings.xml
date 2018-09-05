@@ -42,8 +42,8 @@
     <string name="library">LIBRARY</string>
     <string name="resource">RESOURCE</string>
     <string name="titleDetails">Title Details</string>
-    <string name="checkoutLabel">Checked Out: </string>
-    <string name="overdueLabel">Overdue: </string>
+    <string name="checkoutLabel">"Checked Out: "</string>
+    <string name="overdueLabel">"Overdue: "</string>
     <string name="checkedin">Checked In</string>
 
 
@@ -113,8 +113,6 @@
     <string name="barcodelabel">Barcode: %s</string>
     <string name="homeroomlabel">HomeRoom: %s</string>
     <string name="gradelevellabel">Grade Level: %s</string>
-
-
 
 
 </resources>

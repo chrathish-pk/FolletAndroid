@@ -3,7 +3,18 @@
   ~  * Copyright (c) 2018 Follett. All rights reserved.
   ~  */
   -->
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="checkoutResult"
+            type="com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.CheckoutResult" />
+
+    </data>
 
     <RelativeLayout
         android:id="@+id/checkedoutDetailLayout"
@@ -31,6 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
                 android:fontFamily="@font/opensans_regular"
+                android:text="@{checkoutResult.info.title}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_16sp" />
 
@@ -40,6 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:fontFamily="@font/opensans_regular"
+                android:text="@{checkoutResult.info.materialType}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_16sp" />
 
@@ -49,6 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:fontFamily="@font/opensans_semibold"
+                android:text="@{checkoutResult.info.dueDate}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_16sp" />
 
@@ -61,7 +75,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:padding="10dp"
-            android:src="@drawable/checkedout_info" />
+            android:src="@drawable/checkedout_info"
+            bind:imageUrl="@{checkoutResult.info.coverURL}" />
 
     </RelativeLayout>
 

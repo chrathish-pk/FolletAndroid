@@ -80,6 +80,8 @@ public class ScanPatron implements Serializable {
     @Expose
     private String patronType;
 
+    private boolean isLibrarySelected;
+
     public String getAssetCheckouts() {
         return assetCheckouts;
     }
@@ -222,5 +224,13 @@ public class ScanPatron implements Serializable {
 
     public void setPatronType(String patronType) {
         this.patronType = patronType;
+    }
+
+    public boolean isLibrarySelected() {
+        return isLibrarySelected;
+    }
+
+    public void setLibrarySelected(boolean librarySelected) {
+        isLibrarySelected = librarySelected;
     }
 }

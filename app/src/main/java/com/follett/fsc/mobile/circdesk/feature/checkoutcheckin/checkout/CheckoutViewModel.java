@@ -7,6 +7,7 @@
 package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout;
 
 import android.app.Application;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
@@ -18,8 +19,6 @@ import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import android.support.annotation.NonNull;
 
 public class CheckoutViewModel extends BaseViewModel implements NetworkInterface {
 
@@ -82,5 +81,6 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
         setIsLoding(false);
         FollettLog.d("Exception", throwable.getMessage());
     }
+
 
 }
