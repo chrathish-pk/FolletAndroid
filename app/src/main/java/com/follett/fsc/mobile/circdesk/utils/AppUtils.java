@@ -12,10 +12,13 @@ import android.content.DialogInterface;
 import android.databinding.BindingAdapter;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
@@ -24,6 +27,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.CustomAlert;
 import com.follett.fsc.mobile.circdesk.app.GlideApp;
+import com.follett.fsc.mobile.circdesk.app.base.AlertDialogListener;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 
 public class AppUtils {
@@ -183,5 +187,53 @@ public class AppUtils {
                     .into(view);
 
         }
+    }
+
+    public void showAlertDialog(final Context context, String title, final String msg, String positiveBtnName, String negativeBtnName, final AlertDialogListener alertDialogListener, final int statusCode) {
+        try {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(new ContextThemeWrapper(
+                    context, android.R.style.Theme_DeviceDefault_Light_Dialog));
+
+            if (title != null)
+                alertDialogBuilder.setTitle(title);
+            alertDialogBuilder.setMessage(msg);
+            alertDialogBuilder.setCancelable(false);
+            alertDialogBuilder.setNegativeButton(negativeBtnName, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    alertDialogListener.onNegativeButtonClick(statusCode);
+                }
+            });
+
+            alertDialogBuilder.setPositiveButton(positiveBtnName, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    alertDialogListener.onPositiveButtonClick(statusCode);
+                }
+            });
+
+
+            if (context != null && alertDialog != null && alertDialog.isShowing()) {
+                alertDialog.dismiss();
+                alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            } else {
+                alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
+
+            TextView messageView = alertDialog.findViewById(android.R.id.message);
+            messageView.setTextColor(context.getResources().getColor(R.color.editTextBgColor));
+
+            Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            Button negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+            Button neutralButton = alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL);
+
+            positiveButton.setTextColor(context.getResources().getColor(R.color.blueLabel));
+            negativeButton.setTextColor(context.getResources().getColor(R.color.blueLabel));
+            neutralButton.setTextColor(context.getResources().getColor(R.color.blueLabel));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }

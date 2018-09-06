@@ -14,6 +14,7 @@ import android.view.View;
 
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.base.AlertDialogListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
@@ -23,7 +24,7 @@ import com.follett.fsc.mobile.circdesk.feature.iteminfo.TitleInfoActivity;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
-public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, CheckoutViewModel> implements View.OnClickListener, UpdateUIListener {
+public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, CheckoutViewModel> implements View.OnClickListener, UpdateUIListener, AlertDialogListener {
 
     private CheckoutViewModel checkoutViewModel;
     private FragmentCheckoutBinding fragmentCheckoutBinding;
@@ -88,6 +89,7 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
             fragmentCheckoutBinding.checkoutDetailIncludeLayout.checkedoutDetailLayout.setVisibility(View.GONE);
             fragmentCheckoutBinding.checkoutPatronErrorMsg.setVisibility(View.GONE);
             fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.setText("");
+            fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.setHint(R.string.findPatron);
         } else if (v.getId() == R.id.checkedoutInfoBtn) {
             Intent titleIntent = new Intent(getActivity(), TitleInfoActivity.class);
             titleIntent.putExtra("bibID", checkoutResult.getInfo().getBibID());
@@ -141,12 +143,15 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
     private void updateCheckoutErrorMsg(CheckoutResult checkoutResult) {
 
         if (checkoutResult != null) {
-            fragmentCheckoutBinding.checkoutPatronErrorMsg.setVisibility(View.VISIBLE);
             if (!checkoutResult.getMessages().isEmpty()) {
-                String errorMsg = (checkoutResult.getMessages().size() > 1) ?
-                        checkoutResult.getMessages().get(0).getMessage() + "\n" + checkoutResult.getMessages().get(1).getMessage() :
-                        checkoutResult.getMessages().get(0).getMessage();
-                fragmentCheckoutBinding.checkoutPatronErrorMsg.setText(errorMsg);
+                if (checkoutResult.getMessages().size() == 1) {
+                    String errorMsg = checkoutResult.getMessages().get(0).getMessage();
+                    fragmentCheckoutBinding.checkoutPatronErrorMsg.setVisibility(View.VISIBLE);
+                    fragmentCheckoutBinding.checkoutPatronErrorMsg.setText(errorMsg);
+                } else if (checkoutResult.getMessages().size() > 1) {
+                    String errorMsg = checkoutResult.getMessages().get(0).getMessage() + "\n\n" + checkoutResult.getMessages().get(1).getMessage();
+                    AppUtils.getInstance().showAlertDialog(getActivity(), "Checkout Blocked", errorMsg, "allow", "cancel", this, 0);
+                }
             } else {
                 FollettLog.e(getString(R.string.error), "Empty Error Message from api result");
             }
@@ -160,9 +165,6 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
                 fragmentCheckoutBinding.checkoutPatronErrorMsg.setVisibility(View.GONE);
             fragmentCheckoutBinding.checkoutDetailIncludeLayout.checkedoutDetailLayout.setVisibility(View.VISIBLE);
             fragmentCheckoutBinding.checkoutDetailIncludeLayout.setCheckoutResult(checkoutResult);
-//            fragmentCheckoutBinding.checkoutDetailIncludeLayout.checkedoutName.setText(checkoutResult.getInfo().getTitle());
-//            fragmentCheckoutBinding.checkoutDetailIncludeLayout.checkedoutDue.setText(checkoutResult.getInfo().getDueDate());
-//            fragmentCheckoutBinding.checkoutDetailIncludeLayout.checkedoutType.setText(checkoutResult.getInfo().getBarcode());
         } catch (Exception e) {
             FollettLog.e(getString(R.string.error), e.getMessage());
         }
@@ -188,6 +190,7 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
             fragmentCheckoutBinding.patronDetailIncludeLayout.patronDetailLayout.setVisibility(View.VISIBLE);
             fragmentCheckoutBinding.checkoutDetailIncludeLayout.checkedoutDetailLayout.setVisibility(View.GONE);
             fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.setText("");
+            fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.setHint(R.string.enterBarcode);
             if (fragmentCheckoutBinding.checkoutPatronErrorMsg.getVisibility() == View.VISIBLE)
                 fragmentCheckoutBinding.checkoutPatronErrorMsg.setVisibility(View.GONE);
 
@@ -205,5 +208,15 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
         Intent patronListIntent = new Intent(getActivity(), PatronListActivity.class);
         patronListIntent.putExtra(getString(R.string.scanPatron), scanPatron);
         startActivity(patronListIntent);
+    }
+
+    @Override
+    public void onPositiveButtonClick(int statusCode) {
+
+    }
+
+    @Override
+    public void onNegativeButtonClick(int statusCode) {
+
     }
 }

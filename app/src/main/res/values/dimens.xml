@@ -28,7 +28,7 @@
     <dimen name="layout_size_60">60dp</dimen>
     <dimen name="layout_size_84">84dp</dimen>
 
-    <dimen name="spacing">20dp</dimen>
+    <dimen name="spacing">23dp</dimen>
 
 
 </resources>

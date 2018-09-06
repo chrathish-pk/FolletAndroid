@@ -85,6 +85,12 @@ public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, Checki
     }
 
     public void bindCheckinResult() {
+
+        if (AppSharedPreferences.getInstance(getActivity()).getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED))
+            fragmentCheckinBinding.checkinEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.VISIBLE);
+        else
+            fragmentCheckinBinding.checkinEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.GONE);
+
         if (fragmentCheckinBinding != null) {
             fragmentCheckinBinding.checkinDetailIncludeLayout.checkedoutDetailLayout.setVisibility(View.GONE);
             fragmentCheckinBinding.checkinPatronErrorMsg.setVisibility(View.GONE);

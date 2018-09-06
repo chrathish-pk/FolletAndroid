@@ -15,6 +15,7 @@ import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.UpdateUIListener;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 import java.util.HashMap;
@@ -34,8 +35,8 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
     }
 
     public void getScanPatron(String patronBarcodeID) {
-        setIsLoding(true);
-
+        //setIsLoding(true);
+        AppUtils.getInstance().showProgressDialog(mApplication, null, null, false);
         Map<String, String> map = new HashMap<>();
         map.put("Accept", "application/json");
         map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance(mApplication).getString(AppSharedPreferences.KEY_SESSION_ID));
@@ -46,6 +47,7 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
 
     public void getCheckoutResult(String patronID, String barcode, String collectionType) {
         setIsLoding(true);
+        AppUtils.getInstance().showProgressDialog(mApplication, null, null, false);
 
         Map<String, String> map = new HashMap<>();
         map.put("Accept", "application/json");

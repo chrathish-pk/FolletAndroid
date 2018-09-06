@@ -41,33 +41,25 @@
                     android:layout_marginTop="10dp"
                     android:paddingRight="10dp">
 
-                    <LinearLayout
-                        android:id="@+id/checkoutPatronSubmit"
+                    <TextView
+                        android:id="@+id/patronGoBtn"
                         android:layout_width="100dp"
                         android:layout_height="40dp"
                         android:layout_alignParentRight="true"
-                        android:background="@drawable/rounded_solid_blue"
-                        android:gravity="center">
-
-                        <TextView
-                            android:id="@+id/patronGoBtn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/opensans_regular"
-                            android:gravity="center"
-                            android:padding="5dp"
-                            android:text="@string/Go"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/text_size_16sp" />
-
-                    </LinearLayout>
+                        android:background="@drawable/ripple_effect_selector"
+                        android:fontFamily="@font/opensans_regular"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="@string/Go"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_16sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="20dp"
-                        android:layout_toLeftOf="@+id/checkoutPatronSubmit"
+                        android:layout_toLeftOf="@+id/patronGoBtn"
                         android:fontFamily="@font/opensans_regular"
                         android:padding="5dp"
                         android:text="@string/scan"
