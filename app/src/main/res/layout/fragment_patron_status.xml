@@ -135,67 +135,10 @@
 
 
                 <RelativeLayout
-                    android:id="@+id/holdRelativeLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/firstLine">
-
-                    <TextView
-                        android:id="@+id/titleHoldTextView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableRight="@drawable/right_arrow"
-                        android:fontFamily="@font/opensans_regular"
-                        android:gravity="center_vertical"
-                        android:paddingBottom="@dimen/layout_size_9"
-                        android:paddingHorizontal="@dimen/layout_size_16"
-                        android:paddingTop="@dimen/layout_size_14"
-                        android:text="@{@string/title_hold_count(String.valueOf(patronInfo.holds.size()))}"
-                        android:textSize="@dimen/text_size_16sp"/>
-
-                    <LinearLayout
-                        android:id="@+id/titleHoldDesLinear"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/titleHoldTextView"
-                        android:paddingHorizontal="@dimen/layout_size_16"
-                        android:visibility="@{patronInfo.holds.size() == 0 ? View.GONE : View.VISIBLE}">
-
-                        <TextView
-                            android:id="@+id/titleHoldDesTextView"
-                            android:layout_width="@dimen/layout_size_22"
-                            android:layout_height="@dimen/layout_size_25"
-                            android:background="@drawable/item_shape"
-                            android:gravity="center|top"
-                            android:text="@{String.valueOf(patronInfo.holds.size())}"
-                            android:textColor="@color/white"/>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/layout_size_6"
-                            android:gravity="start"
-                            android:text="@string/onhold_label"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="@dimen/text_size_14sp"/>
-                    </LinearLayout>
-
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_below="@+id/titleHoldDesLinear"
-                        android:layout_marginTop="@dimen/layout_size_9"
-                        android:background="@color/editTextBorderColor"/>
-
-                </RelativeLayout>
-
-
-                <RelativeLayout
                     android:id="@+id/itemRelativeLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/holdRelativeLayout">
+                    android:layout_below="@+id/firstLine">
 
                     <TextView
                         android:id="@+id/itemTextView"
@@ -207,7 +150,7 @@
                         android:paddingBottom="@dimen/layout_size_9"
                         android:paddingHorizontal="@dimen/layout_size_16"
                         android:paddingTop="@dimen/layout_size_14"
-                        android:text="@{@string/item_checkout_count(patronInfo.assetCheckOuts.size())}"
+                        android:text="@{@string/item_checkout_count(String.valueOf(patronInfo.assetCheckOuts.size() + patronInfo.checkouts.size()))}"
                         android:textSize="@dimen/text_size_16sp"/>
 
                     <LinearLayout
@@ -220,12 +163,13 @@
 
                         <TextView
                             android:id="@+id/itemDesTextView"
-                            android:layout_width="@dimen/layout_size_22"
-                            android:layout_height="@dimen/layout_size_25"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:background="@drawable/item_shape"
-                            android:gravity="center|top"
-                            android:text="@{String.valueOf(patronInfo.assetCheckOuts.size())}"
-                            android:textColor="@color/white"/>
+                            android:gravity="center_horizontal"
+                            android:paddingTop="@dimen/layout_size_2"
+                            android:textColor="@color/white"
+                            app:overDueCount="@{patronInfo}"/>
 
                         <TextView
                             android:layout_width="match_parent"
@@ -277,10 +221,11 @@
 
                         <TextView
                             android:id="@+id/fineDesTextView"
-                            android:layout_width="@dimen/layout_size_22"
-                            android:layout_height="@dimen/layout_size_25"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:background="@drawable/item_shape"
-                            android:gravity="center|top"
+                            android:gravity="center_horizontal"
+                            android:paddingTop="@dimen/layout_size_2"
                             android:text="@{String.valueOf(patronInfo.fines.size())}"
                             android:textColor="@color/white"/>
 
@@ -299,6 +244,63 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_below="@+id/fineDesLinear"
+                        android:layout_marginTop="@dimen/layout_size_9"
+                        android:background="@color/editTextBorderColor"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/holdRelativeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/fineRelativeLayout">
+
+                    <TextView
+                        android:id="@+id/titleHoldTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/right_arrow"
+                        android:fontFamily="@font/opensans_regular"
+                        android:gravity="center_vertical"
+                        android:paddingBottom="@dimen/layout_size_9"
+                        android:paddingHorizontal="@dimen/layout_size_16"
+                        android:paddingTop="@dimen/layout_size_14"
+                        android:text="@{@string/title_hold_count(String.valueOf(patronInfo.holds.size()))}"
+                        android:textSize="@dimen/text_size_16sp"/>
+
+                    <LinearLayout
+                        android:id="@+id/titleHoldDesLinear"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/titleHoldTextView"
+                        android:paddingHorizontal="@dimen/layout_size_16"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/titleHoldDesTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/item_shape"
+                            android:gravity="center_horizontal"
+                            android:paddingTop="@dimen/layout_size_2"
+                            android:text="@{String.valueOf(patronInfo.holds.size())}"
+                            android:textColor="@color/white"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/layout_size_6"
+                            android:gravity="start"
+                            android:text="@string/onhold_label"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/text_size_14sp"/>
+                    </LinearLayout>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/titleHoldDesLinear"
                         android:layout_marginTop="@dimen/layout_size_9"
                         android:background="@color/editTextBorderColor"/>
 

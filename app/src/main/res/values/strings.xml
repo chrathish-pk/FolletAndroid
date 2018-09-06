@@ -112,7 +112,14 @@
     <string name="barcodelabel">Barcode: %s</string>
     <string name="homeroomlabel">HomeRoom: %s</string>
     <string name="gradelevellabel">Grade Level: %s</string>
-
+    <string name="barcode_label">Barcode: %s</string>
+    <string name="due_label">Due: %s</string>
+    <string name="item_checkout_label">Items Checked Out</string>
+    <string name="library_title_label">Library Titles</string>
+    <string name="resource_item_label">Resource Items</string>
+    <string name="on_hold_label">On Hold</string>
+    <string name="fine_label">Fines</string>
+    <string name="overdue_label">Overdue</string>
 
 
 

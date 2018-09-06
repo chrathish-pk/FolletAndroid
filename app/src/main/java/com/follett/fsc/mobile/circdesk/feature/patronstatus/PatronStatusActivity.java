@@ -10,6 +10,7 @@ import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityCommonBinding;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.SchoolListFragment;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronList;
 
 import android.os.Bundle;
@@ -25,6 +26,10 @@ public class PatronStatusActivity extends BaseActivity<PatronStatusViewModel> im
     private PatronStatusFragment mPatronStatusFragment;
     
     private PatronListFragment mPatronListFragment;
+    
+    private PatronItemCheckoutFragment mPatronItemCheckoutFragment;
+    
+    private PatronFineListFragment mPatronFineListFragment;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,17 +53,23 @@ public class PatronStatusActivity extends BaseActivity<PatronStatusViewModel> im
     
     @Override
     public void setToolBarTitle(String titleText) {
-    
+        setTitleBar(titleText);
     }
     
     @Override
     public void onNavigation(Object model, int position) {
         
-        if (position == 0 && model != null) {
+        if (position == 0 && model != null) {  //Show patron list
             navigateToPatronList((ArrayList<PatronList>)model, true);
-        } else if (position == 1 && model != null) {
+        } else if (position == 1 && model != null) {  // pop patron list
             popFragmentFromBackStack(mPatronListFragment);
             mPatronStatusFragment.requestPatronId((PatronList) model);
+        } else if (position == 2 && model != null) {    // PatronItemCheckoutFragment checkout
+            navigateToPatronCheckout((PatronInfo) model, true, getString(R.string.item_checkout_label));
+        } else if (position == 3 && model != null) {    // PatronItemCheckoutFragment hold
+            navigateToPatronCheckout((PatronInfo) model, true, getString(R.string.on_hold_label));
+        } else if (position == 4 && model != null) {    // FineListFragment Fine
+            navigateToFineList((PatronInfo) model, true, getString(R.string.fine_label));
         }
     }
     
@@ -83,6 +94,33 @@ public class PatronStatusActivity extends BaseActivity<PatronStatusViewModel> im
         }
         fragmentTransaction.commit();
     }
+    
+    private void navigateToPatronCheckout(PatronInfo patronInfo, boolean isAddToBackStack, String title) {
+    
+        mPatronItemCheckoutFragment = PatronItemCheckoutFragment.newInstance(patronInfo, title);
+        setToolBarTitle(title);
+        
+        final FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction()
+                .add(R.id.base_container, mPatronItemCheckoutFragment);
+        if (isAddToBackStack) {
+            fragmentTransaction.addToBackStack(null);
+        }
+        fragmentTransaction.commit();
+    }
+    
+    private void navigateToFineList(PatronInfo patronInfo, boolean isAddToBackStack, String title) {
+    
+        mPatronFineListFragment = PatronFineListFragment.newInstance(patronInfo);
+        setToolBarTitle(title);
+        
+        final FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction()
+                .add(R.id.base_container, mPatronFineListFragment);
+        if (isAddToBackStack) {
+            fragmentTransaction.addToBackStack(null);
+        }
+        fragmentTransaction.commit();
+    }
+    
 //    @Override
 //    public void onNavigation(int position) {
 //        if (position == 0) { // Navigate to School list

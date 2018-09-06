@@ -24,7 +24,7 @@ public class PatronInfo implements Parcelable {
     @SerializedName("textbookCheckOuts") @Expose private List<Object> textbookCheckOuts = null;
     @SerializedName("pictureName") @Expose private Object pictureName;
     @SerializedName("barcode") @Expose private String barcode;
-    @SerializedName("holds") @Expose private List<Object> holds = null;
+    @SerializedName("holds") @Expose private List<Hold> holds = null;
     @SerializedName("fineTotalString") @Expose private String fineTotalString;
     @SerializedName("fines") @Expose private List<Fine> fines = null;
     @SerializedName("lastName") @Expose private String lastName;
@@ -111,11 +111,11 @@ public class PatronInfo implements Parcelable {
         this.barcode = barcode;
     }
     
-    public List<Object> getHolds() {
+    public List<Hold> getHolds() {
         return holds;
     }
     
-    public void setHolds(List<Object> holds) {
+    public void setHolds(List<Hold> holds) {
         this.holds = holds;
     }
     

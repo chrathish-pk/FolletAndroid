@@ -10,15 +10,11 @@ import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
-import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentPatronListBinding;
-import com.follett.fsc.mobile.circdesk.databinding.FragmentSchoolListBinding;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginFragment;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.SchoolListAdapter;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.SchoolListViewModel;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.SiteResults;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronList;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.CustomCheckoutItem;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 import android.arch.lifecycle.Observer;
@@ -29,26 +25,24 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static com.follett.fsc.mobile.circdesk.utils.AppConstants.PATRON_LIST_KEY;
+import static com.follett.fsc.mobile.circdesk.utils.AppConstants.PATRON_INFO_KEY;
+import static com.follett.fsc.mobile.circdesk.utils.AppConstants.PATRON_TITLE_KEY;
 
-public class PatronListFragment extends BaseFragment<FragmentPatronListBinding, PatronListViewModel> implements CTAButtonListener {
+public class PatronFineListFragment extends BaseFragment<FragmentPatronListBinding, PatronListViewModel> implements CTAButtonListener {
     
-    private static final String TAG = PatronListFragment.class.getSimpleName();
+    private static final String TAG = PatronFineListFragment.class.getSimpleName();
     
     private PatronListViewModel mViewModel;
     
     private NavigationListener navigationListener;
     
-    private List<PatronList> mPatronList;
     
-    
-    public static PatronListFragment newInstance(ArrayList<PatronList> patronList) {
+    public static PatronFineListFragment newInstance(PatronInfo patronInfo) {
         Bundle args = new Bundle();
-        args.putParcelableArrayList(PATRON_LIST_KEY, patronList);
-        PatronListFragment fragment = new PatronListFragment();
+        args.putParcelable(PATRON_INFO_KEY, patronInfo);
+        PatronFineListFragment fragment = new PatronFineListFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -87,14 +81,25 @@ public class PatronListFragment extends BaseFragment<FragmentPatronListBinding, 
     }
     
     public void inItView(final FragmentPatronListBinding lBinding) {
-    
+        
+        lBinding.patronListRecyclerview.setLayoutManager(new LinearLayoutManager(getBaseActivity()));
         final Bundle arguments = getArguments();
         if (arguments != null) {
-            mPatronList = arguments.getParcelableArrayList(PATRON_LIST_KEY);
-            lBinding.patronListRecyclerview.setLayoutManager(new LinearLayoutManager(getBaseActivity()));
-            PatronListAdapter adapter = new PatronListAdapter(getBaseActivity(), mPatronList);
+            PatronInfo patronInfo = arguments.getParcelable(PATRON_INFO_KEY);
+            PatronFineListAdapter adapter = new PatronFineListAdapter(getBaseActivity(),patronInfo.getFines());
             lBinding.patronListRecyclerview.setAdapter(adapter);
         }
+        
+        
+//        mViewModel.formCheckoutModel(getArguments());
+        
+//        mViewModel.fineLiveData.observe(this, new Observer<List<CustomCheckoutItem>>() {
+//            @Override
+//            public void onChanged(@Nullable List<CustomCheckoutItem> customCheckoutItems) {
+//                PatronItemCheckoutAdapter adapter = new PatronItemCheckoutAdapter(getBaseActivity(), customCheckoutItems);
+//                lBinding.patronListRecyclerview.setAdapter(adapter);
+//            }
+//        });
     }
     
     @Override
