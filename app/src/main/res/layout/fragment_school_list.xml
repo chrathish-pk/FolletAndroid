@@ -84,7 +84,7 @@
                 android:background="@drawable/rounded_corners_button"
                 android:gravity="center"
                 android:text="@string/dont_see_your_school"
-                android:onClick="@{(v)->ctaListener.ctaButtonOnClick()}"
+                android:onClick="@{(v)->ctaListener.ctaButtonOnClick(v)}"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_14sp"/>
         </LinearLayout>

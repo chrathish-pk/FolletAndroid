@@ -16,6 +16,8 @@ import com.follett.fsc.mobile.circdesk.feature.loginsetup.SiteResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.Version;
 
 import java.util.Map;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.CheckoutResult;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -76,5 +78,9 @@ public interface APIInterface {
     @JsonAndXmlConverters.Xml
     Observable<LoginResults> getLoginResults(@Query("contextName") String contextName, @Query("site") String site, @Query("userName") String userName, @Query
             ("password") String password);
+
+    @GET("rest/v4/circulation/patronstatus")
+    Observable<PatronInfo> getPatronStatus(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site,
+            @Query("barcode") String barcode);
 
 }

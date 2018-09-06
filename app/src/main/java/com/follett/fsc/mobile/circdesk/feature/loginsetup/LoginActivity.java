@@ -115,6 +115,12 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Navig
         setTitleBar(titleText);
     }
     
+    @Override
+    public void onNavigation(Object model, int position) {
+    
+    }
+    
+    
     private void navigateToFragment() {
         
         if (!TextUtils.isEmpty(AppSharedPreferences.getInstance(this)

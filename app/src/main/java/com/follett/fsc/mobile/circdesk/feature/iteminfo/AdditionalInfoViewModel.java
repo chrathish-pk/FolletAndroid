@@ -8,6 +8,7 @@ package com.follett.fsc.mobile.circdesk.feature.iteminfo;
 
 import android.app.Application;
 import android.arch.lifecycle.MutableLiveData;
+import android.support.annotation.NonNull;
 
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
@@ -26,7 +27,7 @@ public class AdditionalInfoViewModel extends BaseViewModel implements NetworkInt
     private Application mApplication;
     public final MutableLiveData<TitleDetails> mTitleDetails = new MutableLiveData<>();
 
-    public AdditionalInfoViewModel(Application application, AppRemoteRepository appRemoteRepository, AdditionalInfoListener additionalInfoListener) {
+    public AdditionalInfoViewModel(@NonNull Application application, AppRemoteRepository appRemoteRepository, AdditionalInfoListener additionalInfoListener) {
         super(application);
         mAppRemoteRepository = appRemoteRepository;
         this.additionalInfoListener = additionalInfoListener;

@@ -7,10 +7,13 @@ package com.follett.fsc.mobile.circdesk.utils;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.CustomAlert;
 import com.follett.fsc.mobile.circdesk.app.GlideApp;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -19,12 +22,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.databinding.BindingAdapter;
 import android.graphics.drawable.Drawable;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.SERVER_URI_VALUE;
 
 public class AppUtils {
     
@@ -182,6 +190,27 @@ public class AppUtils {
                     .load(AppRemoteRepository.BASE_URL + imageUrl)
                     .into(view);
 
+        }
+    }
+
+//    @BindingAdapter("android:src")
+@BindingAdapter({"bind:imageUrl"})
+    public static void loadImage(ImageView view, String imageUrl) {
+        Context context = view.getContext();
+        if (context != null) {
+//            GlideApp.with(context)
+//                    .load(AppSharedPreferences.getInstance(context)
+//                            .getString(SERVER_URI_VALUE) + imageUrl)
+//                    .placeholder(R.drawable.inventory)
+//                    .into(view);
+
+            RequestOptions options = new RequestOptions()
+                    .fitCenter();
+            options.placeholder(R.drawable.inventory);
+            Glide.with(context)
+                    .setDefaultRequestOptions(options)
+                    .load(AppSharedPreferences.getInstance(context).getString(SERVER_URI_VALUE) + imageUrl)
+                    .into(view);
         }
     }
 }

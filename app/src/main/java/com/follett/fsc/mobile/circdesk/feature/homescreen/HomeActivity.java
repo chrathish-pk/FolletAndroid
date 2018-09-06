@@ -18,6 +18,7 @@ import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.CheckinCheckoutAc
 import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.TitleInfoActivity;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.ItemStatusActivity;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.PatronStatusActivity;
 
 
 public class HomeActivity extends BaseActivity<HomeViewModel> {
@@ -43,10 +44,13 @@ public class HomeActivity extends BaseActivity<HomeViewModel> {
         homeViewModel.getOpenTaskEvent().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                startActivity(new Intent(HomeActivity.this, ItemStatusActivity.class));
+                if (s.equalsIgnoreCase(getString(R.string.checkInCheckout))) {
+                    startActivity(new Intent(HomeActivity.this, CheckinCheckoutActivity.class));
+                } else if (s.equalsIgnoreCase(getString(R.string.patronStatus))) {
+                    startActivity(new Intent(HomeActivity.this, PatronStatusActivity.class));
+                }
             }
         });
-
     }
 
 }
