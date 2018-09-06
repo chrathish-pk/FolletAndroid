@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /*
+  ~  * Copyright (c) 2018 Follett. All rights reserved.
+  ~  */
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="patronInfo"
+            type="com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo"/>
+
+        <variable
+            name="viewModel"
+            type="com.follett.fsc.mobile.circdesk.feature.patronstatus.PatronStatusViewModel"/>
+    </data>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v4.widget.ContentLoadingProgressBar
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <include
+                android:id="@+id/patronEntryIncludeLayout"
+                layout="@layout/patron_entry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+
+            <RelativeLayout
+                android:id="@+id/patronDetailLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="@{patronInfo.success ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/patronEntryIncludeLayout">
+
+                <RelativeLayout
+                    android:id="@+id/patronInfoLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp">
+
+                    <ImageView
+                        android:id="@+id/patronImg"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_centerVertical="true"
+                        app:imageUrl="@{patronInfo.pictureName}"/>
+
+                    <LinearLayout
+                        android:id="@+id/patronLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/patronImg"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/patronName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/opensans_regular"
+                            android:text="@{patronInfo.firstName + ' ' + patronInfo.lastName}"
+                            android:textColor="@color/blueLabel"
+                            android:textSize="@dimen/text_size_20sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/patronType"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/opensans_regular"
+                            android:textSize="@dimen/text_size_18sp"/>
+
+                        <TextView
+                            android:id="@+id/patronBarcodeID"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/opensans_regular"
+                            android:text="@{patronInfo.barcode}"
+                            android:textSize="@dimen/text_size_18sp"/>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/closeBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/close"/>
+
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/firstLine"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/patronInfoLayout"
+                    android:layout_marginTop="@dimen/layout_size_10"
+                    android:background="@color/mountain_mist"/>
+
+
+                <RelativeLayout
+                    android:id="@+id/itemRelativeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/firstLine">
+
+                    <TextView
+                        android:id="@+id/itemTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/right_arrow"
+                        android:fontFamily="@font/opensans_regular"
+                        android:gravity="center_vertical"
+                        android:paddingBottom="@dimen/layout_size_9"
+                        android:paddingHorizontal="@dimen/layout_size_16"
+                        android:paddingTop="@dimen/layout_size_14"
+                        android:text="@{@string/item_checkout_count(String.valueOf(patronInfo.assetCheckOuts.size() + patronInfo.checkouts.size()))}"
+                        android:textSize="@dimen/text_size_16sp"/>
+
+                    <LinearLayout
+                        android:id="@+id/itemDesLinear"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/itemTextView"
+                        android:paddingHorizontal="@dimen/layout_size_16"
+                        android:visibility="@{patronInfo.assetCheckOuts.size()==0 ? View.GONE : View.VISIBLE}">
+
+                        <TextView
+                            android:id="@+id/itemDesTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/item_shape"
+                            android:gravity="center_horizontal"
+                            android:paddingTop="@dimen/layout_size_2"
+                            android:textColor="@color/white"
+                            app:overDueCount="@{patronInfo}"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/layout_size_6"
+                            android:gravity="start"
+                            android:text="@string/items_overude_label"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/text_size_14sp"/>
+                    </LinearLayout>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/itemDesLinear"
+                        android:layout_marginTop="@dimen/layout_size_9"
+                        android:background="@color/editTextBorderColor"/>
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/fineRelativeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/itemRelativeLayout">
+
+                    <TextView
+                        android:id="@+id/fineTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/right_arrow"
+                        android:fontFamily="@font/opensans_regular"
+                        android:gravity="center_vertical"
+                        android:paddingBottom="@dimen/layout_size_9"
+                        android:paddingHorizontal="@dimen/layout_size_16"
+                        android:paddingTop="@dimen/layout_size_14"
+                        android:text="@{@string/fines_count(patronInfo.fines.size())}"
+                        android:textSize="@dimen/text_size_16sp"/>
+
+                    <LinearLayout
+                        android:id="@+id/fineDesLinear"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/fineTextView"
+                        android:paddingHorizontal="@dimen/layout_size_16"
+                        android:visibility="@{patronInfo.fines.size() == 0 ? View.GONE : View.VISIBLE}">
+
+                        <TextView
+                            android:id="@+id/fineDesTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/item_shape"
+                            android:gravity="center_horizontal"
+                            android:paddingTop="@dimen/layout_size_2"
+                            android:text="@{String.valueOf(patronInfo.fines.size())}"
+                            android:textColor="@color/white"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/layout_size_6"
+                            android:gravity="start"
+                            android:text="@{patronInfo.fineTotalString}"
+                            android:textColor="@color/monza"
+                            android:textSize="@dimen/text_size_14sp"/>
+                    </LinearLayout>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/fineDesLinear"
+                        android:layout_marginTop="@dimen/layout_size_9"
+                        android:background="@color/editTextBorderColor"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/holdRelativeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/fineRelativeLayout">
+
+                    <TextView
+                        android:id="@+id/titleHoldTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/right_arrow"
+                        android:fontFamily="@font/opensans_regular"
+                        android:gravity="center_vertical"
+                        android:paddingBottom="@dimen/layout_size_9"
+                        android:paddingHorizontal="@dimen/layout_size_16"
+                        android:paddingTop="@dimen/layout_size_14"
+                        android:text="@{@string/title_hold_count(String.valueOf(patronInfo.holds.size()))}"
+                        android:textSize="@dimen/text_size_16sp"/>
+
+                    <LinearLayout
+                        android:id="@+id/titleHoldDesLinear"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/titleHoldTextView"
+                        android:paddingHorizontal="@dimen/layout_size_16"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/titleHoldDesTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/item_shape"
+                            android:gravity="center_horizontal"
+                            android:paddingTop="@dimen/layout_size_2"
+                            android:text="@{String.valueOf(patronInfo.holds.size())}"
+                            android:textColor="@color/white"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/layout_size_6"
+                            android:gravity="start"
+                            android:text="@string/onhold_label"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/text_size_14sp"/>
+                    </LinearLayout>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/titleHoldDesLinear"
+                        android:layout_marginTop="@dimen/layout_size_9"
+                        android:background="@color/editTextBorderColor"/>
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/patronErrorMsg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/patronEntryIncludeLayout"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/opensans_regular"
+                android:gravity="center"
+                android:padding="10dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/patronEntryIncludeLayout"/>
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</layout>

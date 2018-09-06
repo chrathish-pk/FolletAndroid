@@ -82,7 +82,7 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
     }
     
     @Override
-    public void ctaButtonOnClick() {
+    public void ctaButtonOnClick(View view) {
         
         
         if (!AppUtils.getInstance()
@@ -153,7 +153,7 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
                 
                 if (i == EditorInfo.IME_ACTION_DONE) {
                     AppUtils.getInstance().hideKeyBoard(getBaseActivity(), textView);
-                    ctaButtonOnClick();
+                    ctaButtonOnClick(basicLayoutBinding.libraryEditText);
                 } else if (i == EditorInfo.IME_ACTION_NEXT) {
                     basicLayoutBinding.portEditText.requestFocus();
                 }
@@ -165,7 +165,7 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_DONE) {
                     AppUtils.getInstance().hideKeyBoard(getBaseActivity(), textView);
-                    ctaButtonOnClick();
+                    ctaButtonOnClick(basicLayoutBinding.sslportEditText);
                 }
                 return true;
             }

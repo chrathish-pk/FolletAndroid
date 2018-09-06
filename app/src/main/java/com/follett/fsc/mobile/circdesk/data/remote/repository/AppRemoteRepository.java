@@ -19,6 +19,8 @@ import com.follett.fsc.mobile.circdesk.feature.loginsetup.SiteResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.Version;
 
 import java.util.Map;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
+
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -201,6 +203,34 @@ public class AppRemoteRepository {
                     @Override
                     public void onComplete() {
 
+                    }
+                });
+    }
+    
+    public void getPatronStatus(@Nullable final NetworkInterface networkInterface, Map<String, String> headerMap, String contextName, String site, String patronBarcode) {
+        
+        apiService.getPatronStatus(headerMap, contextName, site, patronBarcode)
+                .subscribeWith(new Observer<PatronInfo>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+                    
+                    @Override
+                    public void onNext(PatronInfo patronInfoResult) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallCompleted(patronInfoResult);
+                        }
+                    }
+                    
+                    @Override
+                    public void onError(Throwable throwable) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallFailed(throwable);
+                        }
+                    }
+                    
+                    @Override
+                    public void onComplete() {
                     }
                 });
     }

@@ -37,22 +37,20 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HomeMenuViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull HomeMenuViewHolder holder, final int position) {
         holder.rowHomeMenuBinding.setMenuItem(homeViewModel.homeMenuItems.get(position));
         holder.rowHomeMenuBinding.itemMenuImg.setImageResource(homeViewModel.homeMenuItems.get(position).getMenuImg());
 
         ItemClickListener itemClickListener = new ItemClickListener() {
             @Override
             public void OnItemClicked() {
-                homeViewModel.getOpenTaskEvent().call();
+                homeViewModel.setOpenTaskEvent(homeViewModel.homeMenuItems.get(position).getMenuName());
             }
-
+    
             @Override
             public void OnItemClick(View view, int position) {
-
             }
         };
-
         holder.rowHomeMenuBinding.setListener(itemClickListener);
 
     }
