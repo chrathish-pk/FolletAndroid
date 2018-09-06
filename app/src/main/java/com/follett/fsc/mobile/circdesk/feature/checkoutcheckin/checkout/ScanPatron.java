@@ -5,8 +5,9 @@
  *
  */
 
-package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin;
+package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout;
 
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.Message;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -78,6 +79,8 @@ public class ScanPatron implements Serializable {
     @SerializedName("patronType")
     @Expose
     private String patronType;
+
+    private boolean isLibrarySelected;
 
     public String getAssetCheckouts() {
         return assetCheckouts;
@@ -221,5 +224,13 @@ public class ScanPatron implements Serializable {
 
     public void setPatronType(String patronType) {
         this.patronType = patronType;
+    }
+
+    public boolean isLibrarySelected() {
+        return isLibrarySelected;
+    }
+
+    public void setLibrarySelected(boolean librarySelected) {
+        isLibrarySelected = librarySelected;
     }
 }

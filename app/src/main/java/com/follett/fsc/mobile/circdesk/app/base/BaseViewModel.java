@@ -23,7 +23,7 @@ public abstract class BaseViewModel<N> extends AndroidViewModel {
     private SingleLiveEvent<String> mErrorMessage = new SingleLiveEvent<>();
     
     private final SingleLiveEvent<Status> mStatus = new SingleLiveEvent<>();
-    
+
 //    public BaseViewModel() {
 //        setIsLoding(false);
 //    }
@@ -57,12 +57,13 @@ public abstract class BaseViewModel<N> extends AndroidViewModel {
     public void setStatus(Status status) {
         mStatus.postValue(status);
     }
-    
     public SingleLiveEvent<String> getErrorMessage() {
         return mErrorMessage;
     }
-    
+
     public void setErrorMessage(String errorMessage) {
         this.mErrorMessage.setValue(errorMessage);
     }
+    
+
 }

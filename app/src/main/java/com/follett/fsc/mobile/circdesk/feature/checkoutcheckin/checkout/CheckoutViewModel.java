@@ -4,27 +4,27 @@
  *
  */
 
-package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin;
+package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout;
 
 import android.app.Application;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.UpdateUIListener;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import android.support.annotation.NonNull;
-
 public class CheckoutViewModel extends BaseViewModel implements NetworkInterface {
 
     private Application mApplication;
     private UpdateUIListener updateUIListener;
-
     private AppRemoteRepository mAppRemoteRepository;
 
     public CheckoutViewModel(@NonNull Application application, AppRemoteRepository appRemoteRepository, UpdateUIListener updateUIListener) {
@@ -35,8 +35,8 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
     }
 
     public void getScanPatron(String patronBarcodeID) {
-        setIsLoding(true);
-
+        //setIsLoding(true);
+        AppUtils.getInstance().showProgressDialog(mApplication, null, null, false);
         Map<String, String> map = new HashMap<>();
         map.put("Accept", "application/json");
         map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance(mApplication).getString(AppSharedPreferences.KEY_SESSION_ID));
@@ -45,14 +45,15 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
         mAppRemoteRepository.getScanPatron(map, this, patronBarcodeID);
     }
 
-    public void getCheckoutResult(String patronID, String barcode) {
+    public void getCheckoutResult(String patronID, String barcode, String collectionType) {
         setIsLoding(true);
+        AppUtils.getInstance().showProgressDialog(mApplication, null, null, false);
 
         Map<String, String> map = new HashMap<>();
         map.put("Accept", "application/json");
         map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance(mApplication).getString(AppSharedPreferences.KEY_SESSION_ID));
         map.put("text/xml", "gzip");
-        mAppRemoteRepository.getCheckoutResult(map, this, patronID, barcode);
+        mAppRemoteRepository.getCheckoutResult(map, this, patronID, barcode, collectionType);
     }
 
     @Override
@@ -82,5 +83,6 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
         setIsLoding(false);
         FollettLog.d("Exception", throwable.getMessage());
     }
+
 
 }

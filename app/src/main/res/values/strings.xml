@@ -13,7 +13,7 @@
     <string name="alert_warning">Information</string>
     <string name="alert_success">Alert</string>
     <string name="back">Back</string>
-    <string name="app_status_title">Follett DESTINY</string>
+    <string name="app_status_title">DESTINY</string>
     <string name="connect_your_school_label">Connect to Your School</string>
     <string name="select_school_label">Select School</string>
     <string name="get_started_label">Get Started</string>
@@ -37,13 +37,16 @@
     <string name="checkout">Check Out</string>
     <string name="checkinChecoutTitle">Check In/Check Out</string>
     <string name="findPatron">Find Patron</string>
+    <string name="enterBarcode">Enter Barcode</string>
     <string name="scan">SCAN</string>
     <string name="Go">GO</string>
     <string name="library">LIBRARY</string>
     <string name="resource">RESOURCE</string>
     <string name="titleDetails">Title Details</string>
-    <string name="checkoutLabel">Checked Out: </string>
-    <string name="overdueLabel">Overdue: </string>
+    <string name="checkoutLabel">"Checked Out: "</string>
+    <string name="overdueLabel">"Overdue: "</string>
+    <string name="checkedin">Checked In</string>
+    <string name="checkedOut">Checked Out</string>
 
 
     <!--Patron Screen-->
@@ -90,7 +93,22 @@
     <string name="item_format">Format</string>
     <string name="item_isbn">ISBN</string>
     <string name="item_target">Target</string>
-    <string name="item_accelerated">Accelerated</string>
+    <string name="item_accelerated">Accelerated</string>'
+    <string name="item_status_in">Status : IN</string>
+    <string name="item_status_out">Status : Out</string>
+    <string name="item_callno">Call# </string>
+    <string name="of">&#032;of&#032;</string>
+    <string name="item_quiz_no">Quiz Number: </string>
+    <string name="item_points">, Points : </string>
+    <string name="intent_titlemoredetails">titleMoreDetails</string>
+    <string name="available_txt"> Available</string>
+    <string name="one">1</string>
+
+    //Item Status
+    <string name="findItem">Find Item</string>
+    <string name="item_status_title">Item Status</string>
+    <string name="item_not_found">Copy %s not found</string>
+
 
     <!-- Intent data passing strings-->
     <string name="scanPatron">scanPatron</string>
@@ -120,7 +138,5 @@
     <string name="on_hold_label">On Hold</string>
     <string name="fine_label">Fines</string>
     <string name="overdue_label">Overdue</string>
-
-
 
 </resources>

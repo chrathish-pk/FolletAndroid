@@ -4,59 +4,68 @@
  *
  */
 
-package com.follett.fsc.mobile.circdesk.feature.iteminfo;
+package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin;
 
 import android.app.Application;
-import android.arch.lifecycle.MutableLiveData;
-import android.support.annotation.NonNull;
 
+import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
-import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.UpdateUIListener;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class AdditionalInfoViewModel extends BaseViewModel implements NetworkInterface {
+/**
+ * Created by muthulakshmi on 04/09/18.
+ */
 
-    private AppRemoteRepository mAppRemoteRepository;
-    AdditionalInfoListener additionalInfoListener;
+public class CheckinViewModel extends BaseViewModel implements NetworkInterface {
+
     private Application mApplication;
-    public final MutableLiveData<TitleDetails> mTitleDetails = new MutableLiveData<>();
+    private UpdateUIListener updateUIListener;
+    private AppRemoteRepository mAppRemoteRepository;
 
-    public AdditionalInfoViewModel(@NonNull Application application, AppRemoteRepository appRemoteRepository, AdditionalInfoListener additionalInfoListener) {
+    public CheckinViewModel(Application application, AppRemoteRepository appRemoteRepository, UpdateUIListener updateUIListener) {
         super(application);
-        mAppRemoteRepository = appRemoteRepository;
-        this.additionalInfoListener = additionalInfoListener;
         this.mApplication = application;
+        this.mAppRemoteRepository = appRemoteRepository;
+        this.updateUIListener = updateUIListener;
     }
 
-    public void getTitleDetails(String bibID) {
+    public void getCheckinData(String checkinBarcode, String collectionType, boolean isLibraryUse) {
         setIsLoding(true);
+
         Map<String, String> map = new HashMap<>();
         map.put("Accept", "application/json");
         map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance(mApplication).getString(AppSharedPreferences.KEY_SESSION_ID));
         map.put("text/xml", "gzip");
-        mAppRemoteRepository.getTitleDetails(map, this, bibID);
+
+        mAppRemoteRepository.getCheckinResult(map, this, checkinBarcode, collectionType, isLibraryUse);
     }
+
 
     @Override
     public void onCallCompleted(Object model) {
         setIsLoding(false);
+
         try {
-            if (model instanceof TitleDetails) {
-                mTitleDetails.postValue((TitleDetails) model);
+            if (model instanceof CheckinResult) {
+                CheckinResult checkinResult = (CheckinResult) model;
+                updateUIListener.updateUI(checkinResult);
             }
         } catch (Exception e) {
-            FollettLog.d("Exception", e.getMessage());
+            FollettLog.e(mApplication.getResources().getString(R.string.error), e.getMessage());
         }
+
     }
 
     @Override
     public void onCallFailed(Throwable throwable) {
+        setIsLoding(false);
         FollettLog.d("Exception", throwable.getMessage());
     }
 }
