@@ -1,10 +1,4 @@
 
-/*
- *
- *  * Copyright (c) 2018 Follett. All rights reserved.
- *
- */
-
 package com.follett.fsc.mobile.circdesk.feature.iteminfo.model;
 
 import java.io.Serializable;
@@ -41,7 +35,7 @@ public class AdditionalInfoRecord implements Serializable
     private String edition;
     @SerializedName("seriesList")
     @Expose
-    private List<Object> seriesList = null;
+    private List<String> seriesList = null;
     @SerializedName("term33XList")
     @Expose
     private List<Object> term33XList = null;
@@ -57,7 +51,7 @@ public class AdditionalInfoRecord implements Serializable
     @SerializedName("issnList")
     @Expose
     private List<Object> issnList = null;
-    private final static long serialVersionUID = 3102081762202603882L;
+    private final static long serialVersionUID = 1415353833980146989L;
 
     public String getFormat() {
         return format;
@@ -123,11 +117,11 @@ public class AdditionalInfoRecord implements Serializable
         this.edition = edition;
     }
 
-    public List<Object> getSeriesList() {
+    public List<String> getSeriesList() {
         return seriesList;
     }
 
-    public void setSeriesList(List<Object> seriesList) {
+    public void setSeriesList(List<String> seriesList) {
         this.seriesList = seriesList;
     }
 

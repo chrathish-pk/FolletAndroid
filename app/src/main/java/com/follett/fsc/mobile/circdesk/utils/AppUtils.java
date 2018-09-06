@@ -4,19 +4,26 @@
 
 package com.follett.fsc.mobile.circdesk.utils;
 
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.CustomAlert;
+import com.follett.fsc.mobile.circdesk.app.GlideApp;
+import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.databinding.BindingAdapter;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class AppUtils {
@@ -158,6 +165,23 @@ public class AppUtils {
         if (null != activity) {
             CustomAlert.showDialog(activity, activity.getString(R.string.no_internet_title), activity.getString(R.string.no_internet_des), activity.getString(R
                     .string.ok), onClickListener, null, onClickListener);
+        }
+    }
+
+    @BindingAdapter({"bind:itemImageUrl"})
+    public static void loadItemImage(ImageView view, String imageUrl) {
+        Context context = view.getContext();
+        if (context != null) {
+            RequestOptions requestOptions = new RequestOptions()
+                    .fitCenter()
+                    .placeholder(R.drawable.inventory);
+
+
+            GlideApp.with(context)
+                    .setDefaultRequestOptions(requestOptions)
+                    .load(AppRemoteRepository.BASE_URL + imageUrl)
+                    .into(view);
+
         }
     }
 }

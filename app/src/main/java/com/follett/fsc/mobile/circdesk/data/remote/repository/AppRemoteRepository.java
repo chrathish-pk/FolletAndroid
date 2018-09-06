@@ -205,7 +205,7 @@ public class AppRemoteRepository {
                 });
     }
 
-    public void getItemStatus(@Nullable final NetworkInterface networkInterface,String itemBarcodeID) {
+    public void getItemStatus(Map<String, String> headers,@Nullable final NetworkInterface networkInterface,String itemBarcodeID) {
 
         apiService.getScanItem("dvpdt_devprodtest","FDPSA",itemBarcodeID,"0")
                .subscribeWith(new Observer<ItemDetails>() {

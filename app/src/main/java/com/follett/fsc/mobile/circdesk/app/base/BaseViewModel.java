@@ -18,6 +18,8 @@ public abstract class BaseViewModel<N> extends ViewModel {
     private final ObservableBoolean mIsLoading = new ObservableBoolean(false);
     
     private final SingleLiveEvent<Status> mStatus = new SingleLiveEvent<>();
+
+    private SingleLiveEvent<String> mErrorMessage = new SingleLiveEvent<>();
     
     public BaseViewModel(Application application) {
         setIsLoding(false);
@@ -47,6 +49,13 @@ public abstract class BaseViewModel<N> extends ViewModel {
     
     public void setStatus(Status status) {
         mStatus.postValue(status);
+    }
+    public SingleLiveEvent<String> getErrorMessage() {
+        return mErrorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.mErrorMessage.setValue(errorMessage);
     }
     
     
