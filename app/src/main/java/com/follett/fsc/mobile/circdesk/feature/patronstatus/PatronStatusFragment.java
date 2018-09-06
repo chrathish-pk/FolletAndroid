@@ -84,11 +84,8 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
     
     
     private void inItView() {
-        mBinding.patronEntryIncludeLayout.patronGoBtn.setOnClickListener(this);
-        mBinding.itemRelativeLayout.setOnClickListener(this);
-        mBinding.closeBtn.setOnClickListener(this);
-        mBinding.holdRelativeLayout.setOnClickListener(this);
-        mBinding.fineRelativeLayout.setOnClickListener(this);
+        
+        mBinding.patronEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.GONE);
         mBinding.patronEntryIncludeLayout.patronEntry.setImeOptions(EditorInfo.IME_ACTION_DONE);
         mViewModel.getErrorMessage()
                 .observe(this, new Observer() {
@@ -105,6 +102,7 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
                 updateUI(mPatronInfo);
             }
         });
+        setListener();
     }
     
     @Override
@@ -170,5 +168,14 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
     
     public void requestPatronId(PatronList patronItem) {
         getPatronInfo(patronItem.getBarcode());
+    }
+    
+    private void setListener() {
+        
+        mBinding.patronEntryIncludeLayout.patronGoBtn.setOnClickListener(this);
+        mBinding.itemRelativeLayout.setOnClickListener(this);
+        mBinding.closeBtn.setOnClickListener(this);
+        mBinding.holdRelativeLayout.setOnClickListener(this);
+        mBinding.fineRelativeLayout.setOnClickListener(this);
     }
 }

@@ -7,10 +7,13 @@ package com.follett.fsc.mobile.circdesk.feature.patronstatus;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
+import com.follett.fsc.mobile.circdesk.feature.iteminfo.TitleInfoActivity;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.CustomCheckoutItem;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronList;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -68,6 +71,16 @@ public class PatronStatusActivity extends BaseActivity<PatronStatusViewModel> im
             navigateToPatronCheckout((PatronInfo) model, true, getString(R.string.on_hold_label));
         } else if (position == 4 && model != null) {    // FineListFragment Fine
             navigateToFineList((PatronInfo) model, true, getString(R.string.fine_label));
+        } else if (position == 5) {
+            navigateToTitleDetail((CustomCheckoutItem) model);
+        }
+    }
+    
+    private void navigateToTitleDetail(CustomCheckoutItem checkoutItem) {
+        if (checkoutItem != null) {
+            Intent titleIntent = new Intent(this, TitleInfoActivity.class);
+            titleIntent.putExtra("bibID", String.valueOf(checkoutItem.getId()));
+            startActivity(titleIntent);
         }
     }
     

@@ -8,6 +8,7 @@ package com.follett.fsc.mobile.circdesk.feature.patronstatus.model;
 
 public class CustomCheckoutItem {
     
+    private int id;
     private String checkoutTitle;
     private String bookName;
     private String barCode;
@@ -15,13 +16,22 @@ public class CustomCheckoutItem {
     private Boolean isArrow;
     private Boolean isOverDue;
     
-    public CustomCheckoutItem(String checkoutTitle, String bookName, String barCode, String dueDate, Boolean isArrow, Boolean isOverDue) {
+    public CustomCheckoutItem(int id, String checkoutTitle, String bookName, String barCode, String dueDate, Boolean isArrow, Boolean isOverDue) {
+        this.id = id;
         this.checkoutTitle = checkoutTitle;
         this.bookName = bookName;
         this.barCode = barCode;
         this.dueDate = dueDate;
         this.isArrow = isArrow;
         this.isOverDue = isOverDue;
+    }
+    
+    public int getId() {
+        return id;
+    }
+    
+    public void setId(int id) {
+        this.id = id;
     }
     
     public String getCheckoutTitle() {
@@ -40,7 +50,7 @@ public class CustomCheckoutItem {
         return dueDate;
     }
     
-    public Boolean getTitle() {
+    public Boolean isArrow() {
         return isArrow;
     }
     
@@ -60,7 +70,7 @@ public class CustomCheckoutItem {
         this.dueDate = dueDate;
     }
     
-    public void setTitle(Boolean title) {
+    public void setArrow(Boolean title) {
         isArrow = title;
     }
     
