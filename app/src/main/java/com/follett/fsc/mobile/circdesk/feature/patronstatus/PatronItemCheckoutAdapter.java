@@ -58,7 +58,6 @@ public class PatronItemCheckoutAdapter extends RecyclerView.Adapter<PatronItemCh
         public PatronItemCheckoutViewHolder(PatronCheckoutItemBinding listItemBinding) {
             super(listItemBinding.getRoot());
             binding = listItemBinding;
-//            binding.patronLayout.setOnClickListener(this);
         }
         
         @Override

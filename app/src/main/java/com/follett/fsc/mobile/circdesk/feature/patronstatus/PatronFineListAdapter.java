@@ -58,7 +58,6 @@ public class PatronFineListAdapter extends RecyclerView.Adapter<PatronFineListAd
         public PatronFineListViewHolder(PatronFineItemBinding listItemBinding) {
             super(listItemBinding.getRoot());
             binding = listItemBinding;
-//            binding.patronLayout.setOnClickListener(this);
         }
         
         @Override

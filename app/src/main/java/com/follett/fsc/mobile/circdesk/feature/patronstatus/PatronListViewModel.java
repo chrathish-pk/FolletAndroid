@@ -33,7 +33,7 @@ public class PatronListViewModel extends BaseViewModel<CTAButtonListener> {
         super(application);
     }
     
-    public void formCheckoutModel(final Bundle arguments) {
+    public void createCheckoutModelData(final Bundle arguments) {
         if (arguments != null) {
             setIsLoding(true);
             PatronInfo patronInfo = arguments.getParcelable(PATRON_INFO_KEY);
