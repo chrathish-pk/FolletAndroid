@@ -3,94 +3,129 @@
   ~  * Copyright (c) 2018 Follett. All rights reserved.
   ~  */
   -->
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="scanPatron"
+            type="com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.ScanPatron" />
+
+    </data>
+
+    <LinearLayout
         android:id="@+id/patronDetailLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:visibility="gone">
 
         <RelativeLayout
-            android:id="@+id/patronInfoLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp">
 
-            <ImageView
-                android:id="@+id/checkoutPatronImg"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_centerVertical="true" />
+            <RelativeLayout
+                android:id="@+id/patronInfoLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:id="@+id/checkoutPatronLayout"
+                <ImageView
+                    android:id="@+id/checkoutPatronImg"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerVertical="true"
+                    bind:imageUrl="@{scanPatron.patronPictureFileName}" />
+
+                <LinearLayout
+                    android:id="@+id/checkoutPatronLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/checkoutPatronImg"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/checkoutPatronName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/opensans_regular"
+                        android:text="@{scanPatron.lastFirstMiddleName}"
+                        android:textColor="@color/blueLabel"
+                        android:textSize="@dimen/text_size_18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/checkoutPatronType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/opensans_regular"
+                        android:text="@{scanPatron.patronType}"
+                        android:textSize="@dimen/text_size_16sp" />
+
+                    <TextView
+                        android:id="@+id/checkoutPatronID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/opensans_regular"
+                        android:text="@{scanPatron.barcode}"
+                        android:textSize="@dimen/text_size_16sp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/checkoutCloseBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/close" />
+
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/checkedOutCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_below="@+id/patronInfoLayout"
                 android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/checkoutPatronImg"
-                android:orientation="vertical">
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/opensans_regular"
+                android:text="@{scanPatron.librarySelected ? @string/checkoutLabel +scanPatron.libraryCheckouts : @string/checkoutLabel +scanPatron.assetCheckouts}"
+                android:textColor="@color/blueLabel"
+                android:textSize="@dimen/text_size_16sp" />
 
-                <TextView
-                    android:id="@+id/checkoutPatronName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/opensans_regular"
-                    android:textColor="@color/blueLabel"
-                    android:textSize="@dimen/text_size_18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/checkoutPatronType"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/opensans_regular"
-                    android:textSize="@dimen/text_size_16sp" />
-
-                <TextView
-                    android:id="@+id/checkoutPatronID"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/opensans_regular"
-                    android:textSize="@dimen/text_size_16sp" />
-
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/checkoutCloseBtn"
+            <TextView
+                android:id="@+id/overdue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_below="@+id/patronInfoLayout"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/close" />
+                android:fontFamily="@font/opensans_regular"
+                android:text="@{scanPatron.librarySelected ? @string/overdueLabel +scanPatron.libraryOverdues : @string/overdueLabel +scanPatron.assetOverdues}"
+                android:textColor="@color/blueLabel"
+                android:textSize="@dimen/text_size_16sp" />
 
 
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/checkedOutCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/patronInfoLayout"
-            android:layout_marginLeft="10dp"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/overdue"
             android:layout_marginTop="10dp"
-            android:fontFamily="@font/opensans_regular"
-            android:textColor="@color/blueLabel"
-            android:textSize="@dimen/text_size_16sp" />
+            android:background="@color/editTextBorderColor" />
 
-        <TextView
-            android:id="@+id/overdue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/patronInfoLayout"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/opensans_regular"
-            android:textColor="@color/blueLabel"
-            android:textSize="@dimen/text_size_16sp" />
-
-    </RelativeLayout>
+    </LinearLayout>
 
 </layout>

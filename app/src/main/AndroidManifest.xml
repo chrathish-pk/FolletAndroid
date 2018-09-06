@@ -24,7 +24,7 @@
 
         <activity android:name=".feature.checkoutcheckin.CheckinCheckoutActivity" />
 
-        <activity android:name=".feature.checkoutcheckin.PatronListActivity" />
+        <activity android:name=".feature.checkoutcheckin.checkout.PatronListActivity" />
 
         <activity android:name=".feature.homescreen.HomeActivity" />
 
