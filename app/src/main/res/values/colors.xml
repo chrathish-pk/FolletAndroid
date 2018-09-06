@@ -11,7 +11,7 @@
     <color name="editTextBgColor">#B4B4B4</color>
     <color name="bottom_bar">#F3F3F3</color>
     <color name="dark_slate_blue">#202f72</color>
-
+    <color name="text_color">#4a4a4a</color>
     <color name="black">#000000</color>
     <color name="blueLabel">#2d5ba0</color>
     <color name="mountain_mist">#A7A5A8</color>

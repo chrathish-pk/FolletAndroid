@@ -16,6 +16,8 @@ import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityHomeBinding;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.CheckinCheckoutActivity;
 import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
+import com.follett.fsc.mobile.circdesk.feature.iteminfo.TitleInfoActivity;
+import com.follett.fsc.mobile.circdesk.feature.itemstatus.ItemStatusActivity;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.PatronStatusActivity;
 
 

@@ -14,6 +14,7 @@ import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.CheckoutResult;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.ScanPatron;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
+import com.follett.fsc.mobile.circdesk.feature.itemstatus.ItemDetails;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.SiteResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.Version;
@@ -178,8 +179,7 @@ public class AppRemoteRepository {
     }
 
     public void getTitleDetails(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String bibID) {
-        apiService.getTitleDetails(headers, "dvpdt_devprodtest", "FDPSA", "COGNITE", bibID, "DestinyCirc", "Android_24_7.0_lge_lucye_LG-H870DS", "1_Android",
-                "English")
+        apiService.getTitleDetails(headers, "dvpdt_devprodtest", "FDPSA", bibID)
                 .subscribeWith(new Observer<TitleDetails>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -206,29 +206,60 @@ public class AppRemoteRepository {
                     }
                 });
     }
-    
+
+    public void getItemStatus(Map<String, String> headers,@Nullable final NetworkInterface networkInterface,String itemBarcodeID) {
+
+        apiService.getScanItem("dvpdt_devprodtest","FDPSA",itemBarcodeID,"0")
+               .subscribeWith(new Observer<ItemDetails>() {
+                   @Override
+                   public void onSubscribe(Disposable d) {
+
+                   }
+
+                   @Override
+                   public void onNext(ItemDetails itemDetails) {
+                       if(networkInterface!=null)
+                       {
+                           networkInterface.onCallCompleted(itemDetails);
+                       }
+                   }
+
+                   @Override
+                   public void onError(Throwable throwable) {
+                       if (networkInterface != null) {
+                           networkInterface.onCallFailed(throwable);
+                       }
+                   }
+
+                   @Override
+                   public void onComplete() {
+
+                    }
+                });
+    }
+
     public void getPatronStatus(@Nullable final NetworkInterface networkInterface, Map<String, String> headerMap, String contextName, String site, String patronBarcode) {
-        
+
         apiService.getPatronStatus(headerMap, contextName, site, patronBarcode)
                 .subscribeWith(new Observer<PatronInfo>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
-                    
+
                     @Override
                     public void onNext(PatronInfo patronInfoResult) {
                         if (networkInterface != null) {
                             networkInterface.onCallCompleted(patronInfoResult);
                         }
                     }
-                    
+
                     @Override
                     public void onError(Throwable throwable) {
                         if (networkInterface != null) {
                             networkInterface.onCallFailed(throwable);
                         }
                     }
-                    
+
                     @Override
                     public void onComplete() {
                     }

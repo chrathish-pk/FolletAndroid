@@ -90,7 +90,22 @@
     <string name="item_format">Format</string>
     <string name="item_isbn">ISBN</string>
     <string name="item_target">Target</string>
-    <string name="item_accelerated">Accelerated</string>
+    <string name="item_accelerated">Accelerated</string>'
+    <string name="item_status_in">Status : IN</string>
+    <string name="item_status_out">Status : Out</string>
+    <string name="item_callno">Call# </string>
+    <string name="of">&#032;of&#032;</string>
+    <string name="item_quiz_no">Quiz Number: </string>
+    <string name="item_points">, Points : </string>
+    <string name="intent_titlemoredetails">titleMoreDetails</string>
+    <string name="available_txt"> Available</string>
+    <string name="one">1</string>
+
+    //Item Status
+    <string name="findItem">Find Item</string>
+    <string name="item_status_title">Item Status</string>
+    <string name="item_not_found">Copy %s not found</string>
+
 
     <!-- Intent data passing strings-->
     <string name="scanPatron">scanPatron</string>
