@@ -36,7 +36,7 @@ import static com.follett.fsc.mobile.circdesk.utils.AppConstants.PATRON_LIST_KEY
 
 public class PatronListFragment extends BaseFragment<FragmentPatronListBinding, PatronListViewModel> implements CTAButtonListener {
     
-    private static final String TAG = LoginFragment.class.getSimpleName();
+    private static final String TAG = PatronListFragment.class.getSimpleName();
     
     private PatronListViewModel mViewModel;
     

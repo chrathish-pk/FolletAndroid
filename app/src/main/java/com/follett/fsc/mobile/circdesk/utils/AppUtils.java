@@ -4,6 +4,17 @@
 
 package com.follett.fsc.mobile.circdesk.utils;
 
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.CustomAlert;
+import com.follett.fsc.mobile.circdesk.app.GlideApp;
+import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -11,12 +22,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.databinding.BindingAdapter;
 import android.graphics.drawable.Drawable;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.text.TextUtils;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -172,6 +186,7 @@ public class AppUtils {
         }
     }
 
+
     @BindingAdapter({"bind:imageUrl"})
     public static void loadImage(ImageView view, String imageUrl) {
         Context context = view.getContext();
@@ -184,6 +199,23 @@ public class AppUtils {
             GlideApp.with(context)
                     .setDefaultRequestOptions(requestOptions)
                     .load(AppRemoteRepository.BASE_URL + imageUrl + "?contextName=dvpdt_devprodtest")
+                    .into(view);
+
+        }
+    }
+
+    @BindingAdapter({"bind:itemImageUrl"})
+    public static void loadItemImage(ImageView view, String imageUrl) {
+        Context context = view.getContext();
+        if (context != null) {
+            RequestOptions requestOptions = new RequestOptions()
+                    .fitCenter()
+                    .placeholder(R.drawable.inventory);
+
+
+            GlideApp.with(context)
+                    .setDefaultRequestOptions(requestOptions)
+                    .load(AppRemoteRepository.BASE_URL + imageUrl)
                     .into(view);
 
         }

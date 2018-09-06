@@ -11,6 +11,7 @@ import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin.CheckinRe
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.CheckoutResult;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.ScanPatron;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
+import com.follett.fsc.mobile.circdesk.feature.itemstatus.ItemDetails;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.SiteResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.Version;
@@ -42,6 +43,17 @@ public interface APIInterface {
     @JsonAndXmlConverters.Xml
     Observable<SiteResults> getSchoolList(@Query("contextName") String contextName);
 
+    @Headers({
+            "Cookie: JSESSIONID=YYXn43oP1_6wRo83mhiiKqAs23x4omFd5QKE-F0q",
+            "Accept: application/json",
+            "text/xml: gzip"
+    })
+    @GET("rest/v4/circulation/copystatus")
+    @JsonAndXmlConverters.Xml
+    Observable<ItemDetails> getScanItem(@Query("contextName") String contextName, @Query("site") String site,
+                                        @Query("barcode") String barcode, @Query("collectionType") String collectionType);
+
+
     @GET("rest/v4/circulation/scanpatron")
     @JsonAndXmlConverters.Xml
     Observable<ScanPatron> getScanPatron(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site, @Query("client") String client,
@@ -67,7 +79,9 @@ public interface APIInterface {
                                                @Query("barcode") String barcode, @Query("collectionType") String collectionType,
                                                @Query("inLibraryUse") String inLibraryUse);
 
+
     @GET("rest/v4/circulation/patronstatus")
     Observable<PatronInfo> getPatronStatus(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site,
                                            @Query("barcode") String barcode);
+
 }

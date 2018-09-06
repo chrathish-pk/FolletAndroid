@@ -6,24 +6,32 @@
 
 package com.follett.fsc.mobile.circdesk.feature.patronstatus;
 
-import android.arch.lifecycle.Observer;
-import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
-
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentPatronStatusBinding;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.CheckoutResult;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.CheckoutResult;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.PatronListActivity;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.AssetCheckOut;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.Checkout;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronList;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
+
+import android.arch.lifecycle.Observer;
+import android.content.Context;
+import android.content.Intent;
+import android.databinding.BindingAdapter;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -32,8 +40,10 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
     private static final String TAG = PatronStatusFragment.class.getSimpleName();
     
     private PatronStatusViewModel mViewModel;
+    
     private FragmentPatronStatusBinding mBinding;
-    private CheckoutResult checkoutResult = null;
+    
+    private PatronInfo mPatronInfo;
     
     private NavigationListener mNavigationListener;
     
@@ -80,7 +90,10 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
     
     private void inItView() {
         mBinding.patronEntryIncludeLayout.patronGoBtn.setOnClickListener(this);
+        mBinding.itemRelativeLayout.setOnClickListener(this);
         mBinding.closeBtn.setOnClickListener(this);
+        mBinding.holdRelativeLayout.setOnClickListener(this);
+        mBinding.fineRelativeLayout.setOnClickListener(this);
         mBinding.patronEntryIncludeLayout.patronEntry.setImeOptions(EditorInfo.IME_ACTION_DONE);
         mViewModel.getErrorMessage()
                 .observe(this, new Observer() {
@@ -93,7 +106,8 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
         mViewModel.mPatronInfo.observe(this, new Observer<PatronInfo>() {
             @Override
             public void onChanged(@Nullable PatronInfo patronInfo) {
-                updateUI(patronInfo);
+                mPatronInfo = patronInfo;
+                updateUI(mPatronInfo);
             }
         });
 
@@ -108,12 +122,35 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
     @Override
     public void onClick(View v) {
         if (v == mBinding.patronEntryIncludeLayout.patronGoBtn) {
+            mBinding.patronDetailLayout.setVisibility(View.GONE);
            getPatronInfo(AppUtils.getInstance()
                    .getEditTextValue(mBinding.patronEntryIncludeLayout.patronEntry));
            
         } else if (v == mBinding.closeBtn) {
             mBinding.patronDetailLayout.setVisibility(View.GONE);
+        } else if (v == mBinding.itemRelativeLayout) {
+            if (mPatronInfo != null) {
+                if (!mPatronInfo.getCheckouts().isEmpty() ||
+                        !mPatronInfo.getAssetCheckOuts().isEmpty()) {
+                    mNavigationListener.onNavigation(mPatronInfo, 2);
+    
+                }
+            }
+        } else if (v == mBinding.holdRelativeLayout) {
+            if (mPatronInfo != null) {
+                if (!mPatronInfo.getHolds().isEmpty()) {
+                    mNavigationListener.onNavigation(mPatronInfo, 3);
+                }
+            }
+        } else if (v == mBinding.fineRelativeLayout) {
+            if (mPatronInfo != null) {
+                if (!mPatronInfo.getFines().isEmpty()) {
+                    mNavigationListener.onNavigation(mPatronInfo, 4);
+                }
+            }
         }
+        
+        
 
 
 //        else if (v.getId() == R.id.checkoutCloseBtn && mBinding.patronDetailIncludeLayout.patronDetailLayout.getVisibility() == View.VISIBLE) {
@@ -183,87 +220,25 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
         getPatronInfo(patronItem.getBarcode());
     }
     
-//        getActivity().runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//
-////                else if (patronInfo != null && patronInfo instanceof CheckoutResult) {
-////                    checkoutResult = (CheckoutResult) patronInfo;
-////                    if (checkoutResult.getSuccess()) {
-////                        bindCheckoutResult(checkoutResult);
-////                    } else {
-////                        updateCheckoutErrorMsg(checkoutResult);
-////                    }
-////                }
-//
-//    }
-//    }
-
-//    private void updateCheckoutErrorMsg(CheckoutResult checkoutResult) {
-//
-//        if (checkoutResult != null) {
-//            mBinding.checkoutPatronErrorMsg.setVisibility(View.VISIBLE);
-//            if (checkoutResult.getMessages().size() > 1) {
-//                String errorMsg = checkoutResult.getMessages().get(0).getMessage() + "\n" + checkoutResult.getMessages().get(1).getMessage();
-//                mBinding.checkoutPatronErrorMsg.setText(errorMsg);
-//            } else {
-//                mBinding.checkoutPatronErrorMsg.setText(checkoutResult.getMessages().get(0).getMessage());
-//            }
-//        }
-//
-//    }
-
-//    private void bindCheckoutResult(CheckoutResult checkoutResult) {
-//        try {
-//            if (mBinding.checkoutPatronErrorMsg.getVisibility() == View.VISIBLE)
-//                mBinding.checkoutPatronErrorMsg.setVisibility(View.GONE);
-//            mBinding.checkoutDetailIncludeLayout.checkedoutDetailLayout.setVisibility(View.VISIBLE);
-//            mBinding.checkoutDetailIncludeLayout.checkedoutName.setText(checkoutResult.getInfo().getTitle());
-//            mBinding.checkoutDetailIncludeLayout.checkedoutDue.setText(checkoutResult.getInfo().getDueDate());
-//            mBinding.checkoutDetailIncludeLayout.checkedoutType.setText(checkoutResult.getInfo().getBarcode());
-//        } catch (Exception e) {
-//            FollettLog.e(getString(R.string.error), e.getMessage());
-//        }
-//    }
-
-//    private void updatePatronErrorMsg(ScanPatron scanPatron) {
-//        mBinding.checkoutPatronErrorMsg.setVisibility(View.VISIBLE);
-//        mBinding.checkoutPatronErrorMsg.setText(scanPatron.getMessages().get(0).getMessage());
-//    }
-
-//    public void updatePatronView() {
-//
-//
-//        if (scanPatron != null) {
-//            mBinding.patronDetailIncludeLayout.patronDetailLayout.setVisibility(View.VISIBLE);
-//            mBinding.patronEntryIncludeLayout.patronEntry.setText("");
-//            if (mBinding.checkoutPatronErrorMsg.getVisibility() == View.VISIBLE)
-//                mBinding.checkoutPatronErrorMsg.setVisibility(View.GONE);
-//            if (AppSharedPreferences.getInstance(getActivity()).getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED)) {
-//                String checoutValue = getString(R.string.checkoutLabel) + scanPatron.getLibraryCheckouts();
-//                mBinding.patronDetailIncludeLayout.checkedOutCount.setText(checoutValue);
-//                String overdueValue = getString(R.string.overdueLabel) + scanPatron.getLibraryOverdues();
-//                mBinding.patronDetailIncludeLayout.overdue.setText(overdueValue);
-//            } else {
-//                String checoutValue = getString(R.string.checkoutLabel) + scanPatron.getAssetCheckouts();
-//                mBinding.patronDetailIncludeLayout.checkedOutCount.setText(checoutValue);
-//                String overdueValue = getString(R.string.overdueLabel) + scanPatron.getAssetOverdues();
-//                mBinding.patronDetailIncludeLayout.overdue.setText(overdueValue);
-//            }
-//            mBinding.patronDetailIncludeLayout.checkoutPatronName.setText(scanPatron.getLastFirstMiddleName());
-//            mBinding.patronDetailIncludeLayout.checkoutPatronID.setText(scanPatron.getPatronID());
-//            mBinding.patronDetailIncludeLayout.checkoutPatronType.setText(scanPatron.getPatronType());
-//
-//            GlideApp.with(this)
-//                    .load(scanPatron.getPatronPictureFileName())
-//                    .placeholder(R.drawable.inventory)
-//                    .into(mBinding.patronDetailIncludeLayout.checkoutPatronImg);
-//        } else {
-//            mBinding.patronDetailIncludeLayout.patronDetailLayout.setVisibility(View.GONE);
-//        }
-//    }
-
+    
+    @BindingAdapter(value = {"overDueCount"})
+    public static void setOverdueCount(@NonNull TextView textView, @NonNull PatronInfo patronInfo) {
+        int overDueCount = 0;
+        if (patronInfo != null) {
+            for (AssetCheckOut assetCheckOut : patronInfo.getAssetCheckOuts()) {
+                if (assetCheckOut.getOverDue()) {
+                    overDueCount++;
+                }
+            }
+            for (Checkout checkout : patronInfo.getCheckouts()) {
+                if (checkout.getOverDue()) {
+                    overDueCount++;
+                }
+            }
+        }
+       
+        textView.setText(String.valueOf(overDueCount));
+    }
 
 
 }
