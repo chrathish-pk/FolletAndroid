@@ -85,7 +85,7 @@
             android:fontFamily="@font/opensans_semibold"
             android:gravity="center_vertical"
             android:text="@{@string/due_label(checkoutItem.dueDate)}"
-            android:textColor="@{checkoutItem.isOverDue ? @color/monza : @color/black}"
+            android:textColor="@{safeUnbox(checkoutItem.isOverDue) ? @color/monza : @color/black}"
             android:textSize="@dimen/text_size_16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

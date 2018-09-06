@@ -4,7 +4,7 @@ package com.follett.fsc.mobile.circdesk.feature.itemstatus;
 import java.io.Serializable;
 import java.util.List;
 
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.Note;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.Note;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
