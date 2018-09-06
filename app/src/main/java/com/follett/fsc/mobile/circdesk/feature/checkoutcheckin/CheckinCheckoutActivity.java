@@ -76,9 +76,6 @@ public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewMod
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.backBtn:
-                AppSharedPreferences.getInstance(this).setString(AppSharedPreferences.KEY_BARCODE, null);
-                AppSharedPreferences.getInstance(this).setString(AppSharedPreferences.KEY_PATRON_ID, null);
-                AppSharedPreferences.getInstance(this).setString(AppSharedPreferences.KEY_SELECTED_BARCODE, null);
                 finish();
                 break;
             case R.id.libraryBtn:
@@ -116,8 +113,5 @@ public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewMod
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        AppSharedPreferences.getInstance(this).setString(AppSharedPreferences.KEY_BARCODE, null);
-        AppSharedPreferences.getInstance(this).setString(AppSharedPreferences.KEY_PATRON_ID, null);
-        AppSharedPreferences.getInstance(this).setString(AppSharedPreferences.KEY_SELECTED_BARCODE, null);
     }
 }
