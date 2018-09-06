@@ -3,15 +3,11 @@ package com.follett.fsc.mobile.circdesk.feature.itemstatus;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
@@ -27,7 +23,6 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding,I
     private ItemDetails itemDetailsinfo;
     private FragmentItemStatusBinding fragmentItemStatusBinding;
     private ItemStatusViewModel itemStatusViewModel;
-    private NavigationListener mNavigationListener;
 
 
     public ItemStatusFragment() {
@@ -45,7 +40,7 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding,I
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mNavigationListener = (NavigationListener) context;
+            NavigationListener mNavigationListener = (NavigationListener) context;
         } catch (ClassCastException ex) {
             FollettLog.e("TAG", "ClassCastException");
         }
@@ -72,7 +67,6 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding,I
 
     private void initView() {
 
-        //baseBinding.backBtn.setOnClickListener(this);
         fragmentItemStatusBinding.itemStatusPatronGoBtn.setOnClickListener(this);
         fragmentItemStatusBinding.itemStatusCheckedoutInfoBtn.setOnClickListener(this);
         itemStatusViewModel.getErrorMessage()

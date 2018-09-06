@@ -30,13 +30,6 @@ public class AdditionalInfoActivity extends BaseActivity<AdditionalInfoViewModel
         if (getIntent().getExtras() != null) {
             titleDetails = (TitleDetails) getIntent().getSerializableExtra("titleMoreDetails");
         }
-//        additionalInfoViewModel.mTitleDetails.observe(this, new Observer<TitleDetails>() {
-//
-//            @Override
-//            public void onChanged(@Nullable TitleDetails titleDetails) {
-//                updateMoreDetailsUI(titleDetails);
-//            }
-//        });
         updateMoreDetailsUI(titleDetails);
     }
 

@@ -38,7 +38,6 @@ public class TitleInfoActivity extends BaseActivity<AdditionalInfoViewModel> imp
             String bibID = getIntent().getStringExtra("bibID");
             additionalInfoViewModel.getTitleDetails(bibID);
         }
-        //additionalInfoViewModel.getTitleDetails(bibID);
         additionalInfoViewModel.getErrorMessage()
                 .observe(this, new Observer() {
                     @Override

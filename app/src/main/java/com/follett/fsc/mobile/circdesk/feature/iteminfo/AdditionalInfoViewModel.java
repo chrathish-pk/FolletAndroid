@@ -23,7 +23,7 @@ import java.util.Map;
 public class AdditionalInfoViewModel extends BaseViewModel implements NetworkInterface {
 
     private AppRemoteRepository mAppRemoteRepository;
-    private AdditionalInfoListener additionalInfoListener;
+    AdditionalInfoListener additionalInfoListener;
     private Application mApplication;
     public final MutableLiveData<TitleDetails> mTitleDetails = new MutableLiveData<>();
 
