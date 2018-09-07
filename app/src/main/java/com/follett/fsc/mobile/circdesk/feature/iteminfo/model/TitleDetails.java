@@ -1,12 +1,15 @@
 
 package com.follett.fsc.mobile.circdesk.feature.iteminfo.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class TitleDetails implements Serializable
+public class TitleDetails implements Parcelable
 {
 
     @SerializedName("title")
@@ -76,6 +79,62 @@ public class TitleDetails implements Serializable
     @Expose
     private List<Object> holdErrorList = null;
     private final static long serialVersionUID = 3423712223050425072L;
+
+    protected TitleDetails(Parcel in) {
+        title = in.readString();
+        byte tmpTemporary = in.readByte();
+        temporary = tmpTemporary == 0 ? null : tmpTemporary == 1;
+        status = in.readString();
+        responsibility = in.readString();
+        contentImageLink = in.readString();
+        awardInfoRecord = in.readParcelable(AwardInfoRecord.class.getClassLoader());
+        reviewInfoRecord = in.readParcelable(ReviewInfoRecord.class.getClassLoader());
+        holdInfoRecord = in.readParcelable(HoldInfoRecord.class.getClassLoader());
+        quizInfoRecord = in.readParcelable(QuizInfoRecord.class.getClassLoader());
+        titleDetailsLink = in.readString();
+        additionalInfoRecord = in.readParcelable(AdditionalInfoRecord.class.getClassLoader());
+        if (in.readByte() == 0) {
+            lostLocal = null;
+        } else {
+            lostLocal = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            totalLocal = null;
+        } else {
+            totalLocal = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            totalOffsite = null;
+        } else {
+            totalOffsite = in.readInt();
+        }
+        callNumber = in.readString();
+        if (in.readByte() == 0) {
+            availableOffsite = null;
+        } else {
+            availableOffsite = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            availableLocal = null;
+        } else {
+            availableLocal = in.readInt();
+        }
+        byte tmpInUsersBooklist = in.readByte();
+        inUsersBooklist = tmpInUsersBooklist == 0 ? null : tmpInUsersBooklist == 1;
+        summaryList = in.createStringArrayList();
+    }
+
+    public static final Creator<TitleDetails> CREATOR = new Creator<TitleDetails>() {
+        @Override
+        public TitleDetails createFromParcel(Parcel in) {
+            return new TitleDetails(in);
+        }
+
+        @Override
+        public TitleDetails[] newArray(int size) {
+            return new TitleDetails[size];
+        }
+    };
 
     public String getTitle() {
         return title;
@@ -253,4 +312,56 @@ public class TitleDetails implements Serializable
         this.holdErrorList = holdErrorList;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeByte((byte) (temporary == null ? 0 : temporary ? 1 : 2));
+        dest.writeString(status);
+        dest.writeString(responsibility);
+        dest.writeString(contentImageLink);
+        dest.writeParcelable(awardInfoRecord, flags);
+        dest.writeParcelable(reviewInfoRecord, flags);
+        dest.writeParcelable(holdInfoRecord, flags);
+        dest.writeParcelable(quizInfoRecord, flags);
+        dest.writeString(titleDetailsLink);
+        dest.writeParcelable(additionalInfoRecord, flags);
+        if (lostLocal == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(lostLocal);
+        }
+        if (totalLocal == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(totalLocal);
+        }
+        if (totalOffsite == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(totalOffsite);
+        }
+        dest.writeString(callNumber);
+        if (availableOffsite == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(availableOffsite);
+        }
+        if (availableLocal == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(availableLocal);
+        }
+        dest.writeByte((byte) (inUsersBooklist == null ? 0 : inUsersBooklist ? 1 : 2));
+        dest.writeStringList(summaryList);
+    }
 }

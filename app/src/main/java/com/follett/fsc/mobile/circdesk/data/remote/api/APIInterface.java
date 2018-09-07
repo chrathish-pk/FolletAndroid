@@ -19,6 +19,8 @@ import java.util.Map;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.CheckoutResult;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
+
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.HeaderMap;
@@ -60,7 +62,6 @@ public interface APIInterface {
             "text/xml: gzip"
     })
     @GET("rest/v4/circulation/scanpatron")
-    @JsonAndXmlConverters.Xml
     Observable<ScanPatron> getScanPatron(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site, @Query("client") String client,
                                          @Query("barcode") String barcode, @Query("appID") String appID, @Query("device") String device,
                                          @Query("appVersion") String appVersion, @Query("appLanguage") String appLanguage);

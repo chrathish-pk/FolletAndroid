@@ -64,7 +64,8 @@ public class TitleInfoActivity extends BaseActivity<AdditionalInfoViewModel> imp
                 break;
             case R.id.additional_info_btn:
                 Intent moreDetailsIntent = new Intent(this, AdditionalInfoActivity.class);
-                moreDetailsIntent.putExtra("titleMoreDetails", additionalInfoDetails);
+                moreDetailsIntent.putExtra("titleMoreDetails",additionalInfoDetails);
+                //moreDetailsIntent.putExtra("titleMoreDetails", additionalInfoDetails);
                 startActivity(moreDetailsIntent);
 
                 break;

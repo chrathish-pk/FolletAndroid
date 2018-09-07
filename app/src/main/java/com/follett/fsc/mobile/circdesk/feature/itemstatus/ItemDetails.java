@@ -1,6 +1,9 @@
 
 package com.follett.fsc.mobile.circdesk.feature.itemstatus;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -8,7 +11,7 @@ import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.Note;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ItemDetails implements Serializable
+public class ItemDetails implements Parcelable
 {
 
     @SerializedName("location")
@@ -63,6 +66,36 @@ public class ItemDetails implements Serializable
     @Expose
     private Object coverImage;
     private final static long serialVersionUID = -2194385777627677709L;
+
+    protected ItemDetails(Parcel in) {
+        location = in.readString();
+        isbn = in.readString();
+        title = in.readString();
+        status = in.readString();
+        currentCheckout = in.readParcelable(CurrentCheckout.class.getClassLoader());
+        department = in.readString();
+        if (in.readByte() == 0) {
+            bibID = null;
+        } else {
+            bibID = in.readInt();
+        }
+        author = in.readString();
+        byte tmpSuccess = in.readByte();
+        success = tmpSuccess == 0 ? null : tmpSuccess == 1;
+        barcode = in.readString();
+    }
+
+    public static final Creator<ItemDetails> CREATOR = new Creator<ItemDetails>() {
+        @Override
+        public ItemDetails createFromParcel(Parcel in) {
+            return new ItemDetails(in);
+        }
+
+        @Override
+        public ItemDetails[] newArray(int size) {
+            return new ItemDetails[size];
+        }
+    };
 
     public String getLocation() {
         return location;
@@ -192,4 +225,27 @@ public class ItemDetails implements Serializable
         this.coverImage = coverImage;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(location);
+        dest.writeString(isbn);
+        dest.writeString(title);
+        dest.writeString(status);
+        dest.writeParcelable(currentCheckout, flags);
+        dest.writeString(department);
+        if (bibID == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(bibID);
+        }
+        dest.writeString(author);
+        dest.writeByte((byte) (success == null ? 0 : success ? 1 : 2));
+        dest.writeString(barcode);
+    }
 }
