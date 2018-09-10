@@ -79,7 +79,7 @@ public class SchoolListAdapter extends RecyclerView.Adapter<SchoolListAdapter.Sc
             AppSharedPreferences.getInstance(mContext)
                     .setString(KEY_SITE_NAME, mSchoolList.get(position)
                             .getSiteName());
-            mNavigationListener.onNavigation(1);
+            mNavigationListener.onNavigation(null, 2);
         }
     }
 }

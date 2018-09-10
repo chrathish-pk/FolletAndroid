@@ -6,8 +6,6 @@
 
 package com.follett.fsc.mobile.circdesk.data.remote.repository;
 
-import android.support.annotation.Nullable;
-
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.api.FollettAPIManager;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
@@ -16,10 +14,13 @@ import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.Checkout
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.ScanPatron;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.ItemDetails;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.DistrictList;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.SiteResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.Version;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
+
+import android.support.annotation.Nullable;
 
 import java.util.Map;
 
@@ -33,7 +34,7 @@ public class AppRemoteRepository {
 
     private APIInterface apiService;
 
-    public static final String BASE_URL = "https://devprodtest.follettdestiny.com";
+    public static final String BASE_URL = "https://uat-destiny.follettsoftware.com/";
 
     public AppRemoteRepository() {
         apiService = FollettAPIManager.getClient(BASE_URL)
@@ -61,6 +62,33 @@ public class AppRemoteRepository {
 
                     @Override
                     public void onComplete() {
+                        // Do Nothing
+                    }
+                });
+    }
+    
+    public void getDistrictList(@Nullable final NetworkInterface networkInterface) {
+        apiService.getDistrictList()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribeWith(new DisposableObserver<DistrictList>() {
+                    @Override
+                    public void onNext(DistrictList districtList) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallCompleted(districtList);
+                        }
+                    }
+                    
+                    @Override
+                    public void onError(Throwable throwable) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallFailed(throwable);
+                        }
+                    }
+                    
+                    @Override
+                    public void onComplete() {
+                        // Do Nothing
                     }
                 });
     }
@@ -86,6 +114,7 @@ public class AppRemoteRepository {
 
                     @Override
                     public void onComplete() {
+                        // Do Nothing
                     }
                 });
     }
@@ -98,6 +127,7 @@ public class AppRemoteRepository {
                 .subscribeWith(new Observer<LoginResults>() {
                     @Override
                     public void onSubscribe(Disposable d) {
+                        // Do Nothing
                     }
 
                     @Override
@@ -126,7 +156,7 @@ public class AppRemoteRepository {
                 .subscribeWith(new Observer<ScanPatron>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        // Do Nothing
                     }
 
                     @Override

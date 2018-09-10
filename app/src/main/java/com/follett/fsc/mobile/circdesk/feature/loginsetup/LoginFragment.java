@@ -165,7 +165,10 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
                     @Override
                     public void onChanged(@Nullable Status status) {
                         if (Status.SUCCESS.equals(status)) {
-                            navigationListener.onNavigation(2);
+                            navigationListener.onNavigation(null, 3);
+                        } else if (Status.ERROR.equals(status)) {
+                            AppUtils.getInstance()
+                                    .showShortToastMessages(getBaseActivity(), getString(R.string.invalid_user_id));
                         }
                     }
                 });
