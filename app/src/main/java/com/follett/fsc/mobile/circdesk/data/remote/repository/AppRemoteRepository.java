@@ -34,11 +34,41 @@ public class AppRemoteRepository {
     private APIInterface apiService;
 
     public static final String BASE_URL = "https://devprodtest.follettdestiny.com";
+    private static long mAPILastChecked = 0;
+    private static final int API_CHECK_INTERVAL = 24 * 60 * 60 * 1000;            // 24 hours
 
     public AppRemoteRepository() {
         apiService = FollettAPIManager.getClient(BASE_URL)
                 .create(APIInterface.class);
     }
+
+   /* public static void updateVersion() {
+        if (mAPILastChecked == 0) {
+            mAPILastChecked = AppInfo.mPrefs.getAPIVersion_LastCheck();
+        }
+        long now = System.currentTimeMillis();
+        if (now - mAPILastChecked >= API_CHECK_INTERVAL) {
+            AppInfo.mPrefs.setAPIVersion_LastCheck(now);
+            int currentVersion = AppInfo.mPrefs.getAPIVersion();
+            if (currentVersion > MAX_API_VERSION_SUPPORTED) {
+                // Highly unlikely, but just in case we are reverting from a future version, we need
+                // to cap it
+                currentVersion = MAX_API_VERSION_SUPPORTED;
+                AppInfo.mPrefs.setAPIVersion(currentVersion);
+                clearInstance();
+            } else if (currentVersion < MAX_API_VERSION_SUPPORTED) {
+                int destinyVersion = instance.getVersion(AppInfo.mPrefs);
+                if (destinyVersion != currentVersion) {
+                    if (destinyVersion > MAX_API_VERSION_SUPPORTED) {
+                        // This means Destiny is newer than our application
+                        destinyVersion = MAX_API_VERSION_SUPPORTED;
+                    }
+                    AppInfo.mPrefs.setAPIVersion(destinyVersion);
+                    clearInstance();
+                }
+            }
+        }
+    }*/
 
     public void getVersion(@Nullable final NetworkInterface networkInterface) {
         apiService.getVersion()
@@ -104,6 +134,7 @@ public class AppRemoteRepository {
                     public void onNext(LoginResults loginResults) {
                         if (networkInterface != null) {
                             networkInterface.onCallCompleted(loginResults);
+                            //AppSharedPreferences.getInstance(this).setString(KEY_PERMISSIONS, loginResults.getPermissions().toString());
 
                         }
                     }
@@ -237,32 +268,31 @@ public class AppRemoteRepository {
                 });
     }
 
-    public void getItemStatus(Map<String, String> headers,@Nullable final NetworkInterface networkInterface,String itemBarcodeID) {
+    public void getItemStatus(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String itemBarcodeID) {
 
-        apiService.getScanItem("dvpdt_devprodtest","FDPSA",itemBarcodeID,"0")
-               .subscribeWith(new Observer<ItemDetails>() {
-                   @Override
-                   public void onSubscribe(Disposable d) {
+        apiService.getScanItem("dvpdt_devprodtest", "FDPSA", itemBarcodeID, "0")
+                .subscribeWith(new Observer<ItemDetails>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-                   }
+                    }
 
-                   @Override
-                   public void onNext(ItemDetails itemDetails) {
-                       if(networkInterface!=null)
-                       {
-                           networkInterface.onCallCompleted(itemDetails);
-                       }
-                   }
+                    @Override
+                    public void onNext(ItemDetails itemDetails) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallCompleted(itemDetails);
+                        }
+                    }
 
-                   @Override
-                   public void onError(Throwable throwable) {
-                       if (networkInterface != null) {
-                           networkInterface.onCallFailed(throwable);
-                       }
-                   }
+                    @Override
+                    public void onError(Throwable throwable) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallFailed(throwable);
+                        }
+                    }
 
-                   @Override
-                   public void onComplete() {
+                    @Override
+                    public void onComplete() {
 
                     }
                 });

@@ -35,7 +35,7 @@
     <!-- Checkin Checkout Screen-->
     <string name="checkin">Check In</string>
     <string name="checkout">Check Out</string>
-    <string name="checkinChecoutTitle">Check In/Check Out</string>
+    <string name="checkinChecoutTitle">Check Out/Check In</string>
     <string name="findPatron">Find Patron</string>
     <string name="enterBarcode">Enter Barcode</string>
     <string name="scan">SCAN</string>

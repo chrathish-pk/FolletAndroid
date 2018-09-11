@@ -6,16 +6,6 @@
 
 package com.follett.fsc.mobile.circdesk.feature.loginsetup;
 
-import com.follett.fsc.mobile.circdesk.BR;
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
-import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
-import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
-import com.follett.fsc.mobile.circdesk.databinding.FragmentBasicLayoutBinding;
-import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
-import com.follett.fsc.mobile.circdesk.utils.AppUtils;
-import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
-
 import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -27,22 +17,32 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
+import com.follett.fsc.mobile.circdesk.BR;
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
+import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
+import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
+import com.follett.fsc.mobile.circdesk.databinding.FragmentBasicLayoutBinding;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
+
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.SERVER_URI_VALUE;
 
 public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, BasicViewModel> implements CTAButtonListener {
-    
+
     private static final String IS_BASIC_FRAGMENT = "isbasicfragment";
-    
+
     private FragmentBasicLayoutBinding mBasicLayoutBinding;
-    
+
     private BasicViewModel mBasicViewModel;
-    
+
     private AppRemoteRepository appRemoteRepository;
-    
+
     private NavigationListener navigationListener;
-    
+
     private boolean mIsBaseFragment;
-    
+
     public static BasicFragment newInstance(boolean isBasicFragment) {
         Bundle args = new Bundle();
         args.putBoolean(IS_BASIC_FRAGMENT, isBasicFragment);
@@ -50,41 +50,39 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
         fragment.setArguments(args);
         return fragment;
     }
-    
+
     @Override
     public int getLayoutId() {
         return R.layout.fragment_basic_layout;
     }
-    
+
     @Override
     public BasicViewModel getViewModel() {
         appRemoteRepository = new AppRemoteRepository();
         mBasicViewModel = new BasicViewModel(getBaseApplication(), appRemoteRepository);
         return mBasicViewModel;
     }
-    
+
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
     }
-    
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBasicViewModel.setNavigator(this);
     }
-    
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mBasicLayoutBinding = getViewDataBinding();
         inItView(mBasicLayoutBinding);
     }
-    
+
     @Override
     public void ctaButtonOnClick(View view) {
-        
-        
         if (!AppUtils.getInstance()
                 .isEditTextNotEmpty(mBasicLayoutBinding.libraryEditText)) {
             AppUtils.getInstance()
@@ -108,8 +106,8 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
                     .getEditTextValue(mBasicLayoutBinding.sslportEditText));
         }
     }
-    
-    
+
+
     public void displayErrorToast(final String message) {
         getBaseActivity().runOnUiThread(new Runnable() {
             @Override
@@ -119,8 +117,8 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
             }
         });
     }
-    
-    
+
+
     private void savePreference(String libraryURI, String port, String sslPort) {
         AppUtils.getInstance()
                 .hideKeyBoard(getBaseActivity(), mBasicLayoutBinding.libraryEditText);
@@ -129,17 +127,17 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
                     .showNoInternetAlertDialog(getBaseActivity());
             return;
         }
-        
+
         mBasicViewModel.savePreference(libraryURI, port, sslPort);
     }
-    
+
     private void inItView(final FragmentBasicLayoutBinding basicLayoutBinding) {
         final Bundle arguments = getArguments();
         if (null != arguments) {
             mIsBaseFragment = arguments.getBoolean(IS_BASIC_FRAGMENT);
             mBasicViewModel.setAdvancedTabView(mIsBaseFragment);
         }
-        
+
         if (mIsBaseFragment) {
             basicLayoutBinding.libraryEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
         } else {
@@ -150,7 +148,7 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
         basicLayoutBinding.libraryEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                
+
                 if (i == EditorInfo.IME_ACTION_DONE) {
                     AppUtils.getInstance().hideKeyBoard(getBaseActivity(), textView);
                     ctaButtonOnClick(basicLayoutBinding.libraryEditText);
@@ -170,54 +168,54 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
                 return true;
             }
         });
-        
+
         basicLayoutBinding.libraryEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
-            
+
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-              onTextChangedInEditText();
+                onTextChangedInEditText();
             }
-            
+
             @Override
             public void afterTextChanged(Editable editable) {
-            
+
             }
         });
-        
+
         basicLayoutBinding.portEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        
+
             }
-    
+
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 onTextChangedInEditText();
             }
-    
+
             @Override
             public void afterTextChanged(Editable editable) {
-        
+
             }
         });
-    
+
         basicLayoutBinding.sslportEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        
+
             }
-    
+
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 onTextChangedInEditText();
             }
-    
+
             @Override
             public void afterTextChanged(Editable editable) {
-        
+
             }
         });
         basicLayoutBinding.setBasicListener(this);
@@ -232,9 +230,9 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
                     }
                 });
     }
-    
+
     private void handleStatus(Status status) {
-        
+
         if (Status.SUCCESS.equals(status)) {
             navigationListener.onNavigation(0);
         } else if (Status.ERROR.equals(status)) {
@@ -243,7 +241,7 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
             displayErrorToast(getString(R.string.error_sorry_school_not_setup));
         }
     }
-    
+
     public void onTextChangedInEditText() {
         if (AppUtils.getInstance()
                 .isEditTextNotEmpty(mBasicLayoutBinding.libraryEditText) && AppUtils.getInstance()
@@ -257,5 +255,5 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
             mBasicLayoutBinding.connectTextview.setSelected(false);
         }
     }
-    
+
 }

@@ -32,7 +32,6 @@ public class LoginViewModel extends BaseViewModel<CTAButtonListener> implements 
         mAppRemoteRepository = appRemoteRepository;
     }
 
-
     public void getLoginResults(String contextName, String site, String userName, String password) {
         setIsLoding(true);
         mAppRemoteRepository.getLoginResults(this, contextName, site, userName, password);
