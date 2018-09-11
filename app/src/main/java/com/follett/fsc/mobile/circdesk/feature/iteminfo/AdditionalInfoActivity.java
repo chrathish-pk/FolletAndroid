@@ -27,8 +27,9 @@ public class AdditionalInfoActivity extends BaseActivity<AdditionalInfoViewModel
         setTitleBar(getString(R.string.titleDetails));
         setBackBtnVisible();
         baseBinding.backBtn.setOnClickListener(this);
+
         if (getIntent().getExtras() != null) {
-            titleDetails = (TitleDetails) getIntent().getSerializableExtra("titleMoreDetails");
+            titleDetails = getIntent().getParcelableExtra("titleMoreDetails");
         }
         updateMoreDetailsUI(titleDetails);
     }
@@ -41,12 +42,9 @@ public class AdditionalInfoActivity extends BaseActivity<AdditionalInfoViewModel
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.backBtn:
-                finish();
-                break;
-            default:
-                break;
+        if (v.getId() == R.id.backBtn) {
+            finish();
         }
+
     }
 }

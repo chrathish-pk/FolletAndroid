@@ -19,7 +19,6 @@ import android.widget.TextView;
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentPatronStatusBinding;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.Permissions;
@@ -30,6 +29,16 @@ import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronList;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import com.google.gson.Gson;
+
+import android.arch.lifecycle.Observer;
+import android.content.Context;
+import android.databinding.BindingAdapter;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -103,6 +112,8 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
         mBinding.closeBtn.setOnClickListener(this);
         mBinding.holdRelativeLayout.setOnClickListener(this);
         mBinding.fineRelativeLayout.setOnClickListener(this);
+
+        mBinding.patronEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.GONE);
         mBinding.patronEntryIncludeLayout.patronEntry.setImeOptions(EditorInfo.IME_ACTION_DONE);
         mViewModel.getErrorMessage()
                 .observe(this, new Observer() {
@@ -119,13 +130,7 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
                 updateUI(mPatronInfo);
             }
         });
-
-//        mViewModel.getPatronInfo().observe(this, new Observer<PatronInfo>() {
-//            @Override
-//            public void onChanged(@Nullable PatronInfo patronInfo) {
-//
-//            }
-//        });
+        setListener();
     }
 
     @Override
@@ -138,20 +143,25 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
         } else if (v == mBinding.closeBtn) {
             mBinding.patronDetailLayout.setVisibility(View.GONE);
         } else if (v == mBinding.itemRelativeLayout) {
-            if (mPatronInfo != null) {
-                if (!mPatronInfo.getCheckouts().isEmpty() ||
-                        !mPatronInfo.getAssetCheckOuts().isEmpty()) {
+            if (mPatronInfo != null && (!mPatronInfo.getCheckouts()
+                    .isEmpty() || !mPatronInfo.getAssetCheckOuts()
+                    .isEmpty())) {
                     mNavigationListener.onNavigation(mPatronInfo, 2);
 
                 }
             }
         } else if (v == mBinding.holdRelativeLayout) {
-            if (mPatronInfo != null) {
-                if (!mPatronInfo.getHolds().isEmpty()) {
-                    mNavigationListener.onNavigation(mPatronInfo, 3);
-                }
+            if (mPatronInfo != null && !mPatronInfo.getHolds()
+                    .isEmpty()) {
+                mNavigationListener.onNavigation(mPatronInfo, 3);
             }
         } else if (v == mBinding.fineRelativeLayout) {
+            if (mPatronInfo != null && !mPatronInfo.getFines()
+                    .isEmpty()) {
+                mNavigationListener.onNavigation(mPatronInfo, 4);
+            }
+        }
+    }
             if (mPatronInfo != null) {
                 if (!mPatronInfo.getFines().isEmpty()) {
                     mNavigationListener.onNavigation(mPatronInfo, 4);
@@ -245,7 +255,13 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
         }
 
         textView.setText(String.valueOf(overDueCount));
+
+    private void setListener() {
+
+        mBinding.patronEntryIncludeLayout.patronGoBtn.setOnClickListener(this);
+        mBinding.itemRelativeLayout.setOnClickListener(this);
+        mBinding.closeBtn.setOnClickListener(this);
+        mBinding.holdRelativeLayout.setOnClickListener(this);
+        mBinding.fineRelativeLayout.setOnClickListener(this);
     }
-
-
 }

@@ -6,18 +6,27 @@
 
 package com.follett.fsc.mobile.circdesk.feature.patronstatus;
 
+import com.follett.fsc.mobile.circdesk.R;
 import android.app.Application;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.AssetCheckOut;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.Checkout;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
+
+import android.app.Application;
+import android.arch.lifecycle.MutableLiveData;
+import android.databinding.BindingAdapter;
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
+import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +45,7 @@ public class PatronStatusViewModel extends BaseViewModel implements NetworkInter
     public PatronStatusViewModel(@NonNull Application application) {
         super(application);
         this.mApplication = application;
-        mAppRemoteRepository = new AppRemoteRepository();
+        mAppRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(getApplication()));
     }
     
     public void getPatronInfo(String typedText) {
@@ -45,7 +54,8 @@ public class PatronStatusViewModel extends BaseViewModel implements NetworkInter
     
             Map<String, String> headerMap = new HashMap<>();
             headerMap.put("Accept", "application/json");
-            headerMap.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance(mApplication).getString(AppSharedPreferences.KEY_SESSION_ID));
+            headerMap.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance(mApplication)
+                    .getString(AppSharedPreferences.KEY_SESSION_ID));
             headerMap.put("text/xml", "gzip");
             
             mAppRemoteRepository.getPatronStatus(this, headerMap, AppSharedPreferences.getInstance(getApplication())
@@ -56,34 +66,16 @@ public class PatronStatusViewModel extends BaseViewModel implements NetworkInter
         }
     }
     
-    
-    public void getScanPatron(String patronBarcodeID) {
-    
-    }
-    
+
     @Override
     public void onCallCompleted(Object model) {
         setIsLoding(false);
         try {
             if (model instanceof PatronInfo) {
                 mPatronInfo.postValue((PatronInfo) model);
-//                ScanPatron scanPatron = (ScanPatron) model;
-//                String selectedPatronID = AppSharedPreferences.getInstance(mApplication)
-//                        .getString(AppSharedPreferences.KEY_SELECTED_BARCODE);
-//                if (!TextUtils.isEmpty(selectedPatronID)) {
-//                    AppSharedPreferences.getInstance(mApplication)
-//                            .setString(AppSharedPreferences.KEY_BARCODE, selectedPatronID);
-//                    AppSharedPreferences.getInstance(mApplication)
-//                            .setString(AppSharedPreferences.KEY_PATRON_ID, scanPatron.getPatronID());
-//                    AppSharedPreferences.getInstance(mApplication)
-//                            .setString(AppSharedPreferences.KEY_SELECTED_BARCODE, null);
-//                }
-//                updateUIListener.updateUI(scanPatron);
+
             }
-//            else if (model instanceof CheckoutResult) {
-//                CheckoutResult checkoutResult = (CheckoutResult) model;
-//                updateUIListener.updateUI(checkoutResult);
-//            }
+
         } catch (Exception e) {
             FollettLog.d("Exception", e.getMessage());
         }
@@ -95,4 +87,21 @@ public class PatronStatusViewModel extends BaseViewModel implements NetworkInter
         FollettLog.d("Exception", throwable.getMessage());
     }
     
+    @BindingAdapter(value = {"overDueCount"})
+    public static void setOverdueCount(@NonNull TextView textView, PatronInfo patronInfo) {
+        int overDueCount = 0;
+        if (patronInfo != null) {
+            for (AssetCheckOut assetCheckOut : patronInfo.getAssetCheckOuts()) {
+                if (assetCheckOut.getOverDue()) {
+                    overDueCount++;
+                }
+            }
+            for (Checkout checkout : patronInfo.getCheckouts()) {
+                if (checkout.getOverDue()) {
+                    overDueCount++;
+                }
+            }
+        }
+        textView.setText(String.valueOf(overDueCount));
+    }
 }

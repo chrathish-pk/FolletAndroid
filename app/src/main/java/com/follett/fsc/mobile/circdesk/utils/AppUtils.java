@@ -4,16 +4,18 @@
 
 package com.follett.fsc.mobile.circdesk.utils;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.AlertDialogListener;
 import com.follett.fsc.mobile.circdesk.app.CustomAlert;
-import com.follett.fsc.mobile.circdesk.app.GlideApp;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
+import com.follett.fsc.mobile.circdesk.app.GlideApp;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -22,7 +24,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.databinding.BindingAdapter;
 import android.graphics.drawable.Drawable;
-import android.support.graphics.drawable.VectorDrawableCompat;
 import android.text.TextUtils;
 import android.view.ContextThemeWrapper;
 import android.view.View;
@@ -31,24 +32,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.CustomAlert;
-import com.follett.fsc.mobile.circdesk.app.GlideApp;
-import com.follett.fsc.mobile.circdesk.app.base.AlertDialogListener;
-import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
+
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.SERVER_URI_VALUE;
 
 public class AppUtils {
 
     private static AppUtils mInstance = null;
-    private static AlertDialog alertDialog;
-    private static ProgressDialog mProgressDialog;
+    private AlertDialog alertDialog;
+    private ProgressDialog mProgressDialog;
 
     public static AppUtils getInstance() {
         if (mInstance == null) {
@@ -68,7 +61,8 @@ public class AppUtils {
 
             }
         } catch (Exception e) {
-            e.printStackTrace();
+
+            FollettLog.d(AppConstants.EXCEPTION, e.getMessage());
         }
     }
 
@@ -82,7 +76,7 @@ public class AppUtils {
                 input.showSoftInput(view, InputMethodManager.SHOW_FORCED);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            FollettLog.d(AppConstants.EXCEPTION, e.getMessage());
         }
     }
 
@@ -122,7 +116,7 @@ public class AppUtils {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            FollettLog.d(AppConstants.EXCEPTION, e.getMessage());
         }
     }
 
@@ -152,6 +146,7 @@ public class AppUtils {
             return false;
         }
         return true;
+
     }
 
     public String getEditTextValue(EditText editText) {
@@ -170,14 +165,10 @@ public class AppUtils {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                switch (which) {
-                    case DialogInterface.BUTTON_POSITIVE:
-                        dialog.dismiss();
-                        break;
-                    default:
-                        break;
+                if(which == DialogInterface.BUTTON_POSITIVE)
+                {
+                    dialog.dismiss();
                 }
-
             }
         };
         if (null != activity) {
@@ -186,10 +177,28 @@ public class AppUtils {
         }
     }
 
+    @BindingAdapter({"bind:itemImageUrl"})
+    public static void loadItemImage(ImageView view, String imageUrl) {
+        Context context = view.getContext();
+        if (context != null) {
+            AppRemoteRepository appRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(context));
+            RequestOptions requestOptions = new RequestOptions()
+                    .fitCenter()
+                    .placeholder(R.drawable.inventory);
+
+
+            GlideApp.with(context)
+                    .setDefaultRequestOptions(requestOptions)
+                    .load(appRemoteRepository.getString(SERVER_URI_VALUE) + imageUrl)
+                    .into(view);
+
+        }
+    }
 
     @BindingAdapter({"bind:imageUrl"})
     public static void loadImage(ImageView view, String imageUrl) {
         Context context = view.getContext();
+        AppRemoteRepository appRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(context));
         if (context != null) {
             RequestOptions requestOptions = new RequestOptions()
                     .fitCenter()
@@ -198,24 +207,8 @@ public class AppUtils {
 
             GlideApp.with(context)
                     .setDefaultRequestOptions(requestOptions)
-                    .load(AppRemoteRepository.BASE_URL + imageUrl + "?contextName=dvpdt_devprodtest")
-                    .into(view);
-
-        }
-    }
-
-    @BindingAdapter({"bind:itemImageUrl"})
-    public static void loadItemImage(ImageView view, String imageUrl) {
-        Context context = view.getContext();
-        if (context != null) {
-            RequestOptions requestOptions = new RequestOptions()
-                    .fitCenter()
-                    .placeholder(R.drawable.inventory);
-
-
-            GlideApp.with(context)
-                    .setDefaultRequestOptions(requestOptions)
-                    .load(AppRemoteRepository.BASE_URL + imageUrl)
+                    .load(appRemoteRepository
+                            + imageUrl + "?contextName=dvpdt_devprodtest")
                     .into(view);
 
         }
@@ -252,20 +245,23 @@ public class AppUtils {
                 alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
             }
+          if(context != null) {
+              TextView messageView = alertDialog.findViewById(android.R.id.message);
+              messageView.setTextColor(context.getResources().getColor(R.color.editTextBgColor));
 
-            TextView messageView = alertDialog.findViewById(android.R.id.message);
-            messageView.setTextColor(context.getResources().getColor(R.color.editTextBgColor));
+              Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+              Button negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+              Button neutralButton = alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL);
 
-            Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-            Button negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-            Button neutralButton = alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL);
+              positiveButton.setTextColor(context.getResources().getColor(R.color.blueLabel));
+              negativeButton.setTextColor(context.getResources().getColor(R.color.blueLabel));
+              neutralButton.setTextColor(context.getResources().getColor(R.color.blueLabel));
+          }
 
-            positiveButton.setTextColor(context.getResources().getColor(R.color.blueLabel));
-            negativeButton.setTextColor(context.getResources().getColor(R.color.blueLabel));
-            neutralButton.setTextColor(context.getResources().getColor(R.color.blueLabel));
         } catch (Exception e) {
-            e.printStackTrace();
+            FollettLog.d(AppConstants.EXCEPTION, e.getMessage());
         }
 
     }
+
 }

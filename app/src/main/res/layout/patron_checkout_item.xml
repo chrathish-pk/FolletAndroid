@@ -19,7 +19,7 @@
     </data>
 
     <android.support.constraint.ConstraintLayout
-
+        android:id="@+id/itemCheckoutContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -46,11 +46,12 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:drawablePadding="74dp"
-            android:drawableRight="@drawable/right_arrow"
+            app:arrowIcon="@{@drawable/right_arrow}"
+            app:checkoutModel="@{checkoutItem}"
             android:fontFamily="@font/opensans_semibold"
             android:gravity="center_vertical"
             android:text="@{checkoutItem.bookName}"
+            android:drawablePadding="74dp"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_16sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -85,7 +86,7 @@
             android:fontFamily="@font/opensans_semibold"
             android:gravity="center_vertical"
             android:text="@{@string/due_label(checkoutItem.dueDate)}"
-            android:textColor="@{checkoutItem.isOverDue ? @color/monza : @color/black}"
+            android:textColor="@{safeUnbox(checkoutItem.isOverDue) ? @color/monza : @color/black}"
             android:textSize="@dimen/text_size_16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

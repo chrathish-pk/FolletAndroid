@@ -29,9 +29,11 @@
         <activity android:name=".feature.homescreen.HomeActivity" />
 
         <activity android:name=".feature.iteminfo.TitleInfoActivity" />
-
+        <activity android:name=".feature.itemstatus.ItemStatusActivity"/>
         <activity android:name=".feature.iteminfo.AdditionalInfoActivity" />
         <activity android:name=".feature.patronstatus.PatronStatusActivity"/>
+
+
     </application>
 
 </manifest>

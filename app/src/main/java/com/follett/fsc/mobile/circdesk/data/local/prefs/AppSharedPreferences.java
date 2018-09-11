@@ -25,6 +25,7 @@ public class AppSharedPreferences {
     public static final String KEY_SERVER_PORT = "serverPort";
     public static final String KEY_SERVER_SSL_PORT = "serverSSLPort";
     public static final String KEY_CONTEXT_NAME = "contextName";
+    public static final String KEY_DISTRICT_NAME = "districtName";
     public static final String SERVER_URI_VALUE = "server_uri_value";
 
     public static final String KEY_SITE_SHORT_NAME = "site";
@@ -45,7 +46,6 @@ public class AppSharedPreferences {
     public static final String KEY_PATRON_NAME = "patronName";
 
     public static final String KEY_SELECTED_BARCODE = "selectedBarcode";
-    //public static final String KEY_BARCODE = "barcode";
     public static final String KEY_PATRON_ID = "patronID";
     public static final String FOLLETT_API_VERSION = "apiversion";
     public static final String KEY_IS_LIBRARY_SELECTED = "isLibrarySelected";
@@ -65,8 +65,8 @@ public class AppSharedPreferences {
     }
 
     private AppSharedPreferences(Context context) {
-        String SHARED_PERFERENCE_NAME = "Follett";
-        prefs = context.getSharedPreferences(SHARED_PERFERENCE_NAME, Context.MODE_PRIVATE);
+        String sharedPerferenceName = "Follett";
+        prefs = context.getSharedPreferences(sharedPerferenceName, Context.MODE_PRIVATE);
         editor = prefs.edit();
         editor.apply();
     }
@@ -77,8 +77,8 @@ public class AppSharedPreferences {
     }
 
     public String getString(String key) {
-        String DEFAULT_VALUE = "";
-        return prefs.getString(key, DEFAULT_VALUE);
+        String defaultValue = "";
+        return prefs.getString(key, defaultValue);
     }
 
     public void setInt(String key, int value) {
@@ -87,8 +87,8 @@ public class AppSharedPreferences {
     }
 
     public int getInt(String key) {
-        int DEFAULT_INT_VALUE = -1;
-        return prefs.getInt(key, DEFAULT_INT_VALUE);
+        int defaultIntValue = -1;
+        return prefs.getInt(key, defaultIntValue);
     }
 
     public void setBoolean(String key, Boolean value) {
@@ -133,7 +133,7 @@ public class AppSharedPreferences {
             result = url.toString();
             result = result.substring(result.indexOf(paramName) + paramName.length() + 1);
             if (result.contains("&")) {
-                result = result.substring(0, result.indexOf("&"));
+                result = result.substring(0, result.indexOf('&'));
             }
         }
         return result;

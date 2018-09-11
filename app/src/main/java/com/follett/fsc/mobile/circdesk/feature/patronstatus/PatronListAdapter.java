@@ -7,7 +7,6 @@ package com.follett.fsc.mobile.circdesk.feature.patronstatus;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.databinding.PatronListItemBinding;
-import com.follett.fsc.mobile.circdesk.databinding.SchoolListItemBinding;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronList;
 
@@ -26,9 +25,10 @@ public class PatronListAdapter extends RecyclerView.Adapter<PatronListAdapter.Pa
     private List<PatronList> mPatronList;
     
     private NavigationListener mNavigationListener;
-    
+
+
     private Context mContext;
-    
+
     @NonNull
     @Override
     public PatronListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -37,7 +37,6 @@ public class PatronListAdapter extends RecyclerView.Adapter<PatronListAdapter.Pa
     }
     
     public PatronListAdapter(Context context, List<PatronList> patronLists) {
-        mContext = context;
         this.mPatronList = patronLists;
         mNavigationListener = (NavigationListener) context;
     }
@@ -67,17 +66,7 @@ public class PatronListAdapter extends RecyclerView.Adapter<PatronListAdapter.Pa
         
         @Override
         public void onClick(View view) {
-            int position = getAdapterPosition();
-//            AppSharedPreferences.getInstance(mContext)
-//                    .setString(KEY_SITE_SHORT_NAME, mPatronList.get(position)
-//                            .getSiteShortName());
-//            AppSharedPreferences.getInstance(mContext)
-//                    .setString(KEY_SITE_ID, mPatronList.get(position)
-//                            .getSiteID());
-//            AppSharedPreferences.getInstance(mContext)
-//                    .setString(KEY_SITE_NAME, mPatronList.get(position)
-//                            .getSiteName());
-            mNavigationListener.onNavigation(mPatronList.get(position), 1);
+            mNavigationListener.onNavigation(mPatronList.get(getAdapterPosition()), 1);
         }
     }
 }

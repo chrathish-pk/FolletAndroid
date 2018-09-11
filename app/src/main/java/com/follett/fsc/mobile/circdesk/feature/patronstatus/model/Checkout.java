@@ -517,7 +517,8 @@ public class Checkout implements Parcelable {
         parcel.writeString(copyBarcode);
         parcel.writeString(title);
         parcel.writeString(lexile);
-        parcel.writeByte((byte) (temporary == null ? 0 : temporary ? 1 : 2));
+        if (temporary) parcel.writeByte((byte) (temporary == null ? 0 : 1));
+        else parcel.writeByte((byte) (temporary == null ? 0 : 2));
         if (reviewCount == null) { parcel.writeByte((byte) 0); } else {
             parcel.writeByte((byte) 1);
             parcel.writeInt(reviewCount);
@@ -532,9 +533,13 @@ public class Checkout implements Parcelable {
         parcel.writeString(electronicResourceDisplayable);
         parcel.writeString(providerIconLink);
         parcel.writeString(contentImageLink);
-        parcel.writeByte((byte) (electronicResourceIsRelative == null ? 0 : electronicResourceIsRelative ? 1 : 2));
-        parcel.writeByte((byte) (canViewTitleDetails == null ? 0 : canViewTitleDetails ? 1 : 2));
-        parcel.writeByte((byte) (follettShelfEBook == null ? 0 : follettShelfEBook ? 1 : 2));
+        if (electronicResourceIsRelative)
+            parcel.writeByte((byte) (electronicResourceIsRelative == null ? 0 : 1));
+        else parcel.writeByte((byte) (electronicResourceIsRelative == null ? 0 : 2));
+        if (canViewTitleDetails) parcel.writeByte((byte) (canViewTitleDetails == null ? 0 : 1));
+        else parcel.writeByte((byte) (canViewTitleDetails == null ? 0 : 2));
+        if (follettShelfEBook) parcel.writeByte((byte) (follettShelfEBook == null ? 0 : 1));
+        else parcel.writeByte((byte) (follettShelfEBook == null ? 0 : 2));
         parcel.writeString(electronicResourceURL);
         parcel.writeString(titleDetailsLink);
         parcel.writeString(pubYear);
@@ -542,7 +547,8 @@ public class Checkout implements Parcelable {
             parcel.writeByte((byte) 1);
             parcel.writeInt(lostLocal);
         }
-        parcel.writeByte((byte) (renewable == null ? 0 : renewable ? 1 : 2));
+        if (renewable) parcel.writeByte((byte) (renewable == null ? 0 : 1));
+        else parcel.writeByte((byte) (renewable == null ? 0 : 2));
         if (totalLocal == null) { parcel.writeByte((byte) 0); } else {
             parcel.writeByte((byte) 1);
             parcel.writeInt(totalLocal);
@@ -572,10 +578,14 @@ public class Checkout implements Parcelable {
             parcel.writeByte((byte) 1);
             parcel.writeInt(availableLocal);
         }
-        parcel.writeByte((byte) (myRatingApproved == null ? 0 : myRatingApproved ? 1 : 2));
-        parcel.writeByte((byte) (digitalRecord == null ? 0 : digitalRecord ? 1 : 2));
-        parcel.writeByte((byte) (reviewPending == null ? 0 : reviewPending ? 1 : 2));
-        parcel.writeByte((byte) (overDue == null ? 0 : overDue ? 1 : 2));
+        if (myRatingApproved) parcel.writeByte((byte) (myRatingApproved == null ? 0 : 1));
+        else parcel.writeByte((byte) (myRatingApproved == null ? 0 : 2));
+        if (digitalRecord) parcel.writeByte((byte) (digitalRecord == null ? 0 : 1));
+        else parcel.writeByte((byte) (digitalRecord == null ? 0 : 2));
+        if (reviewPending) parcel.writeByte((byte) (reviewPending == null ? 0 : 1));
+        else parcel.writeByte((byte) (reviewPending == null ? 0 : 2));
+        if (overDue) parcel.writeByte((byte) (overDue == null ? 0 : 1));
+        else parcel.writeByte((byte) (overDue == null ? 0 : 2));
         if (copyid == null) { parcel.writeByte((byte) 0); } else {
             parcel.writeByte((byte) 1);
             parcel.writeInt(copyid);

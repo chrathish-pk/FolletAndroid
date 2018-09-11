@@ -14,7 +14,7 @@ import android.view.View;
 
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.base.AlertDialogListener;
+import com.follett.fsc.mobile.circdesk.app.AlertDialogListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
@@ -38,7 +38,8 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
 
     @Override
     public CheckoutViewModel getViewModel() {
-        checkoutViewModel = new CheckoutViewModel(getBaseActivity().getApplication(), new AppRemoteRepository(), this);
+        checkoutViewModel = new CheckoutViewModel(getBaseActivity().getApplication()
+                , this);
         return checkoutViewModel;
     }
 
@@ -115,19 +116,10 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (value != null && value instanceof ScanPatron) {
+                if (value instanceof ScanPatron) {
                     scanPatron = (ScanPatron) value;
-                    if (scanPatron.getSuccess().equalsIgnoreCase("true")) {
-                        if (scanPatron.getPatronList() != null) {
-                            navigateToPatronListScreen(scanPatron);
-                        } else {
-                            bindPatronResult();
-                        }
-                    } else {
-                        AppSharedPreferences.getInstance(getActivity()).setString(AppSharedPreferences.KEY_SELECTED_BARCODE, null);
-                        updatePatronErrorMsg(scanPatron);
-                    }
-                } else if (value != null && value instanceof CheckoutResult) {
+                    scanPatronUpdate(scanPatron);
+                } else if (value instanceof CheckoutResult) {
                     checkoutResult = (CheckoutResult) value;
                     if (checkoutResult.getSuccess()) {
                         bindCheckoutResult(checkoutResult);
@@ -139,6 +131,20 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
         });
 
     }
+
+    private void scanPatronUpdate(ScanPatron scanPatron) {
+        if (scanPatron.getSuccess().equalsIgnoreCase("true")) {
+            if (scanPatron.getPatronList() != null) {
+                navigateToPatronListScreen(scanPatron);
+            } else {
+                bindPatronResult();
+            }
+        } else {
+            AppSharedPreferences.getInstance(getActivity()).setString(AppSharedPreferences.KEY_SELECTED_BARCODE, null);
+            updatePatronErrorMsg(scanPatron);
+        }
+    }
+
 
     private void updateCheckoutErrorMsg(CheckoutResult checkoutResult) {
 
@@ -214,11 +220,11 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
 
     @Override
     public void onPositiveButtonClick(int statusCode) {
-
+       //Do Nothing
     }
 
     @Override
     public void onNegativeButtonClick(int statusCode) {
-
+        //Do Nothing
     }
 }

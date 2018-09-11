@@ -8,13 +8,14 @@
 package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout;
 
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.Message;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import java.io.Serializable;
 import java.util.List;
 
-public class ScanPatron implements Serializable {
+public class ScanPatron implements Parcelable{
 
     @SerializedName("assetCheckouts")
     @Expose
@@ -81,6 +82,42 @@ public class ScanPatron implements Serializable {
     private String patronType;
 
     private boolean isLibrarySelected;
+
+
+    protected ScanPatron(Parcel in) {
+        assetCheckouts = in.readString();
+        assetOverdues = in.readString();
+        libraryCheckouts = in.readString();
+        libraryOverdues = in.readString();
+        messages = in.createTypedArrayList(Message.CREATOR);
+        patronList = in.createTypedArrayList(Patron.CREATOR);
+        patronNotes = in.createTypedArrayList(Note.CREATOR);
+        success = in.readString();
+        textbookCheckouts = in.readString();
+        textbookOverdues = in.readString();
+        patronPictureFileName = in.readString();
+        libraryFines = in.readString();
+        textbookFines = in.readString();
+        assetFines = in.readString();
+        patronID = in.readString();
+        lastFirstMiddleName = in.readString();
+        barcode = in.readString();
+        patronType = in.readString();
+        isLibrarySelected = in.readByte() != 0;
+    }
+
+
+    public static final Creator<ScanPatron> CREATOR = new Creator<ScanPatron>() {
+        @Override
+        public ScanPatron createFromParcel(Parcel in) {
+            return new ScanPatron(in);
+        }
+
+        @Override
+        public ScanPatron[] newArray(int size) {
+            return new ScanPatron[size];
+        }
+    };
 
     public String getAssetCheckouts() {
         return assetCheckouts;
@@ -232,5 +269,32 @@ public class ScanPatron implements Serializable {
 
     public void setLibrarySelected(boolean librarySelected) {
         isLibrarySelected = librarySelected;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(assetCheckouts);
+        dest.writeString(assetOverdues);
+        dest.writeString(libraryCheckouts);
+        dest.writeString(libraryOverdues);
+        dest.writeTypedList(messages);
+        dest.writeTypedList(patronList);
+        dest.writeString(success);
+        dest.writeString(textbookCheckouts);
+        dest.writeString(textbookOverdues);
+        dest.writeString(patronPictureFileName);
+        dest.writeString(libraryFines);
+        dest.writeString(textbookFines);
+        dest.writeString(assetFines);
+        dest.writeString(patronID);
+        dest.writeString(lastFirstMiddleName);
+        dest.writeString(barcode);
+        dest.writeString(patronType);
+        dest.writeByte((byte) (isLibrarySelected ? 1 : 0));
     }
 }

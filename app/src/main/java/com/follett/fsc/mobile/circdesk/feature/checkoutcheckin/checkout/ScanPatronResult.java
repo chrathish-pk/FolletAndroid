@@ -7,12 +7,12 @@
 
 package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
-public class ScanPatronResult implements Serializable {
+public class ScanPatronResult {
 
     @SerializedName("assetCheckouts")
     @Expose
@@ -44,6 +44,19 @@ public class ScanPatronResult implements Serializable {
     @SerializedName("textbookOverdues")
     @Expose
     private String textbookOverdues;
+
+    protected ScanPatronResult(Parcel in) {
+        assetCheckouts = in.readString();
+        assetOverdues = in.readString();
+        libraryCheckouts = in.readString();
+        libraryOverdues = in.readString();
+        messages = in.readString();
+        patronList = in.readParcelable(PatronList.class.getClassLoader());
+        patronNotes = in.readString();
+        success = in.readString();
+        textbookCheckouts = in.readString();
+        textbookOverdues = in.readString();
+    }
 
     public String getAssetCheckouts() {
         return assetCheckouts;

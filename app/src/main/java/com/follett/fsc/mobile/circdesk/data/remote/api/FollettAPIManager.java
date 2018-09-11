@@ -6,6 +6,7 @@
 
 package com.follett.fsc.mobile.circdesk.data.remote.api;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
@@ -28,14 +29,18 @@ public class FollettAPIManager {
     private static Retrofit retrofit = null;
     private static OkHttpClient okHttpClient;
 
+    private FollettAPIManager(){
+
+    }
+
     public static Retrofit getClient(String baseUrl) {
 
         if (okHttpClient == null) {
             initOkHttp();
         }
 
-        if (retrofit == null) {
-            retrofit = new Retrofit.Builder().addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+        if (retrofit == null && !TextUtils.isEmpty(baseUrl)) {
+             retrofit = new Retrofit.Builder().addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
                     .baseUrl(baseUrl)
                     .client(okHttpClient)
                     .addConverterFactory(GsonConverterFactory.create())

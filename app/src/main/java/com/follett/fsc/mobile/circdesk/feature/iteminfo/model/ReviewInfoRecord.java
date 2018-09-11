@@ -1,12 +1,14 @@
 
 package com.follett.fsc.mobile.circdesk.feature.iteminfo.model;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ReviewInfoRecord implements Serializable
+public class ReviewInfoRecord implements Parcelable
 {
 
     @SerializedName("alreadyReviewedByUser")
@@ -21,7 +23,26 @@ public class ReviewInfoRecord implements Serializable
     @SerializedName("reviewList")
     @Expose
     private List<Object> reviewList = null;
-    private final static long serialVersionUID = 2382812993672654714L;
+
+    protected ReviewInfoRecord(Parcel in) {
+        byte tmpAlreadyReviewedByUser = in.readByte();
+        alreadyReviewedByUser = tmpAlreadyReviewedByUser == 0 ? null : tmpAlreadyReviewedByUser == 1;
+        reviewAverage = in.readString();
+        byte tmpMyRatingApproved = in.readByte();
+        myRatingApproved = tmpMyRatingApproved == 0 ? null : tmpMyRatingApproved == 1;
+    }
+
+    public static final Creator<ReviewInfoRecord> CREATOR = new Creator<ReviewInfoRecord>() {
+        @Override
+        public ReviewInfoRecord createFromParcel(Parcel in) {
+            return new ReviewInfoRecord(in);
+        }
+
+        @Override
+        public ReviewInfoRecord[] newArray(int size) {
+            return new ReviewInfoRecord[size];
+        }
+    };
 
     public Boolean getAlreadyReviewedByUser() {
         return alreadyReviewedByUser;
@@ -55,4 +76,17 @@ public class ReviewInfoRecord implements Serializable
         this.reviewList = reviewList;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (alreadyReviewedByUser) dest.writeByte((byte) (alreadyReviewedByUser == null ? 0 : 1));
+        else dest.writeByte((byte) (alreadyReviewedByUser == null ? 0 : 2));
+        dest.writeString(reviewAverage);
+        if (myRatingApproved) dest.writeByte((byte) (myRatingApproved == null ? 0 : 1));
+        else dest.writeByte((byte) (myRatingApproved == null ? 0 : 2));
+    }
 }

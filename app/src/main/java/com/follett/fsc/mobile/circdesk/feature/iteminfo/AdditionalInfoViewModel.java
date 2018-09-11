@@ -20,6 +20,9 @@ import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
+
 public class AdditionalInfoViewModel extends BaseViewModel implements NetworkInterface {
 
     private AppRemoteRepository mAppRemoteRepository;
@@ -27,11 +30,11 @@ public class AdditionalInfoViewModel extends BaseViewModel implements NetworkInt
     private Application mApplication;
     public final MutableLiveData<TitleDetails> mTitleDetails = new MutableLiveData<>();
 
-    public AdditionalInfoViewModel(@NonNull Application application, AppRemoteRepository appRemoteRepository, AdditionalInfoListener additionalInfoListener) {
+    public AdditionalInfoViewModel(@NonNull Application application, AdditionalInfoListener additionalInfoListener) {
         super(application);
-        mAppRemoteRepository = appRemoteRepository;
         this.additionalInfoListener = additionalInfoListener;
         this.mApplication = application;
+        mAppRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(application));
     }
 
     public void getTitleDetails(String bibID) {
@@ -40,7 +43,9 @@ public class AdditionalInfoViewModel extends BaseViewModel implements NetworkInt
         map.put("Accept", "application/json");
         map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance(mApplication).getString(AppSharedPreferences.KEY_SESSION_ID));
         map.put("text/xml", "gzip");
-        mAppRemoteRepository.getTitleDetails(map, this, bibID);
+        mAppRemoteRepository.getTitleDetails(map, this,AppSharedPreferences.getInstance(getApplication())
+                .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance(getApplication())
+                .getString(KEY_SITE_SHORT_NAME), bibID);
     }
 
     @Override

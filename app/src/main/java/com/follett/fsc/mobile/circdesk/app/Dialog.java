@@ -11,8 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.text.TextUtils;
 import android.view.KeyEvent;
-
-import java.util.ArrayList;
+import java.util.List;
 
 public class Dialog extends AlertDialog.Builder implements DialogInterface.OnKeyListener {
 
@@ -20,7 +19,7 @@ public class Dialog extends AlertDialog.Builder implements DialogInterface.OnKey
     public static class DialogDetails {
         public String mTitle;
         public String mMessage;
-        public ArrayList<Button> mDialogButtonList;
+        public List<Button> mDialogButtonList;
     }
 
     public static class Button {
@@ -91,10 +90,6 @@ public class Dialog extends AlertDialog.Builder implements DialogInterface.OnKey
 
     @Override
     public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-
-        if (keyCode == KeyEvent.KEYCODE_SEARCH) {
-            return true;
-        }
-        return false;
+        return  keyCode == KeyEvent.KEYCODE_SEARCH;
     }
 }

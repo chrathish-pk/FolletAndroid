@@ -6,6 +6,8 @@
 
 package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -13,7 +15,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by muthulakshmi on 29/08/18.
  */
 
-public class CheckoutInfo {
+public class CheckoutInfo implements Parcelable {
 
     @SerializedName("barcode")
     @Expose
@@ -33,6 +35,27 @@ public class CheckoutInfo {
     @SerializedName("title")
     @Expose
     private String title;
+
+    protected CheckoutInfo(Parcel in) {
+        barcode = in.readString();
+        bibID = in.readString();
+        coverURL = in.readString();
+        dueDate = in.readString();
+        materialType = in.readString();
+        title = in.readString();
+    }
+
+    public static final Creator<CheckoutInfo> CREATOR = new Creator<CheckoutInfo>() {
+        @Override
+        public CheckoutInfo createFromParcel(Parcel in) {
+            return new CheckoutInfo(in);
+        }
+
+        @Override
+        public CheckoutInfo[] newArray(int size) {
+            return new CheckoutInfo[size];
+        }
+    };
 
     public String getBarcode() {
         return barcode;
@@ -80,5 +103,20 @@ public class CheckoutInfo {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(barcode);
+        dest.writeString(bibID);
+        dest.writeString(coverURL);
+        dest.writeString(dueDate);
+        dest.writeString(materialType);
+        dest.writeString(title);
     }
 }

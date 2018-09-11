@@ -31,32 +31,22 @@ public class PatronListActivity extends BaseActivity<CheckoutViewModel> implemen
 
 
         if (getIntent().getExtras() != null) {
-            scanPatron = (ScanPatron) getIntent().getSerializableExtra(getString(R.string.scanPatron));
+            scanPatron = (ScanPatron) getIntent().getParcelableExtra(getString(R.string.scanPatron));
         }
 
         setTitleBar(getString(R.string.selectPatron));
 
         PatronListAdapter patronListAdapter = new PatronListAdapter(this, scanPatron, this);
         activityPatronListBinding.patronListView.setAdapter(patronListAdapter);
-
-       /* checkoutViewModel.getScanPatron().observe(this, new Observer<ScanPatron>() {
-            @Override
-            public void onChanged(@Nullable ScanPatron scanPatron) {
-                patronListAdapter = new PatronListAdapter(this,checkoutViewModel);
-                activityPatronListBinding.patronListView.setAdapter(patronListAdapter);
-            }
-        });*/
-
-
     }
     
     @Override
-    public void OnItemClicked() {
+    public void onItemClicked() {
     
     }
     
     @Override
-    public void OnItemClick(View view, int position) {
+    public void onItemClick(View view, int position) {
         AppSharedPreferences.getInstance(this).setString(AppSharedPreferences.KEY_SELECTED_BARCODE, scanPatron.getPatronList().get(position).getBarcode());
         finish();
     }

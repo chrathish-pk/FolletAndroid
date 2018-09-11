@@ -20,9 +20,12 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.RowPatronListBinding;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
+
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.SERVER_URI_VALUE;
 
 public class PatronListAdapter extends RecyclerView.Adapter<PatronListViewHolder> implements View.OnClickListener {
 
@@ -51,8 +54,9 @@ public class PatronListAdapter extends RecyclerView.Adapter<PatronListViewHolder
         holder.rowPatronListBinding.patronLayout.setTag(position);
 
         holder.rowPatronListBinding.patronLayout.setOnClickListener(this);
+        AppRemoteRepository appRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(context));
 
-        FollettLog.d("patronImg", AppRemoteRepository.BASE_URL + patron.getPatronPictureFileName());
+        FollettLog.d("patronImg", appRemoteRepository.getString(SERVER_URI_VALUE) + patron.getPatronPictureFileName());
 
         RequestOptions requestOptions = new RequestOptions()
                 .fitCenter()
@@ -60,20 +64,20 @@ public class PatronListAdapter extends RecyclerView.Adapter<PatronListViewHolder
                 .transforms(new CenterCrop(), new RoundedCorners(500));
 
         Glide.with(context)
-                .load(AppRemoteRepository.BASE_URL + patron.getPatronPictureFileName() + "?contextName=dvpdt_devprodtest")
+                .load(appRemoteRepository.getString(SERVER_URI_VALUE) + patron.getPatronPictureFileName() + "?contextName=dvpdt_devprodtest")
                 .apply(requestOptions)
                 .into(holder.rowPatronListBinding.patronImg);
     }
 
     @Override
     public int getItemCount() {
-        return scanPatron.getPatronList().size();
+        return scanPatron!=null ?scanPatron.getPatronList().size():0;
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.patronLayout) {
-            itemClickListener.OnItemClick(v, (Integer) v.getTag());
+            itemClickListener.onItemClick(v, (Integer) v.getTag());
         }
     }
 }

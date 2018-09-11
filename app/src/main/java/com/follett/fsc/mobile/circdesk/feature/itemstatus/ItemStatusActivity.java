@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
 
 
-public class ItemStatusActivity extends BaseActivity<ItemStatusViewModel> implements NavigationListener{
+public class ItemStatusActivity extends BaseActivity<ItemStatusViewModel> implements NavigationListener,View.OnClickListener{
 
      private ItemStatusFragment itemStatusFragment;
 
@@ -24,6 +26,8 @@ public class ItemStatusActivity extends BaseActivity<ItemStatusViewModel> implem
 
     private void initView() {
         setTitleBar(getString(R.string.item_status_title));
+        setBackBtnVisible();
+        baseBinding.backBtn.setOnClickListener(this);
         itemStatusFragment = ItemStatusFragment.newInstance();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.itemStatusContainer, itemStatusFragment, "itemStatusFragment")
@@ -37,12 +41,12 @@ public class ItemStatusActivity extends BaseActivity<ItemStatusViewModel> implem
 
     @Override
     public void setToolBarTitle(String titleText) {
-
+        //setToolBarTitle
     }
 
     @Override
     public void onNavigation(Object model, int position) {
-
+        //onNavigation
     }
 
     private void popFragmentFromBackStack(Fragment fragment) {
@@ -51,5 +55,12 @@ public class ItemStatusActivity extends BaseActivity<ItemStatusViewModel> implem
         trans.remove(fragment);
         trans.commit();
         manager.popBackStack();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.backBtn) {
+            finish();
+        }
     }
 }
