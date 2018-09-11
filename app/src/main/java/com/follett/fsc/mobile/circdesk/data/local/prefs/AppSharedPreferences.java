@@ -25,6 +25,7 @@ public class AppSharedPreferences {
     public static final String KEY_SERVER_PORT = "serverPort";
     public static final String KEY_SERVER_SSL_PORT = "serverSSLPort";
     public static final String KEY_CONTEXT_NAME = "contextName";
+    public static final String KEY_DISTRICT_NAME = "districtName";
     public static final String SERVER_URI_VALUE = "server_uri_value";
 
     public static final String KEY_SITE_SHORT_NAME = "site";

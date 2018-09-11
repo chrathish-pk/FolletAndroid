@@ -13,13 +13,15 @@
     <string name="alert_warning">Information</string>
     <string name="alert_success">Alert</string>
     <string name="back">Back</string>
-    <string name="app_status_title">Follett DESTINY</string>
+    <string name="app_status_title">DESTINY</string>
     <string name="connect_your_school_label">Connect to Your School</string>
+    <string name="select_district_label">Select District</string>
     <string name="select_school_label">Select School</string>
     <string name="get_started_label">Get Started</string>
     <string name="loading_label">Please wait...</string>
     <string name="no_internet_title">No Internet Connection</string>
     <string name="no_internet_des">Please try again when you have a better connection.</string>
+    <string name="double_quote">\"</string>
 
     <!--Home screen-->
     <string name="home">HOME</string>
@@ -36,13 +38,16 @@
     <string name="checkout">Check Out</string>
     <string name="checkinChecoutTitle">Check In/Check Out</string>
     <string name="findPatron">Find Patron</string>
+    <string name="enterBarcode">Enter Barcode</string>
     <string name="scan">SCAN</string>
     <string name="Go">GO</string>
     <string name="library">LIBRARY</string>
     <string name="resource">RESOURCE</string>
     <string name="titleDetails">Title Details</string>
-    <string name="checkoutLabel">Checked Out: </string>
-    <string name="overdueLabel">Overdue: </string>
+    <string name="checkoutLabel">"Checked Out: "</string>
+    <string name="overdueLabel">"Overdue: "</string>
+    <string name="checkedin">Checked In</string>
+    <string name="checkedOut">Checked Out</string>
 
 
     <!--Patron Screen-->
@@ -71,12 +76,16 @@
     <string name="error_unable_to_communicate">Unable to communicate with server.</string>
     <string name="error_load_prefs">Unable to load preferences.</string>
     <string name="school_noschoollist">No School Listed</string>
+    <string name="no_district_list">No District Listed</string>
+    <string name="dont_see_your_district">DON`T SEE YOUR DISTRICT?</string>
     <string name="dont_see_your_school">DON`T SEE YOUR SCHOOL?</string>
     <string name="additional_info">ADDITIONAL INFO</string>
-
+    <string name="no_district">No district available</string>
+    <string name="no_schools">No schools are configured in %s. Please contact your system administrator.</string>
     <string name="user_id">User ID</string>
     <string name="password">Password</string>
     <string name="login">LOG IN</string>
+    <string name="invalid_user_id">Invalid username or password.</string>
 
     <!-- Additional Info and More Details-->
     <string name="item_description">Description</string>
@@ -90,6 +99,21 @@
     <string name="item_isbn">ISBN</string>
     <string name="item_target">Target</string>
     <string name="item_accelerated">Accelerated</string>
+    <string name="item_status_in">Status : IN</string>
+    <string name="item_status_out">Status : Out</string>
+    <string name="item_callno">Call# </string>
+    <string name="of">&#032;of&#032;</string>
+    <string name="item_quiz_no">Quiz Number: </string>
+    <string name="item_points">, Points : </string>
+    <string name="intent_titlemoredetails">titleMoreDetails</string>
+    <string name="available_txt"> Available</string>
+    <string name="one">1</string>
+
+    //Item Status
+    <string name="findItem">Find Item</string>
+    <string name="item_status_title">Item Status</string>
+    <string name="item_not_found">Copy %s not found</string>
+
 
     <!-- Intent data passing strings-->
     <string name="scanPatron">scanPatron</string>
@@ -99,6 +123,26 @@
     <string name="error">Error</string>
     <string name="scanPatronError">Scan patron error</string>
     <string name="noDataFound">no data found from api result</string>
+
+    <!--Patron Status-->
+    <string name="patron_status_label">Patron Status</string>
+    <string name="patron_not_found">Patron %s not found</string>
+    <string name="items_overude_label">items overudue</string>
+    <string name="onhold_label">items on hold</string>
+    <string name="title_hold_count">Titles On Hold (%s)</string>
+    <string name="item_checkout_count">Items Checked Out (%s)</string>
+    <string name="fines_count">Fines (%s)</string>
+    <string name="barcodelabel">Barcode: %s</string>
+    <string name="homeroomlabel">HomeRoom: %s</string>
+    <string name="gradelevellabel">Grade Level: %s</string>
+    <string name="barcode_label">Barcode: %s</string>
+    <string name="due_label">Due: %s</string>
+    <string name="item_checkout_label">Items Checked Out</string>
+    <string name="library_title_label">Library Titles</string>
+    <string name="resource_item_label">Resource Items</string>
+    <string name="on_hold_label">On Hold</string>
+    <string name="fine_label">Fines</string>
+    <string name="overdue_label">Overdue</string>
 
     <!-- Info Screen-->
     <string name="info">Follett Destiny Version %1$s</string>
@@ -110,4 +154,5 @@
     <string name="rate_follett_destiny">RATE FOLLETT DESTINY</string>
     <string name="change_site">CHANGE SITE</string>
     <string name="logout">LOG OUT</string>
+
 </resources>

@@ -6,20 +6,22 @@
 
 package com.follett.fsc.mobile.circdesk.feature.loginsetup;
 
-import com.follett.fsc.mobile.circdesk.utils.AppConstants;
+import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
+import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
-import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
+import com.follett.fsc.mobile.circdesk.utils.AppConstants;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 import com.follett.fsc.mobile.commons.android.URLHelper;
 
 import android.app.Application;
+import android.arch.lifecycle.MutableLiveData;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import java.io.IOException;
@@ -28,11 +30,15 @@ import java.net.URL;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.DEFAULT_HTTP_PORT;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.DEFAULT_SSL_PORT;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.FOLLETT_API_VERSION;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_DISTRICT_NAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SERVER_PORT;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SERVER_SSL_PORT;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.SERVER_URI_VALUE;
 
 public class BasicViewModel extends BaseViewModel<CTAButtonListener> implements NetworkInterface {
+    
+    public final MutableLiveData<DistrictList> mDistrictList = new MutableLiveData<>();
     
     private ObservableField<String> storedSchoolUri = new ObservableField<>();
     
@@ -42,31 +48,52 @@ public class BasicViewModel extends BaseViewModel<CTAButtonListener> implements 
     
     private AppRemoteRepository mAppRemoteRepository;
     
-    public BasicViewModel(Application application, AppRemoteRepository appRemoteRepository) {
+    public BasicViewModel(@NonNull Application application) {
         super(application);
         mApplication = application;
-        mAppRemoteRepository = appRemoteRepository;
-        
     }
     
     public void savePreference(String serverName, String port, String sslPort) {
         setIsLoding(true);
+        mAppRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(getApplication()));
         SaveContextTask saveTask = new SaveContextTask();
         saveTask.execute(serverName, port, sslPort);
     }
     
     @Override
     public void onCallCompleted(Object model) {
-        setIsLoding(false);
         try {
-            Version version = (Version) model;
-            String lVersion = version.getVersion();
-            if (Integer.parseInt(lVersion) < AppConstants.MIN_API_VERSION_SUPPORTED) {
-                setStatus(Status.SCHOOL_NOT_SETUP_ERROR);
-            } else {
-                AppSharedPreferences.getInstance(mApplication)
-                        .setString(FOLLETT_API_VERSION, lVersion);
-                setStatus(Status.SUCCESS);
+            if (model instanceof Version) {
+                Version version = (Version) model;
+                String lVersion = version.getVersion();
+                if (Integer.parseInt(lVersion) < AppConstants.MIN_API_VERSION_SUPPORTED) {
+                    setIsLoding(false);
+                    setStatus(Status.SCHOOL_NOT_SETUP_ERROR);
+                } else {
+                    AppSharedPreferences.getInstance(mApplication)
+                            .setString(FOLLETT_API_VERSION, lVersion);
+                    mAppRemoteRepository.getDistrictList(this);
+                }
+            } else if (model instanceof DistrictList) {
+                DistrictList districtList = (DistrictList) model;
+                int size = districtList.getDistricts()
+                        .size();
+                if (size == 0) {
+                    setStatus(Status.NO_LIST_FOUND);
+                } else if (size == 1) {
+                    AppSharedPreferences.getInstance(getApplication())
+                            .setString(KEY_CONTEXT_NAME, districtList.getDistricts()
+                                    .get(0)
+                                    .getContextName());
+                    AppSharedPreferences.getInstance(getApplication())
+                            .setString(KEY_DISTRICT_NAME, districtList.getDistricts()
+                                    .get(0)
+                                    .getDistrictName());
+                    setStatus(Status.SUCCESS);
+                } else if (size > 1) {
+                    mDistrictList.postValue((DistrictList) model);
+                }
+                setIsLoding(false);
             }
         } catch (Exception e) {
             FollettLog.d("Exception", e.getMessage());
@@ -82,11 +109,6 @@ public class BasicViewModel extends BaseViewModel<CTAButtonListener> implements 
     private class SaveContextTask extends AsyncTask<String, Void, Boolean> {
         
         @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-        
-        @Override
         protected Boolean doInBackground(String... params) {
             Boolean result = Boolean.FALSE;
             String serverName = params[0];
@@ -97,8 +119,7 @@ public class BasicViewModel extends BaseViewModel<CTAButtonListener> implements 
                 try {
                     AppSharedPreferences.getInstance(mApplication)
                             .removeAllSession();
-                    AppSharedPreferences.getInstance(mApplication).
-                            setString(SERVER_URI_VALUE, serverName);
+                    mAppRemoteRepository.setString(SERVER_URI_VALUE, serverName);
                     if (port != null) {
                         AppSharedPreferences.getInstance(mApplication)
                                 .setInt(KEY_SERVER_PORT, Integer.parseInt(port));

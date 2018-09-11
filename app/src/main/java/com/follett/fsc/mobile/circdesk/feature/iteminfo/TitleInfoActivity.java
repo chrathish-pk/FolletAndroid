@@ -6,23 +6,23 @@
 
 package com.follett.fsc.mobile.circdesk.feature.iteminfo;
 
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
+import com.follett.fsc.mobile.circdesk.databinding.ActivityTitleDetailsBinding;
+import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
+
+import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.bumptech.glide.Glide;
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
-import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
-import com.follett.fsc.mobile.circdesk.databinding.ActivityTitleDetailsBinding;
-import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
-import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-
 public class TitleInfoActivity extends BaseActivity<AdditionalInfoViewModel> implements View.OnClickListener, AdditionalInfoListener {
 
     ActivityTitleDetailsBinding activityTitleDetailsBinding;
     TitleDetails additionalInfoDetails;
+    AdditionalInfoViewModel additionalInfoViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,16 +31,31 @@ public class TitleInfoActivity extends BaseActivity<AdditionalInfoViewModel> imp
         setTitleBar(getString(R.string.titleDetails));
         setBackBtnVisible();
         baseBinding.backBtn.setOnClickListener(this);
-        AdditionalInfoViewModel additionalInfoViewModel = new AdditionalInfoViewModel(this.getApplication(), new AppRemoteRepository(), this);
+        AdditionalInfoViewModel additionalInfoViewModel = new AdditionalInfoViewModel
+                (this.getApplication(), this);
 
         if (getIntent() != null) {
             String bibID = getIntent().getStringExtra("bibID");
             additionalInfoViewModel.getTitleDetails(bibID);
         }
+        additionalInfoViewModel.getErrorMessage()
+                .observe(this, new Observer() {
+                    @Override
+                    public void onChanged(@Nullable Object object) {
+                        AppUtils.getInstance()
+                                .showShortToastMessages(TitleInfoActivity.this, (String) object);
+                    }
+                });
+        additionalInfoViewModel.mTitleDetails.observe(this, new Observer<TitleDetails>() {
+
+
+            @Override
+            public void onChanged(@Nullable TitleDetails titleDetails) {
+                updateTitleDetails(titleDetails);
+            }
+        });
 
     }
-
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -51,6 +66,7 @@ public class TitleInfoActivity extends BaseActivity<AdditionalInfoViewModel> imp
                 Intent moreDetailsIntent = new Intent(this, AdditionalInfoActivity.class);
                 moreDetailsIntent.putExtra("titleMoreDetails", additionalInfoDetails);
                 startActivity(moreDetailsIntent);
+
                 break;
             default:
                 break;
@@ -66,23 +82,10 @@ public class TitleInfoActivity extends BaseActivity<AdditionalInfoViewModel> imp
             public void run() {
                 if (titleDetails != null) {
                     additionalInfoDetails = titleDetails;
-                    FollettLog.i("TAG", "Title" + titleDetails.getTitle());
-
-                    activityTitleDetailsBinding.itemTitleName.setText(titleDetails.getTitle());
-                    activityTitleDetailsBinding.itemAuthor.setText(titleDetails.getResponsibility());
-                    activityTitleDetailsBinding.itemInfo.setText("Call#" + titleDetails.getCallNumber());
-                    activityTitleDetailsBinding.itemRatingBar.setRating(Float.parseFloat(titleDetails.getReviewInfoRecord().getReviewAverage()));
-                    if (titleDetails.getStatus().equals("1")) {
-                        activityTitleDetailsBinding.itemStatus.setText("Status : IN");
-                    } else {
-                        activityTitleDetailsBinding.itemStatus.setText("Status : OUT");
-                    }
-                    activityTitleDetailsBinding.itemDescription.setText(titleDetails.getSummaryList().get(0));
-                    activityTitleDetailsBinding.itemAvailability.setText(titleDetails.getAvailableLocal() + " of " + titleDetails.getTotalLocal() + " Available");
                     activityTitleDetailsBinding.additionalInfoBtn.setOnClickListener(TitleInfoActivity.this);
-                    Glide.with(TitleInfoActivity.this)
-                            .load(AppRemoteRepository.BASE_URL + titleDetails.getContentImageLink())
-                            .into(activityTitleDetailsBinding.itemImg);
+                    activityTitleDetailsBinding.setTitleDetailsViewModel(additionalInfoDetails);
+
+
                 }
             }
         });

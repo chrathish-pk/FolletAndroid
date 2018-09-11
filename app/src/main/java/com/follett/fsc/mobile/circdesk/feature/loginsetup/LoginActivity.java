@@ -26,6 +26,8 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Navig
     
     private ActivityLoginBinding mLoginBinding;
     
+    private DistrictListFragment mDistrictListFragment;
+    
     private SchoolListFragment mSchoolListFragment;
     
     private LoginFragment mLoginFragment;
@@ -57,12 +59,12 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Navig
             
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-            
+                    // Do Nothing
             }
             
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-            
+                // Do Nothing
             }
         });
         SiteViewPagerAdapter adapter = new SiteViewPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
@@ -72,13 +74,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Navig
     
     @Override
     public void onNavigation(int position) {
-        if (position == 0) { // Navigate to School list
-            navigateToSchoolList(true);
-        } else if (position == 1) { // Navigate to Login
-            navigateToLogin(true);
-        } else if (position == 2) { // Navigate to Home Screen
-            navigateToHome();
-        }
+        // Do Nothing
     }
     
     private void navigateToLogin(boolean isAddToBackStack) {
@@ -91,6 +87,20 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Navig
         }
         fragmentTransaction.commit();
     }
+    
+    private void navigateToDistrictList(DistrictList districtList, boolean isAddToBackStack) {
+    
+        mDistrictListFragment = DistrictListFragment.newInstance(districtList);
+        setToolBarTitle(getString(R.string.select_district_label));
+        
+        final FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction()
+                .add(R.id.loginContainer, mDistrictListFragment);
+        if (isAddToBackStack) {
+            fragmentTransaction.addToBackStack(null);
+        }
+        fragmentTransaction.commit();
+    }
+    
     
     private void navigateToSchoolList(boolean isAddToBackStack) {
         
@@ -114,6 +124,24 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Navig
     public void setToolBarTitle(String titleText) {
         setTitleBar(titleText);
     }
+    
+    @Override
+    public void onNavigation(Object model, int position) {
+    
+        if (model instanceof DistrictList && position == 0) {
+            navigateToDistrictList((DistrictList) model, true);
+        } else
+        if (position == 1) { // Navigate to School list
+            navigateToSchoolList(true);
+        } else if (position == 2) { // Navigate to Login
+            navigateToLogin(true);
+        } else if (position == 3) { // Navigate to Home Screen
+            navigateToHome();
+        }
+        
+        
+    }
+    
     
     private void navigateToFragment() {
         

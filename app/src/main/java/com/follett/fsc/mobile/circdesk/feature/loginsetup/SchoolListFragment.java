@@ -8,14 +8,17 @@ package com.follett.fsc.mobile.circdesk.feature.loginsetup;
 
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
+import com.follett.fsc.mobile.circdesk.app.CustomAlert;
+import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentSchoolListBinding;
-import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 
 import android.arch.lifecycle.Observer;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,7 +31,7 @@ public class SchoolListFragment extends BaseFragment<FragmentSchoolListBinding, 
     
     private SchoolListViewModel mViewModel;
     
-    private NavigationListener navigationListener;
+    private NavigationListener mNavigationListener;
     
     
     public static SchoolListFragment newInstance() {
@@ -42,7 +45,7 @@ public class SchoolListFragment extends BaseFragment<FragmentSchoolListBinding, 
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            navigationListener = (NavigationListener) context;
+            mNavigationListener = (NavigationListener) context;
         } catch (ClassCastException ex) {
             FollettLog.e(TAG, "ClassCastException");
         }
@@ -55,7 +58,7 @@ public class SchoolListFragment extends BaseFragment<FragmentSchoolListBinding, 
     
     @Override
     public SchoolListViewModel getViewModel() {
-        mViewModel = new SchoolListViewModel(getBaseActivity().getApplication(), new AppRemoteRepository());
+        mViewModel = new SchoolListViewModel(getBaseActivity().getApplication());
         return mViewModel;
     }
     
@@ -83,17 +86,57 @@ public class SchoolListFragment extends BaseFragment<FragmentSchoolListBinding, 
                 lBinding.schoolRecyclerview.setAdapter(adapter);
             }
         });
+        mViewModel.getStatus()
+                .observe(this, new Observer<Status>() {
+                    @Override
+                    public void onChanged(@Nullable Status status) {
+                        handleStatus(status);
+                    }
+                });
+        mViewModel.noSchoolFoundMsg.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String msg) {
+                showAlert(msg);
+            }
+        });
+    }
+    
+    private void handleStatus(Status status) {
+        if (Status.SUCCESS.equals(status)) {
+            mNavigationListener.onNavigation(null, 2);
+        }
     }
     
     @Override
     public void onDetach() {
-        navigationListener.setToolBarTitle(getActivity().getString(R.string.connect_your_school_label));
+        mNavigationListener.setToolBarTitle(getActivity().getString(R.string.connect_your_school_label));
         super.onDetach();
     }
     
     @Override
-    public void ctaButtonOnClick() {
+    public void ctaButtonOnClick(View view) {
+        mViewModel.clearSchoolPref();
         getBaseActivity().onBackPressed();
+    }
+    
+    private void showAlert(String msg) {
+        
+        DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        dialog.dismiss();
+                        break;
+                    default:
+                        break;
+                }
+                
+            }
+        };
+        CustomAlert.showDialog(getBaseActivity(), null, msg, getString(R.string.ok), onClickListener, null, onClickListener);
+        
     }
 }
 

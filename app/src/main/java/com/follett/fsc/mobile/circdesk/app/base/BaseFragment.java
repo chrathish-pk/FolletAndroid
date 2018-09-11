@@ -27,7 +27,7 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     
     private static final String TAG = BaseFragment.class.getSimpleName();
     
-    private Activity mActivity;
+    protected Activity mActivity;
     
     private View mRootView;
     

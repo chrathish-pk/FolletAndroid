@@ -6,6 +6,8 @@
 
 package com.follett.fsc.mobile.circdesk.app;
 
+import android.view.View;
+
 public interface CTAButtonListener {
-    public void ctaButtonOnClick();
+    public void ctaButtonOnClick(View view);
 }

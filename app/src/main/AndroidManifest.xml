@@ -24,13 +24,14 @@
 
         <activity android:name=".feature.checkoutcheckin.CheckinCheckoutActivity" />
 
-        <activity android:name=".feature.checkoutcheckin.PatronListActivity" />
+        <activity android:name=".feature.checkoutcheckin.checkout.PatronListActivity" />
 
         <activity android:name=".feature.homescreen.HomeActivity" />
 
         <activity android:name=".feature.iteminfo.TitleInfoActivity" />
 
         <activity android:name=".feature.iteminfo.AdditionalInfoActivity" />
+        <activity android:name=".feature.patronstatus.PatronStatusActivity"/>
     </application>
 
 </manifest>

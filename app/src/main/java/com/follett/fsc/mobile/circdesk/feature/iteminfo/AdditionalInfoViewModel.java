@@ -7,6 +7,8 @@
 package com.follett.fsc.mobile.circdesk.feature.iteminfo;
 
 import android.app.Application;
+import android.arch.lifecycle.MutableLiveData;
+import android.support.annotation.NonNull;
 
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
@@ -21,17 +23,19 @@ import java.util.Map;
 public class AdditionalInfoViewModel extends BaseViewModel implements NetworkInterface {
 
     private AppRemoteRepository mAppRemoteRepository;
-    private AdditionalInfoListener additionalInfoListener;
+    AdditionalInfoListener additionalInfoListener;
     private Application mApplication;
+    public final MutableLiveData<TitleDetails> mTitleDetails = new MutableLiveData<>();
 
-    public AdditionalInfoViewModel(Application application, AppRemoteRepository appRemoteRepository, AdditionalInfoListener additionalInfoListener) {
+    public AdditionalInfoViewModel(@NonNull Application application, AdditionalInfoListener additionalInfoListener) {
         super(application);
-        mAppRemoteRepository = appRemoteRepository;
         this.additionalInfoListener = additionalInfoListener;
         this.mApplication = application;
+        mAppRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(application));
     }
 
     public void getTitleDetails(String bibID) {
+        setIsLoding(true);
         Map<String, String> map = new HashMap<>();
         map.put("Accept", "application/json");
         map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance(mApplication).getString(AppSharedPreferences.KEY_SESSION_ID));
@@ -41,9 +45,11 @@ public class AdditionalInfoViewModel extends BaseViewModel implements NetworkInt
 
     @Override
     public void onCallCompleted(Object model) {
+        setIsLoding(false);
         try {
-            TitleDetails titleDetails = (TitleDetails) model;
-            additionalInfoListener.updateTitleDetails(titleDetails);
+            if (model instanceof TitleDetails) {
+                mTitleDetails.postValue((TitleDetails) model);
+            }
         } catch (Exception e) {
             FollettLog.d("Exception", e.getMessage());
         }

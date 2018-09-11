@@ -55,6 +55,13 @@
         <item name="android:fontFamily">@font/opensans_regular</item>
     </style>
 
+    <style name="Patron_TextView_Style">
+        <item name="android:padding">@dimen/layout_size_16</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:fontFamily">@font/opensans_regular</item>
+        <item name="android:textSize">@dimen/text_size_16sp</item>
+    </style>
+
     <!-- Toggle button theme -->
     <style name="SCBSwitch" parent="Theme.AppCompat.Light">
         <!-- active thumb & track color (30% transparency) -->
@@ -68,4 +75,5 @@
         <item name="android:colorForeground">#42221f1f
         </item>
     </style>
+
 </resources>

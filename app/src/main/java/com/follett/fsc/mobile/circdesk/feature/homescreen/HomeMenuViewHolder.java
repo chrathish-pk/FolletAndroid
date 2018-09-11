@@ -16,10 +16,6 @@ public class HomeMenuViewHolder extends RecyclerView.ViewHolder {
 
     public HomeMenuViewHolder(RowHomeMenuBinding rowHomeMenuBinding) {
         super(rowHomeMenuBinding.getRoot());
-
         this.rowHomeMenuBinding = rowHomeMenuBinding;
-
-
     }
-
 }

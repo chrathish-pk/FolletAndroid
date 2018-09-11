@@ -41,8 +41,6 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
     
     private LoginViewModel mLoginViewModel;
     
-    private AppRemoteRepository appRemoteRepository;
-    
     private NavigationListener navigationListener;
     
     public static LoginFragment newInstance() {
@@ -59,8 +57,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
     
     @Override
     public LoginViewModel getViewModel() {
-        appRemoteRepository = new AppRemoteRepository();
-        mLoginViewModel = new LoginViewModel(getBaseApplication(), appRemoteRepository);
+        mLoginViewModel = new LoginViewModel(getBaseApplication());
         mLoginViewModel.setNavigator(this);
         return mLoginViewModel;
     }
@@ -93,7 +90,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
     }
     
     @Override
-    public void ctaButtonOnClick() {
+    public void ctaButtonOnClick(View view) {
         
         AppUtils.getInstance().hideKeyBoard(getBaseActivity(), mLayoutBinding.getRoot());
         if (!AppUtils.getInstance()
@@ -165,7 +162,10 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
                     @Override
                     public void onChanged(@Nullable Status status) {
                         if (Status.SUCCESS.equals(status)) {
-                            navigationListener.onNavigation(2);
+                            navigationListener.onNavigation(null, 3);
+                        } else if (Status.ERROR.equals(status)) {
+                            AppUtils.getInstance()
+                                    .showShortToastMessages(getBaseActivity(), getString(R.string.invalid_user_id));
                         }
                     }
                 });
@@ -193,7 +193,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
         if (i == EditorInfo.IME_ACTION_NEXT) {
             mLayoutBinding.passwordEditText.requestFocus();
         } else if (i == EditorInfo.IME_ACTION_DONE) {
-            ctaButtonOnClick();
+            ctaButtonOnClick(mLayoutBinding.passwordEditText);
         }
         return true;
     }

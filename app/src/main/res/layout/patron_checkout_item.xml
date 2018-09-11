@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /*
+  ~  * Copyright (c) 2018 Follett. All rights reserved.
+  ~  */
+  -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="checkoutItem"
+            type="com.follett.fsc.mobile.circdesk.feature.patronstatus.model.CustomCheckoutItem"/>
+
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/itemCheckoutContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/libraryTitleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/opensans_semibold"
+            android:text="@{checkoutItem.checkoutTitle}"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_size_18sp"
+            android:visibility="@{checkoutItem.checkoutTitle == null ? View.GONE : View.VISIBLE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/bookNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:arrowIcon="@{@drawable/right_arrow}"
+            app:checkoutModel="@{checkoutItem}"
+            android:fontFamily="@font/opensans_semibold"
+            android:gravity="center_vertical"
+            android:text="@{checkoutItem.bookName}"
+            android:drawablePadding="74dp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/libraryTitleTextView"/>
+
+
+        <TextView
+            android:id="@+id/barCodeTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="114dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/opensans_semibold"
+
+            android:gravity="center_vertical"
+            android:text="@{@string/barcode_label(checkoutItem.barCode)}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bookNameTextView"/>
+
+        <TextView
+            android:id="@+id/dueTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="114dp"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/opensans_semibold"
+            android:gravity="center_vertical"
+            android:text="@{@string/due_label(checkoutItem.dueDate)}"
+            android:textColor="@{safeUnbox(checkoutItem.isOverDue) ? @color/monza : @color/black}"
+            android:textSize="@dimen/text_size_16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/barCodeTextView"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/itemDesLinear"
+            android:layout_marginTop="24dp"
+            android:background="@color/editTextBorderColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dueTextView"/>
+
+    </android.support.constraint.ConstraintLayout>
+</layout>
