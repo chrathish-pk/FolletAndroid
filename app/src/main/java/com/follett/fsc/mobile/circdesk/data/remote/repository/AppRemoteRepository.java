@@ -330,14 +330,37 @@ public class AppRemoteRepository {
                     }
                 });
     }
-   
     
     
-    public void setString (String key, String value) {
+    public void setString(String key, String value) {
         appPreferencesHelper.setString(key, value);
     }
     
-    public String getString (String key) {
+    public String getString(String key) {
         return appPreferencesHelper.getString(key);
+    }
+    
+    public void setInt(String key, int value) {
+        appPreferencesHelper.setInt(key, value);
+    }
+    
+    public int getInt(String key) {
+        return appPreferencesHelper.getInt(key);
+    }
+    
+    public void setBoolean(String key, Boolean value) {
+        appPreferencesHelper.setBoolean(key, value);
+    }
+    
+    public Boolean getBoolean(String key) {
+        return appPreferencesHelper.getBoolean(key);
+    }
+    
+    public void removeValues(String key) {
+        appPreferencesHelper.removeValues(key);
+    }
+    
+    public void removeAllSession() {
+        appPreferencesHelper.removeAllSession();
     }
 }
