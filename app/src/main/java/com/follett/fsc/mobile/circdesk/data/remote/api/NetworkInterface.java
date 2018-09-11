@@ -7,8 +7,8 @@
 package com.follett.fsc.mobile.circdesk.data.remote.api;
 
 public interface NetworkInterface<T> {
-    
+
     void onCallCompleted(T model);
-    
+
     void onCallFailed(Throwable throwable);
 }
