@@ -44,15 +44,12 @@ public class AppSharedPreferences {
     public static final String KEY_STICKY_PRODUCT_TYPE = "stickyProductType";
     public static final String KEY_PATRON_NAME = "patronName";
 
-    public static final String KEY_PERMISSIONS = "permissions";
-
     public static final String KEY_SELECTED_BARCODE = "selectedBarcode";
     //public static final String KEY_BARCODE = "barcode";
     public static final String KEY_PATRON_ID = "patronID";
     public static final String FOLLETT_API_VERSION = "apiversion";
     public static final String KEY_IS_LIBRARY_SELECTED = "isLibrarySelected";
-
-
+    public static final String KEY_PERMISSIONS = "permissions";
 
 
     private static AppSharedPreferences mSessionInstance = null;

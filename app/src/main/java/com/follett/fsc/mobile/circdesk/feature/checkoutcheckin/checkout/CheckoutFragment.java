@@ -187,16 +187,18 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
 
     public void bindPatronResult() {
         if (scanPatron != null) {
-            fragmentCheckoutBinding.patronDetailIncludeLayout.patronDetailLayout.setVisibility(View.VISIBLE);
-            fragmentCheckoutBinding.checkoutDetailIncludeLayout.checkedoutDetailLayout.setVisibility(View.GONE);
-            fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.setText("");
-            fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.setHint(R.string.enterBarcode);
-            if (fragmentCheckoutBinding.checkoutPatronErrorMsg.getVisibility() == View.VISIBLE)
-                fragmentCheckoutBinding.checkoutPatronErrorMsg.setVisibility(View.GONE);
+            if (!TextUtils.isEmpty(AppSharedPreferences.getInstance(getActivity()).getString(AppSharedPreferences.KEY_SELECTED_BARCODE))) {
+                fragmentCheckoutBinding.patronDetailIncludeLayout.patronDetailLayout.setVisibility(View.VISIBLE);
+                fragmentCheckoutBinding.checkoutDetailIncludeLayout.checkedoutDetailLayout.setVisibility(View.GONE);
+                fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.setText("");
+                fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.setHint(R.string.enterBarcode);
+                if (fragmentCheckoutBinding.checkoutPatronErrorMsg.getVisibility() == View.VISIBLE)
+                    fragmentCheckoutBinding.checkoutPatronErrorMsg.setVisibility(View.GONE);
 
-            scanPatron.setLibrarySelected(AppSharedPreferences.getInstance(getActivity()).getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED));
-            fragmentCheckoutBinding.setScanPatron(scanPatron);
+                scanPatron.setLibrarySelected(AppSharedPreferences.getInstance(getActivity()).getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED));
 
+                fragmentCheckoutBinding.setScanPatron(scanPatron);
+            }
         } else {
             if (fragmentCheckoutBinding != null)
                 fragmentCheckoutBinding.patronDetailIncludeLayout.patronDetailLayout.setVisibility(View.GONE);

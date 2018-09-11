@@ -5,14 +5,15 @@
 
     <data>
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
-            type="com.follett.fsc.mobile.circdesk.feature.itemstatus.ItemStatusViewModel"/>
+            type="com.follett.fsc.mobile.circdesk.feature.itemstatus.ItemStatusViewModel" />
 
         <variable
             name="itemDetailsViewModel"
-            type="com.follett.fsc.mobile.circdesk.feature.itemstatus.ItemDetails"/>
+            type="com.follett.fsc.mobile.circdesk.feature.itemstatus.ItemDetails" />
 
 
     </data>
@@ -115,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/opensans_regular"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_size_16sp"/>
+                android:textSize="@dimen/text_size_16sp" />
         </LinearLayout>
 
         <RelativeLayout
@@ -272,7 +273,6 @@
                     android:textSize="@dimen/text_size_16sp" />
             </LinearLayout>
         </LinearLayout>
-
 
 
     </android.support.constraint.ConstraintLayout>

@@ -11,14 +11,17 @@ import android.view.View;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentItemStatusBinding;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.TitleInfoActivity;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.Permissions;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
+import com.google.gson.Gson;
 
-public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding,ItemStatusViewModel> implements View.OnClickListener,UpdateItemUIListener {
+public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, ItemStatusViewModel> implements View.OnClickListener, UpdateItemUIListener {
 
     private ItemDetails itemDetailsinfo;
     private FragmentItemStatusBinding fragmentItemStatusBinding;
@@ -61,12 +64,27 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding,I
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         fragmentItemStatusBinding = getViewDataBinding();
+
+        ShowLibraryResource();
         initView();
 
     }
 
-    private void initView() {
+    private void ShowLibraryResource() {
+        String permissionValue = AppSharedPreferences.getInstance(getActivity()).getString(AppSharedPreferences.KEY_PERMISSIONS);
+        Permissions permissions = new Gson().fromJson(permissionValue, Permissions.class);
+        if (Boolean.parseBoolean(permissions.getCanViewCopyStatusLibrary()))
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setVisibility(View.VISIBLE);
+        else
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setVisibility(View.GONE);
 
+        if (Boolean.parseBoolean(permissions.getCanViewCopyStatusAsset()))
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setVisibility(View.VISIBLE);
+        else
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setVisibility(View.GONE);
+    }
+
+    private void initView() {
         fragmentItemStatusBinding.itemStatusPatronGoBtn.setOnClickListener(this);
         fragmentItemStatusBinding.itemStatusCheckedoutInfoBtn.setOnClickListener(this);
         itemStatusViewModel.getErrorMessage()
@@ -83,8 +101,6 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding,I
 
                 updateItemStatusUI(itemDetails);
             }
-
-
         });
     }
 
@@ -102,8 +118,7 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding,I
                         if (itemDetailsinfo != null) {
                             fragmentItemStatusBinding.setItemDetailsViewModel(itemDetailsinfo);
                         }
-                    }
-                    else if (itemDetailsinfo != null && !itemDetailsinfo.getSuccess()) {
+                    } else if (itemDetailsinfo != null && !itemDetailsinfo.getSuccess()) {
                         fragmentItemStatusBinding.itemErrorMsgLayout.setVisibility(View.VISIBLE);
                         fragmentItemStatusBinding.itemStatusDetailLayout.setVisibility(View.GONE);
                         fragmentItemStatusBinding.itemStatusCheckoutDetailsLayout.setVisibility(View.GONE);
@@ -148,10 +163,8 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding,I
     }
 
 
-
     @Override
     public void updateUI(final Object itemDetails) {
-
 
 
     }

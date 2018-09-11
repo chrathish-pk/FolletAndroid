@@ -8,7 +8,6 @@ package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -20,9 +19,11 @@ import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityCheckinCheckoutBinding;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin.CheckinFragment;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.CheckoutFragment;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.Permissions;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
+import com.google.gson.Gson;
 
-public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewModel> implements View.OnClickListener {
+public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewModel> implements View.OnClickListener, ViewPager.OnPageChangeListener {
 
     TabLayoutViewPagerAdapter adapter;
     ActivityCheckinCheckoutBinding actvityCheckinCheckoutBinding;
@@ -39,7 +40,7 @@ public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewMod
         setupViewPager(actvityCheckinCheckoutBinding.viewPager);
         actvityCheckinCheckoutBinding.tabLayout.setupWithViewPager(actvityCheckinCheckoutBinding.viewPager);
         actvityCheckinCheckoutBinding.viewPager.setOffscreenPageLimit(actvityCheckinCheckoutBinding.tabLayout.getTabCount());
-        actvityCheckinCheckoutBinding.viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(actvityCheckinCheckoutBinding.tabLayout));
+        actvityCheckinCheckoutBinding.viewPager.addOnPageChangeListener(this);
 
         actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setOnClickListener(this);
         actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setOnClickListener(this);
@@ -126,5 +127,38 @@ public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewMod
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        String permissionValue = AppSharedPreferences.getInstance(this).getString(AppSharedPreferences.KEY_PERMISSIONS);
+        Permissions permissions = new Gson().fromJson(permissionValue, Permissions.class);
+        if (position == 0) {
+            ShowLibraryResource(Boolean.parseBoolean(permissions.getCanCheckoutLibrary()), Boolean.parseBoolean(permissions.getCanCheckoutAsset()));
+        } else if (position == 1) {
+            ShowLibraryResource(Boolean.parseBoolean(permissions.getCanCheckinLibrary()), Boolean.parseBoolean(permissions.getCanCheckinAsset()));
+        }
+    }
+
+    private void ShowLibraryResource(boolean canShowLibrary, boolean canShowResource) {
+        if (canShowLibrary)
+            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setVisibility(View.VISIBLE);
+        else
+            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setVisibility(View.GONE);
+
+        if (canShowResource)
+            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setVisibility(View.VISIBLE);
+        else
+            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }
