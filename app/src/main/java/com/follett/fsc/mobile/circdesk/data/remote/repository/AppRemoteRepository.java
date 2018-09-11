@@ -8,7 +8,6 @@ package com.follett.fsc.mobile.circdesk.data.remote.repository;
 
 import android.support.annotation.Nullable;
 
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.api.FollettAPIManager;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
@@ -29,8 +28,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
-
-import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_PERMISSIONS;
 
 public class AppRemoteRepository {
 
@@ -107,7 +104,6 @@ public class AppRemoteRepository {
                     public void onNext(LoginResults loginResults) {
                         if (networkInterface != null) {
                             networkInterface.onCallCompleted(loginResults);
-                            AppSharedPreferences.getInstance(this).setString(KEY_PERMISSIONS, loginResults.getPermissions().toString());
 
                         }
                     }
