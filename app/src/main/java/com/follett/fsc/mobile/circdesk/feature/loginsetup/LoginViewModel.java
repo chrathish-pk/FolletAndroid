@@ -28,10 +28,11 @@ public class LoginViewModel extends BaseViewModel<CTAButtonListener> implements 
 
     private AppRemoteRepository mAppRemoteRepository;
     
-    public LoginViewModel(@NonNull Application application, AppRemoteRepository appRemoteRepository) {
+    public LoginViewModel(@NonNull Application application) {
         super(application);
         mApplication = application;
-        mAppRemoteRepository = appRemoteRepository;
+        mAppRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(getApplication()));
+        ;
     }
     
     

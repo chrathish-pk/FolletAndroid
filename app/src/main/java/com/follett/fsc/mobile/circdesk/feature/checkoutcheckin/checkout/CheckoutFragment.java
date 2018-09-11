@@ -38,7 +38,8 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
 
     @Override
     public CheckoutViewModel getViewModel() {
-        checkoutViewModel = new CheckoutViewModel(getBaseActivity().getApplication(), new AppRemoteRepository(), this);
+        checkoutViewModel = new CheckoutViewModel(getBaseActivity().getApplication()
+                , this);
         return checkoutViewModel;
     }
 

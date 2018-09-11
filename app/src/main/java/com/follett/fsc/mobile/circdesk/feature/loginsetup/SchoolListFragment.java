@@ -58,7 +58,7 @@ public class SchoolListFragment extends BaseFragment<FragmentSchoolListBinding, 
     
     @Override
     public SchoolListViewModel getViewModel() {
-        mViewModel = new SchoolListViewModel(getBaseActivity().getApplication(), new AppRemoteRepository());
+        mViewModel = new SchoolListViewModel(getBaseActivity().getApplication());
         return mViewModel;
     }
     

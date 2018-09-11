@@ -127,7 +127,7 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
                     .showNoInternetAlertDialog(getBaseActivity());
             return;
         }
-        
+        AppSharedPreferences.getInstance(getBaseActivity()).setString(SERVER_URI_VALUE, libraryURI);
         mBasicViewModel.savePreference(libraryURI, port, sslPort);
     }
     

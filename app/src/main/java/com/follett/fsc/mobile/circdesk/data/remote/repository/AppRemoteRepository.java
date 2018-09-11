@@ -6,6 +6,9 @@
 
 package com.follett.fsc.mobile.circdesk.data.remote.repository;
 
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppPrefHelper;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppPreferencesHelper;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.api.FollettAPIManager;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
@@ -30,14 +33,17 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.SERVER_URI_VALUE;
+
 public class AppRemoteRepository {
 
     private APIInterface apiService;
+    
+    private AppPrefHelper appPreferencesHelper;
 
-    public static final String BASE_URL = "https://uat-destiny.follettsoftware.com/";
-
-    public AppRemoteRepository() {
-        apiService = FollettAPIManager.getClient(BASE_URL)
+    public AppRemoteRepository(AppSharedPreferences appPref) {
+        appPreferencesHelper = new AppPreferencesHelper(appPref);
+        apiService = FollettAPIManager.getClient(getString(SERVER_URI_VALUE))
                 .create(APIInterface.class);
     }
 
@@ -323,5 +329,15 @@ public class AppRemoteRepository {
                     public void onComplete() {
                     }
                 });
+    }
+   
+    
+    
+    public void setString (String key, String value) {
+        appPreferencesHelper.setString(key, value);
+    }
+    
+    public String getString (String key) {
+        return appPreferencesHelper.getString(key);
     }
 }

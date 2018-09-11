@@ -40,7 +40,7 @@ public class PatronStatusViewModel extends BaseViewModel implements NetworkInter
     public PatronStatusViewModel(@NonNull Application application) {
         super(application);
         this.mApplication = application;
-        mAppRemoteRepository = new AppRemoteRepository();
+        mAppRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(getApplication()));
     }
     
     public void getPatronInfo(String typedText) {

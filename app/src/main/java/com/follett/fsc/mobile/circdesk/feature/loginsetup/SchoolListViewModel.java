@@ -36,10 +36,10 @@ public class SchoolListViewModel extends BaseViewModel<CTAButtonListener> implem
     
     private Application mApplication;
     
-    public SchoolListViewModel(Application application, AppRemoteRepository appRemoteRepository) {
+    public SchoolListViewModel(Application application) {
         super(application);
         mApplication = application;
-        mAppRemoteRepository = appRemoteRepository;
+        mAppRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(application));
         fetchSchoolList();
     }
     

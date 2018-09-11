@@ -51,12 +51,11 @@ public class BasicViewModel extends BaseViewModel<CTAButtonListener> implements 
     public BasicViewModel(@NonNull Application application) {
         super(application);
         mApplication = application;
-        mAppRemoteRepository = new AppRemoteRepository();
-        
     }
     
     public void savePreference(String serverName, String port, String sslPort) {
         setIsLoding(true);
+        mAppRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(getApplication()));
         SaveContextTask saveTask = new SaveContextTask();
         saveTask.execute(serverName, port, sslPort);
     }
@@ -120,9 +119,7 @@ public class BasicViewModel extends BaseViewModel<CTAButtonListener> implements 
                 try {
                     AppSharedPreferences.getInstance(mApplication)
                             .removeAllSession();
-                    AppSharedPreferences.getInstance(mApplication)
-                            .
-                                    setString(SERVER_URI_VALUE, serverName);
+                    mAppRemoteRepository.setString(SERVER_URI_VALUE, serverName);
                     if (port != null) {
                         AppSharedPreferences.getInstance(mApplication)
                                 .setInt(KEY_SERVER_PORT, Integer.parseInt(port));

@@ -29,11 +29,12 @@ public class CheckinViewModel extends BaseViewModel implements NetworkInterface 
     private UpdateUIListener updateUIListener;
     private AppRemoteRepository mAppRemoteRepository;
 
-    public CheckinViewModel(Application application, AppRemoteRepository appRemoteRepository, UpdateUIListener updateUIListener) {
+    public CheckinViewModel(Application application, UpdateUIListener updateUIListener) {
         super(application);
         this.mApplication = application;
-        this.mAppRemoteRepository = appRemoteRepository;
         this.updateUIListener = updateUIListener;
+        this.mAppRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(application));
+    
     }
 
     public void getCheckinData(String checkinBarcode, String collectionType, boolean isLibraryUse) {
