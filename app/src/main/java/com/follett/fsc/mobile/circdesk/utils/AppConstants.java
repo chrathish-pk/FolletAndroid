@@ -18,6 +18,9 @@ public class AppConstants {
     public static final String PATRON_INFO_KEY = "patroninfo";
     
     public static final String PATRON_TITLE_KEY = "patrontitle";
+    
+    public static final String DISTRICT_LIST_KEY = "districtlist";
+    
 
     public static final String EXCEPTION = "Exception";
 

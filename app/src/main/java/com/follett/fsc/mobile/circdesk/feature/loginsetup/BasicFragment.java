@@ -8,15 +8,17 @@ package com.follett.fsc.mobile.circdesk.feature.loginsetup;
 
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
+import com.follett.fsc.mobile.circdesk.app.CustomAlert;
+import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentBasicLayoutBinding;
-import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
-import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 
 import android.arch.lifecycle.Observer;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -36,9 +38,7 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
     private FragmentBasicLayoutBinding mBasicLayoutBinding;
     
     private BasicViewModel mBasicViewModel;
-    
-    private AppRemoteRepository appRemoteRepository;
-    
+
     private NavigationListener navigationListener;
     
     private boolean mIsBaseFragment;
@@ -58,8 +58,7 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
     
     @Override
     public BasicViewModel getViewModel() {
-        appRemoteRepository = new AppRemoteRepository();
-        mBasicViewModel = new BasicViewModel(getBaseApplication(), appRemoteRepository);
+        mBasicViewModel = new BasicViewModel(getBaseApplication());
         return mBasicViewModel;
     }
     
@@ -129,7 +128,7 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
                     .showNoInternetAlertDialog(getBaseActivity());
             return;
         }
-        
+        AppSharedPreferences.getInstance(getBaseActivity()).setString(SERVER_URI_VALUE, libraryURI);
         mBasicViewModel.savePreference(libraryURI, port, sslPort);
     }
     
@@ -152,7 +151,8 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 
                 if (i == EditorInfo.IME_ACTION_DONE) {
-                    AppUtils.getInstance().hideKeyBoard(getBaseActivity(), textView);
+                    AppUtils.getInstance()
+                            .hideKeyBoard(getBaseActivity(), textView);
                     ctaButtonOnClick(basicLayoutBinding.libraryEditText);
                 } else if (i == EditorInfo.IME_ACTION_NEXT) {
                     basicLayoutBinding.portEditText.requestFocus();
@@ -164,7 +164,8 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_DONE) {
-                    AppUtils.getInstance().hideKeyBoard(getBaseActivity(), textView);
+                    AppUtils.getInstance()
+                            .hideKeyBoard(getBaseActivity(), textView);
                     ctaButtonOnClick(basicLayoutBinding.sslportEditText);
                 }
                 return true;
@@ -174,56 +175,51 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
         basicLayoutBinding.libraryEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                //do nothing
+                // Do Nothing
             }
             
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-              onTextChangedInEditText();
+                onTextChangedInEditText();
             }
             
             @Override
             public void afterTextChanged(Editable editable) {
-                //do nothing
-
+                // Do Nothing
             }
         });
         
         basicLayoutBinding.portEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                //do nothing
-
+                // Do Nothing
             }
-    
+
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 onTextChangedInEditText();
             }
-    
+
             @Override
             public void afterTextChanged(Editable editable) {
-                //do nothing
-
+                // Do Nothing
             }
         });
-    
+
         basicLayoutBinding.sslportEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                //do nothing
-
+                // Do Nothing
             }
-    
+
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 onTextChangedInEditText();
             }
-    
+
             @Override
             public void afterTextChanged(Editable editable) {
-                //do nothing
-
+                // Do Nothing
             }
         });
         basicLayoutBinding.setBasicListener(this);
@@ -237,19 +233,40 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
                         handleStatus(status);
                     }
                 });
+        mBasicViewModel.mDistrictList.observe(this, new Observer<DistrictList>() {
+            @Override
+            public void onChanged(@Nullable DistrictList districtList) {
+                navigationListener.onNavigation(districtList, 0);
+            }
+        });
     }
     
     private void handleStatus(Status status) {
         
         if (Status.SUCCESS.equals(status)) {
-            navigationListener.onNavigation(0);
+            navigationListener.onNavigation(null, 1);
         } else if (Status.ERROR.equals(status)) {
             displayErrorToast(getString(R.string.ssl_error));
         } else if (Status.SCHOOL_NOT_SETUP_ERROR.equals(status)) {
             displayErrorToast(getString(R.string.error_sorry_school_not_setup));
+        } else if (Status.NO_LIST_FOUND.equals(status)) {
+            showAlert(getString(R.string.no_district));
         }
     }
-    
+
+    private void showAlert(String msg) {
+
+        DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == DialogInterface.BUTTON_POSITIVE) {
+                    dialog.dismiss();
+                }
+            }
+        };
+        CustomAlert.showDialog(getBaseActivity(), null, msg, getString(R.string.ok), onClickListener, null, onClickListener);
+    }
+
     public void onTextChangedInEditText() {
         if (AppUtils.getInstance()
                 .isEditTextNotEmpty(mBasicLayoutBinding.libraryEditText) && AppUtils.getInstance()

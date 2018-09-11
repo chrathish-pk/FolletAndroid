@@ -31,7 +31,7 @@ public class PatronListActivity extends BaseActivity<CheckoutViewModel> implemen
 
 
         if (getIntent().getExtras() != null) {
-            scanPatron =  getIntent().getParcelableExtra(getString(R.string.scanPatron));
+            scanPatron = (ScanPatron) getIntent().getParcelableExtra(getString(R.string.scanPatron));
         }
 
         setTitleBar(getString(R.string.selectPatron));
@@ -39,17 +39,12 @@ public class PatronListActivity extends BaseActivity<CheckoutViewModel> implemen
         PatronListAdapter patronListAdapter = new PatronListAdapter(this, scanPatron, this);
         activityPatronListBinding.patronListView.setAdapter(patronListAdapter);
     }
-
+    
     @Override
-<<<<<<< Updated upstream:app/src/main/java/com/follett/fsc/mobile/circdesk/feature/checkoutcheckin/PatronListActivity.java
-    public void OnItemClicked() {
-
-=======
     public void onItemClicked() {
-     //onItemClicked
->>>>>>> Stashed changes:app/src/main/java/com/follett/fsc/mobile/circdesk/feature/checkoutcheckin/checkout/PatronListActivity.java
+    
     }
-
+    
     @Override
     public void onItemClick(View view, int position) {
         AppSharedPreferences.getInstance(this).setString(AppSharedPreferences.KEY_SELECTED_BARCODE, scanPatron.getPatronList().get(position).getBarcode());

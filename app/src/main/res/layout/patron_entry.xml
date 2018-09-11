@@ -30,8 +30,8 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/opensans_regular"
-                    android:imeOptions="actionDone"
                     android:hint="@string/findPatron"
+                    android:imeOptions="actionDone"
                     android:padding="10dp"
                     android:textSize="@dimen/text_size_16sp" />
 

@@ -12,7 +12,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ScanPatronResult implements Parcelable {
+public class ScanPatronResult {
 
     @SerializedName("assetCheckouts")
     @Expose
@@ -57,37 +57,6 @@ public class ScanPatronResult implements Parcelable {
         textbookCheckouts = in.readString();
         textbookOverdues = in.readString();
     }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(assetCheckouts);
-        dest.writeString(assetOverdues);
-        dest.writeString(libraryCheckouts);
-        dest.writeString(libraryOverdues);
-        dest.writeString(messages);
-        dest.writeParcelable(patronList, flags);
-        dest.writeString(patronNotes);
-        dest.writeString(success);
-        dest.writeString(textbookCheckouts);
-        dest.writeString(textbookOverdues);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Creator<ScanPatronResult> CREATOR = new Creator<ScanPatronResult>() {
-        @Override
-        public ScanPatronResult createFromParcel(Parcel in) {
-            return new ScanPatronResult(in);
-        }
-
-        @Override
-        public ScanPatronResult[] newArray(int size) {
-            return new ScanPatronResult[size];
-        }
-    };
 
     public String getAssetCheckouts() {
         return assetCheckouts;

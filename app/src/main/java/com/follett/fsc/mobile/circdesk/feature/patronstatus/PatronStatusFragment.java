@@ -84,11 +84,8 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
     
     
     private void inItView() {
-        mBinding.patronEntryIncludeLayout.patronGoBtn.setOnClickListener(this);
-        mBinding.itemRelativeLayout.setOnClickListener(this);
-        mBinding.closeBtn.setOnClickListener(this);
-        mBinding.holdRelativeLayout.setOnClickListener(this);
-        mBinding.fineRelativeLayout.setOnClickListener(this);
+
+        mBinding.patronEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.GONE);
         mBinding.patronEntryIncludeLayout.patronEntry.setImeOptions(EditorInfo.IME_ACTION_DONE);
         mViewModel.getErrorMessage()
                 .observe(this, new Observer() {
@@ -105,47 +102,33 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
                 updateUI(mPatronInfo);
             }
         });
-
+        setListener();
     }
     
     @Override
     public void onClick(View v) {
         if (v == mBinding.patronEntryIncludeLayout.patronGoBtn) {
             mBinding.patronDetailLayout.setVisibility(View.GONE);
-           getPatronInfo(AppUtils.getInstance()
-                   .getEditTextValue(mBinding.patronEntryIncludeLayout.patronEntry));
-           
+            getPatronInfo(AppUtils.getInstance()
+                    .getEditTextValue(mBinding.patronEntryIncludeLayout.patronEntry));
+
         } else if (v == mBinding.closeBtn) {
             mBinding.patronDetailLayout.setVisibility(View.GONE);
         } else if (v == mBinding.itemRelativeLayout) {
-              itemRelativeLayout();
+            if (mPatronInfo != null && (!mPatronInfo.getCheckouts()
+                    .isEmpty() || !mPatronInfo.getAssetCheckOuts()
+                    .isEmpty())) {
+                    mNavigationListener.onNavigation(mPatronInfo, 2);
+            }
         } else if (v == mBinding.holdRelativeLayout) {
-            holdRelativeLayout();
-        } else if (v == mBinding.fineRelativeLayout) {
-           fineRelativeLayout();
-        }
-    }
-
-    private void fineRelativeLayout() {
-        if (mPatronInfo != null && !mPatronInfo.getFines().isEmpty()) {
-                          mNavigationListener.onNavigation(mPatronInfo, 4);
-            }
-            }
-
-    private void holdRelativeLayout() {
-        if (mPatronInfo != null && !mPatronInfo.getHolds().isEmpty()) {
-
+            if (mPatronInfo != null && !mPatronInfo.getHolds()
+                    .isEmpty()) {
                 mNavigationListener.onNavigation(mPatronInfo, 3);
-
-        }
-    }
-
-    private void itemRelativeLayout() {
-
-        if (mPatronInfo != null) {
-            if (!mPatronInfo.getCheckouts().isEmpty() ||
-                    !mPatronInfo.getAssetCheckOuts().isEmpty()) {
-                mNavigationListener.onNavigation(mPatronInfo, 2);
+            }
+        } else if (v == mBinding.fineRelativeLayout) {
+            if (mPatronInfo != null && !mPatronInfo.getFines()
+                    .isEmpty()) {
+                mNavigationListener.onNavigation(mPatronInfo, 4);
             }
         }
     }
@@ -187,25 +170,12 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
         getPatronInfo(patronItem.getBarcode());
     }
     
-    
-    @BindingAdapter(value = {"overDueCount"})
-    public static void setOverdueCount(@NonNull TextView textView, @NonNull PatronInfo patronInfo) {
-        int overDueCount = 0;
-        if (patronInfo != null) {
-            for (AssetCheckOut assetCheckOut : patronInfo.getAssetCheckOuts()) {
-                if (assetCheckOut.getOverDue()) {
-                    overDueCount++;
-                }
-            }
-            for (Checkout checkout : patronInfo.getCheckouts()) {
-                if (checkout.getOverDue()) {
-                    overDueCount++;
-                }
-            }
-        }
-       
-        textView.setText(String.valueOf(overDueCount));
+    private void setListener() {
+
+        mBinding.patronEntryIncludeLayout.patronGoBtn.setOnClickListener(this);
+        mBinding.itemRelativeLayout.setOnClickListener(this);
+        mBinding.closeBtn.setOnClickListener(this);
+        mBinding.holdRelativeLayout.setOnClickListener(this);
+        mBinding.fineRelativeLayout.setOnClickListener(this);
     }
-
-
 }

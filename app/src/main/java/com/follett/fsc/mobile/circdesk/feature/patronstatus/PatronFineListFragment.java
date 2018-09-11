@@ -24,17 +24,13 @@ import android.view.View;
 
 
 import static com.follett.fsc.mobile.circdesk.utils.AppConstants.PATRON_INFO_KEY;
-import static com.follett.fsc.mobile.circdesk.utils.AppConstants.PATRON_TITLE_KEY;
 
 public class PatronFineListFragment extends BaseFragment<FragmentPatronListBinding, PatronListViewModel> implements CTAButtonListener {
     
     private static final String TAG = PatronFineListFragment.class.getSimpleName();
-    
-    private PatronListViewModel mViewModel;
-    
+
     private NavigationListener navigationListener;
-    
-    
+
     public static PatronFineListFragment newInstance(PatronInfo patronInfo) {
         Bundle args = new Bundle();
         args.putParcelable(PATRON_INFO_KEY, patronInfo);
@@ -60,8 +56,7 @@ public class PatronFineListFragment extends BaseFragment<FragmentPatronListBindi
     
     @Override
     public PatronListViewModel getViewModel() {
-        mViewModel = new PatronListViewModel(getBaseActivity().getApplication());
-        return mViewModel;
+        return new PatronListViewModel(getBaseActivity().getApplication());
     }
     
     @Override
@@ -82,7 +77,7 @@ public class PatronFineListFragment extends BaseFragment<FragmentPatronListBindi
         final Bundle arguments = getArguments();
         if (arguments != null) {
             PatronInfo patronInfo = arguments.getParcelable(PATRON_INFO_KEY);
-            PatronFineListAdapter adapter = new PatronFineListAdapter(getBaseActivity(),patronInfo.getFines());
+            PatronFineListAdapter adapter = new PatronFineListAdapter(getBaseActivity(), patronInfo.getFines());
             lBinding.patronListRecyclerview.setAdapter(adapter);
         }
     }

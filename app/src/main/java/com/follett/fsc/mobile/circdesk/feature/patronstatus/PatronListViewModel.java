@@ -17,7 +17,11 @@ import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 
 import android.app.Application;
 import android.arch.lifecycle.MutableLiveData;
+import android.databinding.BindingAdapter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +36,8 @@ public class PatronListViewModel extends BaseViewModel<CTAButtonListener> {
     public PatronListViewModel(Application application) {
         super(application);
     }
-
-    public void formCheckoutModel(final Bundle arguments) {
+    
+    public void createCheckoutModelData(final Bundle arguments) {
         if (arguments != null) {
             setIsLoding(true);
             PatronInfo patronInfo = arguments.getParcelable(PATRON_INFO_KEY);
@@ -46,15 +50,43 @@ public class PatronListViewModel extends BaseViewModel<CTAButtonListener> {
                 final List<Checkout> checkouts = patronInfo.getCheckouts();
                 final List<AssetCheckOut> assetsCheckouts = patronInfo.getAssetCheckOuts();
 
-                checkoutSize(checkouts, checkoutItemList);
-                assetsCheckoutSize(assetsCheckouts, checkoutItemList);
 
+                for (int i = 0; i < checkouts.size(); i++) {
+                    if (i == 0) {
+                        checkoutItemList.add(new CustomCheckoutItem(checkouts.get(i).getId(), getApplication().getString(R.string.library_title_label), checkouts.get(i)
+                                .getTitle(), checkouts.get(i)
+                                .getCopyBarcode(), checkouts.get(i)
+                                .getDueDate(), true, checkouts.get(i)
+                                .getOverDue()));
+                    } else {
+                        checkoutItemList.add(new CustomCheckoutItem(checkouts.get(i).getId(),null, checkouts.get(i)
+                                .getTitle(), checkouts.get(i)
+                                .getCopyBarcode(), checkouts.get(i)
+                                .getDueDate(), true, checkouts.get(i)
+                                .getOverDue()));
+                    }
+                }
 
+                for (int i = 0; i < assetsCheckouts.size(); i++) {
+                    if (i == 0) {
+                        checkoutItemList.add(new CustomCheckoutItem(assetsCheckouts.get(i).getId(), getApplication().getString(R.string.resource_item_label), assetsCheckouts.get(i)
+                                .getTitle(), assetsCheckouts.get(i)
+                                .getCopyBarcode(), assetsCheckouts.get(i)
+                                .getDueDate(), false, assetsCheckouts.get(i)
+                                .getOverDue()));
+                    } else {
+                        checkoutItemList.add(new CustomCheckoutItem(assetsCheckouts.get(i).getId(), null, assetsCheckouts.get(i)
+                                .getTitle(), assetsCheckouts.get(i)
+                                .getCopyBarcode(), assetsCheckouts.get(i)
+                                .getDueDate(), false, assetsCheckouts.get(i)
+                                .getOverDue()));
+                    }
+                }
             } else if (title.equalsIgnoreCase(getApplication().getString(R.string.on_hold_label))) {
                 final List<Hold> holdList = patronInfo.getHolds();
 
                 for (Hold hold : holdList) {
-                    checkoutItemList.add(new CustomCheckoutItem(null, hold.getTitle(), String.valueOf(hold.getBibID()), hold.getDateExpires(), true, false));
+                    checkoutItemList.add(new CustomCheckoutItem(hold.getBibID(), null, hold.getTitle(), String.valueOf(hold.getBibID()), hold.getDateExpires(), true, false));
                 }
             }
             setIsLoding(false);
@@ -62,41 +94,11 @@ public class PatronListViewModel extends BaseViewModel<CTAButtonListener> {
         }
     }
 
-    private void assetsCheckoutSize(List<AssetCheckOut> assetsCheckouts, List<CustomCheckoutItem> checkoutItemList) {
-
-        for (int i = 0; i < assetsCheckouts.size(); i++) {
-            if (i == 0) {
-                checkoutItemList.add(new CustomCheckoutItem(getApplication().getString(R.string.resource_item_label), assetsCheckouts.get(i)
-                        .getTitle(), assetsCheckouts.get(i)
-                        .getCopyBarcode(), assetsCheckouts.get(i)
-                        .getDueDate(), false, assetsCheckouts.get(i)
-                        .getOverDue()));
-            } else {
-                checkoutItemList.add(new CustomCheckoutItem(null, assetsCheckouts.get(i)
-                        .getTitle(), assetsCheckouts.get(i)
-                        .getCopyBarcode(), assetsCheckouts.get(i)
-                        .getDueDate(), false, assetsCheckouts.get(i)
-                        .getOverDue()));
-            }
-        }
-    }
-
-    private void checkoutSize(List<Checkout> checkouts, List<CustomCheckoutItem> checkoutItemList) {
-
-        for (int i = 0; i < checkouts.size(); i++) {
-            if (i == 0) {
-                checkoutItemList.add(new CustomCheckoutItem(getApplication().getString(R.string.library_title_label), checkouts.get(i)
-                        .getTitle(), checkouts.get(i)
-                        .getCopyBarcode(), checkouts.get(i)
-                        .getDueDate(), true, checkouts.get(i)
-                        .getOverDue()));
-            } else {
-                checkoutItemList.add(new CustomCheckoutItem(null, checkouts.get(i)
-                        .getTitle(), checkouts.get(i)
-                        .getCopyBarcode(), checkouts.get(i)
-                        .getDueDate(), true, checkouts.get(i)
-                        .getOverDue()));
-            }
+    @BindingAdapter(value = {"checkoutModel", "arrowIcon"})
+    public static void setArrowIcon(@NonNull TextView textView, CustomCheckoutItem checkoutItem, Drawable image) {
+        if (null != checkoutItem && null != image && checkoutItem.isArrow()) {
+            image.setBounds(0, 0, 0, 0);
+            textView.setCompoundDrawablesWithIntrinsicBounds(null, null, image, null);
         }
     }
 }

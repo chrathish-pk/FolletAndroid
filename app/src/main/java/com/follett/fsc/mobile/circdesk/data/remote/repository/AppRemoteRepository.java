@@ -6,8 +6,9 @@
 
 package com.follett.fsc.mobile.circdesk.data.remote.repository;
 
-import android.support.annotation.Nullable;
-
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppPrefHelper;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppPreferencesHelper;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.api.FollettAPIManager;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
@@ -16,13 +17,15 @@ import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.Checkout
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.ScanPatron;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.ItemDetails;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.DistrictList;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.SiteResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.Version;
-
-import java.util.Map;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 
+import android.support.annotation.Nullable;
+
+import java.util.Map;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -30,14 +33,17 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.SERVER_URI_VALUE;
+
 public class AppRemoteRepository {
 
     private APIInterface apiService;
 
-    public static final String BASE_URL = "https://devprodtest.follettdestiny.com";
+    private AppPrefHelper appPreferencesHelper;
 
-    public AppRemoteRepository() {
-        apiService = FollettAPIManager.getClient(BASE_URL)
+    public AppRemoteRepository(AppSharedPreferences appPref) {
+        appPreferencesHelper = new AppPreferencesHelper(appPref);
+        apiService = FollettAPIManager.getClient(getString(SERVER_URI_VALUE))
                 .create(APIInterface.class);
     }
 
@@ -62,7 +68,33 @@ public class AppRemoteRepository {
 
                     @Override
                     public void onComplete() {
-                        //onComplete
+                        // Do Nothing
+                    }
+                });
+    }
+
+    public void getDistrictList(@Nullable final NetworkInterface networkInterface) {
+        apiService.getDistrictList()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribeWith(new DisposableObserver<DistrictList>() {
+                    @Override
+                    public void onNext(DistrictList districtList) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallCompleted(districtList);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallFailed(throwable);
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        // Do Nothing
                     }
                 });
     }
@@ -88,7 +120,7 @@ public class AppRemoteRepository {
 
                     @Override
                     public void onComplete() {
-                        //onComplete
+                        // Do Nothing
                     }
                 });
     }
@@ -101,7 +133,7 @@ public class AppRemoteRepository {
                 .subscribeWith(new Observer<LoginResults>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        //onSubscribe
+                        // Do Nothing
                     }
 
                     @Override
@@ -120,7 +152,7 @@ public class AppRemoteRepository {
 
                     @Override
                     public void onComplete() {
-                        //onComplete
+                        //Do Nothing
                     }
                 });
     }
@@ -131,7 +163,7 @@ public class AppRemoteRepository {
                 .subscribeWith(new Observer<ScanPatron>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        //onSubscribe
+                        // Do Nothing
                     }
 
                     @Override
@@ -150,7 +182,7 @@ public class AppRemoteRepository {
 
                     @Override
                     public void onComplete() {
-                        //onComplete
+                        //Do Nothing
                     }
                 });
     }
@@ -161,7 +193,7 @@ public class AppRemoteRepository {
                 .subscribeWith(new Observer<CheckoutResult>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        //onSubscribe
+                        //Do Nothing
                     }
 
                     @Override
@@ -222,7 +254,7 @@ public class AppRemoteRepository {
                 .subscribeWith(new Observer<TitleDetails>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        //onSubscribe
+                        //Do Nothing
                     }
 
                     @Override
@@ -240,7 +272,7 @@ public class AppRemoteRepository {
                     }
                     @Override
                     public void onComplete() {
-                        //onComplete
+                        //Do Nothing
                     }
                 });
     }
@@ -251,7 +283,7 @@ public class AppRemoteRepository {
                .subscribeWith(new Observer<ItemDetails>() {
                    @Override
                    public void onSubscribe(Disposable d) {
-                       //onSubscribe
+                       //Do Nothing
 
                    }
 
@@ -272,7 +304,7 @@ public class AppRemoteRepository {
 
                    @Override
                    public void onComplete() {
-                       //onComplete
+                       //Do Nothing
                     }
                 });
     }
@@ -283,7 +315,7 @@ public class AppRemoteRepository {
                 .subscribeWith(new Observer<PatronInfo>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        //onSubscribe
+                        //Do Nothing
                     }
 
                     @Override
@@ -302,8 +334,41 @@ public class AppRemoteRepository {
 
                     @Override
                     public void onComplete() {
-                        //onComplete
+                        //Do Nothing
                     }
                 });
+    }
+
+
+    public void setString(String key, String value) {
+        appPreferencesHelper.setString(key, value);
+    }
+
+    public String getString(String key) {
+        return appPreferencesHelper.getString(key);
+    }
+
+    public void setInt(String key, int value) {
+        appPreferencesHelper.setInt(key, value);
+    }
+
+    public int getInt(String key) {
+        return appPreferencesHelper.getInt(key);
+    }
+
+    public void setBoolean(String key, Boolean value) {
+        appPreferencesHelper.setBoolean(key, value);
+    }
+
+    public Boolean getBoolean(String key) {
+        return appPreferencesHelper.getBoolean(key);
+    }
+
+    public void removeValues(String key) {
+        appPreferencesHelper.removeValues(key);
+    }
+
+    public void removeAllSession() {
+        appPreferencesHelper.removeAllSession();
     }
 }

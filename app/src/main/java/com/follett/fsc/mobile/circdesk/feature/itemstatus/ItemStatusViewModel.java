@@ -24,11 +24,11 @@ public class ItemStatusViewModel extends BaseViewModel implements NetworkInterfa
 
     private AppRemoteRepository mAppRemoteRepository;
 
-    public ItemStatusViewModel(Application application, AppRemoteRepository appRemoteRepository, UpdateItemUIListener updateItemUIListener) {
+    public ItemStatusViewModel(Application application, UpdateItemUIListener updateItemUIListener) {
         super(application);
         this.mApplication = application;
-        this.mAppRemoteRepository = appRemoteRepository;
         this.updateItemUIListener = updateItemUIListener;
+        this.mAppRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(application));
     }
 
 

@@ -63,7 +63,7 @@
                 android:layout_marginTop="2dp"
                 android:gravity="left"
                 android:fontFamily="@font/opensans_regular"
-                android:text="@{checkoutResult!=null ? checkoutResult.info.materialType : String.valueOf(checkinResult.info.materialType)}"
+                android:text="@{checkoutResult!=null ? checkoutResult.info.materialType : String.valueOf(safeUnbox(checkinResult.info.materialType))}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_16sp" />
 

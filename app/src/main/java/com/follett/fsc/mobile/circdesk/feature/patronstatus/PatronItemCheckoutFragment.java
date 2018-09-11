@@ -35,7 +35,7 @@ public class PatronItemCheckoutFragment extends BaseFragment<FragmentPatronListB
     
     private PatronListViewModel mViewModel;
     
-    private NavigationListener navigationListener;
+    private NavigationListener mNavigationListener;
     
     
     public static PatronItemCheckoutFragment newInstance(PatronInfo patronInfo, String title) {
@@ -51,7 +51,7 @@ public class PatronItemCheckoutFragment extends BaseFragment<FragmentPatronListB
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            navigationListener = (NavigationListener) context;
+            mNavigationListener = (NavigationListener) context;
         } catch (ClassCastException ex) {
             FollettLog.e(TAG, "ClassCastException");
         }
@@ -83,7 +83,7 @@ public class PatronItemCheckoutFragment extends BaseFragment<FragmentPatronListB
     public void inItView(final FragmentPatronListBinding lBinding) {
         
         lBinding.patronListRecyclerview.setLayoutManager(new LinearLayoutManager(getBaseActivity()));
-        mViewModel.formCheckoutModel(getArguments());
+        mViewModel.createCheckoutModelData(getArguments());
         
         mViewModel.checkoutLiveData.observe(this, new Observer<List<CustomCheckoutItem>>() {
             @Override
@@ -96,7 +96,7 @@ public class PatronItemCheckoutFragment extends BaseFragment<FragmentPatronListB
     
     @Override
     public void onDetach() {
-        navigationListener.setToolBarTitle(getActivity().getString(R.string.patron_status_label));
+        mNavigationListener.setToolBarTitle(getActivity().getString(R.string.patron_status_label));
         super.onDetach();
     }
     

@@ -7,16 +7,13 @@
 
 package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.Message;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class CheckoutResult implements Parcelable {
+public class CheckoutResult {
 
     @SerializedName("info")
     @Expose
@@ -39,40 +36,6 @@ public class CheckoutResult implements Parcelable {
     @SerializedName("success")
     @Expose
     private Boolean success;
-
-    protected CheckoutResult(Parcel in) {
-        info = in.readParcelable(CheckoutInfo.class.getClassLoader());
-        if (in.readByte() == 0) {
-            textbookCheckouts = null;
-        } else {
-            textbookCheckouts = in.readInt();
-        }
-        if (in.readByte() == 0) {
-            libraryCheckouts = null;
-        } else {
-            libraryCheckouts = in.readInt();
-        }
-        if (in.readByte() == 0) {
-            assetCheckouts = null;
-        } else {
-            assetCheckouts = in.readInt();
-        }
-        messages = in.createTypedArrayList(Message.CREATOR);
-        byte tmpSuccess = in.readByte();
-        success = tmpSuccess == 0 ? null : tmpSuccess == 1;
-    }
-
-    public static final Creator<CheckoutResult> CREATOR = new Creator<CheckoutResult>() {
-        @Override
-        public CheckoutResult createFromParcel(Parcel in) {
-            return new CheckoutResult(in);
-        }
-
-        @Override
-        public CheckoutResult[] newArray(int size) {
-            return new CheckoutResult[size];
-        }
-    };
 
     public CheckoutInfo getInfo() {
         return info;
@@ -130,34 +93,4 @@ public class CheckoutResult implements Parcelable {
         this.success = success;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(info, flags);
-        if (textbookCheckouts == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(textbookCheckouts);
-        }
-        if (libraryCheckouts == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(libraryCheckouts);
-        }
-        if (assetCheckouts == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(assetCheckouts);
-        }
-        dest.writeTypedList(messages);
-        if (success) dest.writeByte((byte) (success == null ? 0 : 1));
-        else dest.writeByte((byte) (success == null ? 0 : 2));
-    }
 }

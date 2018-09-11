@@ -1,5 +1,13 @@
 package com.follett.fsc.mobile.circdesk.feature.itemstatus;
 
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.databinding.FragmentItemStatusBinding;
+import com.follett.fsc.mobile.circdesk.feature.iteminfo.TitleInfoActivity;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
+import com.follett.fsc.mobile.circdesk.utils.FollettLog;
+
 import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
@@ -55,7 +63,8 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding,I
 
     @Override
     public ItemStatusViewModel getViewModel() {
-        itemStatusViewModel = new ItemStatusViewModel(getBaseActivity().getApplication(), new AppRemoteRepository(), this);
+        itemStatusViewModel = new ItemStatusViewModel(getBaseActivity().getApplication()
+                , this);
         return itemStatusViewModel;
     }
 
@@ -178,6 +187,6 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding,I
 
     @Override
     public void updateUI(final Object itemDetails) {
-        //do nothing
+        //Do Nothing
     }
 }

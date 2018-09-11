@@ -30,11 +30,11 @@ public class AdditionalInfoViewModel extends BaseViewModel implements NetworkInt
     private Application mApplication;
     public final MutableLiveData<TitleDetails> mTitleDetails = new MutableLiveData<>();
 
-    public AdditionalInfoViewModel(@NonNull Application application, AppRemoteRepository appRemoteRepository, AdditionalInfoListener additionalInfoListener) {
+    public AdditionalInfoViewModel(@NonNull Application application, AdditionalInfoListener additionalInfoListener) {
         super(application);
-        mAppRemoteRepository = appRemoteRepository;
         this.additionalInfoListener = additionalInfoListener;
         this.mApplication = application;
+        mAppRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(application));
     }
 
     public void getTitleDetails(String bibID) {

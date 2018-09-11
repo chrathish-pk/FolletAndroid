@@ -1,3 +1,4 @@
+
 /*
  *
  *  * Copyright (c) 2018 Follett. All rights reserved.
@@ -16,9 +17,9 @@ import android.arch.lifecycle.MutableLiveData;
 import java.util.List;
 
 public class PatronFineListViewModel extends BaseViewModel<CTAButtonListener> {
-    
+
     public final MutableLiveData<List<Fine>> fineLiveData = new MutableLiveData<>();
-    
+
     public PatronFineListViewModel(Application application) {
         super(application);
     }

@@ -32,11 +32,12 @@ public class CheckinViewModel extends BaseViewModel implements NetworkInterface 
     private UpdateUIListener updateUIListener;
     private AppRemoteRepository mAppRemoteRepository;
 
-    public CheckinViewModel(Application application, AppRemoteRepository appRemoteRepository, UpdateUIListener updateUIListener) {
+    public CheckinViewModel(Application application, UpdateUIListener updateUIListener) {
         super(application);
         this.mApplication = application;
-        this.mAppRemoteRepository = appRemoteRepository;
         this.updateUIListener = updateUIListener;
+        this.mAppRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(application));
+
     }
 
     public void getCheckinData(String checkinBarcode, String collectionType, boolean isLibraryUse) {
@@ -48,8 +49,10 @@ public class CheckinViewModel extends BaseViewModel implements NetworkInterface 
         map.put("text/xml", "gzip");
 
         mAppRemoteRepository.getCheckinResult(map, this,AppSharedPreferences.getInstance(getApplication())
-                .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance(getApplication())
-                .getString(KEY_SITE_SHORT_NAME),checkinBarcode, collectionType, isLibraryUse);
+                        .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance(getApplication())
+                        .getString(KEY_SITE_SHORT_NAME),
+                checkinBarcode, collectionType, isLibraryUse);
+
     }
 
 

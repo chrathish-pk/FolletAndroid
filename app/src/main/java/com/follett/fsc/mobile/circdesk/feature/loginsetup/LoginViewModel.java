@@ -25,10 +25,11 @@ public class LoginViewModel extends BaseViewModel<CTAButtonListener> implements 
 
     private AppRemoteRepository mAppRemoteRepository;
     
-    public LoginViewModel(@NonNull Application application, AppRemoteRepository appRemoteRepository) {
+    public LoginViewModel(@NonNull Application application) {
         super(application);
         mApplication = application;
-        mAppRemoteRepository = appRemoteRepository;
+        mAppRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(getApplication()));
+        ;
     }
     
     
@@ -51,6 +52,8 @@ public class LoginViewModel extends BaseViewModel<CTAButtonListener> implements 
                 AppSharedPreferences.getInstance(mApplication)
                         .setString(KEY_SESSION_ID, loginResults.getSessionID());
                 setStatus(Status.SUCCESS);
+            } else {
+                setStatus(Status.ERROR);
             }
         } catch (Exception e) {
             FollettLog.d("Exception", e.getMessage());

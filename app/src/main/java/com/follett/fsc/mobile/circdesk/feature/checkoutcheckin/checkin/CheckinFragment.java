@@ -37,7 +37,8 @@ public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, Checki
 
     @Override
     public CheckinViewModel getViewModel() {
-        checkinViewModel = new CheckinViewModel(getBaseActivity().getApplication(), new AppRemoteRepository(), this);
+        checkinViewModel = new CheckinViewModel(getBaseActivity().getApplication()
+                , this);
         return null;
     }
 

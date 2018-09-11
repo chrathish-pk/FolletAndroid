@@ -7,14 +7,15 @@
 
 package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout;
 
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.Message;
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.Message;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
-public class ScanPatron implements Parcelable {
+public class ScanPatron implements Parcelable{
 
     @SerializedName("assetCheckouts")
     @Expose
@@ -82,6 +83,7 @@ public class ScanPatron implements Parcelable {
 
     private boolean isLibrarySelected;
 
+
     protected ScanPatron(Parcel in) {
         assetCheckouts = in.readString();
         assetOverdues = in.readString();
@@ -103,6 +105,7 @@ public class ScanPatron implements Parcelable {
         patronType = in.readString();
         isLibrarySelected = in.readByte() != 0;
     }
+
 
     public static final Creator<ScanPatron> CREATOR = new Creator<ScanPatron>() {
         @Override
@@ -281,7 +284,6 @@ public class ScanPatron implements Parcelable {
         dest.writeString(libraryOverdues);
         dest.writeTypedList(messages);
         dest.writeTypedList(patronList);
-        dest.writeTypedList(patronNotes);
         dest.writeString(success);
         dest.writeString(textbookCheckouts);
         dest.writeString(textbookOverdues);
