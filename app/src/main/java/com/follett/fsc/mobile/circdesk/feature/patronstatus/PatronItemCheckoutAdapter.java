@@ -58,13 +58,15 @@ public class PatronItemCheckoutAdapter extends RecyclerView.Adapter<PatronItemCh
         public PatronItemCheckoutViewHolder(PatronCheckoutItemBinding listItemBinding) {
             super(listItemBinding.getRoot());
             binding = listItemBinding;
-//            binding.patronLayout.setOnClickListener(this);
+            binding.itemCheckoutContainer.setOnClickListener(this);
         }
-        
+    
         @Override
         public void onClick(View view) {
-            int position = getAdapterPosition();
-            mNavigationListener.onNavigation(mCheckoutItemList.get(position), 1);
+            CustomCheckoutItem item = mCheckoutItemList.get(getAdapterPosition());
+            if (item.isArrow()) {
+                mNavigationListener.onNavigation(item, 5);
+            }
         }
     }
 }

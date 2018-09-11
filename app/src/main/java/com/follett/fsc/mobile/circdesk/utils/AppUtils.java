@@ -7,13 +7,12 @@ package com.follett.fsc.mobile.circdesk.utils;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.AlertDialogListener;
 import com.follett.fsc.mobile.circdesk.app.CustomAlert;
 import com.follett.fsc.mobile.circdesk.app.GlideApp;
-import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -22,7 +21,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.databinding.BindingAdapter;
 import android.graphics.drawable.Drawable;
-import android.support.graphics.drawable.VectorDrawableCompat;
 import android.text.TextUtils;
 import android.view.ContextThemeWrapper;
 import android.view.View;
@@ -31,18 +29,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.CustomAlert;
-import com.follett.fsc.mobile.circdesk.app.GlideApp;
-import com.follett.fsc.mobile.circdesk.app.base.AlertDialogListener;
-import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.SERVER_URI_VALUE;
 
 public class AppUtils {
 
@@ -190,6 +179,7 @@ public class AppUtils {
     @BindingAdapter({"bind:imageUrl"})
     public static void loadImage(ImageView view, String imageUrl) {
         Context context = view.getContext();
+        AppRemoteRepository appRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(context));
         if (context != null) {
             RequestOptions requestOptions = new RequestOptions()
                     .fitCenter()
@@ -198,7 +188,8 @@ public class AppUtils {
 
             GlideApp.with(context)
                     .setDefaultRequestOptions(requestOptions)
-                    .load(AppRemoteRepository.BASE_URL + imageUrl + "?contextName=dvpdt_devprodtest")
+                    .load(appRemoteRepository
+                            + imageUrl + "?contextName=dvpdt_devprodtest")
                     .into(view);
 
         }
@@ -208,6 +199,7 @@ public class AppUtils {
     public static void loadItemImage(ImageView view, String imageUrl) {
         Context context = view.getContext();
         if (context != null) {
+            AppRemoteRepository appRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(context));
             RequestOptions requestOptions = new RequestOptions()
                     .fitCenter()
                     .placeholder(R.drawable.inventory);
@@ -215,7 +207,7 @@ public class AppUtils {
 
             GlideApp.with(context)
                     .setDefaultRequestOptions(requestOptions)
-                    .load(AppRemoteRepository.BASE_URL + imageUrl)
+                    .load(appRemoteRepository.getString(SERVER_URI_VALUE) + imageUrl)
                     .into(view);
 
         }

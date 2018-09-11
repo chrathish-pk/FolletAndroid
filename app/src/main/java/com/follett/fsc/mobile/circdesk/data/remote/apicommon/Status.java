@@ -11,5 +11,6 @@ public enum Status {
     SUCCESS,
     ERROR,
     NO_NETWORK,
-    SCHOOL_NOT_SETUP_ERROR
+    SCHOOL_NOT_SETUP_ERROR,
+    NO_LIST_FOUND
 }

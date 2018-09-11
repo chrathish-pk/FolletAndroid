@@ -27,11 +27,11 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
     private UpdateUIListener updateUIListener;
     private AppRemoteRepository mAppRemoteRepository;
 
-    public CheckoutViewModel(@NonNull Application application, AppRemoteRepository appRemoteRepository, UpdateUIListener updateUIListener) {
+    public CheckoutViewModel(@NonNull Application application, UpdateUIListener updateUIListener) {
         super(application);
         this.mApplication = application;
-        this.mAppRemoteRepository = appRemoteRepository;
         this.updateUIListener = updateUIListener;
+        this.mAppRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(application));
     }
 
     public void getScanPatron(String patronBarcodeID) {
