@@ -7,10 +7,13 @@
 
 package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Message {
+public class Message implements Parcelable {
 
     @SerializedName("message")
     @Expose
@@ -18,6 +21,27 @@ public class Message {
     @SerializedName("code")
     @Expose
     private Integer code;
+
+    protected Message(Parcel in) {
+        message = in.readString();
+        if (in.readByte() == 0) {
+            code = null;
+        } else {
+            code = in.readInt();
+        }
+    }
+
+    public static final Creator<Message> CREATOR = new Creator<Message>() {
+        @Override
+        public Message createFromParcel(Parcel in) {
+            return new Message(in);
+        }
+
+        @Override
+        public Message[] newArray(int size) {
+            return new Message[size];
+        }
+    };
 
     public String getMessage() {
         return message;
@@ -35,4 +59,19 @@ public class Message {
         this.code = code;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(message);
+        if (code == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(code);
+        }
+    }
 }

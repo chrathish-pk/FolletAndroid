@@ -11,14 +11,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
-
 import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityHomeBinding;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.CheckinCheckoutActivity;
-import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
-import com.follett.fsc.mobile.circdesk.feature.iteminfo.TitleInfoActivity;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.ItemStatusActivity;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.PatronStatusActivity;
+import com.follett.fsc.mobile.circdesk.utils.SpacesItemDecoration;
 
 
 public class HomeActivity extends BaseActivity<HomeViewModel> {
@@ -38,6 +37,9 @@ public class HomeActivity extends BaseActivity<HomeViewModel> {
         homeViewModel.loadHomeMenuItems(this);
 
         activityHomeBinding.menuRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
+        activityHomeBinding.menuRecyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+
         homeMenuAdapter = new HomeMenuAdapter(this, homeViewModel);
         activityHomeBinding.menuRecyclerView.setAdapter(homeMenuAdapter);
 
@@ -48,6 +50,9 @@ public class HomeActivity extends BaseActivity<HomeViewModel> {
                     startActivity(new Intent(HomeActivity.this, CheckinCheckoutActivity.class));
                 } else if (s.equalsIgnoreCase(getString(R.string.patronStatus))) {
                     startActivity(new Intent(HomeActivity.this, PatronStatusActivity.class));
+                }
+                else if (s.equalsIgnoreCase(getString(R.string.item_status_title))) {
+                    startActivity(new Intent(HomeActivity.this, ItemStatusActivity.class));
                 }
             }
         });

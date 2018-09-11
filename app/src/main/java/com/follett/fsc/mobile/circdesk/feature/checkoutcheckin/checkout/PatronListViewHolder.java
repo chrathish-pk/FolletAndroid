@@ -4,7 +4,7 @@
  *
  */
 
-package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin;
+package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout;
 
 import android.support.v7.widget.RecyclerView;
 

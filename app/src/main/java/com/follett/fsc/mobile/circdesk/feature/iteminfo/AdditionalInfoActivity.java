@@ -42,12 +42,9 @@ public class AdditionalInfoActivity extends BaseActivity<AdditionalInfoViewModel
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.backBtn:
-                finish();
-                break;
-            default:
-                break;
+        if (v.getId() == R.id.backBtn) {
+            finish();
         }
+
     }
 }

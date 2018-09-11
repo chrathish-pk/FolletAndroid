@@ -16,13 +16,9 @@
 
 
     </data>
-
-
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
@@ -272,7 +268,12 @@
                     android:textSize="@dimen/text_size_16sp" />
             </LinearLayout>
         </LinearLayout>
-
+        <android.support.v4.widget.ContentLoadingProgressBar
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="@{checkoutViewModel.isLoading ? View.VISIBLE : View.GONE}" />
 
 
     </android.support.constraint.ConstraintLayout>

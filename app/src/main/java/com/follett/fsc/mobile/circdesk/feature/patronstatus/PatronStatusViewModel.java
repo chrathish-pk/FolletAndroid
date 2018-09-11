@@ -7,22 +7,18 @@
 package com.follett.fsc.mobile.circdesk.feature.patronstatus;
 
 import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.SingleLiveEvent;
+import android.app.Application;
+import android.arch.lifecycle.MutableLiveData;
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
+
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.CheckoutResult;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.Patron;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.UpdateUIListener;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
-import android.app.Application;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.support.annotation.NonNull;
-import android.text.TextUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -63,7 +59,7 @@ public class PatronStatusViewModel extends BaseViewModel implements NetworkInter
     
     
     public void getScanPatron(String patronBarcodeID) {
-    
+        //getScanPatron
     }
     
     @Override
@@ -72,23 +68,9 @@ public class PatronStatusViewModel extends BaseViewModel implements NetworkInter
         try {
             if (model instanceof PatronInfo) {
                 mPatronInfo.postValue((PatronInfo) model);
-//                ScanPatron scanPatron = (ScanPatron) model;
-//                String selectedPatronID = AppSharedPreferences.getInstance(mApplication)
-//                        .getString(AppSharedPreferences.KEY_SELECTED_BARCODE);
-//                if (!TextUtils.isEmpty(selectedPatronID)) {
-//                    AppSharedPreferences.getInstance(mApplication)
-//                            .setString(AppSharedPreferences.KEY_BARCODE, selectedPatronID);
-//                    AppSharedPreferences.getInstance(mApplication)
-//                            .setString(AppSharedPreferences.KEY_PATRON_ID, scanPatron.getPatronID());
-//                    AppSharedPreferences.getInstance(mApplication)
-//                            .setString(AppSharedPreferences.KEY_SELECTED_BARCODE, null);
-//                }
-//                updateUIListener.updateUI(scanPatron);
+
             }
-//            else if (model instanceof CheckoutResult) {
-//                CheckoutResult checkoutResult = (CheckoutResult) model;
-//                updateUIListener.updateUI(checkoutResult);
-//            }
+
         } catch (Exception e) {
             FollettLog.d("Exception", e.getMessage());
         }

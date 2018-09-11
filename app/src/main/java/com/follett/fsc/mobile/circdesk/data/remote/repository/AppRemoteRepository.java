@@ -11,8 +11,9 @@ import android.support.annotation.Nullable;
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.api.FollettAPIManager;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.CheckoutResult;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.ScanPatron;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin.CheckinResult;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.CheckoutResult;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.ScanPatron;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.ItemDetails;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginResults;
@@ -61,6 +62,7 @@ public class AppRemoteRepository {
 
                     @Override
                     public void onComplete() {
+                        //onComplete
                     }
                 });
     }
@@ -86,6 +88,7 @@ public class AppRemoteRepository {
 
                     @Override
                     public void onComplete() {
+                        //onComplete
                     }
                 });
     }
@@ -98,6 +101,7 @@ public class AppRemoteRepository {
                 .subscribeWith(new Observer<LoginResults>() {
                     @Override
                     public void onSubscribe(Disposable d) {
+                        //onSubscribe
                     }
 
                     @Override
@@ -116,17 +120,18 @@ public class AppRemoteRepository {
 
                     @Override
                     public void onComplete() {
+                        //onComplete
                     }
                 });
     }
 
-    public void getScanPatron(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String patronBarcodeID) {
-        apiService.getScanPatron(headers, "dvpdt_devprodtest", "FDPSA", "COGNITE", patronBarcodeID, "DestinyCirc", "Android_24_7.0_lge_lucye_LG-H870DS", "1_Android",
+    public void getScanPatron(Map<String, String> headers, @Nullable final NetworkInterface networkInterface,String contextName, String site, String patronBarcodeID) {
+        apiService.getScanPatron(headers, contextName, site, "COGNITE", patronBarcodeID, "DestinyCirc", "Android_24_7.0_lge_lucye_LG-H870DS", "1_Android",
                 "English")
                 .subscribeWith(new Observer<ScanPatron>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        //onSubscribe
                     }
 
                     @Override
@@ -145,17 +150,18 @@ public class AppRemoteRepository {
 
                     @Override
                     public void onComplete() {
+                        //onComplete
                     }
                 });
     }
 
-    public void getCheckoutResult(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String patronID, String barcode) {
+    public void getCheckoutResult(Map<String, String> headers, @Nullable final NetworkInterface networkInterface,String contextName, String site, String patronID, String barcode, String collectionType) {
 
-        apiService.getCheckoutResult(headers, "dvpdt_devprodtest", "FDPSA", barcode, patronID, "0", "false")
+        apiService.getCheckoutResult(headers, contextName, site, barcode, patronID, collectionType, "false")
                 .subscribeWith(new Observer<CheckoutResult>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        //onSubscribe
                     }
 
                     @Override
@@ -174,16 +180,49 @@ public class AppRemoteRepository {
 
                     @Override
                     public void onComplete() {
+                        //onComplete
                     }
                 });
     }
 
-    public void getTitleDetails(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String bibID) {
-        apiService.getTitleDetails(headers, "dvpdt_devprodtest", "FDPSA", bibID)
+    public void getCheckinResult(Map<String, String> headers, @Nullable final NetworkInterface networkInterface,String contextName, String site, String barcode, String collectionType, boolean isLibraryUse) {
+
+        apiService.getCheckinResult(headers, contextName, site, barcode, collectionType, String.valueOf(isLibraryUse))
+                .subscribeWith(new Observer<CheckinResult>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        //onSubscribe
+
+                    }
+
+                    @Override
+                    public void onNext(CheckinResult checkinResult) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallCompleted(checkinResult);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallFailed(throwable);
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        //onComplete
+
+                    }
+                });
+    }
+
+    public void getTitleDetails(Map<String, String> headers, @Nullable final NetworkInterface networkInterface,String contextName, String site, String bibID) {
+        apiService.getTitleDetails(headers, contextName, site, bibID)
                 .subscribeWith(new Observer<TitleDetails>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        //onSubscribe
                     }
 
                     @Override
@@ -199,20 +238,20 @@ public class AppRemoteRepository {
                             networkInterface.onCallFailed(throwable);
                         }
                     }
-
                     @Override
                     public void onComplete() {
-
+                        //onComplete
                     }
                 });
     }
 
-    public void getItemStatus(Map<String, String> headers,@Nullable final NetworkInterface networkInterface,String itemBarcodeID) {
+    public void getItemStatus(Map<String, String> headers,@Nullable final NetworkInterface networkInterface,String contextName, String site,String itemBarcodeID,String collectionType) {
 
-        apiService.getScanItem("dvpdt_devprodtest","FDPSA",itemBarcodeID,"0")
+        apiService.getScanItem(contextName,site,itemBarcodeID,collectionType)
                .subscribeWith(new Observer<ItemDetails>() {
                    @Override
                    public void onSubscribe(Disposable d) {
+                       //onSubscribe
 
                    }
 
@@ -233,7 +272,7 @@ public class AppRemoteRepository {
 
                    @Override
                    public void onComplete() {
-
+                       //onComplete
                     }
                 });
     }
@@ -244,6 +283,7 @@ public class AppRemoteRepository {
                 .subscribeWith(new Observer<PatronInfo>() {
                     @Override
                     public void onSubscribe(Disposable d) {
+                        //onSubscribe
                     }
 
                     @Override
@@ -262,6 +302,7 @@ public class AppRemoteRepository {
 
                     @Override
                     public void onComplete() {
+                        //onComplete
                     }
                 });
     }

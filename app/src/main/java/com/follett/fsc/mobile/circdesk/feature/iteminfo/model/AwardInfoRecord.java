@@ -4,18 +4,16 @@ package com.follett.fsc.mobile.circdesk.feature.iteminfo.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class AwardInfoRecord implements Parcelable
-{
+public class AwardInfoRecord implements Parcelable {
 
     @SerializedName("awardList")
     @Expose
     private List<Object> awardList = null;
-    private final static long serialVersionUID = -8656971996702398491L;
 
     protected AwardInfoRecord(Parcel in) {
     }
@@ -47,5 +45,6 @@ public class AwardInfoRecord implements Parcelable
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        //do nothing
     }
 }

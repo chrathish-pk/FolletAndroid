@@ -3,8 +3,6 @@ package com.follett.fsc.mobile.circdesk.feature.iteminfo.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -44,7 +42,6 @@ public class HoldInfoRecord implements Parcelable
     @SerializedName("dateExpires")
     @Expose
     private Object dateExpires;
-    private final static long serialVersionUID = 7869101393155848547L;
 
     protected HoldInfoRecord(Parcel in) {
         byte tmpCanPlaceHold = in.readByte();
@@ -163,7 +160,8 @@ public class HoldInfoRecord implements Parcelable
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeByte((byte) (canPlaceHold == null ? 0 : canPlaceHold ? 1 : 2));
+        if (canPlaceHold) dest.writeByte((byte) (canPlaceHold == null ? 0 : 1));
+        else dest.writeByte((byte) (canPlaceHold == null ? 0 : 2));
         if (totalHoldableCopies == null) {
             dest.writeByte((byte) 0);
         } else {

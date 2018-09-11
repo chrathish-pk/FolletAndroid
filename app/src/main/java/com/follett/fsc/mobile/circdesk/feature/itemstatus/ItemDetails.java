@@ -4,12 +4,11 @@ package com.follett.fsc.mobile.circdesk.feature.itemstatus;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
-import java.util.List;
-
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.Note;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.Note;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class ItemDetails implements Parcelable
 {
@@ -65,7 +64,6 @@ public class ItemDetails implements Parcelable
     @SerializedName("coverImage")
     @Expose
     private Object coverImage;
-    private final static long serialVersionUID = -2194385777627677709L;
 
     protected ItemDetails(Parcel in) {
         location = in.readString();
@@ -245,7 +243,8 @@ public class ItemDetails implements Parcelable
             dest.writeInt(bibID);
         }
         dest.writeString(author);
-        dest.writeByte((byte) (success == null ? 0 : success ? 1 : 2));
+        if (success) dest.writeByte((byte) (success == null ? 0 : 1));
+        else dest.writeByte((byte) (success == null ? 0 : 2));
         dest.writeString(barcode);
     }
 }

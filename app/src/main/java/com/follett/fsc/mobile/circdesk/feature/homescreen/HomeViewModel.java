@@ -39,7 +39,6 @@ public class HomeViewModel extends BaseViewModel<CTAButtonListener> {
         homeMenuItems.add(new HomeMenu(context.getString(R.string.patronStatus), R.drawable.patron));
         homeMenuItems.add(new HomeMenu(context.getString(R.string.itemStatus), R.drawable.status));
         homeMenuItems.add(new HomeMenu(context.getString(R.string.inventory), R.drawable.inventory));
-        //homeMenuItems.add(new HomeMenu(context.getString(R.string.receive), R.drawable.receive));
     }
 
 

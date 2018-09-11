@@ -4,7 +4,6 @@ package com.follett.fsc.mobile.circdesk.feature.iteminfo.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

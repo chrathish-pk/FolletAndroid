@@ -4,7 +4,6 @@ package com.follett.fsc.mobile.circdesk.feature.itemstatus;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -25,7 +24,6 @@ public class CurrentCheckout implements Parcelable
     @SerializedName("checkedOutToBarcode")
     @Expose
     private String checkedOutToBarcode;
-    private final static long serialVersionUID = -1287248026689003198L;
 
     protected CurrentCheckout(Parcel in) {
         dateDue = in.readString();

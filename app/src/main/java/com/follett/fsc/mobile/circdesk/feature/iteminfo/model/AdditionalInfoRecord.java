@@ -3,8 +3,6 @@ package com.follett.fsc.mobile.circdesk.feature.iteminfo.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -54,7 +52,6 @@ public class AdditionalInfoRecord implements Parcelable
     @SerializedName("issnList")
     @Expose
     private List<Object> issnList = null;
-    private final static long serialVersionUID = 1415353833980146989L;
 
     protected AdditionalInfoRecord(Parcel in) {
         format = in.readString();

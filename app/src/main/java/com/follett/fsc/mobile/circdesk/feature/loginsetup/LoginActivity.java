@@ -57,12 +57,13 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Navig
             
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-            
+                // do nothing
             }
             
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-            
+                // do nothing
+
             }
         });
         SiteViewPagerAdapter adapter = new SiteViewPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
@@ -117,7 +118,8 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Navig
     
     @Override
     public void onNavigation(Object model, int position) {
-    
+        // do nothing
+
     }
     
     

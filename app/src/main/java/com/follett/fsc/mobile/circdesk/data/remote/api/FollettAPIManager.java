@@ -28,6 +28,10 @@ public class FollettAPIManager {
     private static Retrofit retrofit = null;
     private static OkHttpClient okHttpClient;
 
+    private FollettAPIManager(){
+
+    }
+
     public static Retrofit getClient(String baseUrl) {
 
         if (okHttpClient == null) {

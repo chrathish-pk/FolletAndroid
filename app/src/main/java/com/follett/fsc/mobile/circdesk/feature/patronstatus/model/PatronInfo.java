@@ -168,7 +168,8 @@ public class PatronInfo implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
     
         parcel.writeTypedList(assetCheckOuts);
-        parcel.writeByte((byte) (success == null ? 0 : success ? 1 : 2));
+        if (success) parcel.writeByte((byte) (success == null ? 0 : 1));
+        else parcel.writeByte((byte) (success == null ? 0 : 2));
         parcel.writeString(barcode);
         parcel.writeString(fineTotalString);
         parcel.writeTypedList(fines);

@@ -26,67 +26,77 @@ import static com.follett.fsc.mobile.circdesk.utils.AppConstants.PATRON_INFO_KEY
 import static com.follett.fsc.mobile.circdesk.utils.AppConstants.PATRON_TITLE_KEY;
 
 public class PatronListViewModel extends BaseViewModel<CTAButtonListener> {
-    
+
     public final MutableLiveData<List<CustomCheckoutItem>> checkoutLiveData = new MutableLiveData<>();
-    
+
     public PatronListViewModel(Application application) {
         super(application);
     }
-    
+
     public void formCheckoutModel(final Bundle arguments) {
         if (arguments != null) {
             setIsLoding(true);
             PatronInfo patronInfo = arguments.getParcelable(PATRON_INFO_KEY);
             String title = arguments.getString(PATRON_TITLE_KEY);
-            
-            
+
+
             List<CustomCheckoutItem> checkoutItemList = new ArrayList<>();
-            
+
             if (title.equalsIgnoreCase(getApplication().getString(R.string.item_checkout_label))) {
                 final List<Checkout> checkouts = patronInfo.getCheckouts();
                 final List<AssetCheckOut> assetsCheckouts = patronInfo.getAssetCheckOuts();
-                
-                
-                for (int i = 0; i < checkouts.size(); i++) {
-                    if (i == 0) {
-                        checkoutItemList.add(new CustomCheckoutItem(getApplication().getString(R.string.library_title_label), checkouts.get(i)
-                                .getTitle(), checkouts.get(i)
-                                .getCopyBarcode(), checkouts.get(i)
-                                .getDueDate(), true, checkouts.get(i)
-                                .getOverDue()));
-                    } else {
-                        checkoutItemList.add(new CustomCheckoutItem(null, checkouts.get(i)
-                                .getTitle(), checkouts.get(i)
-                                .getCopyBarcode(), checkouts.get(i)
-                                .getDueDate(), true, checkouts.get(i)
-                                .getOverDue()));
-                    }
-                }
-                
-                for (int i = 0; i < assetsCheckouts.size(); i++) {
-                    if (i == 0) {
-                        checkoutItemList.add(new CustomCheckoutItem(getApplication().getString(R.string.resource_item_label), assetsCheckouts.get(i)
-                                .getTitle(), assetsCheckouts.get(i)
-                                .getCopyBarcode(), assetsCheckouts.get(i)
-                                .getDueDate(), false, assetsCheckouts.get(i)
-                                .getOverDue()));
-                    } else {
-                        checkoutItemList.add(new CustomCheckoutItem(null, assetsCheckouts.get(i)
-                                .getTitle(), assetsCheckouts.get(i)
-                                .getCopyBarcode(), assetsCheckouts.get(i)
-                                .getDueDate(), false, assetsCheckouts.get(i)
-                                .getOverDue()));
-                    }
-                }
+
+                checkoutSize(checkouts, checkoutItemList);
+                assetsCheckoutSize(assetsCheckouts, checkoutItemList);
+
+
             } else if (title.equalsIgnoreCase(getApplication().getString(R.string.on_hold_label))) {
                 final List<Hold> holdList = patronInfo.getHolds();
-                
+
                 for (Hold hold : holdList) {
                     checkoutItemList.add(new CustomCheckoutItem(null, hold.getTitle(), String.valueOf(hold.getBibID()), hold.getDateExpires(), true, false));
                 }
             }
             setIsLoding(false);
             checkoutLiveData.postValue(checkoutItemList);
+        }
+    }
+
+    private void assetsCheckoutSize(List<AssetCheckOut> assetsCheckouts, List<CustomCheckoutItem> checkoutItemList) {
+
+        for (int i = 0; i < assetsCheckouts.size(); i++) {
+            if (i == 0) {
+                checkoutItemList.add(new CustomCheckoutItem(getApplication().getString(R.string.resource_item_label), assetsCheckouts.get(i)
+                        .getTitle(), assetsCheckouts.get(i)
+                        .getCopyBarcode(), assetsCheckouts.get(i)
+                        .getDueDate(), false, assetsCheckouts.get(i)
+                        .getOverDue()));
+            } else {
+                checkoutItemList.add(new CustomCheckoutItem(null, assetsCheckouts.get(i)
+                        .getTitle(), assetsCheckouts.get(i)
+                        .getCopyBarcode(), assetsCheckouts.get(i)
+                        .getDueDate(), false, assetsCheckouts.get(i)
+                        .getOverDue()));
+            }
+        }
+    }
+
+    private void checkoutSize(List<Checkout> checkouts, List<CustomCheckoutItem> checkoutItemList) {
+
+        for (int i = 0; i < checkouts.size(); i++) {
+            if (i == 0) {
+                checkoutItemList.add(new CustomCheckoutItem(getApplication().getString(R.string.library_title_label), checkouts.get(i)
+                        .getTitle(), checkouts.get(i)
+                        .getCopyBarcode(), checkouts.get(i)
+                        .getDueDate(), true, checkouts.get(i)
+                        .getOverDue()));
+            } else {
+                checkoutItemList.add(new CustomCheckoutItem(null, checkouts.get(i)
+                        .getTitle(), checkouts.get(i)
+                        .getCopyBarcode(), checkouts.get(i)
+                        .getDueDate(), true, checkouts.get(i)
+                        .getOverDue()));
+            }
         }
     }
 }

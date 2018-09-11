@@ -4,7 +4,6 @@ package com.follett.fsc.mobile.circdesk.feature.iteminfo.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -24,7 +23,6 @@ public class ReviewInfoRecord implements Parcelable
     @SerializedName("reviewList")
     @Expose
     private List<Object> reviewList = null;
-    private final static long serialVersionUID = 2382812993672654714L;
 
     protected ReviewInfoRecord(Parcel in) {
         byte tmpAlreadyReviewedByUser = in.readByte();
@@ -85,8 +83,10 @@ public class ReviewInfoRecord implements Parcelable
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeByte((byte) (alreadyReviewedByUser == null ? 0 : alreadyReviewedByUser ? 1 : 2));
+        if (alreadyReviewedByUser) dest.writeByte((byte) (alreadyReviewedByUser == null ? 0 : 1));
+        else dest.writeByte((byte) (alreadyReviewedByUser == null ? 0 : 2));
         dest.writeString(reviewAverage);
-        dest.writeByte((byte) (myRatingApproved == null ? 0 : myRatingApproved ? 1 : 2));
+        if (myRatingApproved) dest.writeByte((byte) (myRatingApproved == null ? 0 : 1));
+        else dest.writeByte((byte) (myRatingApproved == null ? 0 : 2));
     }
 }

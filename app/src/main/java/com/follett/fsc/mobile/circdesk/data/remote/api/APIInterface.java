@@ -7,8 +7,9 @@
 package com.follett.fsc.mobile.circdesk.data.remote.api;
 
 
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.CheckoutResult;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.ScanPatron;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin.CheckinResult;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.CheckoutResult;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.ScanPatron;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.ItemDetails;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginResults;
@@ -16,10 +17,8 @@ import com.follett.fsc.mobile.circdesk.feature.loginsetup.SiteResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.Version;
 
 import java.util.Map;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.CheckoutResult;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -83,5 +82,12 @@ public interface APIInterface {
     @GET("rest/v4/circulation/patronstatus")
     Observable<PatronInfo> getPatronStatus(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site,
             @Query("barcode") String barcode);
+
+
+    @GET("rest/v4/circulation/checkin")
+    Observable<CheckinResult> getCheckinResult(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site,
+                                               @Query("barcode") String barcode, @Query("collectionType") String collectionType,
+                                               @Query("inLibraryUse") String inLibraryUse);
+
 
 }

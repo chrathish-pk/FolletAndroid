@@ -7,9 +7,7 @@ package com.follett.fsc.mobile.circdesk.feature.patronstatus;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
-import com.follett.fsc.mobile.circdesk.databinding.ActivityCommonBinding;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.SchoolListFragment;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronList;
 
@@ -49,6 +47,7 @@ public class PatronStatusActivity extends BaseActivity<PatronStatusViewModel> im
     
     @Override
     public void onNavigation(int position) {
+        //onNavigation
     }
     
     @Override
@@ -120,16 +119,7 @@ public class PatronStatusActivity extends BaseActivity<PatronStatusViewModel> im
         }
         fragmentTransaction.commit();
     }
-    
-//    @Override
-//    public void onNavigation(int position) {
-//        if (position == 0) { // Navigate to School list
-//            navigateToSchoolList(true);
-//        } else if (position == 1) { // Navigate to Login
-//            navigateToLogin(true);
-//        } else if (position == 2) { // Navigate to Home Screen
-//            navigateToHome();
-//        }
-//    }
+
+
 }
 

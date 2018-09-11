@@ -6,9 +6,9 @@ package com.follett.fsc.mobile.circdesk.app;
 import android.app.Application;
 
 public class FollettApplication extends Application {
-    
+
     @Override
     public void onCreate() {
-        super.onCreate();
+      super.onCreate();
     }
 }

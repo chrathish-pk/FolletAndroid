@@ -9,9 +9,7 @@ import com.follett.fsc.mobile.circdesk.app.SingleLiveEvent;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.ViewModel;
 import android.databinding.ObservableBoolean;
-import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
 
 import java.lang.ref.WeakReference;
@@ -24,10 +22,6 @@ public abstract class BaseViewModel<N> extends AndroidViewModel {
     
     private final SingleLiveEvent<Status> mStatus = new SingleLiveEvent<>();
 
-//    public BaseViewModel() {
-//        setIsLoding(false);
-//    }
-    
     private WeakReference<N> mNavigator;
     
     public BaseViewModel(@NonNull Application application) {

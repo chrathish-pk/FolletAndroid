@@ -7,6 +7,9 @@ import android.util.Log;
 
 public class FollettLog {
 
+    private FollettLog() {
+    }
+
     /**
      * Send an ERROR log message.
      *

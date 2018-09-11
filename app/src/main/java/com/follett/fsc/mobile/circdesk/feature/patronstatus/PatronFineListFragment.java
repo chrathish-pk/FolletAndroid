@@ -11,13 +11,10 @@ import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentPatronListBinding;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginFragment;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.CustomCheckoutItem;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
-import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,7 +22,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
-import java.util.List;
 
 import static com.follett.fsc.mobile.circdesk.utils.AppConstants.PATRON_INFO_KEY;
 import static com.follett.fsc.mobile.circdesk.utils.AppConstants.PATRON_TITLE_KEY;
@@ -89,17 +85,6 @@ public class PatronFineListFragment extends BaseFragment<FragmentPatronListBindi
             PatronFineListAdapter adapter = new PatronFineListAdapter(getBaseActivity(),patronInfo.getFines());
             lBinding.patronListRecyclerview.setAdapter(adapter);
         }
-        
-        
-//        mViewModel.formCheckoutModel(getArguments());
-        
-//        mViewModel.fineLiveData.observe(this, new Observer<List<CustomCheckoutItem>>() {
-//            @Override
-//            public void onChanged(@Nullable List<CustomCheckoutItem> customCheckoutItems) {
-//                PatronItemCheckoutAdapter adapter = new PatronItemCheckoutAdapter(getBaseActivity(), customCheckoutItems);
-//                lBinding.patronListRecyclerview.setAdapter(adapter);
-//            }
-//        });
     }
     
     @Override

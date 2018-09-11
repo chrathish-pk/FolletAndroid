@@ -32,7 +32,7 @@ public class TitleInfoActivity extends BaseActivity<AdditionalInfoViewModel> imp
         setTitleBar(getString(R.string.titleDetails));
         setBackBtnVisible();
         baseBinding.backBtn.setOnClickListener(this);
-        AdditionalInfoViewModel additionalInfoViewModel = new AdditionalInfoViewModel(this.getApplication(), new AppRemoteRepository(), this);
+        additionalInfoViewModel = new AdditionalInfoViewModel(this.getApplication(), new AppRemoteRepository(), this);
 
         if (getIntent() != null) {
             String bibID = getIntent().getStringExtra("bibID");
@@ -65,7 +65,6 @@ public class TitleInfoActivity extends BaseActivity<AdditionalInfoViewModel> imp
             case R.id.additional_info_btn:
                 Intent moreDetailsIntent = new Intent(this, AdditionalInfoActivity.class);
                 moreDetailsIntent.putExtra("titleMoreDetails",additionalInfoDetails);
-                //moreDetailsIntent.putExtra("titleMoreDetails", additionalInfoDetails);
                 startActivity(moreDetailsIntent);
 
                 break;

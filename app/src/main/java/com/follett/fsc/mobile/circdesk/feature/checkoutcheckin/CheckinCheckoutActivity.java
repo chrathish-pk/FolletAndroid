@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
@@ -18,6 +19,8 @@ import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityCheckinCheckoutBinding;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin.CheckinFragment;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.CheckoutFragment;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewModel> implements View.OnClickListener {
@@ -47,15 +50,15 @@ public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewMod
 
     private void updateLibraryResourceBg() {
         if (AppSharedPreferences.getInstance(this).getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED)) {
-            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(getResources().getColor(R.color.blueLabel));
-            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(getResources().getColor(R.color.white));
-            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(getResources().getColor(R.color.white));
-            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(getResources().getColor(R.color.blueLabel));
+            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(this,R.color.blueLabel));
+            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(this,R.color.white));
+            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(this,R.color.white));
+            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(this,R.color.blueLabel));
         } else {
-            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(getResources().getColor(R.color.blueLabel));
-            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(getResources().getColor(R.color.white));
-            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(getResources().getColor(R.color.white));
-            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(getResources().getColor(R.color.blueLabel));
+            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(this,R.color.blueLabel));
+            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(this,R.color.white));
+            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(this,R.color.white));
+            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(this,R.color.blueLabel));
         }
     }
 
@@ -79,22 +82,31 @@ public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewMod
                 finish();
                 break;
             case R.id.libraryBtn:
-                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(getResources().getColor(R.color.blueLabel));
-                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(getResources().getColor(R.color.white));
-                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(getResources().getColor(R.color.white));
-                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(getResources().getColor(R.color.blueLabel));
+                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(this,R.color.blueLabel));
+                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(this,R.color.white));
+                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(this,R.color.white));
+                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(this,R.color.blueLabel));
                 AppSharedPreferences.getInstance(this).setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, true);
                 Fragment fragment = adapter.getItem(actvityCheckinCheckoutBinding.viewPager.getCurrentItem());
-                ((CheckoutFragment) fragment).bindPatronResult();
+                if (fragment instanceof CheckoutFragment) {
+                    ((CheckoutFragment) fragment).bindPatronResult();
+                } else if (fragment instanceof CheckinFragment) {
+                    ((CheckinFragment) fragment).bindCheckinResult();
+
+                }
                 break;
             case R.id.resourceBtn:
-                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(getResources().getColor(R.color.blueLabel));
-                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(getResources().getColor(R.color.white));
-                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(getResources().getColor(R.color.white));
-                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(getResources().getColor(R.color.blueLabel));
+                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(this,R.color.blueLabel));
+                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(this,R.color.white));
+                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(this,R.color.white));
+                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(this,R.color.blueLabel));
                 AppSharedPreferences.getInstance(this).setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, false);
                 Fragment fragment1 = adapter.getItem(actvityCheckinCheckoutBinding.viewPager.getCurrentItem());
-                ((CheckoutFragment) fragment1).bindPatronResult();
+                if (fragment1 instanceof CheckoutFragment) {
+                    ((CheckoutFragment) fragment1).bindPatronResult();
+                } else if (fragment1 instanceof CheckinFragment) {
+                    ((CheckinFragment) fragment1).bindCheckinResult();
+                }
                 break;
             default:
                 break;
@@ -106,7 +118,9 @@ public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewMod
         super.onResume();
         if (!TextUtils.isEmpty(AppSharedPreferences.getInstance(this).getString(AppSharedPreferences.KEY_SELECTED_BARCODE))) {
             Fragment fragment = adapter.getItem(actvityCheckinCheckoutBinding.viewPager.getCurrentItem());
-            ((CheckoutFragment) fragment).getPatronID();
+            if (fragment instanceof CheckoutFragment) {
+                ((CheckoutFragment) fragment).getPatronID();
+            }
         }
     }
 

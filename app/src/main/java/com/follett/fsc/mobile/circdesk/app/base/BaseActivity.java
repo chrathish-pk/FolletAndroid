@@ -16,14 +16,11 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+
 
 public abstract class BaseActivity<V extends BaseViewModel> extends AppCompatActivity {
     
-    private TextView titleBarTextView;
-    private ImageView backBtn;
-    
+
     public ActivityBaseBinding baseBinding;
     
     @Override

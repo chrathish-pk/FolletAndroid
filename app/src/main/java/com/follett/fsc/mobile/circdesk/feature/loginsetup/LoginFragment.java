@@ -131,7 +131,8 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
         basicLayoutBinding.useridEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            
+                // do nothing
+
             }
             
             @Override
@@ -141,13 +142,15 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
             
             @Override
             public void afterTextChanged(Editable editable) {
-            
+                // do nothing
+
             }
         });
         basicLayoutBinding.passwordEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            
+                // do nothing
+
             }
             
             @Override
@@ -157,7 +160,8 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
             
             @Override
             public void afterTextChanged(Editable editable) {
-            
+                // do nothing
+
             }
         });
         mLoginViewModel.getStatus()

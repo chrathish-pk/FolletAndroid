@@ -10,18 +10,10 @@ import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
-import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentPatronListBinding;
-import com.follett.fsc.mobile.circdesk.databinding.FragmentSchoolListBinding;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginFragment;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.SchoolListAdapter;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.SchoolListViewModel;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.SiteResults;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronList;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-
-import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;

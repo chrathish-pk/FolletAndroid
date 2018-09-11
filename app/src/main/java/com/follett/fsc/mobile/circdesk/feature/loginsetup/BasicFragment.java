@@ -174,6 +174,7 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
         basicLayoutBinding.libraryEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                //do nothing
             }
             
             @Override
@@ -183,14 +184,16 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
             
             @Override
             public void afterTextChanged(Editable editable) {
-            
+                //do nothing
+
             }
         });
         
         basicLayoutBinding.portEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        
+                //do nothing
+
             }
     
             @Override
@@ -200,14 +203,16 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
     
             @Override
             public void afterTextChanged(Editable editable) {
-        
+                //do nothing
+
             }
         });
     
         basicLayoutBinding.sslportEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        
+                //do nothing
+
             }
     
             @Override
@@ -217,7 +222,8 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
     
             @Override
             public void afterTextChanged(Editable editable) {
-        
+                //do nothing
+
             }
         });
         basicLayoutBinding.setBasicListener(this);

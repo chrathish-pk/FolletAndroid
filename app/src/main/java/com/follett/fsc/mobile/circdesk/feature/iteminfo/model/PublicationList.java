@@ -4,7 +4,6 @@ package com.follett.fsc.mobile.circdesk.feature.iteminfo.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -17,7 +16,6 @@ public class PublicationList implements Parcelable
     @SerializedName("prompt")
     @Expose
     private String prompt;
-    private final static long serialVersionUID = 2718610145586674836L;
 
     protected PublicationList(Parcel in) {
         value = in.readString();

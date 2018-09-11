@@ -6,11 +6,14 @@
 
 package com.follett.fsc.mobile.circdesk.feature.loginsetup;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 @Root(name = "siteRecord")
-public class SiteRecord {
+public class SiteRecord implements Parcelable {
     
     @Element(required = false) String asset;
     
@@ -25,7 +28,29 @@ public class SiteRecord {
     @Element(required = false) String siteShortName;
     
     @Element(required = false) String textbook;
-    
+
+    protected SiteRecord(Parcel in) {
+        asset = in.readString();
+        library = in.readString();
+        media = in.readString();
+        siteID = in.readString();
+        siteName = in.readString();
+        siteShortName = in.readString();
+        textbook = in.readString();
+    }
+
+    public static final Creator<SiteRecord> CREATOR = new Creator<SiteRecord>() {
+        @Override
+        public SiteRecord createFromParcel(Parcel in) {
+            return new SiteRecord(in);
+        }
+
+        @Override
+        public SiteRecord[] newArray(int size) {
+            return new SiteRecord[size];
+        }
+    };
+
     public String getAsset() {
         return asset;
     }
@@ -80,5 +105,21 @@ public class SiteRecord {
     
     public void setSiteName(String siteName) {
         this.siteName = siteName;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(asset);
+        dest.writeString(library);
+        dest.writeString(media);
+        dest.writeString(siteID);
+        dest.writeString(siteName);
+        dest.writeString(siteShortName);
+        dest.writeString(textbook);
     }
 }

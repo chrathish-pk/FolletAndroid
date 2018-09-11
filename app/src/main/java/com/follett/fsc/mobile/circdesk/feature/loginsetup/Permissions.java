@@ -6,10 +6,13 @@
 
 package com.follett.fsc.mobile.circdesk.feature.loginsetup;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Permissions {
+public class Permissions implements Parcelable {
 
     @SerializedName("canCheckinAsset")
     @Expose
@@ -128,6 +131,60 @@ public class Permissions {
     @SerializedName("canViewTop10")
     @Expose
     private String canViewTop10;
+
+    protected Permissions(Parcel in) {
+        canCheckinAsset = in.readString();
+        canCheckinLibrary = in.readString();
+        canCheckinTextbook = in.readString();
+        canCheckoutAsset = in.readString();
+        canCheckoutLibrary = in.readString();
+        canCheckoutTextbook = in.readString();
+        canDeleteHold = in.readString();
+        canDoBasicSearch = in.readString();
+        canLinkToFollettShelf = in.readString();
+        canOverrideBlocksAsset = in.readString();
+        canOverrideBlocksLibrary = in.readString();
+        canOverrideBlocksTextbook = in.readString();
+        canPlaceHold = in.readString();
+        canPlaceHoldOnAvailableCopies = in.readString();
+        canPlaceHoldOnMultipleCopies = in.readString();
+        canPostToSocialMediaSites = in.readString();
+        canRenew = in.readString();
+        canSearchDigitalResources = in.readString();
+        canSearchOneSearch = in.readString();
+        canSearchWPE = in.readString();
+        canSeeSearchSuggestions = in.readString();
+        canSubmitLibraryReviewComments = in.readString();
+        canSubmitLibraryReviews = in.readString();
+        canUseBookclub = in.readString();
+        canUseDestinyQuest = in.readString();
+        canViewCheckoutHistory = in.readString();
+        canViewCopyStatusAsset = in.readString();
+        canViewCopyStatusLibrary = in.readString();
+        canViewCopyStatusTextbook = in.readString();
+        canViewItemsOutAsset = in.readString();
+        canViewItemsOutLibrary = in.readString();
+        canViewItemsOutTextbook = in.readString();
+        canViewMyInfo = in.readString();
+        canViewMyList = in.readString();
+        canViewNewArrivals = in.readString();
+        canViewOffsiteInfo = in.readString();
+        canViewPatronStatus = in.readString();
+        canViewPublicLists = in.readString();
+        canViewTop10 = in.readString();
+    }
+
+    public static final Creator<Permissions> CREATOR = new Creator<Permissions>() {
+        @Override
+        public Permissions createFromParcel(Parcel in) {
+            return new Permissions(in);
+        }
+
+        @Override
+        public Permissions[] newArray(int size) {
+            return new Permissions[size];
+        }
+    };
 
     public String getCanCheckinAsset() {
         return canCheckinAsset;
@@ -439,5 +496,53 @@ public class Permissions {
 
     public void setCanViewTop10(String canViewTop10) {
         this.canViewTop10 = canViewTop10;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(canCheckinAsset);
+        dest.writeString(canCheckinLibrary);
+        dest.writeString(canCheckinTextbook);
+        dest.writeString(canCheckoutAsset);
+        dest.writeString(canCheckoutLibrary);
+        dest.writeString(canCheckoutTextbook);
+        dest.writeString(canDeleteHold);
+        dest.writeString(canDoBasicSearch);
+        dest.writeString(canLinkToFollettShelf);
+        dest.writeString(canOverrideBlocksAsset);
+        dest.writeString(canOverrideBlocksLibrary);
+        dest.writeString(canOverrideBlocksTextbook);
+        dest.writeString(canPlaceHold);
+        dest.writeString(canPlaceHoldOnAvailableCopies);
+        dest.writeString(canPlaceHoldOnMultipleCopies);
+        dest.writeString(canPostToSocialMediaSites);
+        dest.writeString(canRenew);
+        dest.writeString(canSearchDigitalResources);
+        dest.writeString(canSearchOneSearch);
+        dest.writeString(canSearchWPE);
+        dest.writeString(canSeeSearchSuggestions);
+        dest.writeString(canSubmitLibraryReviewComments);
+        dest.writeString(canSubmitLibraryReviews);
+        dest.writeString(canUseBookclub);
+        dest.writeString(canUseDestinyQuest);
+        dest.writeString(canViewCheckoutHistory);
+        dest.writeString(canViewCopyStatusAsset);
+        dest.writeString(canViewCopyStatusLibrary);
+        dest.writeString(canViewCopyStatusTextbook);
+        dest.writeString(canViewItemsOutAsset);
+        dest.writeString(canViewItemsOutLibrary);
+        dest.writeString(canViewItemsOutTextbook);
+        dest.writeString(canViewMyInfo);
+        dest.writeString(canViewMyList);
+        dest.writeString(canViewNewArrivals);
+        dest.writeString(canViewOffsiteInfo);
+        dest.writeString(canViewPatronStatus);
+        dest.writeString(canViewPublicLists);
+        dest.writeString(canViewTop10);
     }
 }
