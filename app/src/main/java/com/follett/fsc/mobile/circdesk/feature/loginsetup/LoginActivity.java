@@ -27,7 +27,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Navig
     private ActivityLoginBinding mLoginBinding;
     
     private DistrictListFragment mDistrictListFragment;
-    
+
     private SchoolListFragment mSchoolListFragment;
     
     private LoginFragment mLoginFragment;
@@ -89,10 +89,10 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Navig
     }
     
     private void navigateToDistrictList(DistrictList districtList, boolean isAddToBackStack) {
-    
+
         mDistrictListFragment = DistrictListFragment.newInstance(districtList);
         setToolBarTitle(getString(R.string.select_district_label));
-        
+
         final FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction()
                 .add(R.id.loginContainer, mDistrictListFragment);
         if (isAddToBackStack) {
@@ -100,8 +100,8 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Navig
         }
         fragmentTransaction.commit();
     }
-    
-    
+
+
     private void navigateToSchoolList(boolean isAddToBackStack) {
         
         mSchoolListFragment = SchoolListFragment.newInstance();
@@ -127,7 +127,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Navig
     
     @Override
     public void onNavigation(Object model, int position) {
-    
+
         if (model instanceof DistrictList && position == 0) {
             navigateToDistrictList((DistrictList) model, true);
         } else
@@ -138,8 +138,8 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Navig
         } else if (position == 3) { // Navigate to Home Screen
             navigateToHome();
         }
-        
-        
+
+
     }
     
     

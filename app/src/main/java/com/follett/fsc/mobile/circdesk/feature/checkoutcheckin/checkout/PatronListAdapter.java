@@ -71,13 +71,13 @@ public class PatronListAdapter extends RecyclerView.Adapter<PatronListViewHolder
 
     @Override
     public int getItemCount() {
-        return scanPatron.getPatronList().size();
+        return scanPatron!=null ?scanPatron.getPatronList().size():0;
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.patronLayout) {
-            itemClickListener.OnItemClick(v, (Integer) v.getTag());
+            itemClickListener.onItemClick(v, (Integer) v.getTag());
         }
     }
 }

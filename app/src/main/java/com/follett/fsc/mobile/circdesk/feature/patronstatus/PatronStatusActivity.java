@@ -27,7 +27,7 @@ public class PatronStatusActivity extends BaseActivity<PatronStatusViewModel> im
     private PatronStatusFragment mPatronStatusFragment;
     
     private PatronListFragment mPatronListFragment;
-    
+
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +75,7 @@ public class PatronStatusActivity extends BaseActivity<PatronStatusViewModel> im
             navigateToTitleDetail((CustomCheckoutItem) model);
         }
     }
-    
+
     private void navigateToTitleDetail(CustomCheckoutItem checkoutItem) {
         if (checkoutItem != null) {
             Intent titleIntent = new Intent(this, TitleInfoActivity.class);

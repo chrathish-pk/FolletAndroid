@@ -1,12 +1,13 @@
 
 package com.follett.fsc.mobile.circdesk.feature.iteminfo.model;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class AdditionalInfoRecord implements Serializable
+public class AdditionalInfoRecord implements Parcelable
 {
 
     @SerializedName("format")
@@ -51,7 +52,28 @@ public class AdditionalInfoRecord implements Serializable
     @SerializedName("issnList")
     @Expose
     private List<Object> issnList = null;
-    private final static long serialVersionUID = 1415353833980146989L;
+
+    protected AdditionalInfoRecord(Parcel in) {
+        format = in.readString();
+        publisher = in.readString();
+        titlesBy = in.readString();
+        targetAudienceList = in.createStringArrayList();
+        edition = in.readString();
+        seriesList = in.createStringArrayList();
+        isbnList = in.createStringArrayList();
+    }
+
+    public static final Creator<AdditionalInfoRecord> CREATOR = new Creator<AdditionalInfoRecord>() {
+        @Override
+        public AdditionalInfoRecord createFromParcel(Parcel in) {
+            return new AdditionalInfoRecord(in);
+        }
+
+        @Override
+        public AdditionalInfoRecord[] newArray(int size) {
+            return new AdditionalInfoRecord[size];
+        }
+    };
 
     public String getFormat() {
         return format;
@@ -165,4 +187,19 @@ public class AdditionalInfoRecord implements Serializable
         this.issnList = issnList;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(format);
+        dest.writeString(publisher);
+        dest.writeString(titlesBy);
+        dest.writeStringList(targetAudienceList);
+        dest.writeString(edition);
+        dest.writeStringList(seriesList);
+        dest.writeStringList(isbnList);
+    }
 }

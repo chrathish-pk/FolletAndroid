@@ -1,11 +1,13 @@
 
 package com.follett.fsc.mobile.circdesk.feature.iteminfo.model;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class QuizList implements Serializable
+public class QuizList implements Parcelable
 {
 
     @SerializedName("serviceName")
@@ -30,6 +32,32 @@ public class QuizList implements Serializable
     @Expose
     private String quizNumber;
     private final static long serialVersionUID = -4423020165744468852L;
+
+    protected QuizList(Parcel in) {
+        serviceName = in.readString();
+        if (in.readByte() == 0) {
+            serviceType = null;
+        } else {
+            serviceType = in.readInt();
+        }
+        readingLevel = in.readString();
+        interestLevel = in.readString();
+        points = in.readString();
+        quizID = in.readString();
+        quizNumber = in.readString();
+    }
+
+    public static final Creator<QuizList> CREATOR = new Creator<QuizList>() {
+        @Override
+        public QuizList createFromParcel(Parcel in) {
+            return new QuizList(in);
+        }
+
+        @Override
+        public QuizList[] newArray(int size) {
+            return new QuizList[size];
+        }
+    };
 
     public String getServiceName() {
         return serviceName;
@@ -87,4 +115,24 @@ public class QuizList implements Serializable
         this.quizNumber = quizNumber;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(serviceName);
+        if (serviceType == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(serviceType);
+        }
+        dest.writeString(readingLevel);
+        dest.writeString(interestLevel);
+        dest.writeString(points);
+        dest.writeString(quizID);
+        dest.writeString(quizNumber);
+    }
 }

@@ -38,7 +38,7 @@ import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferen
 public class AppRemoteRepository {
 
     private APIInterface apiService;
-    
+
     private AppPrefHelper appPreferencesHelper;
 
     public AppRemoteRepository(AppSharedPreferences appPref) {
@@ -72,7 +72,7 @@ public class AppRemoteRepository {
                     }
                 });
     }
-    
+
     public void getDistrictList(@Nullable final NetworkInterface networkInterface) {
         apiService.getDistrictList()
                 .observeOn(AndroidSchedulers.mainThread())
@@ -84,14 +84,14 @@ public class AppRemoteRepository {
                             networkInterface.onCallCompleted(districtList);
                         }
                     }
-                    
+
                     @Override
                     public void onError(Throwable throwable) {
                         if (networkInterface != null) {
                             networkInterface.onCallFailed(throwable);
                         }
                     }
-                    
+
                     @Override
                     public void onComplete() {
                         // Do Nothing
@@ -152,12 +152,13 @@ public class AppRemoteRepository {
 
                     @Override
                     public void onComplete() {
+                        //Do Nothing
                     }
                 });
     }
 
-    public void getScanPatron(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String patronBarcodeID) {
-        apiService.getScanPatron(headers, "dvpdt_devprodtest", "FDPSA", "COGNITE", patronBarcodeID, "DestinyCirc", "Android_24_7.0_lge_lucye_LG-H870DS", "1_Android",
+    public void getScanPatron(Map<String, String> headers, @Nullable final NetworkInterface networkInterface,String contextName, String site, String patronBarcodeID) {
+        apiService.getScanPatron(headers, contextName, site, "COGNITE", patronBarcodeID, "DestinyCirc", "Android_24_7.0_lge_lucye_LG-H870DS", "1_Android",
                 "English")
                 .subscribeWith(new Observer<ScanPatron>() {
                     @Override
@@ -181,17 +182,18 @@ public class AppRemoteRepository {
 
                     @Override
                     public void onComplete() {
+                        //Do Nothing
                     }
                 });
     }
 
-    public void getCheckoutResult(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String patronID, String barcode, String collectionType) {
+    public void getCheckoutResult(Map<String, String> headers, @Nullable final NetworkInterface networkInterface,String contextName, String site, String patronID, String barcode, String collectionType) {
 
-        apiService.getCheckoutResult(headers, "dvpdt_devprodtest", "FDPSA", barcode, patronID, collectionType, "false")
+        apiService.getCheckoutResult(headers, contextName, site, barcode, patronID, collectionType, "false")
                 .subscribeWith(new Observer<CheckoutResult>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        //Do Nothing
                     }
 
                     @Override
@@ -210,16 +212,18 @@ public class AppRemoteRepository {
 
                     @Override
                     public void onComplete() {
+                        //onComplete
                     }
                 });
     }
 
-    public void getCheckinResult(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String barcode, String collectionType, boolean isLibraryUse) {
+    public void getCheckinResult(Map<String, String> headers, @Nullable final NetworkInterface networkInterface,String contextName, String site, String barcode, String collectionType, boolean isLibraryUse) {
 
-        apiService.getCheckinResult(headers, "dvpdt_devprodtest", "FDPSA", barcode, collectionType, String.valueOf(isLibraryUse))
+        apiService.getCheckinResult(headers, contextName, site, barcode, collectionType, String.valueOf(isLibraryUse))
                 .subscribeWith(new Observer<CheckinResult>() {
                     @Override
                     public void onSubscribe(Disposable d) {
+                        //onSubscribe
 
                     }
 
@@ -239,16 +243,18 @@ public class AppRemoteRepository {
 
                     @Override
                     public void onComplete() {
+                        //onComplete
+
                     }
                 });
     }
 
-    public void getTitleDetails(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String bibID) {
-        apiService.getTitleDetails(headers, "dvpdt_devprodtest", "FDPSA", bibID)
+    public void getTitleDetails(Map<String, String> headers, @Nullable final NetworkInterface networkInterface,String contextName, String site, String bibID) {
+        apiService.getTitleDetails(headers, contextName, site, bibID)
                 .subscribeWith(new Observer<TitleDetails>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        //Do Nothing
                     }
 
                     @Override
@@ -264,20 +270,20 @@ public class AppRemoteRepository {
                             networkInterface.onCallFailed(throwable);
                         }
                     }
-
                     @Override
                     public void onComplete() {
-
+                        //Do Nothing
                     }
                 });
     }
 
-    public void getItemStatus(Map<String, String> headers,@Nullable final NetworkInterface networkInterface,String itemBarcodeID) {
+    public void getItemStatus(Map<String, String> headers,@Nullable final NetworkInterface networkInterface,String contextName, String site,String itemBarcodeID,String collectionType) {
 
-        apiService.getScanItem("dvpdt_devprodtest","FDPSA",itemBarcodeID,"0")
+        apiService.getScanItem(contextName,site,itemBarcodeID,collectionType)
                .subscribeWith(new Observer<ItemDetails>() {
                    @Override
                    public void onSubscribe(Disposable d) {
+                       //Do Nothing
 
                    }
 
@@ -298,7 +304,7 @@ public class AppRemoteRepository {
 
                    @Override
                    public void onComplete() {
-
+                       //Do Nothing
                     }
                 });
     }
@@ -309,6 +315,7 @@ public class AppRemoteRepository {
                 .subscribeWith(new Observer<PatronInfo>() {
                     @Override
                     public void onSubscribe(Disposable d) {
+                        //Do Nothing
                     }
 
                     @Override
@@ -327,39 +334,40 @@ public class AppRemoteRepository {
 
                     @Override
                     public void onComplete() {
+                        //Do Nothing
                     }
                 });
     }
-    
-    
+
+
     public void setString(String key, String value) {
         appPreferencesHelper.setString(key, value);
     }
-    
+
     public String getString(String key) {
         return appPreferencesHelper.getString(key);
     }
-    
+
     public void setInt(String key, int value) {
         appPreferencesHelper.setInt(key, value);
     }
-    
+
     public int getInt(String key) {
         return appPreferencesHelper.getInt(key);
     }
-    
+
     public void setBoolean(String key, Boolean value) {
         appPreferencesHelper.setBoolean(key, value);
     }
-    
+
     public Boolean getBoolean(String key) {
         return appPreferencesHelper.getBoolean(key);
     }
-    
+
     public void removeValues(String key) {
         appPreferencesHelper.removeValues(key);
     }
-    
+
     public void removeAllSession() {
         appPreferencesHelper.removeAllSession();
     }

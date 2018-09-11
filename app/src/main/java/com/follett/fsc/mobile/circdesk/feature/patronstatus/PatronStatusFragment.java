@@ -84,7 +84,7 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
     
     
     private void inItView() {
-        
+
         mBinding.patronEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.GONE);
         mBinding.patronEntryIncludeLayout.patronEntry.setImeOptions(EditorInfo.IME_ACTION_DONE);
         mViewModel.getErrorMessage()
@@ -111,7 +111,7 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
             mBinding.patronDetailLayout.setVisibility(View.GONE);
             getPatronInfo(AppUtils.getInstance()
                     .getEditTextValue(mBinding.patronEntryIncludeLayout.patronEntry));
-            
+
         } else if (v == mBinding.closeBtn) {
             mBinding.patronDetailLayout.setVisibility(View.GONE);
         } else if (v == mBinding.itemRelativeLayout) {
@@ -132,13 +132,13 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
             }
         }
     }
-    
+
     private void getPatronInfo(String patronID) {
         AppUtils.getInstance()
                 .hideKeyBoard(getBaseActivity(), mBinding.patronEntryIncludeLayout.patronEntry);
         mViewModel.getPatronInfo(patronID);
     }
-    
+
     private void updateUI(final PatronInfo patronInfo) {
         if (null != mActivity) {
             mActivity.runOnUiThread(new Runnable() {
@@ -171,7 +171,7 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
     }
     
     private void setListener() {
-        
+
         mBinding.patronEntryIncludeLayout.patronGoBtn.setOnClickListener(this);
         mBinding.itemRelativeLayout.setOnClickListener(this);
         mBinding.closeBtn.setOnClickListener(this);

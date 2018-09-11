@@ -30,9 +30,9 @@ import static com.follett.fsc.mobile.circdesk.utils.AppConstants.PATRON_INFO_KEY
 import static com.follett.fsc.mobile.circdesk.utils.AppConstants.PATRON_TITLE_KEY;
 
 public class PatronListViewModel extends BaseViewModel<CTAButtonListener> {
-    
+
     public final MutableLiveData<List<CustomCheckoutItem>> checkoutLiveData = new MutableLiveData<>();
-    
+
     public PatronListViewModel(Application application) {
         super(application);
     }
@@ -42,15 +42,15 @@ public class PatronListViewModel extends BaseViewModel<CTAButtonListener> {
             setIsLoding(true);
             PatronInfo patronInfo = arguments.getParcelable(PATRON_INFO_KEY);
             String title = arguments.getString(PATRON_TITLE_KEY);
-            
-            
+
+
             List<CustomCheckoutItem> checkoutItemList = new ArrayList<>();
-            
+
             if (title.equalsIgnoreCase(getApplication().getString(R.string.item_checkout_label))) {
                 final List<Checkout> checkouts = patronInfo.getCheckouts();
                 final List<AssetCheckOut> assetsCheckouts = patronInfo.getAssetCheckOuts();
-                
-                
+
+
                 for (int i = 0; i < checkouts.size(); i++) {
                     if (i == 0) {
                         checkoutItemList.add(new CustomCheckoutItem(checkouts.get(i).getId(), getApplication().getString(R.string.library_title_label), checkouts.get(i)
@@ -66,7 +66,7 @@ public class PatronListViewModel extends BaseViewModel<CTAButtonListener> {
                                 .getOverDue()));
                     }
                 }
-                
+
                 for (int i = 0; i < assetsCheckouts.size(); i++) {
                     if (i == 0) {
                         checkoutItemList.add(new CustomCheckoutItem(assetsCheckouts.get(i).getId(), getApplication().getString(R.string.resource_item_label), assetsCheckouts.get(i)
@@ -84,7 +84,7 @@ public class PatronListViewModel extends BaseViewModel<CTAButtonListener> {
                 }
             } else if (title.equalsIgnoreCase(getApplication().getString(R.string.on_hold_label))) {
                 final List<Hold> holdList = patronInfo.getHolds();
-                
+
                 for (Hold hold : holdList) {
                     checkoutItemList.add(new CustomCheckoutItem(hold.getBibID(), null, hold.getTitle(), String.valueOf(hold.getBibID()), hold.getDateExpires(), true, false));
                 }
@@ -93,7 +93,7 @@ public class PatronListViewModel extends BaseViewModel<CTAButtonListener> {
             checkoutLiveData.postValue(checkoutItemList);
         }
     }
-    
+
     @BindingAdapter(value = {"checkoutModel", "arrowIcon"})
     public static void setArrowIcon(@NonNull TextView textView, CustomCheckoutItem checkoutItem, Drawable image) {
         if (null != checkoutItem && null != image && checkoutItem.isArrow()) {

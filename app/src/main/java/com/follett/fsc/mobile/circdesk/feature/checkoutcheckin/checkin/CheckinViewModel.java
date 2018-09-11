@@ -19,6 +19,9 @@ import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
+
 /**
  * Created by muthulakshmi on 04/09/18.
  */
@@ -34,7 +37,7 @@ public class CheckinViewModel extends BaseViewModel implements NetworkInterface 
         this.mApplication = application;
         this.updateUIListener = updateUIListener;
         this.mAppRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(application));
-    
+
     }
 
     public void getCheckinData(String checkinBarcode, String collectionType, boolean isLibraryUse) {
@@ -45,7 +48,11 @@ public class CheckinViewModel extends BaseViewModel implements NetworkInterface 
         map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance(mApplication).getString(AppSharedPreferences.KEY_SESSION_ID));
         map.put("text/xml", "gzip");
 
-        mAppRemoteRepository.getCheckinResult(map, this, checkinBarcode, collectionType, isLibraryUse);
+        mAppRemoteRepository.getCheckinResult(map, this,AppSharedPreferences.getInstance(getApplication())
+                        .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance(getApplication())
+                        .getString(KEY_SITE_SHORT_NAME),
+                checkinBarcode, collectionType, isLibraryUse);
+
     }
 
 

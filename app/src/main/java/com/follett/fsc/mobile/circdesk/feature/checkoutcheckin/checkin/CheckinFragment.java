@@ -64,7 +64,7 @@ public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, Checki
             @Override
             public void run() {
                 try {
-                    if (value != null && value instanceof CheckinResult) {
+                    if (value instanceof CheckinResult) {
                         checkinResult = (CheckinResult) value;
                         if (checkinResult.getSuccess()) {
                             fragmentCheckinBinding.checkinPatronErrorMsg.setVisibility(View.GONE);
@@ -117,6 +117,8 @@ public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, Checki
                 Intent titleIntent = new Intent(getActivity(), TitleInfoActivity.class);
                 titleIntent.putExtra("bibID", checkinResult.getInfo().getBibID().toString().trim());
                 startActivity(titleIntent);
+                break;
+            default:
                 break;
         }
     }

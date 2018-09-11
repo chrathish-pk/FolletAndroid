@@ -6,10 +6,13 @@
 
 package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Note {
+public class Note implements Parcelable {
 
     @SerializedName("noteID")
     @Expose
@@ -20,6 +23,24 @@ public class Note {
     @SerializedName("urgent")
     @Expose
     private String urgent;
+
+    protected Note(Parcel in) {
+        noteID = in.readString();
+        text = in.readString();
+        urgent = in.readString();
+    }
+
+    public static final Creator<Note> CREATOR = new Creator<Note>() {
+        @Override
+        public Note createFromParcel(Parcel in) {
+            return new Note(in);
+        }
+
+        @Override
+        public Note[] newArray(int size) {
+            return new Note[size];
+        }
+    };
 
     public String getNoteID() {
         return noteID;
@@ -43,5 +64,17 @@ public class Note {
 
     public void setUrgent(String urgent) {
         this.urgent = urgent;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(noteID);
+        dest.writeString(text);
+        dest.writeString(urgent);
     }
 }

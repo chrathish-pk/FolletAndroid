@@ -8,6 +8,7 @@ package com.follett.fsc.mobile.circdesk.feature.iteminfo;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
+import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityTitleDetailsBinding;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
@@ -31,8 +32,7 @@ public class TitleInfoActivity extends BaseActivity<AdditionalInfoViewModel> imp
         setTitleBar(getString(R.string.titleDetails));
         setBackBtnVisible();
         baseBinding.backBtn.setOnClickListener(this);
-        AdditionalInfoViewModel additionalInfoViewModel = new AdditionalInfoViewModel
-                (this.getApplication(), this);
+        additionalInfoViewModel = new AdditionalInfoViewModel(this.getApplication(), this);
 
         if (getIntent() != null) {
             String bibID = getIntent().getStringExtra("bibID");
@@ -64,7 +64,7 @@ public class TitleInfoActivity extends BaseActivity<AdditionalInfoViewModel> imp
                 break;
             case R.id.additional_info_btn:
                 Intent moreDetailsIntent = new Intent(this, AdditionalInfoActivity.class);
-                moreDetailsIntent.putExtra("titleMoreDetails", additionalInfoDetails);
+                moreDetailsIntent.putExtra("titleMoreDetails",additionalInfoDetails);
                 startActivity(moreDetailsIntent);
 
                 break;

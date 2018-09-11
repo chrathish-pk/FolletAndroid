@@ -71,6 +71,10 @@ public class AssetCheckOut implements Parcelable {
         lexile = in.readString();
         byte tmpTemporary = in.readByte();
         temporary = tmpTemporary == 0 ? null : tmpTemporary == 1;
+        setupAssetCheckOut(in);
+    }
+
+    private void setupAssetCheckOut(Parcel in) {
         if (in.readByte() == 0) { reviewCount = null; } else { reviewCount = in.readInt(); }
         dueDate = in.readString();
         if (in.readByte() == 0) { status = null; } else { status = in.readInt(); }
@@ -94,6 +98,11 @@ public class AssetCheckOut implements Parcelable {
         if (in.readByte() == 0) { totalLocal = null; } else { totalLocal = in.readInt(); }
         if (in.readByte() == 0) { totalOffsite = null; } else { totalOffsite = in.readInt(); }
         reviewAverage = in.readString();
+        setupAssetCheckOut1(in);
+    }
+
+    private void setupAssetCheckOut1(Parcel in) {
+
         if (in.readByte() == 0) { resoldMaterialType = null; } else { resoldMaterialType = in.readInt(); }
         if (in.readByte() == 0) { materialType = null; } else { materialType = in.readInt(); }
         author = in.readString();
@@ -112,7 +121,8 @@ public class AssetCheckOut implements Parcelable {
         overDue = tmpOverDue == 0 ? null : tmpOverDue == 1;
         if (in.readByte() == 0) { copyid = null; } else { copyid = in.readInt(); }
     }
-    
+
+
     public static final Creator<AssetCheckOut> CREATOR = new Creator<AssetCheckOut>() {
         @Override
         public AssetCheckOut createFromParcel(Parcel in) {
@@ -508,8 +518,11 @@ public class AssetCheckOut implements Parcelable {
     
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-    
-        if (id == null) { parcel.writeByte((byte) 0); } else {
+        setupWriteToParcel(parcel);
+    }
+
+    private void setupWriteToParcel(Parcel parcel) {
+        if (id == null) { parcel.writeByte((byte) 0 ); } else {
             parcel.writeByte((byte) 1);
             parcel.writeInt(id);
         }
@@ -517,7 +530,8 @@ public class AssetCheckOut implements Parcelable {
         parcel.writeString(copyBarcode);
         parcel.writeString(title);
         parcel.writeString(lexile);
-        parcel.writeByte((byte) (temporary == null ? 0 : temporary ? 1 : 2));
+        if (temporary) parcel.writeByte((byte) (temporary == null ? 0 : 1));
+        else parcel.writeByte((byte) (temporary == null ? 0 : 2));
         if (reviewCount == null) { parcel.writeByte((byte) 0); } else {
             parcel.writeByte((byte) 1);
             parcel.writeInt(reviewCount);
@@ -532,9 +546,22 @@ public class AssetCheckOut implements Parcelable {
         parcel.writeString(electronicResourceDisplayable);
         parcel.writeString(providerIconLink);
         parcel.writeString(contentImageLink);
-        parcel.writeByte((byte) (electronicResourceIsRelative == null ? 0 : electronicResourceIsRelative ? 1 : 2));
-        parcel.writeByte((byte) (canViewTitleDetails == null ? 0 : canViewTitleDetails ? 1 : 2));
-        parcel.writeByte((byte) (follettShelfEBook == null ? 0 : follettShelfEBook ? 1 : 2));
+        setupWriteToParcel1(parcel);
+
+    }
+    private void setupWriteToParcel1(Parcel parcel) {
+        if (electronicResourceIsRelative)
+            parcel.writeByte((byte) (electronicResourceIsRelative == null ? 0 : 1));
+        else parcel.writeByte((byte) (electronicResourceIsRelative == null ? 0 : 2));
+        if (canViewTitleDetails) parcel.writeByte((byte) (canViewTitleDetails == null ? 0 : 1));
+        else parcel.writeByte((byte) (canViewTitleDetails == null ? 0 : 2));
+        setupWriteToParcel2(parcel);
+
+
+    }
+    private void setupWriteToParcel2(Parcel parcel) {
+        if (follettShelfEBook) parcel.writeByte((byte) (follettShelfEBook == null ? 0 : 1));
+        else parcel.writeByte((byte) (follettShelfEBook == null ? 0 : 2));
         parcel.writeString(electronicResourceURL);
         parcel.writeString(titleDetailsLink);
         parcel.writeString(pubYear);
@@ -542,7 +569,14 @@ public class AssetCheckOut implements Parcelable {
             parcel.writeByte((byte) 1);
             parcel.writeInt(lostLocal);
         }
-        parcel.writeByte((byte) (renewable == null ? 0 : renewable ? 1 : 2));
+        if (renewable) parcel.writeByte((byte) (renewable == null ? 0 : 1));
+        else parcel.writeByte((byte) (renewable == null ? 0 : 2));
+        setupWriteToParcel3(parcel);
+
+
+
+    }
+    private void setupWriteToParcel3(Parcel parcel) {
         if (totalLocal == null) { parcel.writeByte((byte) 0); } else {
             parcel.writeByte((byte) 1);
             parcel.writeInt(totalLocal);
@@ -571,11 +605,23 @@ public class AssetCheckOut implements Parcelable {
         if (availableLocal == null) { parcel.writeByte((byte) 0); } else {
             parcel.writeByte((byte) 1);
             parcel.writeInt(availableLocal);
+            setupWriteToParcel4(parcel);
+
         }
-        parcel.writeByte((byte) (myRatingApproved == null ? 0 : myRatingApproved ? 1 : 2));
-        parcel.writeByte((byte) (digitalRecord == null ? 0 : digitalRecord ? 1 : 2));
-        parcel.writeByte((byte) (reviewPending == null ? 0 : reviewPending ? 1 : 2));
-        parcel.writeByte((byte) (overDue == null ? 0 : overDue ? 1 : 2));
+    }
+    private void setupWriteToParcel4(Parcel parcel) {
+
+        if (myRatingApproved) parcel.writeByte((byte) (myRatingApproved == null ? 0 : 1));
+        else parcel.writeByte((byte) (myRatingApproved == null ? 0 : 2));
+        if (digitalRecord) parcel.writeByte((byte) (digitalRecord == null ? 0 : 1));
+        else parcel.writeByte((byte) (digitalRecord == null ? 0 : 2));
+        setupWriteToParcel5(parcel);
+    }
+    private void setupWriteToParcel5(Parcel parcel) {
+        if (reviewPending) parcel.writeByte((byte) (reviewPending == null ? 0 : 1));
+        else parcel.writeByte((byte) (reviewPending == null ? 0 : 2));
+        if (overDue) parcel.writeByte((byte) (overDue == null ? 0 : 1));
+        else parcel.writeByte((byte) (overDue == null ? 0 : 2));
         if (copyid == null) { parcel.writeByte((byte) 0); } else {
             parcel.writeByte((byte) 1);
             parcel.writeInt(copyid);

@@ -20,6 +20,9 @@ import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
+
 public class AdditionalInfoViewModel extends BaseViewModel implements NetworkInterface {
 
     private AppRemoteRepository mAppRemoteRepository;
@@ -40,7 +43,9 @@ public class AdditionalInfoViewModel extends BaseViewModel implements NetworkInt
         map.put("Accept", "application/json");
         map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance(mApplication).getString(AppSharedPreferences.KEY_SESSION_ID));
         map.put("text/xml", "gzip");
-        mAppRemoteRepository.getTitleDetails(map, this, bibID);
+        mAppRemoteRepository.getTitleDetails(map, this,AppSharedPreferences.getInstance(getApplication())
+                .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance(getApplication())
+                .getString(KEY_SITE_SHORT_NAME), bibID);
     }
 
     @Override

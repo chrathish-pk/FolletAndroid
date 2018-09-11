@@ -25,7 +25,10 @@ public class PatronListAdapter extends RecyclerView.Adapter<PatronListAdapter.Pa
     private List<PatronList> mPatronList;
     
     private NavigationListener mNavigationListener;
-    
+
+
+    private Context mContext;
+
     @NonNull
     @Override
     public PatronListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

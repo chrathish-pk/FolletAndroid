@@ -43,12 +43,13 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuViewHolder> {
 
         ItemClickListener itemClickListener = new ItemClickListener() {
             @Override
-            public void OnItemClicked() {
+            public void onItemClicked() {
                 homeViewModel.setOpenTaskEvent(homeViewModel.homeMenuItems.get(position).getMenuName());
             }
     
             @Override
-            public void OnItemClick(View view, int position) {
+            public void onItemClick(View view, int position) {
+                //onItemClicked
             }
         };
         holder.rowHomeMenuBinding.setListener(itemClickListener);

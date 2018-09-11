@@ -13,6 +13,7 @@ import com.follett.fsc.mobile.circdesk.app.CustomAlert;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
+import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentBasicLayoutBinding;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 
@@ -37,7 +38,7 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
     private FragmentBasicLayoutBinding mBasicLayoutBinding;
     
     private BasicViewModel mBasicViewModel;
-    
+
     private NavigationListener navigationListener;
     
     private boolean mIsBaseFragment;
@@ -193,29 +194,29 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 // Do Nothing
             }
-            
+
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 onTextChangedInEditText();
             }
-            
+
             @Override
             public void afterTextChanged(Editable editable) {
                 // Do Nothing
             }
         });
-        
+
         basicLayoutBinding.sslportEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 // Do Nothing
             }
-            
+
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 onTextChangedInEditText();
             }
-            
+
             @Override
             public void afterTextChanged(Editable editable) {
                 // Do Nothing
@@ -252,9 +253,9 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
             showAlert(getString(R.string.no_district));
         }
     }
-    
+
     private void showAlert(String msg) {
-        
+
         DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -265,7 +266,7 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
         };
         CustomAlert.showDialog(getBaseActivity(), null, msg, getString(R.string.ok), onClickListener, null, onClickListener);
     }
-    
+
     public void onTextChangedInEditText() {
         if (AppUtils.getInstance()
                 .isEditTextNotEmpty(mBasicLayoutBinding.libraryEditText) && AppUtils.getInstance()

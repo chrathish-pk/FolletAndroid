@@ -22,14 +22,15 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
+
 import static com.follett.fsc.mobile.circdesk.utils.AppConstants.PATRON_INFO_KEY;
 
 public class PatronFineListFragment extends BaseFragment<FragmentPatronListBinding, PatronListViewModel> implements CTAButtonListener {
     
     private static final String TAG = PatronFineListFragment.class.getSimpleName();
-    
+
     private NavigationListener navigationListener;
-    
+
     public static PatronFineListFragment newInstance(PatronInfo patronInfo) {
         Bundle args = new Bundle();
         args.putParcelable(PATRON_INFO_KEY, patronInfo);

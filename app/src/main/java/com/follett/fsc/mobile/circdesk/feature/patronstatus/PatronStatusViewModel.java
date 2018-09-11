@@ -7,6 +7,11 @@
 package com.follett.fsc.mobile.circdesk.feature.patronstatus;
 
 import com.follett.fsc.mobile.circdesk.R;
+import android.app.Application;
+import android.arch.lifecycle.MutableLiveData;
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
+
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
@@ -61,14 +66,16 @@ public class PatronStatusViewModel extends BaseViewModel implements NetworkInter
         }
     }
     
-    
+
     @Override
     public void onCallCompleted(Object model) {
         setIsLoding(false);
         try {
             if (model instanceof PatronInfo) {
                 mPatronInfo.postValue((PatronInfo) model);
+
             }
+
         } catch (Exception e) {
             FollettLog.d("Exception", e.getMessage());
         }

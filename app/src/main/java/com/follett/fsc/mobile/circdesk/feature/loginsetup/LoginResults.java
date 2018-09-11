@@ -6,10 +6,13 @@
 
 package com.follett.fsc.mobile.circdesk.feature.loginsetup;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class LoginResults {
+public class LoginResults implements Parcelable {
 
     @SerializedName("firstName")
     @Expose
@@ -59,6 +62,36 @@ public class LoginResults {
     @SerializedName("success")
     @Expose
     private String success;
+
+    protected LoginResults(Parcel in) {
+        firstName = in.readString();
+        guest = in.readString();
+        invalidUsernameOrPassword = in.readString();
+        lastName = in.readString();
+        listID = in.readString();
+        listSize = in.readString();
+        lockedOut = in.readString();
+        middleName = in.readString();
+        myListsTotalSize = in.readString();
+        numberOfMyLists = in.readString();
+        passwordExpired = in.readString();
+        passwordNotSecure = in.readString();
+        sessionID = in.readString();
+        sessionTimeoutInMillis = in.readString();
+        success = in.readString();
+    }
+
+    public static final Creator<LoginResults> CREATOR = new Creator<LoginResults>() {
+        @Override
+        public LoginResults createFromParcel(Parcel in) {
+            return new LoginResults(in);
+        }
+
+        @Override
+        public LoginResults[] newArray(int size) {
+            return new LoginResults[size];
+        }
+    };
 
     public String getFirstName() {
         return firstName;
@@ -186,5 +219,29 @@ public class LoginResults {
 
     public void setSuccess(String success) {
         this.success = success;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(firstName);
+        dest.writeString(guest);
+        dest.writeString(invalidUsernameOrPassword);
+        dest.writeString(lastName);
+        dest.writeString(listID);
+        dest.writeString(listSize);
+        dest.writeString(lockedOut);
+        dest.writeString(middleName);
+        dest.writeString(myListsTotalSize);
+        dest.writeString(numberOfMyLists);
+        dest.writeString(passwordExpired);
+        dest.writeString(passwordNotSecure);
+        dest.writeString(sessionID);
+        dest.writeString(sessionTimeoutInMillis);
+        dest.writeString(success);
     }
 }

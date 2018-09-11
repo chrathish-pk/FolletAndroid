@@ -7,12 +7,13 @@
 
 package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
-public class Patron implements Serializable{
+public class Patron implements Parcelable{
 
     @SerializedName("barcode")
     @Expose
@@ -26,6 +27,25 @@ public class Patron implements Serializable{
     @SerializedName("patronPictureFileName")
     @Expose
     private String patronPictureFileName;
+
+    protected Patron(Parcel in) {
+        barcode = in.readString();
+        lastFirstMiddleName = in.readString();
+        patronID = in.readString();
+        patronPictureFileName = in.readString();
+    }
+
+    public static final Creator<Patron> CREATOR = new Creator<Patron>() {
+        @Override
+        public Patron createFromParcel(Parcel in) {
+            return new Patron(in);
+        }
+
+        @Override
+        public Patron[] newArray(int size) {
+            return new Patron[size];
+        }
+    };
 
     public String getBarcode() {
         return barcode;
@@ -59,4 +79,16 @@ public class Patron implements Serializable{
         this.patronPictureFileName = patronPictureFileName;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(barcode);
+        dest.writeString(lastFirstMiddleName);
+        dest.writeString(patronID);
+        dest.writeString(patronPictureFileName);
+    }
 }

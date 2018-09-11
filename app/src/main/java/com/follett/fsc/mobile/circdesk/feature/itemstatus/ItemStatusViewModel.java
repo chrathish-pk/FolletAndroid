@@ -12,10 +12,13 @@ import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
+
 public class ItemStatusViewModel extends BaseViewModel implements NetworkInterface {
 
     private Application mApplication;
-    private UpdateItemUIListener updateItemUIListener;
+    UpdateItemUIListener updateItemUIListener;
     public final MutableLiveData<ItemDetails> itemDetailsInfo = new MutableLiveData<>();
 
 
@@ -29,13 +32,15 @@ public class ItemStatusViewModel extends BaseViewModel implements NetworkInterfa
     }
 
 
-    public void getScanItem(String itemBarcodeID) {
+    public void getScanItem(String itemBarcodeID,String collectionType) {
         setIsLoding(true);
         Map<String, String> map = new HashMap<>();
         map.put("Accept", "application/json");
         map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance(mApplication).getString(AppSharedPreferences.KEY_SESSION_ID));
         map.put("text/xml", "gzip");
-        mAppRemoteRepository.getItemStatus(map,this, itemBarcodeID);
+        mAppRemoteRepository.getItemStatus(map,this,AppSharedPreferences.getInstance(getApplication())
+                .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance(getApplication())
+                .getString(KEY_SITE_SHORT_NAME), itemBarcodeID,collectionType);
     }
 
     @Override
@@ -54,6 +59,6 @@ public class ItemStatusViewModel extends BaseViewModel implements NetworkInterfa
 
     @Override
     public void onCallFailed(Throwable throwable) {
-
+        //onCallFailed
     }
 }

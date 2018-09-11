@@ -7,10 +7,13 @@
 
 package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Info {
+public class Info implements Parcelable {
 
     @SerializedName("title")
     @Expose
@@ -30,6 +33,35 @@ public class Info {
     @SerializedName("coverURL")
     @Expose
     private String coverURL;
+
+    protected Info(Parcel in) {
+        title = in.readString();
+        dueDate = in.readString();
+        if (in.readByte() == 0) {
+            bibID = null;
+        } else {
+            bibID = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            materialType = null;
+        } else {
+            materialType = in.readInt();
+        }
+        barcode = in.readString();
+        coverURL = in.readString();
+    }
+
+    public static final Creator<Info> CREATOR = new Creator<Info>() {
+        @Override
+        public Info createFromParcel(Parcel in) {
+            return new Info(in);
+        }
+
+        @Override
+        public Info[] newArray(int size) {
+            return new Info[size];
+        }
+    };
 
     public String getTitle() {
         return title;
@@ -79,4 +111,28 @@ public class Info {
         this.coverURL = coverURL;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(dueDate);
+        if (bibID == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(bibID);
+        }
+        if (materialType == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(materialType);
+        }
+        dest.writeString(barcode);
+        dest.writeString(coverURL);
+    }
 }

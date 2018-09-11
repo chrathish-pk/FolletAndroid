@@ -1,11 +1,13 @@
 
 package com.follett.fsc.mobile.circdesk.feature.itemstatus;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CurrentCheckout implements Serializable
+public class CurrentCheckout implements Parcelable
 {
     @SerializedName("dateDue")
     @Expose
@@ -22,7 +24,26 @@ public class CurrentCheckout implements Serializable
     @SerializedName("checkedOutToBarcode")
     @Expose
     private String checkedOutToBarcode;
-    private final static long serialVersionUID = -1287248026689003198L;
+
+    protected CurrentCheckout(Parcel in) {
+        dateDue = in.readString();
+        dateOut = in.readString();
+        dateReturned = in.readString();
+        checkedOutToName = in.readString();
+        checkedOutToBarcode = in.readString();
+    }
+
+    public static final Creator<CurrentCheckout> CREATOR = new Creator<CurrentCheckout>() {
+        @Override
+        public CurrentCheckout createFromParcel(Parcel in) {
+            return new CurrentCheckout(in);
+        }
+
+        @Override
+        public CurrentCheckout[] newArray(int size) {
+            return new CurrentCheckout[size];
+        }
+    };
 
     public boolean isEmpty() {
         return checkedOutToName == null && checkedOutToBarcode == null;
@@ -68,4 +89,17 @@ public class CurrentCheckout implements Serializable
         this.checkedOutToBarcode = checkedOutToBarcode;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(dateDue);
+        dest.writeString(dateOut);
+        dest.writeString(dateReturned);
+        dest.writeString(checkedOutToName);
+        dest.writeString(checkedOutToBarcode);
+    }
 }

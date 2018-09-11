@@ -21,6 +21,9 @@ import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
+
 public class CheckoutViewModel extends BaseViewModel implements NetworkInterface {
 
     private Application mApplication;
@@ -42,7 +45,9 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
         map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance(mApplication).getString(AppSharedPreferences.KEY_SESSION_ID));
         map.put("text/xml", "gzip");
 
-        mAppRemoteRepository.getScanPatron(map, this, patronBarcodeID);
+        mAppRemoteRepository.getScanPatron(map, this,AppSharedPreferences.getInstance(getApplication())
+                .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance(getApplication())
+                .getString(KEY_SITE_SHORT_NAME), patronBarcodeID);
     }
 
     public void getCheckoutResult(String patronID, String barcode, String collectionType) {
@@ -53,7 +58,9 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
         map.put("Accept", "application/json");
         map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance(mApplication).getString(AppSharedPreferences.KEY_SESSION_ID));
         map.put("text/xml", "gzip");
-        mAppRemoteRepository.getCheckoutResult(map, this, patronID, barcode, collectionType);
+        mAppRemoteRepository.getCheckoutResult(map, this,AppSharedPreferences.getInstance(getApplication())
+                .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance(getApplication())
+                .getString(KEY_SITE_SHORT_NAME), patronID, barcode, collectionType);
     }
 
     @Override
