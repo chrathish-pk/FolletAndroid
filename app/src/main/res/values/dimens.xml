@@ -6,7 +6,9 @@
 
 <resources>
     <dimen name="text_size_12sp">12sp</dimen>
+    <dimen name="text_size_13sp">13.8sp</dimen>
     <dimen name="text_size_14sp">14sp</dimen>
+    <dimen name="text_size_15sp">15sp</dimen>
     <dimen name="text_size_16sp">16sp</dimen>
     <dimen name="text_size_18sp">18sp</dimen>
     <dimen name="text_size_20sp">20sp</dimen>
@@ -16,13 +18,17 @@
     <dimen name="layout_size_6">6dp</dimen>
     <dimen name="layout_size_9">9dp</dimen>
     <dimen name="layout_size_10">10dp</dimen>
+    <dimen name="layout_size_13">13dp</dimen>
     <dimen name="layout_size_14">14dp</dimen>
+    <dimen name="layout_size_15">15dp</dimen>
     <dimen name="layout_size_16">16dp</dimen>
+    <dimen name="layout_size_17">17dp</dimen>
     <dimen name="layout_size_18">18dp</dimen>
     <dimen name="layout_size_22">22dp</dimen>
     <dimen name="layout_size_24">24dp</dimen>
     <dimen name="layout_size_25">25dp</dimen>
     <dimen name="layout_size_26">26dp</dimen>
+    <dimen name="layout_size_28">28dp</dimen>
     <dimen name="layout_size_30">30dp</dimen>
     <dimen name="layout_size_36">36dp</dimen>
     <dimen name="layout_size_50">50dp</dimen>
