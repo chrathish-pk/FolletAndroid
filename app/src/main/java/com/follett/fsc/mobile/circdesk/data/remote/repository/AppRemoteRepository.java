@@ -6,6 +6,8 @@
 
 package com.follett.fsc.mobile.circdesk.data.remote.repository;
 
+import android.support.annotation.Nullable;
+
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppPrefHelper;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppPreferencesHelper;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
@@ -22,8 +24,6 @@ import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.SiteResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.Version;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
-
-import android.support.annotation.Nullable;
 
 import java.util.Map;
 

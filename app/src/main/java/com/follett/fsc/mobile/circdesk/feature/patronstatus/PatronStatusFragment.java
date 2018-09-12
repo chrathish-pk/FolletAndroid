@@ -6,49 +6,48 @@
 
 package com.follett.fsc.mobile.circdesk.feature.patronstatus;
 
-import com.follett.fsc.mobile.circdesk.BR;
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
-import com.follett.fsc.mobile.circdesk.databinding.FragmentPatronStatusBinding;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.AssetCheckOut;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.Checkout;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronList;
-import com.follett.fsc.mobile.circdesk.utils.AppUtils;
-import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-
 import android.arch.lifecycle.Observer;
 import android.content.Context;
-import android.databinding.BindingAdapter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
+
+import com.follett.fsc.mobile.circdesk.BR;
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.databinding.FragmentPatronStatusBinding;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.Permissions;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronList;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
+import com.follett.fsc.mobile.circdesk.utils.FollettLog;
+import com.google.gson.Gson;
 
 import java.util.List;
 
 public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBinding, PatronStatusViewModel> implements View.OnClickListener {
-    
+
     private static final String TAG = PatronStatusFragment.class.getSimpleName();
-    
+
     private PatronStatusViewModel mViewModel;
-    
+
     private FragmentPatronStatusBinding mBinding;
-    
+
     private PatronInfo mPatronInfo;
-    
+
     private NavigationListener mNavigationListener;
-    
+
     public static PatronStatusFragment newInstance() {
         Bundle args = new Bundle();
         PatronStatusFragment fragment = new PatronStatusFragment();
         fragment.setArguments(args);
         return fragment;
     }
-    
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -58,31 +57,41 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
             FollettLog.e(TAG, "ClassCastException");
         }
     }
-    
+
     @Override
     public int getLayoutId() {
         return R.layout.fragment_patron_status;
     }
-    
+
     @Override
     public PatronStatusViewModel getViewModel() {
         mViewModel = new PatronStatusViewModel(getBaseApplication());
         return mViewModel;
     }
-    
+
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
     }
-    
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mBinding = getViewDataBinding();
+
+        showItemCheckedoutView();
         inItView();
     }
-    
-    
+
+    private void showItemCheckedoutView() {
+        String permissionValue = AppSharedPreferences.getInstance(getActivity()).getString(AppSharedPreferences.KEY_PERMISSIONS);
+        Permissions permissions = new Gson().fromJson(permissionValue, Permissions.class);
+        if (Boolean.parseBoolean(permissions.getCanViewItemsOutAsset()) || Boolean.parseBoolean(permissions.getCanViewItemsOutLibrary()))
+            mBinding.itemRelativeLayout.setVisibility(View.VISIBLE);
+        else
+            mBinding.itemRelativeLayout.setVisibility(View.GONE);
+    }
+
     private void inItView() {
 
         mBinding.patronEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.GONE);
@@ -104,7 +113,7 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
         });
         setListener();
     }
-    
+
     @Override
     public void onClick(View v) {
         if (v == mBinding.patronEntryIncludeLayout.patronGoBtn) {
@@ -118,7 +127,7 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
             if (mPatronInfo != null && (!mPatronInfo.getCheckouts()
                     .isEmpty() || !mPatronInfo.getAssetCheckOuts()
                     .isEmpty())) {
-                    mNavigationListener.onNavigation(mPatronInfo, 2);
+                mNavigationListener.onNavigation(mPatronInfo, 2);
             }
         } else if (v == mBinding.holdRelativeLayout) {
             if (mPatronInfo != null && !mPatronInfo.getHolds()
@@ -161,15 +170,15 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
             });
         }
     }
-    
+
     private void navigateToPatronListFragment(List<PatronList> patronList) {
         mNavigationListener.onNavigation(patronList, 0);
     }
-    
+
     public void requestPatronId(PatronList patronItem) {
         getPatronInfo(patronItem.getBarcode());
     }
-    
+
     private void setListener() {
 
         mBinding.patronEntryIncludeLayout.patronGoBtn.setOnClickListener(this);

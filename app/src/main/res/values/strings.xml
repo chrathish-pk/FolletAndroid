@@ -36,7 +36,7 @@
     <!-- Checkin Checkout Screen-->
     <string name="checkin">Check In</string>
     <string name="checkout">Check Out</string>
-    <string name="checkinChecoutTitle">Check In/Check Out</string>
+    <string name="checkinChecoutTitle">Check Out/Check In</string>
     <string name="findPatron">Find Patron</string>
     <string name="enterBarcode">Enter Barcode</string>
     <string name="scan">SCAN</string>
@@ -98,7 +98,7 @@
     <string name="item_format">Format</string>
     <string name="item_isbn">ISBN</string>
     <string name="item_target">Target</string>
-    <string name="item_accelerated">Accelerated</string>'
+    <string name="item_accelerated">Accelerated</string>
     <string name="item_status_in">Status : IN</string>
     <string name="item_status_out">Status : Out</string>
     <string name="item_callno">Call# </string>
@@ -143,5 +143,16 @@
     <string name="on_hold_label">On Hold</string>
     <string name="fine_label">Fines</string>
     <string name="overdue_label">Overdue</string>
+
+    <!-- Info Screen-->
+    <string name="info">Follett Destiny Version %1$s</string>
+    <string name="copyright_info">Copyright 2016 Follet School Solutions. \nA Follett Corporation Company. \nAll Rights Reserved. \n \nBuild %1$s \nAPI Version: %2$s</string>
+    <string name="view_legel">VIEW LEGAL</string>
+    <string name="site_info">Site: %1$s</string>
+    <string name="user_info">User: %1$s</string>
+    <string name="note">Note: If your library uses Standard Interleaved 2 of 5 or Standard Codabr barcodes, turn Follett decoding off. </string>
+    <string name="rate_follett_destiny">RATE FOLLETT DESTINY</string>
+    <string name="change_site">CHANGE SITE</string>
+    <string name="logout">LOG OUT</string>
 
 </resources>

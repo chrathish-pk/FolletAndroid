@@ -16,7 +16,6 @@ import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
-import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentCheckinBinding;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.UpdateUIListener;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.TitleInfoActivity;
@@ -92,11 +91,9 @@ public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, Checki
         else
             fragmentCheckinBinding.checkinEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.GONE);
 
-        if (fragmentCheckinBinding != null) {
-            fragmentCheckinBinding.checkinDetailIncludeLayout.checkedoutDetailLayout.setVisibility(View.GONE);
-            fragmentCheckinBinding.checkinPatronErrorMsg.setVisibility(View.GONE);
-            fragmentCheckinBinding.checkinEntryIncludeLayout.patronEntry.setText("");
-        }
+        fragmentCheckinBinding.checkinDetailIncludeLayout.checkedoutDetailLayout.setVisibility(View.GONE);
+        fragmentCheckinBinding.checkinPatronErrorMsg.setVisibility(View.GONE);
+        fragmentCheckinBinding.checkinEntryIncludeLayout.patronEntry.setText("");
     }
 
     @Override
