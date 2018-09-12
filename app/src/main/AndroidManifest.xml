@@ -32,6 +32,7 @@
         <activity android:name=".feature.itemstatus.ItemStatusActivity"/>
         <activity android:name=".feature.iteminfo.AdditionalInfoActivity" />
         <activity android:name=".feature.patronstatus.PatronStatusActivity"/>
+        <activity android:name=".feature.inventory.InventoryActivity"/>
 
 
     </application>

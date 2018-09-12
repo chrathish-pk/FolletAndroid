@@ -26,5 +26,12 @@ public class InventoryActivity extends BaseActivity<InventoryViewModel> {
 
         ActivityInventoryBinding mBinding = putContentView(R.layout.activity_inventory);
 
+        pushFragment(new InventoryFragment(), R.id.inventoryContainer, "InventoryFragment", true);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
     }
 }
