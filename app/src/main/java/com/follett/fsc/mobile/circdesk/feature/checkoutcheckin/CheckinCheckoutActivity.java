@@ -26,8 +26,8 @@ import com.google.gson.Gson;
 
 public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewModel> implements View.OnClickListener, ViewPager.OnPageChangeListener {
 
-    TabLayoutViewPagerAdapter adapter;
-    ActivityCheckinCheckoutBinding actvityCheckinCheckoutBinding;
+    private TabLayoutViewPagerAdapter adapter;
+    private ActivityCheckinCheckoutBinding actvityCheckinCheckoutBinding;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,15 +51,15 @@ public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewMod
 
     private void updateLibraryResourceBg() {
         if (AppSharedPreferences.getInstance(this).getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED)) {
-            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(this,R.color.blueLabel));
-            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(this,R.color.white));
-            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(this,R.color.white));
-            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(this,R.color.blueLabel));
+            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.blueLabel));
+            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(this, R.color.white));
+            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(this, R.color.blueLabel));
         } else {
-            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(this,R.color.blueLabel));
-            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(this,R.color.white));
-            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(this,R.color.white));
-            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(this,R.color.blueLabel));
+            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.blueLabel));
+            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(this, R.color.white));
+            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+            actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(this, R.color.blueLabel));
         }
     }
 
@@ -83,10 +83,10 @@ public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewMod
                 finish();
                 break;
             case R.id.libraryBtn:
-                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(this,R.color.blueLabel));
-                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(this,R.color.white));
-                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(this,R.color.white));
-                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(this,R.color.blueLabel));
+                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.blueLabel));
+                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(this, R.color.white));
+                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(this, R.color.blueLabel));
                 AppSharedPreferences.getInstance(this).setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, true);
                 Fragment fragment = adapter.getItem(actvityCheckinCheckoutBinding.viewPager.getCurrentItem());
                 if (fragment instanceof CheckoutFragment) {
@@ -97,10 +97,10 @@ public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewMod
                 }
                 break;
             case R.id.resourceBtn:
-                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(this,R.color.blueLabel));
-                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(this,R.color.white));
-                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(this,R.color.white));
-                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(this,R.color.blueLabel));
+                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.blueLabel));
+                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(this, R.color.white));
+                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+                actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(this, R.color.blueLabel));
                 AppSharedPreferences.getInstance(this).setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, false);
                 Fragment fragment1 = adapter.getItem(actvityCheckinCheckoutBinding.viewPager.getCurrentItem());
                 if (fragment1 instanceof CheckoutFragment) {
@@ -126,13 +126,8 @@ public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewMod
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-    @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+        //Do implementation
     }
 
     @Override
@@ -140,13 +135,13 @@ public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewMod
         String permissionValue = AppSharedPreferences.getInstance(this).getString(AppSharedPreferences.KEY_PERMISSIONS);
         Permissions permissions = new Gson().fromJson(permissionValue, Permissions.class);
         if (position == 0) {
-            ShowLibraryResource(Boolean.parseBoolean(permissions.getCanCheckoutLibrary()), Boolean.parseBoolean(permissions.getCanCheckoutAsset()));
+            showLibraryResource(Boolean.parseBoolean(permissions.getCanCheckoutLibrary()), Boolean.parseBoolean(permissions.getCanCheckoutAsset()));
         } else if (position == 1) {
-            ShowLibraryResource(Boolean.parseBoolean(permissions.getCanCheckinLibrary()), Boolean.parseBoolean(permissions.getCanCheckinAsset()));
+            showLibraryResource(Boolean.parseBoolean(permissions.getCanCheckinLibrary()), Boolean.parseBoolean(permissions.getCanCheckinAsset()));
         }
     }
 
-    private void ShowLibraryResource(boolean canShowLibrary, boolean canShowResource) {
+    private void showLibraryResource(boolean canShowLibrary, boolean canShowResource) {
         if (canShowLibrary)
             actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setVisibility(View.VISIBLE);
         else
@@ -160,6 +155,6 @@ public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewMod
 
     @Override
     public void onPageScrollStateChanged(int state) {
-
+        //Do implementation
     }
 }

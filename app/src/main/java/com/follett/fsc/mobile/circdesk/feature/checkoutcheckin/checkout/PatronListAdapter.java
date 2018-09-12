@@ -28,7 +28,6 @@ import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.SERVER_URI_VALUE;
 
 public class PatronListAdapter extends RecyclerView.Adapter<PatronListViewHolder> implements View.OnClickListener {
-
     private Context context;
     private ScanPatron scanPatron;
     private ItemClickListener itemClickListener;
@@ -71,7 +70,7 @@ public class PatronListAdapter extends RecyclerView.Adapter<PatronListViewHolder
 
     @Override
     public int getItemCount() {
-        return scanPatron!=null ?scanPatron.getPatronList().size():0;
+        return scanPatron != null ? scanPatron.getPatronList().size() : 0;
     }
 
     @Override

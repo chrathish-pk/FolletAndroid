@@ -17,7 +17,6 @@ import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.AlertDialogListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
-import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentCheckoutBinding;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.UpdateUIListener;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.TitleInfoActivity;
@@ -213,7 +212,7 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
 
 
     private void navigateToPatronListScreen(ScanPatron scanPatron) {
-        Intent patronListIntent = new Intent(getActivity(), PatronListActivity.class);
+        Intent patronListIntent = new Intent(getActivity(), com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.PatronListActivity.class);
         patronListIntent.putExtra(getString(R.string.scanPatron), scanPatron);
         startActivity(patronListIntent);
     }

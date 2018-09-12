@@ -8,37 +8,24 @@ package com.follett.fsc.mobile.circdesk.feature.patronstatus;
 
 import android.arch.lifecycle.Observer;
 import android.content.Context;
-import android.databinding.BindingAdapter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
 
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentPatronStatusBinding;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.Permissions;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.AssetCheckOut;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.Checkout;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronList;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import com.google.gson.Gson;
-
-import android.arch.lifecycle.Observer;
-import android.content.Context;
-import android.databinding.BindingAdapter;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -106,12 +93,6 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
     }
 
     private void inItView() {
-        mBinding.patronEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.GONE);
-        mBinding.patronEntryIncludeLayout.patronGoBtn.setOnClickListener(this);
-        mBinding.itemRelativeLayout.setOnClickListener(this);
-        mBinding.closeBtn.setOnClickListener(this);
-        mBinding.holdRelativeLayout.setOnClickListener(this);
-        mBinding.fineRelativeLayout.setOnClickListener(this);
 
         mBinding.patronEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.GONE);
         mBinding.patronEntryIncludeLayout.patronEntry.setImeOptions(EditorInfo.IME_ACTION_DONE);
@@ -146,9 +127,7 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
             if (mPatronInfo != null && (!mPatronInfo.getCheckouts()
                     .isEmpty() || !mPatronInfo.getAssetCheckOuts()
                     .isEmpty())) {
-                    mNavigationListener.onNavigation(mPatronInfo, 2);
-
-                }
+                mNavigationListener.onNavigation(mPatronInfo, 2);
             }
         } else if (v == mBinding.holdRelativeLayout) {
             if (mPatronInfo != null && !mPatronInfo.getHolds()
@@ -162,49 +141,12 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
             }
         }
     }
-            if (mPatronInfo != null) {
-                if (!mPatronInfo.getFines().isEmpty()) {
-                    mNavigationListener.onNavigation(mPatronInfo, 4);
-                }
-            }
-        }
-
-
-//        else if (v.getId() == R.id.checkoutCloseBtn && mBinding.patronDetailIncludeLayout.patronDetailLayout.getVisibility() == View.VISIBLE) {
-//            AppSharedPreferences.getInstance(getActivity()).setString(AppSharedPreferences.KEY_BARCODE, null);
-//            AppSharedPreferences.getInstance(getActivity()).setString(AppSharedPreferences.KEY_PATRON_ID, null);
-//            AppSharedPreferences.getInstance(getActivity()).setString(AppSharedPreferences.KEY_SELECTED_BARCODE, null);
-//            mBinding.patronDetailIncludeLayout.patronDetailLayout.setVisibility(View.GONE);
-//            mBinding.checkoutDetailIncludeLayout.checkedoutDetailLayout.setVisibility(View.GONE);
-//            mBinding.checkoutPatronErrorMsg.setVisibility(View.GONE);
-//            mBinding.patronEntryIncludeLayout.patronEntry.setText("");
-//        } else if (v.getId() == R.id.checkedoutInfoBtn) {
-//
-//            Intent titleIntent = new Intent(getActivity(), TitleInfoActivity.class);
-//            titleIntent.putExtra("bibID", checkoutResult.getInfo().getBibID());
-//            startActivity(titleIntent);
-//
-//        }
-    }
 
     private void getPatronInfo(String patronID) {
         AppUtils.getInstance()
                 .hideKeyBoard(getBaseActivity(), mBinding.patronEntryIncludeLayout.patronEntry);
         mViewModel.getPatronInfo(patronID);
     }
-
-//    public void getPatronID() {
-//        if (mViewModel != null) {
-//            String selectedBarcode = AppSharedPreferences.getInstance(getActivity())
-//                    .getString(AppSharedPreferences.KEY_SELECTED_BARCODE);
-//            if (TextUtils.isEmpty(selectedBarcode)) {
-//                mViewModel.getScanPatron(mBinding.patronEntryIncludeLayout.patronEntry.getText()
-//                        .toString()
-//                        .trim());
-//            } else { mViewModel.getScanPatron(selectedBarcode); }
-//        }
-//    }
-
 
     private void updateUI(final PatronInfo patronInfo) {
         if (null != mActivity) {
@@ -236,25 +178,6 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
     public void requestPatronId(PatronList patronItem) {
         getPatronInfo(patronItem.getBarcode());
     }
-
-
-    @BindingAdapter(value = {"overDueCount"})
-    public static void setOverdueCount(@NonNull TextView textView, @NonNull PatronInfo patronInfo) {
-        int overDueCount = 0;
-        if (patronInfo != null) {
-            for (AssetCheckOut assetCheckOut : patronInfo.getAssetCheckOuts()) {
-                if (assetCheckOut.getOverDue()) {
-                    overDueCount++;
-                }
-            }
-            for (Checkout checkout : patronInfo.getCheckouts()) {
-                if (checkout.getOverDue()) {
-                    overDueCount++;
-                }
-            }
-        }
-
-        textView.setText(String.valueOf(overDueCount));
 
     private void setListener() {
 

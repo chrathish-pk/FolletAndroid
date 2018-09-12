@@ -7,6 +7,7 @@ package com.follett.fsc.mobile.circdesk.feature.loginsetup;
 
 
 import android.app.Application;
+import android.support.annotation.NonNull;
 
 import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
@@ -15,8 +16,9 @@ import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-import android.support.annotation.NonNull;
+import com.google.gson.Gson;
 
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_PERMISSIONS;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SESSION_ID;
 
 public class LoginViewModel extends BaseViewModel<CTAButtonListener> implements NetworkInterface {
@@ -24,24 +26,24 @@ public class LoginViewModel extends BaseViewModel<CTAButtonListener> implements 
     private Application mApplication;
 
     private AppRemoteRepository mAppRemoteRepository;
-    
+
     public LoginViewModel(@NonNull Application application) {
         super(application);
         mApplication = application;
         mAppRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(getApplication()));
         ;
     }
-    
-    
+
+
     public void getLoginResults(String contextName, String site, String userName, String password) {
         setIsLoding(true);
         mAppRemoteRepository.getLoginResults(this, contextName, site, userName, password);
     }
-    
+
     private void cancelProgressBar() {
         setIsLoding(false);
     }
-    
+
     @Override
     public void onCallCompleted(Object model) {
         cancelProgressBar();
@@ -51,6 +53,10 @@ public class LoginViewModel extends BaseViewModel<CTAButtonListener> implements 
                     .equalsIgnoreCase("true")) {
                 AppSharedPreferences.getInstance(mApplication)
                         .setString(KEY_SESSION_ID, loginResults.getSessionID());
+
+                String permissionJSON = new Gson().toJson((loginResults.getPermissions()));
+                AppSharedPreferences.getInstance(mApplication).setString(KEY_PERMISSIONS, permissionJSON);
+
                 setStatus(Status.SUCCESS);
             } else {
                 setStatus(Status.ERROR);
@@ -59,7 +65,7 @@ public class LoginViewModel extends BaseViewModel<CTAButtonListener> implements 
             FollettLog.d("Exception", e.getMessage());
         }
     }
-    
+
     @Override
     public void onCallFailed(Throwable throwable) {
         cancelProgressBar();
