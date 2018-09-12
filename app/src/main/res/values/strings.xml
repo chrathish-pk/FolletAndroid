@@ -155,4 +155,10 @@
     <string name="change_site">CHANGE SITE</string>
     <string name="logout">LOG OUT</string>
 
+    <!-- Inventory -->
+    <string name="finalize_inventory">Finalize Inventory</string>
+    <string name="unaccounted_copies">%1$d copies unaccounted</string>
+    <string name="mark_lost">MARK LOST</string>
+    <string name="ignore">IGNORE</string>
+
 </resources>

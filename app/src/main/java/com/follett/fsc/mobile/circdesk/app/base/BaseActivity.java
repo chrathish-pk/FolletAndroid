@@ -17,19 +17,10 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.databinding.ActivityBaseBinding;
-
-
-import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityBaseBinding;
 
 public abstract class BaseActivity<V extends BaseViewModel> extends AppCompatActivity {
-    
-
-
-    private TextView titleBarTextView;
-    private ImageView backBtn;
 
     public ActivityBaseBinding baseBinding;
 
