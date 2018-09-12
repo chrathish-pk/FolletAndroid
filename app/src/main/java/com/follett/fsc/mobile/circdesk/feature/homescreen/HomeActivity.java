@@ -11,10 +11,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
+
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityHomeBinding;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.CheckinCheckoutActivity;
+import com.follett.fsc.mobile.circdesk.feature.inventory.InventoryActivity;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.ItemStatusActivity;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.PatronStatusActivity;
 import com.follett.fsc.mobile.circdesk.utils.SpacesItemDecoration;
@@ -50,9 +52,10 @@ public class HomeActivity extends BaseActivity<HomeViewModel> {
                     startActivity(new Intent(HomeActivity.this, CheckinCheckoutActivity.class));
                 } else if (s.equalsIgnoreCase(getString(R.string.patronStatus))) {
                     startActivity(new Intent(HomeActivity.this, PatronStatusActivity.class));
-                }
-                else if (s.equalsIgnoreCase(getString(R.string.item_status_title))) {
+                } else if (s.equalsIgnoreCase(getString(R.string.item_status_title))) {
                     startActivity(new Intent(HomeActivity.this, ItemStatusActivity.class));
+                } else if (s.equalsIgnoreCase(getString(R.string.inventory))) {
+                    startActivity(new Intent(HomeActivity.this, InventoryActivity.class));
                 }
             }
         });

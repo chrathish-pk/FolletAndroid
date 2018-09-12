@@ -6,6 +6,11 @@
 
 package com.follett.fsc.mobile.circdesk.feature.inventory;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+
+import com.follett.fsc.mobile.circdesk.BR;
+import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentInventoryBinding;
 
@@ -15,19 +20,31 @@ import com.follett.fsc.mobile.circdesk.databinding.FragmentInventoryBinding;
 
 public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, InventoryViewModel> {
 
+    private InventoryViewModel inventoryViewModel;
+    private FragmentInventoryBinding fragmentInventoryBinding;
 
     @Override
     public int getLayoutId() {
-        return 0;
+        return R.layout.fragment_inventory;
     }
 
     @Override
     public InventoryViewModel getViewModel() {
-        return null;
+        inventoryViewModel = new InventoryViewModel(getBaseActivity().getApplication());
+        return inventoryViewModel;
     }
 
     @Override
     public int getBindingVariable() {
-        return 0;
+        return BR.inventoryViewModel;
+    }
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        //fragmentInventoryBinding.patronEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.GONE);
+
     }
 }

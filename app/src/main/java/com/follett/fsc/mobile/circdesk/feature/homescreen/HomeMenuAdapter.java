@@ -50,7 +50,7 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuViewHolder> {
         boolean canShowPatronStatus = Boolean.parseBoolean(permissions.getCanViewPatronStatus());
         boolean canShowItemStatus = Boolean.parseBoolean(permissions.getCanViewItemsOutAsset()) || Boolean.parseBoolean(permissions.getCanViewItemsOutLibrary()) || Boolean.parseBoolean(permissions.getCanViewItemsOutTextbook());
 
-        if ((position == 0 && canCheckoutShow && canCheckinShow) || (position == 1 && canShowPatronStatus) || (position == 2 && canShowItemStatus)) {
+        if ((position == 0 && canCheckoutShow && canCheckinShow) || (position == 1 && canShowPatronStatus) || (position == 2 && canShowItemStatus) || position == 3) {
             holder.rowHomeMenuBinding.setMenuItem(homeViewModel.homeMenuItems.get(position));
             holder.rowHomeMenuBinding.itemMenuImg.setImageResource(homeViewModel.homeMenuItems.get(position).getMenuImg());
         }
