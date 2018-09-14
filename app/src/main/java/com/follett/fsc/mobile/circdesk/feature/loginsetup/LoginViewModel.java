@@ -52,7 +52,13 @@ public class LoginViewModel extends BaseViewModel<CTAButtonListener> implements 
                 AppSharedPreferences.getInstance(mApplication)
                         .setString(KEY_SESSION_ID, loginResults.getSessionID());
                 setStatus(Status.SUCCESS);
-            } else {
+            } else if(loginResults.getInvalidUsernameOrPassword()!=null && loginResults.getInvalidUsernameOrPassword()
+                    .equalsIgnoreCase("true"))
+            {
+                setStatus(Status.ERROR);
+            }
+            else
+            {
                 setStatus(Status.ERROR);
             }
         } catch (Exception e) {
