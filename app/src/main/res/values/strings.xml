@@ -160,5 +160,9 @@
     <string name="unaccounted_copies">%1$d copies unaccounted</string>
     <string name="mark_lost">MARK LOST</string>
     <string name="ignore">IGNORE</string>
-
+    <string name="call_numbers_text">To specify a call number range, enter at least the first 3 digits of each Dewy number or a complete call number prefix.</string>
+    <string name="call_from">Call Numbers from:</string>
+    <string name="call_num">Call Number</string>
+    <string name="call_to">To:</string>
+    <string name="enter_date">Enter Date</string>
 </resources>
