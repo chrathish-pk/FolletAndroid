@@ -29,6 +29,16 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
+import com.follett.fsc.mobile.circdesk.BR;
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
+import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
+import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
+import com.follett.fsc.mobile.circdesk.databinding.FragmentBasicLayoutBinding;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
+
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.SERVER_URI_VALUE;
 
 public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, BasicViewModel> implements CTAButtonListener {
@@ -82,8 +92,6 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
     
     @Override
     public void ctaButtonOnClick(View view) {
-        
-        
         if (!AppUtils.getInstance()
                 .isEditTextNotEmpty(mBasicLayoutBinding.libraryEditText)) {
             AppUtils.getInstance()
@@ -107,8 +115,8 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
                     .getEditTextValue(mBasicLayoutBinding.sslportEditText));
         }
     }
-    
-    
+
+
     public void displayErrorToast(final String message) {
         getBaseActivity().runOnUiThread(new Runnable() {
             @Override
@@ -118,8 +126,8 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
             }
         });
     }
-    
-    
+
+
     private void savePreference(String libraryURI, String port, String sslPort) {
         AppUtils.getInstance()
                 .hideKeyBoard(getBaseActivity(), mBasicLayoutBinding.libraryEditText);
@@ -240,9 +248,9 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
             }
         });
     }
-    
+
     private void handleStatus(Status status) {
-        
+
         if (Status.SUCCESS.equals(status)) {
             navigationListener.onNavigation(null, 1);
         } else if (Status.ERROR.equals(status)) {
@@ -280,5 +288,5 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
             mBasicLayoutBinding.connectTextview.setSelected(false);
         }
     }
-    
+
 }

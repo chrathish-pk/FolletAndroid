@@ -18,6 +18,7 @@ public class Message implements Parcelable {
     @SerializedName("message")
     @Expose
     private String message;
+
     @SerializedName("code")
     @Expose
     private Integer code;

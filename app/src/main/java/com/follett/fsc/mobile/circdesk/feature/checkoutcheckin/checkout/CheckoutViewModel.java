@@ -38,7 +38,7 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
     }
 
     public void getScanPatron(String patronBarcodeID) {
-        //setIsLoding(true);
+        setIsLoding(true);
         AppUtils.getInstance().showProgressDialog(mApplication, null, null, false);
         Map<String, String> map = new HashMap<>();
         map.put("Accept", "application/json");

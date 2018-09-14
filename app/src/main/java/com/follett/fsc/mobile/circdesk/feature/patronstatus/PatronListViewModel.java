@@ -6,6 +6,14 @@
 
 package com.follett.fsc.mobile.circdesk.feature.patronstatus;
 
+import android.app.Application;
+import android.arch.lifecycle.MutableLiveData;
+import android.databinding.BindingAdapter;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.widget.TextView;
+
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
@@ -14,14 +22,6 @@ import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.Checkout;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.CustomCheckoutItem;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.Hold;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
-
-import android.app.Application;
-import android.arch.lifecycle.MutableLiveData;
-import android.databinding.BindingAdapter;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
