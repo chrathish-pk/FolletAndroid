@@ -25,7 +25,7 @@
 
     <!--Home screen-->
     <string name="home">HOME</string>
-    <string name="checkInCheckout">" Check In\nCheck Out"</string>
+    <string name="checkInCheckout">" Check Out\nCheck In"</string>
     <string name="patronStatus">"Patron\nStatus"</string>
     <string name="itemStatus">Item Status</string>
     <string name="inventory">Inventory</string>
@@ -125,6 +125,7 @@
     <string name="noDataFound">no data found from api result</string>
 
     <!--Patron Status-->
+    <string name="patron_status">Patron \nStatus</string>
     <string name="patron_status_label">Patron Status</string>
     <string name="patron_not_found">Patron %s not found</string>
     <string name="items_overude_label">items overudue</string>
@@ -154,6 +155,10 @@
     <string name="rate_follett_destiny">RATE FOLLETT DESTINY</string>
     <string name="change_site">CHANGE SITE</string>
     <string name="logout">LOG OUT</string>
+
+    <!-- Inventory-->
+    <string name="inventoryTitle">Inventory</string>
+    <string name="viewSelection">VIEW SELECTIONS</string>
 
     <!-- Inventory -->
     <string name="finalize_inventory">Finalize Inventory</string>

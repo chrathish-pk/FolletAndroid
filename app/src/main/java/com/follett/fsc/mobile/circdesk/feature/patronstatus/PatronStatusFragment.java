@@ -8,9 +8,13 @@ package com.follett.fsc.mobile.circdesk.feature.patronstatus;
 
 import android.arch.lifecycle.Observer;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 
@@ -19,17 +23,20 @@ import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentPatronStatusBinding;
+import com.follett.fsc.mobile.circdesk.feature.iteminfo.TitleInfoActivity;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.Permissions;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.CustomCheckoutItem;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronList;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBinding, PatronStatusViewModel> implements View.OnClickListener {
+public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBinding, PatronStatusViewModel> implements NavigationListener, View.OnClickListener {
 
     private static final String TAG = PatronStatusFragment.class.getSimpleName();
 
@@ -41,10 +48,10 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
 
     private NavigationListener mNavigationListener;
 
+    private PatronListFragment mPatronListFragment;
+
     public static PatronStatusFragment newInstance() {
-        Bundle args = new Bundle();
         PatronStatusFragment fragment = new PatronStatusFragment();
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -78,6 +85,8 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mBinding = getViewDataBinding();
+        mActivity.setTitleBar(getString(R.string.patron_status_label));
+        mActivity.setBackBtnVisible();
 
         showItemCheckedoutView();
         inItView();
@@ -186,5 +195,90 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
         mBinding.closeBtn.setOnClickListener(this);
         mBinding.holdRelativeLayout.setOnClickListener(this);
         mBinding.fineRelativeLayout.setOnClickListener(this);
+    }
+
+    @Override
+    public void onNavigation(int position) {
+
+    }
+
+    @Override
+    public void setToolBarTitle(String titleText) {
+        mActivity.setTitleBar(titleText);
+
+    }
+
+    @Override
+    public void onNavigation(Object model, int position) {
+        if (position == 0 && model != null) {  //Show patron list
+            navigateToPatronList((ArrayList<PatronList>) model, true);
+        } else if (position == 1 && model != null) {  // pop patron list
+            popFragmentFromBackStack(mPatronListFragment);
+            requestPatronId((PatronList) model);
+        } else if (position == 2 && model != null) {    // PatronItemCheckoutFragment checkout
+            navigateToPatronCheckout((PatronInfo) model, true, getString(R.string.item_checkout_label));
+        } else if (position == 3 && model != null) {    // PatronItemCheckoutFragment hold
+            navigateToPatronCheckout((PatronInfo) model, true, getString(R.string.on_hold_label));
+        } else if (position == 4 && model != null) {    // FineListFragment Fine
+            navigateToFineList((PatronInfo) model, true, getString(R.string.fine_label));
+        } else if (position == 5) {
+            navigateToTitleDetail((CustomCheckoutItem) model);
+        }
+    }
+
+    private void navigateToTitleDetail(CustomCheckoutItem checkoutItem) {
+        if (checkoutItem != null) {
+            Intent titleIntent = new Intent(getActivity(), TitleInfoActivity.class);
+            titleIntent.putExtra("bibID", String.valueOf(checkoutItem.getId()));
+            startActivity(titleIntent);
+        }
+    }
+
+    private void popFragmentFromBackStack(Fragment fragment) {
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        FragmentTransaction trans = manager.beginTransaction();
+        trans.remove(fragment);
+        trans.commit();
+        manager.popBackStack();
+    }
+
+
+    private void navigateToPatronList(ArrayList<PatronList> patronList, boolean isAddToBackStack) {
+
+        mPatronListFragment = PatronListFragment.newInstance(patronList);
+        setToolBarTitle(getString(R.string.selectPatron));
+
+        final FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction()
+                .add(R.id.base_container, mPatronListFragment);
+        if (isAddToBackStack) {
+            fragmentTransaction.addToBackStack(null);
+        }
+        fragmentTransaction.commit();
+    }
+
+    private void navigateToPatronCheckout(PatronInfo patronInfo, boolean isAddToBackStack, String title) {
+
+        PatronItemCheckoutFragment patronItemCheckoutFragment = PatronItemCheckoutFragment.newInstance(patronInfo, title);
+        setToolBarTitle(title);
+
+        final FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction()
+                .add(R.id.base_container, patronItemCheckoutFragment);
+        if (isAddToBackStack) {
+            fragmentTransaction.addToBackStack(null);
+        }
+        fragmentTransaction.commit();
+    }
+
+    private void navigateToFineList(PatronInfo patronInfo, boolean isAddToBackStack, String title) {
+
+        PatronFineListFragment patronFineListFragment = PatronFineListFragment.newInstance(patronInfo);
+        setToolBarTitle(title);
+
+        final FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction()
+                .add(R.id.base_container, patronFineListFragment);
+        if (isAddToBackStack) {
+            fragmentTransaction.addToBackStack(null);
+        }
+        fragmentTransaction.commit();
     }
 }

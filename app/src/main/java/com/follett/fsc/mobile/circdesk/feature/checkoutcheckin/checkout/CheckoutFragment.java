@@ -136,6 +136,7 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
             if (scanPatron.getPatronList() != null) {
                 navigateToPatronListScreen(scanPatron);
             } else {
+                this.scanPatron = scanPatron;
                 bindPatronResult();
             }
         } else {
@@ -192,7 +193,6 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
 
     public void bindPatronResult() {
         if (scanPatron != null) {
-            if (!TextUtils.isEmpty(AppSharedPreferences.getInstance(getActivity()).getString(AppSharedPreferences.KEY_SELECTED_BARCODE))) {
                 fragmentCheckoutBinding.patronDetailIncludeLayout.patronDetailLayout.setVisibility(View.VISIBLE);
                 fragmentCheckoutBinding.checkoutDetailIncludeLayout.checkedoutDetailLayout.setVisibility(View.GONE);
                 fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.setText("");
@@ -203,7 +203,6 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
                 scanPatron.setLibrarySelected(AppSharedPreferences.getInstance(getActivity()).getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED));
 
                 fragmentCheckoutBinding.setScanPatron(scanPatron);
-            }
         } else {
             if (fragmentCheckoutBinding != null)
                 fragmentCheckoutBinding.patronDetailIncludeLayout.patronDetailLayout.setVisibility(View.GONE);
@@ -219,7 +218,7 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
 
     @Override
     public void onPositiveButtonClick(int statusCode) {
-       //Do Nothing
+        //Do Nothing
     }
 
     @Override

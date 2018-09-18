@@ -8,6 +8,7 @@ package com.follett.fsc.mobile.circdesk.feature.inventory;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
@@ -18,7 +19,7 @@ import com.follett.fsc.mobile.circdesk.databinding.FragmentInventoryBinding;
  * Created by muthulakshmi on 11/09/18.
  */
 
-public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, InventoryViewModel> {
+public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, InventoryViewModel> implements View.OnClickListener {
 
     private InventoryViewModel inventoryViewModel;
     private FragmentInventoryBinding fragmentInventoryBinding;
@@ -43,8 +44,19 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        fragmentInventoryBinding = getViewDataBinding();
 
-        //fragmentInventoryBinding.patronEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.GONE);
+        fragmentInventoryBinding.patronEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.GONE);
+        fragmentInventoryBinding.inventorySelection.setOnClickListener(this);
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.inventorySelection:
+
+                break;
+        }
     }
 }
