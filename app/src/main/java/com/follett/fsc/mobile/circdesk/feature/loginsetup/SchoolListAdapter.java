@@ -5,10 +5,6 @@
  */
 package com.follett.fsc.mobile.circdesk.feature.loginsetup;
 
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
-import com.follett.fsc.mobile.circdesk.databinding.SchoolListItemBinding;
-
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
@@ -16,6 +12,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.databinding.SchoolListItemBinding;
 
 import java.util.List;
 
@@ -70,13 +70,13 @@ public class SchoolListAdapter extends RecyclerView.Adapter<SchoolListAdapter.Sc
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
-            AppSharedPreferences.getInstance(mContext)
+            AppSharedPreferences.getInstance()
                     .setString(KEY_SITE_SHORT_NAME, mSchoolList.get(position)
                             .getSiteShortName());
-            AppSharedPreferences.getInstance(mContext)
+            AppSharedPreferences.getInstance()
                     .setString(KEY_SITE_ID, mSchoolList.get(position)
                             .getSiteID());
-            AppSharedPreferences.getInstance(mContext)
+            AppSharedPreferences.getInstance()
                     .setString(KEY_SITE_NAME, mSchoolList.get(position)
                             .getSiteName());
             mNavigationListener.onNavigation(null, 2);

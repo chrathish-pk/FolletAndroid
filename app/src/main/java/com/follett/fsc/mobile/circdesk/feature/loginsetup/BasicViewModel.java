@@ -37,29 +37,26 @@ import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferen
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.SERVER_URI_VALUE;
 
 public class BasicViewModel extends BaseViewModel<CTAButtonListener> implements NetworkInterface {
-    
+
     public final MutableLiveData<DistrictList> mDistrictList = new MutableLiveData<>();
-    
+
     private ObservableField<String> storedSchoolUri = new ObservableField<>();
-    
+
     private ObservableBoolean isAdvancedTabView = new ObservableBoolean();
-    
+
     private Application mApplication;
-    
-    private AppRemoteRepository mAppRemoteRepository;
-    
+
     public BasicViewModel(@NonNull Application application) {
         super(application);
         mApplication = application;
     }
-    
+
     public void savePreference(String serverName, String port, String sslPort) {
         setIsLoding(true);
-        mAppRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(getApplication()));
         SaveContextTask saveTask = new SaveContextTask();
         saveTask.execute(serverName, port, sslPort);
     }
-    
+
     @Override
     public void onCallCompleted(Object model) {
         try {
@@ -70,9 +67,9 @@ public class BasicViewModel extends BaseViewModel<CTAButtonListener> implements 
                     setIsLoding(false);
                     setStatus(Status.SCHOOL_NOT_SETUP_ERROR);
                 } else {
-                    AppSharedPreferences.getInstance(mApplication)
+                    AppSharedPreferences.getInstance()
                             .setString(FOLLETT_API_VERSION, lVersion);
-                    mAppRemoteRepository.getDistrictList(this);
+                    AppRemoteRepository.getInstance().getDistrictList(this);
                 }
             } else if (model instanceof DistrictList) {
                 DistrictList districtList = (DistrictList) model;
@@ -81,11 +78,11 @@ public class BasicViewModel extends BaseViewModel<CTAButtonListener> implements 
                 if (size == 0) {
                     setStatus(Status.NO_LIST_FOUND);
                 } else if (size == 1) {
-                    AppSharedPreferences.getInstance(getApplication())
+                    AppSharedPreferences.getInstance()
                             .setString(KEY_CONTEXT_NAME, districtList.getDistricts()
                                     .get(0)
                                     .getContextName());
-                    AppSharedPreferences.getInstance(getApplication())
+                    AppSharedPreferences.getInstance()
                             .setString(KEY_DISTRICT_NAME, districtList.getDistricts()
                                     .get(0)
                                     .getDistrictName());
@@ -99,15 +96,15 @@ public class BasicViewModel extends BaseViewModel<CTAButtonListener> implements 
             FollettLog.d("Exception", e.getMessage());
         }
     }
-    
+
     @Override
     public void onCallFailed(Throwable throwable) {
         setIsLoding(false);
     }
-    
-    
+
+
     private class SaveContextTask extends AsyncTask<String, Void, Boolean> {
-        
+
         @Override
         protected Boolean doInBackground(String... params) {
             Boolean result = Boolean.FALSE;
@@ -117,24 +114,24 @@ public class BasicViewModel extends BaseViewModel<CTAButtonListener> implements 
             try {
                 String url = null;
                 try {
-                    AppSharedPreferences.getInstance(mApplication)
+                    AppSharedPreferences.getInstance()
                             .removeAllSession();
-                    mAppRemoteRepository.setString(SERVER_URI_VALUE, serverName);
+                    AppRemoteRepository.getInstance().setString(SERVER_URI_VALUE, serverName);
                     if (port != null) {
-                        AppSharedPreferences.getInstance(mApplication)
+                        AppSharedPreferences.getInstance()
                                 .setInt(KEY_SERVER_PORT, Integer.parseInt(port));
                     } else {
-                        AppSharedPreferences.getInstance(mApplication)
+                        AppSharedPreferences.getInstance()
                                 .setInt(KEY_SERVER_PORT, DEFAULT_HTTP_PORT);
                     }
                     if (sslPort != null) {
-                        AppSharedPreferences.getInstance(mApplication)
+                        AppSharedPreferences.getInstance()
                                 .setInt(KEY_SERVER_SSL_PORT, Integer.parseInt(sslPort));
                     } else {
-                        AppSharedPreferences.getInstance(mApplication)
+                        AppSharedPreferences.getInstance()
                                 .setInt(KEY_SERVER_SSL_PORT, DEFAULT_SSL_PORT);
                     }
-                    
+
                     try {
                         if (TextUtils.isEmpty(port)) {
                             url = URLHelper.getFinalizedURL(serverName);
@@ -145,10 +142,10 @@ public class BasicViewModel extends BaseViewModel<CTAButtonListener> implements 
                         setIsLoding(false);
                         setStatus(com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status.ERROR);
                     }
-                    AppSharedPreferences.getInstance(mApplication)
+                    AppSharedPreferences.getInstance()
                             .populateInfoFromURL(new URL(url));
                     result = Boolean.TRUE;
-                    
+
                 } catch (IOException e) {
                     setIsLoding(false);
                     setStatus(com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status.ERROR);
@@ -159,30 +156,30 @@ public class BasicViewModel extends BaseViewModel<CTAButtonListener> implements 
             }
             return result;
         }
-        
+
         @Override
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
             if (result) {
-                mAppRemoteRepository.getVersion(BasicViewModel.this);
+                AppRemoteRepository.getInstance().getVersion(BasicViewModel.this);
             } else {
                 setIsLoding(false);
             }
         }
     }
-    
+
     public ObservableField<String> getStoredSchoolUri() {
         return storedSchoolUri;
     }
-    
+
     public void setStoredSchoolUri(String storedSchoolUri) {
         this.storedSchoolUri.set(storedSchoolUri);
     }
-    
+
     public ObservableBoolean getAdvancedTabView() {
         return isAdvancedTabView;
     }
-    
+
     public void setAdvancedTabView(Boolean advancedTabView) {
         this.isAdvancedTabView.set(advancedTabView);
     }

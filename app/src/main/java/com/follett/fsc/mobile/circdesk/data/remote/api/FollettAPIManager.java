@@ -39,7 +39,7 @@ public class FollettAPIManager {
             initOkHttp();
         }
 
-        if (retrofit == null && !TextUtils.isEmpty(baseUrl)) {
+        if (retrofit == null) {
              retrofit = new Retrofit.Builder().addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
                     .baseUrl(baseUrl)
                     .client(okHttpClient)

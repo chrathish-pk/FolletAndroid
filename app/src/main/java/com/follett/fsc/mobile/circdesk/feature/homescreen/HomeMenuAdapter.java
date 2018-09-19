@@ -45,7 +45,7 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuViewHolder> im
     @Override
     public void onBindViewHolder(@NonNull HomeMenuViewHolder holder, final int position) {
 
-        String permissionValue = AppSharedPreferences.getInstance(context).getString(AppSharedPreferences.KEY_PERMISSIONS);
+        String permissionValue = AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_PERMISSIONS);
         Permissions permissions = new Gson().fromJson(permissionValue, Permissions.class);
 
         boolean canCheckoutShow = Boolean.parseBoolean(permissions.getCanCheckoutAsset()) || Boolean.parseBoolean(permissions.getCanCheckoutLibrary()) || Boolean.parseBoolean(permissions.getCanCheckoutTextbook());

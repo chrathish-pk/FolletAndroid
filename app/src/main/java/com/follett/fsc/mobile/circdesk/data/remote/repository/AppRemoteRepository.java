@@ -8,8 +8,6 @@ package com.follett.fsc.mobile.circdesk.data.remote.repository;
 
 import android.support.annotation.Nullable;
 
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppPrefHelper;
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppPreferencesHelper;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.api.FollettAPIManager;
@@ -38,14 +36,20 @@ import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferen
 public class AppRemoteRepository {
 
     private APIInterface apiService;
+    private static AppRemoteRepository mInstance;
 
-    private AppPrefHelper appPreferencesHelper;
+    public static AppRemoteRepository getInstance() {
+        if (mInstance == null)
+            mInstance = new AppRemoteRepository();
 
-    public AppRemoteRepository(AppSharedPreferences appPref) {
-        appPreferencesHelper = new AppPreferencesHelper(appPref);
+        return mInstance;
+    }
+
+    public AppRemoteRepository() {
         apiService = FollettAPIManager.getClient(getString(SERVER_URI_VALUE))
                 .create(APIInterface.class);
     }
+
 
     public void getVersion(@Nullable final NetworkInterface networkInterface) {
         apiService.getVersion()
@@ -157,9 +161,8 @@ public class AppRemoteRepository {
                 });
     }
 
-    public void getScanPatron(Map<String, String> headers, @Nullable final NetworkInterface networkInterface,String contextName, String site, String patronBarcodeID) {
-        apiService.getScanPatron(headers, contextName, site, "COGNITE", patronBarcodeID, "DestinyCirc", "Android_24_7.0_lge_lucye_LG-H870DS", "1_Android",
-                "English")
+    public void getScanPatron(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, String patronBarcodeID) {
+        apiService.getScanPatron(headers, contextName, site, patronBarcodeID)
                 .subscribeWith(new Observer<ScanPatron>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -187,7 +190,7 @@ public class AppRemoteRepository {
                 });
     }
 
-    public void getCheckoutResult(Map<String, String> headers, @Nullable final NetworkInterface networkInterface,String contextName, String site, String patronID, String barcode, String collectionType) {
+    public void getCheckoutResult(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, String patronID, String barcode, String collectionType) {
 
         apiService.getCheckoutResult(headers, contextName, site, barcode, patronID, collectionType, "false")
                 .subscribeWith(new Observer<CheckoutResult>() {
@@ -217,7 +220,7 @@ public class AppRemoteRepository {
                 });
     }
 
-    public void getCheckinResult(Map<String, String> headers, @Nullable final NetworkInterface networkInterface,String contextName, String site, String barcode, String collectionType, boolean isLibraryUse) {
+    public void getCheckinResult(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, String barcode, String collectionType, boolean isLibraryUse) {
 
         apiService.getCheckinResult(headers, contextName, site, barcode, collectionType, String.valueOf(isLibraryUse))
                 .subscribeWith(new Observer<CheckinResult>() {
@@ -249,7 +252,7 @@ public class AppRemoteRepository {
                 });
     }
 
-    public void getTitleDetails(Map<String, String> headers, @Nullable final NetworkInterface networkInterface,String contextName, String site, String bibID) {
+    public void getTitleDetails(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, String bibID) {
         apiService.getTitleDetails(headers, contextName, site, bibID)
                 .subscribeWith(new Observer<TitleDetails>() {
                     @Override
@@ -270,6 +273,7 @@ public class AppRemoteRepository {
                             networkInterface.onCallFailed(throwable);
                         }
                     }
+
                     @Override
                     public void onComplete() {
                         //Do Nothing
@@ -277,34 +281,33 @@ public class AppRemoteRepository {
                 });
     }
 
-    public void getItemStatus(Map<String, String> headers,@Nullable final NetworkInterface networkInterface,String contextName, String site,String itemBarcodeID,String collectionType) {
+    public void getItemStatus(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, String itemBarcodeID, String collectionType) {
 
-        apiService.getScanItem(contextName,site,itemBarcodeID,collectionType)
-               .subscribeWith(new Observer<ItemDetails>() {
-                   @Override
-                   public void onSubscribe(Disposable d) {
-                       //Do Nothing
+        apiService.getScanItem(headers, contextName, site, itemBarcodeID, collectionType)
+                .subscribeWith(new Observer<ItemDetails>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        //Do Nothing
 
-                   }
+                    }
 
-                   @Override
-                   public void onNext(ItemDetails itemDetails) {
-                       if(networkInterface!=null)
-                       {
-                           networkInterface.onCallCompleted(itemDetails);
-                       }
-                   }
+                    @Override
+                    public void onNext(ItemDetails itemDetails) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallCompleted(itemDetails);
+                        }
+                    }
 
-                   @Override
-                   public void onError(Throwable throwable) {
-                       if (networkInterface != null) {
-                           networkInterface.onCallFailed(throwable);
-                       }
-                   }
+                    @Override
+                    public void onError(Throwable throwable) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallFailed(throwable);
+                        }
+                    }
 
-                   @Override
-                   public void onComplete() {
-                       //Do Nothing
+                    @Override
+                    public void onComplete() {
+                        //Do Nothing
                     }
                 });
     }
@@ -341,34 +344,34 @@ public class AppRemoteRepository {
 
 
     public void setString(String key, String value) {
-        appPreferencesHelper.setString(key, value);
+        AppSharedPreferences.getInstance().setString(key,value);
     }
 
     public String getString(String key) {
-        return appPreferencesHelper.getString(key);
+        return AppSharedPreferences.getInstance().getString(key);
     }
 
     public void setInt(String key, int value) {
-        appPreferencesHelper.setInt(key, value);
+        AppSharedPreferences.getInstance().setInt(key, value);
     }
 
     public int getInt(String key) {
-        return appPreferencesHelper.getInt(key);
+        return AppSharedPreferences.getInstance().getInt(key);
     }
 
     public void setBoolean(String key, Boolean value) {
-        appPreferencesHelper.setBoolean(key, value);
+        AppSharedPreferences.getInstance().setBoolean(key, value);
     }
 
     public Boolean getBoolean(String key) {
-        return appPreferencesHelper.getBoolean(key);
+        return AppSharedPreferences.getInstance().getBoolean(key);
     }
 
     public void removeValues(String key) {
-        appPreferencesHelper.removeValues(key);
+        AppSharedPreferences.getInstance().removeValues(key);
     }
 
     public void removeAllSession() {
-        appPreferencesHelper.removeAllSession();
+        AppSharedPreferences.getInstance().removeAllSession();
     }
 }
