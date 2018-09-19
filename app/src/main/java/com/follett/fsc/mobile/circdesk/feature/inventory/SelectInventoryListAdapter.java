@@ -25,13 +25,13 @@ import java.util.List;
  * Created by muthulakshmi on 18/09/18.
  */
 
-public class InventoryListAdapter extends RecyclerView.Adapter<InventoryListViewHolder> implements View.OnClickListener {
+public class SelectInventoryListAdapter extends RecyclerView.Adapter<SelectInventoryListViewHolder> implements View.OnClickListener {
 
     private Context context;
     private List<Inventory> inventoryList = new ArrayList<>();
     private ItemClickListener itemClickListener;
 
-    public InventoryListAdapter(Context context, List<Inventory> inventoryList, ItemClickListener itemClickListener) {
+    public SelectInventoryListAdapter(Context context, List<Inventory> inventoryList, ItemClickListener itemClickListener) {
         this.context = context;
         this.inventoryList = inventoryList;
         this.itemClickListener = itemClickListener;
@@ -39,13 +39,13 @@ public class InventoryListAdapter extends RecyclerView.Adapter<InventoryListView
 
     @NonNull
     @Override
-    public InventoryListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SelectInventoryListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         RowInventoryBinding rowInventoryBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.row_inventory, parent, false);
-        return new InventoryListViewHolder(rowInventoryBinding);
+        return new SelectInventoryListViewHolder(rowInventoryBinding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull InventoryListViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SelectInventoryListViewHolder holder, int position) {
         holder.rowInventoryBinding.setInventory(inventoryList.get(position));
 
         holder.rowInventoryBinding.itemInventoryLayout.setTag(position);

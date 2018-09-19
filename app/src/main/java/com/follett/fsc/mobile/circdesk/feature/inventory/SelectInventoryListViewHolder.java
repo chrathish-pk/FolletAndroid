@@ -14,11 +14,11 @@ import com.follett.fsc.mobile.circdesk.databinding.RowInventoryBinding;
  * Created by muthulakshmi on 18/09/18.
  */
 
-public class InventoryListViewHolder extends RecyclerView.ViewHolder {
+public class SelectInventoryListViewHolder extends RecyclerView.ViewHolder {
 
     public RowInventoryBinding rowInventoryBinding;
 
-    public InventoryListViewHolder(RowInventoryBinding rowInventoryBinding) {
+    public SelectInventoryListViewHolder(RowInventoryBinding rowInventoryBinding) {
         super(rowInventoryBinding.getRoot());
         this.rowInventoryBinding = rowInventoryBinding;
 

@@ -182,5 +182,7 @@
     <string name="excludeItems">Exclude Items Seen On or After</string>
     <string name="mismatchedItemLocationLabel">Mismatched Item Location</string>
     <string name="startInventory">Start Inventory</string>
+    <string name="scanLocation">SCAN LOCATION</string>
+    <string name="inventoryLocation">Inventory Location</string>
 
 </resources>

@@ -25,12 +25,12 @@ import java.util.List;
  * Created by muthulakshmi on 12/09/18.
  */
 
-public class InventoryListFragment extends BaseFragment<FragmentInventoryListBinding, InventoryListViewModel> implements ItemClickListener, View.OnClickListener {
+public class SelectInventoryFragment extends BaseFragment<FragmentInventoryListBinding, SelectInventoryViewModel> implements ItemClickListener, View.OnClickListener {
 
     private FragmentInventoryListBinding fragmentInventoryListBinding;
-    private InventoryListViewModel inventoryListViewModel;
+    private SelectInventoryViewModel selectInventoryViewModel;
     private List<Inventory> inventoryListData = new ArrayList<>();
-    private InventoryListAdapter inventoryListAdapter;
+    private SelectInventoryListAdapter selectInventoryListAdapter;
 
     @Override
     public int getLayoutId() {
@@ -38,9 +38,9 @@ public class InventoryListFragment extends BaseFragment<FragmentInventoryListBin
     }
 
     @Override
-    public InventoryListViewModel getViewModel() {
-        inventoryListViewModel = new InventoryListViewModel(getBaseActivity().getApplication());
-        return inventoryListViewModel;
+    public SelectInventoryViewModel getViewModel() {
+        selectInventoryViewModel = new SelectInventoryViewModel(getBaseActivity().getApplication(),this);
+        return selectInventoryViewModel;
     }
 
     @Override
@@ -63,17 +63,17 @@ public class InventoryListFragment extends BaseFragment<FragmentInventoryListBin
         inventoryListData.add(new Inventory("Second", false));
         inventoryListData.add(new Inventory("Third", false));
 
-        inventoryListAdapter = new InventoryListAdapter(getActivity(), inventoryListData, InventoryListFragment.this);
-        fragmentInventoryListBinding.inventoryRecyclerView.setAdapter(inventoryListAdapter);
+        selectInventoryListAdapter = new SelectInventoryListAdapter(getActivity(), inventoryListData, SelectInventoryFragment.this);
+        fragmentInventoryListBinding.inventoryRecyclerView.setAdapter(selectInventoryListAdapter);
 
 
-        inventoryListViewModel.inventoryList.observe(this, new Observer<List<Inventory>>() {
+        selectInventoryViewModel.inventoryList.observe(this, new Observer<List<Inventory>>() {
             @Override
             public void onChanged(@Nullable List<Inventory> inventoryList) {
                 inventoryListData = inventoryList;
 
-                inventoryListAdapter = new InventoryListAdapter(getActivity(), inventoryListData, InventoryListFragment.this);
-                fragmentInventoryListBinding.inventoryRecyclerView.setAdapter(inventoryListAdapter);
+                selectInventoryListAdapter = new SelectInventoryListAdapter(getActivity(), inventoryListData, SelectInventoryFragment.this);
+                fragmentInventoryListBinding.inventoryRecyclerView.setAdapter(selectInventoryListAdapter);
 
             }
         });
