@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ /*
+  ~  * Copyright (c) 2018 Follett. All rights reserved.
+  ~  */
+  -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="inventory"
+            type="com.follett.fsc.mobile.circdesk.feature.inventory.Inventory" />
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/itemInventoryLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/itemInventoryName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/itemInventoryRadioBtn"
+            android:padding="10dp"
+            android:text="@{inventory.inventoryName}" />
+
+        <RadioButton
+            android:id="@+id/itemInventoryRadioBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:checked="@{inventory.selected}"
+            android:padding="10dp" />
+
+
+    </RelativeLayout>
+
+</layout>

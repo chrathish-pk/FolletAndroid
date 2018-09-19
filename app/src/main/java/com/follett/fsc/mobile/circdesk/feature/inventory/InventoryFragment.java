@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentInventoryBinding;
 
@@ -19,7 +20,7 @@ import com.follett.fsc.mobile.circdesk.databinding.FragmentInventoryBinding;
  * Created by muthulakshmi on 11/09/18.
  */
 
-public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, InventoryViewModel> implements View.OnClickListener {
+public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, InventoryViewModel> implements ItemClickListener {
 
     private InventoryViewModel inventoryViewModel;
     private FragmentInventoryBinding fragmentInventoryBinding;
@@ -31,7 +32,7 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
 
     @Override
     public InventoryViewModel getViewModel() {
-        inventoryViewModel = new InventoryViewModel(getBaseActivity().getApplication());
+        inventoryViewModel = new InventoryViewModel(getBaseActivity().getApplication(), this);
         return inventoryViewModel;
     }
 
@@ -45,18 +46,18 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         fragmentInventoryBinding = getViewDataBinding();
+        mActivity.setTitleBar(getString(R.string.inventory));
 
         fragmentInventoryBinding.patronEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.GONE);
-        fragmentInventoryBinding.inventorySelection.setOnClickListener(this);
 
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.inventorySelection:
 
-                break;
+    @Override
+    public void onItemClick(View view, int position) {
+        switch (view.getId()) {
+            case R.id.inventorySelection:
+                mActivity.pushFragment(new InventoryListFragment(), R.id.loginContainer, "InventoryListFragment", true);
         }
     }
 }
