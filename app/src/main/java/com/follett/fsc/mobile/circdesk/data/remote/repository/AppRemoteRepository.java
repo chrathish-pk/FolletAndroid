@@ -45,11 +45,11 @@ public class AppRemoteRepository {
         return mInstance;
     }
 
+
     public AppRemoteRepository() {
         apiService = FollettAPIManager.getClient(getString(SERVER_URI_VALUE))
                 .create(APIInterface.class);
     }
-
 
     public void getVersion(@Nullable final NetworkInterface networkInterface) {
         apiService.getVersion()

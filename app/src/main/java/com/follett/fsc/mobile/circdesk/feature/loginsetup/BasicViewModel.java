@@ -53,6 +53,10 @@ public class BasicViewModel extends BaseViewModel<CTAButtonListener> implements 
 
     public void savePreference(String serverName, String port, String sslPort) {
         setIsLoding(true);
+        AppSharedPreferences.getInstance()
+                .removeAllSession();
+        AppSharedPreferences.getInstance().setString(SERVER_URI_VALUE, serverName);
+
         SaveContextTask saveTask = new SaveContextTask();
         saveTask.execute(serverName, port, sslPort);
     }
@@ -114,8 +118,7 @@ public class BasicViewModel extends BaseViewModel<CTAButtonListener> implements 
             try {
                 String url = null;
                 try {
-                    AppSharedPreferences.getInstance()
-                            .removeAllSession();
+
                     AppRemoteRepository.getInstance().setString(SERVER_URI_VALUE, serverName);
                     if (port != null) {
                         AppSharedPreferences.getInstance()
