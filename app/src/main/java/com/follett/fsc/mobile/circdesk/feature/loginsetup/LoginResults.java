@@ -244,4 +244,25 @@ public class LoginResults implements Parcelable {
         dest.writeString(sessionTimeoutInMillis);
         dest.writeString(success);
     }
+    
+    public LoginResults(String firstName, String guest, String invalidUsernameOrPassword, String lastName, String listID, String listSize, String lockedOut,
+            String middleName, String myListsTotalSize, String numberOfMyLists, String passwordExpired, String passwordNotSecure, Permissions permissions,
+            String sessionID, String sessionTimeoutInMillis, String success) {
+        this.firstName = firstName;
+        this.guest = guest;
+        this.invalidUsernameOrPassword = invalidUsernameOrPassword;
+        this.lastName = lastName;
+        this.listID = listID;
+        this.listSize = listSize;
+        this.lockedOut = lockedOut;
+        this.middleName = middleName;
+        this.myListsTotalSize = myListsTotalSize;
+        this.numberOfMyLists = numberOfMyLists;
+        this.passwordExpired = passwordExpired;
+        this.passwordNotSecure = passwordNotSecure;
+        this.permissions = permissions;
+        this.sessionID = sessionID;
+        this.sessionTimeoutInMillis = sessionTimeoutInMillis;
+        this.success = success;
+    }
 }

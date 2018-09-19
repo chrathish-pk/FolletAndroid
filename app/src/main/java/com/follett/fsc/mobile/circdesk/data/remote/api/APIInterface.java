@@ -44,10 +44,9 @@ public interface APIInterface {
     @JsonAndXmlConverters.Xml
     Observable<SiteResults> getSchoolList(@Query("contextName") String contextName);
 
-    @Headers({"Cookie: JSESSIONID=YYXn43oP1_6wRo83mhiiKqAs23x4omFd5QKE-F0q", "Accept: application/json", "text/xml: gzip"})
     @GET("rest/v4/circulation/copystatus")
     @JsonAndXmlConverters.Xml
-    Observable<ItemDetails> getScanItem(@Query("contextName") String contextName, @Query("site") String site, @Query("barcode") String barcode, @Query
+    Observable<ItemDetails> getScanItem(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site, @Query("barcode") String barcode, @Query
             ("collectionType") String collectionType);
 
 

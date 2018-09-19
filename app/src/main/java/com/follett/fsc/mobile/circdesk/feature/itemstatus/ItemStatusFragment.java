@@ -2,6 +2,7 @@ package com.follett.fsc.mobile.circdesk.feature.itemstatus;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentItemStatusBinding;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.TitleInfoActivity;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
@@ -18,17 +19,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
-import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
-import com.follett.fsc.mobile.circdesk.databinding.FragmentItemStatusBinding;
-import com.follett.fsc.mobile.circdesk.feature.iteminfo.TitleInfoActivity;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
-import com.follett.fsc.mobile.circdesk.utils.AppUtils;
-import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-
-public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding,ItemStatusViewModel> implements View.OnClickListener,UpdateItemUIListener {
+public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding,ItemStatusViewModel> implements View.OnClickListener {
 
     private ItemDetails itemDetailsinfo;
     private FragmentItemStatusBinding fragmentItemStatusBinding;
@@ -63,8 +54,7 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding,I
 
     @Override
     public ItemStatusViewModel getViewModel() {
-        itemStatusViewModel = new ItemStatusViewModel(getBaseActivity().getApplication()
-                , this);
+        itemStatusViewModel = new ItemStatusViewModel(getBaseActivity().getApplication());
         return itemStatusViewModel;
     }
 
@@ -185,8 +175,4 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding,I
     }
 
 
-    @Override
-    public void updateUI(final Object itemDetails) {
-        //Do Nothing
-    }
 }

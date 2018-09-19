@@ -279,7 +279,7 @@ public class AppRemoteRepository {
 
     public void getItemStatus(Map<String, String> headers,@Nullable final NetworkInterface networkInterface,String contextName, String site,String itemBarcodeID,String collectionType) {
 
-        apiService.getScanItem(contextName,site,itemBarcodeID,collectionType)
+        apiService.getScanItem(headers, contextName,site,itemBarcodeID,collectionType)
                .subscribeWith(new Observer<ItemDetails>() {
                    @Override
                    public void onSubscribe(Disposable d) {

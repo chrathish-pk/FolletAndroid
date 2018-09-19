@@ -35,6 +35,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.SERVER_URI_VALUE;
 
 public class AppUtils {
@@ -262,6 +265,19 @@ public class AppUtils {
             FollettLog.d(AppConstants.EXCEPTION, e.getMessage());
         }
 
+    }
+    
+    public static Map<String, String> getHeader(Context context) {
+        if (context == null) {
+            return new HashMap<>();
+        }
+        
+        Map<String, String> map = new HashMap<>();
+        map.put("Accept", "application/json");
+        map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance(context)
+                .getString(AppSharedPreferences.KEY_SESSION_ID));
+        map.put("text/xml", "gzip");
+        return map;
     }
 
 }

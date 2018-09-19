@@ -18,16 +18,14 @@ import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferen
 public class ItemStatusViewModel extends BaseViewModel implements NetworkInterface {
 
     private Application mApplication;
-    UpdateItemUIListener updateItemUIListener;
     public final MutableLiveData<ItemDetails> itemDetailsInfo = new MutableLiveData<>();
 
 
     private AppRemoteRepository mAppRemoteRepository;
 
-    public ItemStatusViewModel(Application application, UpdateItemUIListener updateItemUIListener) {
+    public ItemStatusViewModel(Application application) {
         super(application);
         this.mApplication = application;
-        this.updateItemUIListener = updateItemUIListener;
         this.mAppRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(application));
     }
 
