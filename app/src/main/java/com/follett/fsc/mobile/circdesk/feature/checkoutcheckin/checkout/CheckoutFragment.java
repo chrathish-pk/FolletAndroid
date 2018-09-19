@@ -204,9 +204,10 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
                 scanPatron.setLibrarySelected(AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED));
 
                 fragmentCheckoutBinding.setScanPatron(scanPatron);
-        } else {
-            if (fragmentCheckoutBinding != null)
-                fragmentCheckoutBinding.patronDetailIncludeLayout.patronDetailLayout.setVisibility(View.GONE);
+            } else {
+                if (fragmentCheckoutBinding != null)
+                    fragmentCheckoutBinding.patronDetailIncludeLayout.patronDetailLayout.setVisibility(View.GONE);
+            }
         }
     }
 

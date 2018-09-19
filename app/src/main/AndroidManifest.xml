@@ -14,7 +14,10 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".feature.loginsetup.LoginActivity">
+
+        <activity
+            android:name=".feature.loginsetup.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,13 +25,21 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".feature.checkoutcheckin.CheckinCheckoutFragment" />
+        <activity
+            android:name=".feature.checkoutcheckin.checkout.PatronListActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".feature.checkoutcheckin.checkout.PatronListActivity" />
+        <activity
+            android:name=".feature.iteminfo.TitleInfoActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".feature.iteminfo.TitleInfoActivity" />
-        <activity android:name=".feature.iteminfo.AdditionalInfoActivity" />
-        <activity android:name=".feature.patronstatus.PatronStatusActivity" />
+        <activity
+            android:name=".feature.iteminfo.AdditionalInfoActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.patronstatus.PatronStatusActivity"
+            android:screenOrientation="portrait" />
 
 
     </application>
