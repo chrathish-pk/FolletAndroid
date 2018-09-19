@@ -51,6 +51,12 @@ public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, Checki
         super.onActivityCreated(savedInstanceState);
         fragmentCheckinBinding = getViewDataBinding();
 
+        if (AppSharedPreferences.getInstance(getActivity()).getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED))
+            fragmentCheckinBinding.checkinEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.VISIBLE);
+        else
+            fragmentCheckinBinding.checkinEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.INVISIBLE);
+
+        fragmentCheckinBinding.checkinEntryIncludeLayout.patronEntry.setHint(getString(R.string.enterBarcode));
         fragmentCheckinBinding.checkinEntryIncludeLayout.patronGoBtn.setOnClickListener(this);
         fragmentCheckinBinding.checkinDetailIncludeLayout.checkedoutInfoBtn.setOnClickListener(this);
         fragmentCheckinBinding.checkinEntryIncludeLayout.checkinLibRecordSwitch.setOnCheckedChangeListener(this);
@@ -89,7 +95,7 @@ public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, Checki
         if (AppSharedPreferences.getInstance(getActivity()).getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED))
             fragmentCheckinBinding.checkinEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.VISIBLE);
         else
-            fragmentCheckinBinding.checkinEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.GONE);
+            fragmentCheckinBinding.checkinEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.INVISIBLE);
 
         fragmentCheckinBinding.checkinDetailIncludeLayout.checkedoutDetailLayout.setVisibility(View.GONE);
         fragmentCheckinBinding.checkinPatronErrorMsg.setVisibility(View.GONE);

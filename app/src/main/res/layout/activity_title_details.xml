@@ -193,7 +193,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/opensans_regular"
-                android:text="Site: Follett Dev Prod Site A"
                 android:textColor="@color/dark_slate_blue"
                 android:textSize="14sp" />
 

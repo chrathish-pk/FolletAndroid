@@ -36,6 +36,7 @@
             android:textSize="@dimen/text_size_12sp"/>
 
         <TextView
+            android:id="@+id/legalBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/layout_size_9"

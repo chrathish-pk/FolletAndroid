@@ -62,6 +62,7 @@ public class AdditionalInfoViewModel extends BaseViewModel implements NetworkInt
 
     @Override
     public void onCallFailed(Throwable throwable) {
+        setIsLoding(false);
         FollettLog.d("Exception", throwable.getMessage());
     }
 }

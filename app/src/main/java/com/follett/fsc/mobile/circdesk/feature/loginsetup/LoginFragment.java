@@ -91,7 +91,13 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
     
     @Override
     public void ctaButtonOnClick(View view) {
-        
+        int v = view.getId();
+        if(v == R.id.changeServerBtn)
+        {
+            getBaseActivity().onBackPressed();
+        }
+        else if(v == R.id.login_textview)
+        {
         AppUtils.getInstance().hideKeyBoard(getBaseActivity(), mLayoutBinding.getRoot());
         if (!AppUtils.getInstance()
                 .isEditTextNotEmpty(mLayoutBinding.useridEditText)) {
@@ -107,12 +113,13 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
                         .showNoInternetAlertDialog(getBaseActivity());
                 return;
             }
-            
+
             mLoginViewModel.getLoginResults(AppSharedPreferences.getInstance(getBaseActivity())
                     .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance(getBaseActivity())
                     .getString(KEY_SITE_SHORT_NAME), AppUtils.getInstance()
                     .getEditTextValue(mLayoutBinding.useridEditText), AppUtils.getInstance()
                     .getEditTextValue(mLayoutBinding.passwordEditText));
+        }
         }
     }
 

@@ -4,6 +4,7 @@
 package com.follett.fsc.mobile.circdesk.app.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.net.ConnectivityManager;
@@ -15,7 +16,10 @@ import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.follett.fsc.mobile.circdesk.BuildConfig;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityBaseBinding;
 
@@ -23,8 +27,11 @@ import com.follett.fsc.mobile.circdesk.databinding.ActivityBaseBinding;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityBaseBinding;
+import com.follett.fsc.mobile.circdesk.feature.homescreen.HomeActivity;
+import com.follett.fsc.mobile.circdesk.feature.inventory.InventoryActivity;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginActivity;
 
-public abstract class BaseActivity<V extends BaseViewModel> extends AppCompatActivity {
+public abstract class BaseActivity<V extends BaseViewModel> extends AppCompatActivity implements View.OnClickListener{
     
 
 
@@ -43,7 +50,7 @@ public abstract class BaseActivity<V extends BaseViewModel> extends AppCompatAct
         }else {
             baseBinding.toolBarIcon.setImageResource(R.drawable.info_icon);
         }
-
+        baseBinding.navigationLayout.navInfoSubLayout.legalBtn.setOnClickListener(this);
         baseBinding.toolBarIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,11 +63,18 @@ public abstract class BaseActivity<V extends BaseViewModel> extends AppCompatAct
 
                     String site_text = String.format(getApplicationContext().getResources().getString(R.string.site_info),
                             AppSharedPreferences.getInstance(getApplicationContext()).getString(AppSharedPreferences.KEY_SITE_NAME));
+                    String apiVersion = String.format(getApplicationContext().getResources().getString(R.string.copyright_info),
+                            BuildConfig.VERSION_NAME, AppSharedPreferences.getInstance(getApplicationContext()).getString(AppSharedPreferences.FOLLETT_API_VERSION));
+                    baseBinding.navigationLayout.navInfoSubLayout.navbarSubContent.setText(apiVersion);
                     baseBinding.navigationLayout.siteHeader.setText(site_text);
                     baseBinding.navigationLayout.logout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            AppSharedPreferences.getInstance(getApplicationContext()).removeAllSession();
+                            AppSharedPreferences.getInstance(getApplicationContext()).removeValues(AppSharedPreferences.KEY_PERMISSIONS);
+                            AppSharedPreferences.getInstance(getApplicationContext()).removeValues(AppSharedPreferences.KEY_SESSION_ID);
+
+                            finish();
+                            startActivity(new Intent(BaseActivity.this, LoginActivity.class));
                         }
                     });
                 }else {
@@ -96,4 +110,13 @@ public abstract class BaseActivity<V extends BaseViewModel> extends AppCompatAct
         return false;
     }
 
+    @Override
+    public void onClick(View v) {
+
+        if(v.getId() == R.id.legalBtn)
+        {
+            startActivity(new Intent(BaseActivity.this, LegalActivity.class));
+        }
+
+    }
 }
