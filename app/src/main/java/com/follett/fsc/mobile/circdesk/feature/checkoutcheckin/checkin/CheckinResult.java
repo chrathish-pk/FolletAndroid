@@ -31,6 +31,13 @@ public class CheckinResult implements Parcelable {
     @Expose
     private Boolean success;
 
+    public CheckinResult(Info info, List<Message> messages, List<Object> notes, Boolean success) {
+        this.info = info;
+        this.messages = messages;
+        this.notes = notes;
+        this.success = success;
+    }
+
     protected CheckinResult(Parcel in) {
         messages = in.createTypedArrayList(Message.CREATOR);
         byte tmpSuccess = in.readByte();

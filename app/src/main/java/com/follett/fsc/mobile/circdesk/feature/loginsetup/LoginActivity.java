@@ -84,6 +84,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Navig
     }
 
     private void navigateToHome() {
+        mLoginBinding.tabLayout.removeAllTabs();
         pushFragment(new HomeFragment(), R.id.loginContainer, "HomeFragment", false);
     }
 
@@ -105,7 +106,6 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Navig
         }
     }
 
-
     private void navigateToFragment() {
         if (!TextUtils.isEmpty(AppSharedPreferences.getInstance()
                 .getString(KEY_SESSION_ID))) {
@@ -126,6 +126,6 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Navig
             loadBasicFragment();
         }
     }
-    
+
 }
 
