@@ -1,14 +1,5 @@
 package com.follett.fsc.mobile.circdesk.feature.itemstatus;
 
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
-import com.follett.fsc.mobile.circdesk.databinding.FragmentItemStatusBinding;
-import com.follett.fsc.mobile.circdesk.feature.iteminfo.TitleInfoActivity;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
-import com.follett.fsc.mobile.circdesk.utils.AppUtils;
-import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-
 import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +9,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.databinding.FragmentItemStatusBinding;
+import com.follett.fsc.mobile.circdesk.feature.iteminfo.TitleInfoActivity;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
+import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding,ItemStatusViewModel> implements View.OnClickListener {
 
@@ -131,7 +131,7 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding,I
             AppUtils.getInstance()
                     .hideKeyBoard(getActivity(), fragmentItemStatusBinding.itemStatusPatronEntry);
             if (AppUtils.getInstance().isEditTextNotEmpty(fragmentItemStatusBinding.itemStatusPatronEntry)) {
-                int collectionType = AppSharedPreferences.getInstance(getActivity()).getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED) ? 0 : 4;
+                int collectionType = AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED) ? 0 : 4;
                 itemStatusViewModel.getScanItem(fragmentItemStatusBinding.itemStatusPatronEntry.getText().toString().trim(),String.valueOf(collectionType));
             } else {
                 AppUtils.getInstance()
@@ -152,7 +152,7 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding,I
             fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(getActivity(),R.color.white));
             fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.white));
             fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(getActivity(),R.color.blueLabel));
-            AppSharedPreferences.getInstance(getActivity()).setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, true);
+            AppSharedPreferences.getInstance().setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, true);
             disableItemStatusView();
 
         }
@@ -162,7 +162,7 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding,I
             fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(getActivity(),R.color.white));
             fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.white));
             fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(getActivity(),R.color.blueLabel));
-            AppSharedPreferences.getInstance(getActivity()).setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, false);
+            AppSharedPreferences.getInstance().setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, false);
             disableItemStatusView();
         }
     }

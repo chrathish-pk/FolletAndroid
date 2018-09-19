@@ -39,10 +39,10 @@ public class AdditionalInfoViewModel extends BaseViewModel implements NetworkInt
         setIsLoding(true);
         Map<String, String> map = new HashMap<>();
         map.put("Accept", "application/json");
-        map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance(mApplication).getString(AppSharedPreferences.KEY_SESSION_ID));
+        map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID));
         map.put("text/xml", "gzip");
-        AppRemoteRepository.getInstance(AppSharedPreferences.getInstance(mApplication)).getTitleDetails(map, this,AppSharedPreferences.getInstance(getApplication())
-                .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance(getApplication())
+        AppRemoteRepository.getInstance().getTitleDetails(map, this,AppSharedPreferences.getInstance()
+                .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
                 .getString(KEY_SITE_SHORT_NAME), bibID);
     }
 

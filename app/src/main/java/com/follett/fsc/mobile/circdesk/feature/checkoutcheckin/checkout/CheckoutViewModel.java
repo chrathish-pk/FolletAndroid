@@ -40,11 +40,11 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
         AppUtils.getInstance().showProgressDialog(mApplication, null, null, false);
         Map<String, String> map = new HashMap<>();
         map.put("Accept", "application/json");
-        map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance(mApplication).getString(AppSharedPreferences.KEY_SESSION_ID));
+        map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID));
         map.put("text/xml", "gzip");
 
-        AppRemoteRepository.getInstance(AppSharedPreferences.getInstance(mApplication)).getScanPatron(map, this,AppSharedPreferences.getInstance(getApplication())
-                .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance(getApplication())
+        AppRemoteRepository.getInstance().getScanPatron(map, this,AppSharedPreferences.getInstance()
+                .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
                 .getString(KEY_SITE_SHORT_NAME), patronBarcodeID);
     }
 
@@ -54,10 +54,10 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
 
         Map<String, String> map = new HashMap<>();
         map.put("Accept", "application/json");
-        map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance(mApplication).getString(AppSharedPreferences.KEY_SESSION_ID));
+        map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID));
         map.put("text/xml", "gzip");
-        AppRemoteRepository.getInstance(AppSharedPreferences.getInstance(mApplication)).getCheckoutResult(map, this,AppSharedPreferences.getInstance(getApplication())
-                .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance(getApplication())
+        AppRemoteRepository.getInstance().getCheckoutResult(map, this,AppSharedPreferences.getInstance()
+                .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
                 .getString(KEY_SITE_SHORT_NAME), patronID, barcode, collectionType);
     }
 
@@ -67,10 +67,10 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
         try {
             if (model instanceof ScanPatron) {
                 ScanPatron scanPatron = (ScanPatron) model;
-                String selectedPatronID = AppSharedPreferences.getInstance(mApplication)
+                String selectedPatronID = AppSharedPreferences.getInstance()
                         .getString(AppSharedPreferences.KEY_SELECTED_BARCODE);
                 if (!TextUtils.isEmpty(selectedPatronID)) {
-                    AppSharedPreferences.getInstance(mApplication)
+                    AppSharedPreferences.getInstance()
                             .setString(AppSharedPreferences.KEY_PATRON_ID, scanPatron.getPatronID());
                 }
                 updateUIListener.updateUI(scanPatron);

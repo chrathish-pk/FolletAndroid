@@ -67,9 +67,9 @@ public class BasicViewModel extends BaseViewModel<CTAButtonListener> implements 
                     setIsLoding(false);
                     setStatus(Status.SCHOOL_NOT_SETUP_ERROR);
                 } else {
-                    AppSharedPreferences.getInstance(mApplication)
+                    AppSharedPreferences.getInstance()
                             .setString(FOLLETT_API_VERSION, lVersion);
-                    AppRemoteRepository.getInstance(AppSharedPreferences.getInstance(mApplication)).getDistrictList(this);
+                    AppRemoteRepository.getInstance().getDistrictList(this);
                 }
             } else if (model instanceof DistrictList) {
                 DistrictList districtList = (DistrictList) model;
@@ -78,11 +78,11 @@ public class BasicViewModel extends BaseViewModel<CTAButtonListener> implements 
                 if (size == 0) {
                     setStatus(Status.NO_LIST_FOUND);
                 } else if (size == 1) {
-                    AppSharedPreferences.getInstance(getApplication())
+                    AppSharedPreferences.getInstance()
                             .setString(KEY_CONTEXT_NAME, districtList.getDistricts()
                                     .get(0)
                                     .getContextName());
-                    AppSharedPreferences.getInstance(getApplication())
+                    AppSharedPreferences.getInstance()
                             .setString(KEY_DISTRICT_NAME, districtList.getDistricts()
                                     .get(0)
                                     .getDistrictName());
@@ -114,21 +114,21 @@ public class BasicViewModel extends BaseViewModel<CTAButtonListener> implements 
             try {
                 String url = null;
                 try {
-                    AppSharedPreferences.getInstance(mApplication)
+                    AppSharedPreferences.getInstance()
                             .removeAllSession();
-                    AppRemoteRepository.getInstance(AppSharedPreferences.getInstance(mApplication)).setString(SERVER_URI_VALUE, serverName);
+                    AppRemoteRepository.getInstance().setString(SERVER_URI_VALUE, serverName);
                     if (port != null) {
-                        AppSharedPreferences.getInstance(mApplication)
+                        AppSharedPreferences.getInstance()
                                 .setInt(KEY_SERVER_PORT, Integer.parseInt(port));
                     } else {
-                        AppSharedPreferences.getInstance(mApplication)
+                        AppSharedPreferences.getInstance()
                                 .setInt(KEY_SERVER_PORT, DEFAULT_HTTP_PORT);
                     }
                     if (sslPort != null) {
-                        AppSharedPreferences.getInstance(mApplication)
+                        AppSharedPreferences.getInstance()
                                 .setInt(KEY_SERVER_SSL_PORT, Integer.parseInt(sslPort));
                     } else {
-                        AppSharedPreferences.getInstance(mApplication)
+                        AppSharedPreferences.getInstance()
                                 .setInt(KEY_SERVER_SSL_PORT, DEFAULT_SSL_PORT);
                     }
 
@@ -142,7 +142,7 @@ public class BasicViewModel extends BaseViewModel<CTAButtonListener> implements 
                         setIsLoding(false);
                         setStatus(com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status.ERROR);
                     }
-                    AppSharedPreferences.getInstance(mApplication)
+                    AppSharedPreferences.getInstance()
                             .populateInfoFromURL(new URL(url));
                     result = Boolean.TRUE;
 
@@ -161,7 +161,7 @@ public class BasicViewModel extends BaseViewModel<CTAButtonListener> implements 
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
             if (result) {
-                AppRemoteRepository.getInstance(AppSharedPreferences.getInstance(mApplication)).getVersion(BasicViewModel.this);
+                AppRemoteRepository.getInstance().getVersion(BasicViewModel.this);
             } else {
                 setIsLoding(false);
             }

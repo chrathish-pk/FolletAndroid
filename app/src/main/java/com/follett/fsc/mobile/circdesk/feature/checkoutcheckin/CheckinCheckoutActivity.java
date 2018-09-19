@@ -50,7 +50,7 @@ public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewMod
     }
 
     private void updateLibraryResourceBg() {
-        if (AppSharedPreferences.getInstance(this).getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED)) {
+        if (AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED)) {
             actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.blueLabel));
             actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(this, R.color.white));
             actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
@@ -87,7 +87,7 @@ public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewMod
                 actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(this, R.color.white));
                 actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
                 actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(this, R.color.blueLabel));
-                AppSharedPreferences.getInstance(this).setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, true);
+                AppSharedPreferences.getInstance().setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, true);
                 Fragment fragment = adapter.getItem(actvityCheckinCheckoutBinding.viewPager.getCurrentItem());
                 if (fragment instanceof CheckoutFragment) {
                     ((CheckoutFragment) fragment).bindPatronResult();
@@ -101,7 +101,7 @@ public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewMod
                 actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(this, R.color.white));
                 actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
                 actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(this, R.color.blueLabel));
-                AppSharedPreferences.getInstance(this).setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, false);
+                AppSharedPreferences.getInstance().setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, false);
                 Fragment fragment1 = adapter.getItem(actvityCheckinCheckoutBinding.viewPager.getCurrentItem());
                 if (fragment1 instanceof CheckoutFragment) {
                     ((CheckoutFragment) fragment1).bindPatronResult();
@@ -117,7 +117,7 @@ public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewMod
     @Override
     protected void onResume() {
         super.onResume();
-        if (!TextUtils.isEmpty(AppSharedPreferences.getInstance(this).getString(AppSharedPreferences.KEY_SELECTED_BARCODE))) {
+        if (!TextUtils.isEmpty(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SELECTED_BARCODE))) {
             Fragment fragment = adapter.getItem(actvityCheckinCheckoutBinding.viewPager.getCurrentItem());
             if (fragment instanceof CheckoutFragment) {
                 ((CheckoutFragment) fragment).getPatronID();
@@ -132,7 +132,7 @@ public class CheckinCheckoutActivity extends BaseActivity<CheckinCheckoutViewMod
 
     @Override
     public void onPageSelected(int position) {
-        String permissionValue = AppSharedPreferences.getInstance(this).getString(AppSharedPreferences.KEY_PERMISSIONS);
+        String permissionValue = AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_PERMISSIONS);
         Permissions permissions = new Gson().fromJson(permissionValue, Permissions.class);
         if (position == 0) {
             showLibraryResource(Boolean.parseBoolean(permissions.getCanCheckoutLibrary()), Boolean.parseBoolean(permissions.getCanCheckoutAsset()));

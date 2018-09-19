@@ -42,7 +42,7 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull HomeMenuViewHolder holder, final int position) {
 
-        String permissionValue = AppSharedPreferences.getInstance(context).getString(AppSharedPreferences.KEY_PERMISSIONS);
+        String permissionValue = AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_PERMISSIONS);
         Permissions permissions = new Gson().fromJson(permissionValue, Permissions.class);
 
         boolean canCheckoutShow = Boolean.parseBoolean(permissions.getCanCheckoutAsset()) || Boolean.parseBoolean(permissions.getCanCheckoutLibrary()) || Boolean.parseBoolean(permissions.getCanCheckoutTextbook());
@@ -50,7 +50,7 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuViewHolder> {
         boolean canShowPatronStatus = Boolean.parseBoolean(permissions.getCanViewPatronStatus());
         boolean canShowItemStatus = Boolean.parseBoolean(permissions.getCanViewItemsOutAsset()) || Boolean.parseBoolean(permissions.getCanViewItemsOutLibrary()) || Boolean.parseBoolean(permissions.getCanViewItemsOutTextbook());
 
-        if ((position == 0 && canCheckoutShow && canCheckinShow) || (position == 1 && canShowPatronStatus) || (position == 2 && canShowItemStatus)) {
+        if ((position == 0 && canCheckoutShow && canCheckinShow) || (position == 1 && canShowPatronStatus) || (position == 2 && canShowItemStatus) || position == 3) {
             holder.rowHomeMenuBinding.setMenuItem(homeViewModel.homeMenuItems.get(position));
             holder.rowHomeMenuBinding.itemMenuImg.setImageResource(homeViewModel.homeMenuItems.get(position).getMenuImg());
         }

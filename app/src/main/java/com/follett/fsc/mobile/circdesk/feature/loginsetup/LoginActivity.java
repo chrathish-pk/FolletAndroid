@@ -5,18 +5,18 @@
  */
 package com.follett.fsc.mobile.circdesk.feature.loginsetup;
 
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
-import com.follett.fsc.mobile.circdesk.databinding.ActivityLoginBinding;
-import com.follett.fsc.mobile.circdesk.utils.AppUtils;
-import com.follett.fsc.mobile.circdesk.feature.homescreen.HomeActivity;
-import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.databinding.ActivityLoginBinding;
+import com.follett.fsc.mobile.circdesk.feature.homescreen.HomeActivity;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SESSION_ID;
@@ -145,17 +145,17 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Navig
     
     private void navigateToFragment() {
         
-        if (!TextUtils.isEmpty(AppSharedPreferences.getInstance(this)
+        if (!TextUtils.isEmpty(AppSharedPreferences.getInstance()
                 .getString(KEY_SESSION_ID))) {
             AppUtils.getInstance()
                     .hideKeyBoard(this, mLoginBinding.getRoot());
             navigateToHome();
-        } else if (!TextUtils.isEmpty(AppSharedPreferences.getInstance(this)
+        } else if (!TextUtils.isEmpty(AppSharedPreferences.getInstance()
                 .getString(KEY_SITE_SHORT_NAME))) {
             AppUtils.getInstance()
                     .hideKeyBoard(this, mLoginBinding.getRoot());
             navigateToLogin(false);
-        } else if (!TextUtils.isEmpty(AppSharedPreferences.getInstance(this)
+        } else if (!TextUtils.isEmpty(AppSharedPreferences.getInstance()
                 .getString(KEY_CONTEXT_NAME))) {
             AppUtils.getInstance()
                     .hideKeyBoard(this, mLoginBinding.getRoot());

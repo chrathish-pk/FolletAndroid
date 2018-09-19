@@ -46,12 +46,12 @@ public class PatronStatusViewModel extends BaseViewModel implements NetworkInter
     
             Map<String, String> headerMap = new HashMap<>();
             headerMap.put("Accept", "application/json");
-            headerMap.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance(mApplication)
+            headerMap.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance()
                     .getString(AppSharedPreferences.KEY_SESSION_ID));
             headerMap.put("text/xml", "gzip");
 
-            AppRemoteRepository.getInstance(AppSharedPreferences.getInstance(mApplication)).getPatronStatus(this, headerMap, AppSharedPreferences.getInstance(getApplication())
-                    .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance(getApplication())
+            AppRemoteRepository.getInstance().getPatronStatus(this, headerMap, AppSharedPreferences.getInstance()
+                    .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
                     .getString(KEY_SITE_SHORT_NAME), typedText);
         } else {
             setErrorMessage(getApplication().getString(R.string.errorPatronEntry));

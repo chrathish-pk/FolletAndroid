@@ -17,10 +17,6 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.databinding.ActivityBaseBinding;
-
-
-import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityBaseBinding;
 
@@ -33,7 +29,7 @@ public abstract class BaseActivity<V extends BaseViewModel> extends AppCompatAct
         super.onCreate(savedInstanceState);
         baseBinding = DataBindingUtil.setContentView(this, R.layout.activity_base);
 
-        if(!TextUtils.isEmpty(AppSharedPreferences.getInstance(this).getString(AppSharedPreferences.KEY_SESSION_ID))){
+        if(!TextUtils.isEmpty(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID))){
             baseBinding.toolBarIcon.setImageResource(R.drawable.baseline_account_circle);
         }else {
             baseBinding.toolBarIcon.setImageResource(R.drawable.info_icon);
@@ -43,19 +39,19 @@ public abstract class BaseActivity<V extends BaseViewModel> extends AppCompatAct
             @Override
             public void onClick(View view) {
                 baseBinding.drawerLayout.openDrawer(GravityCompat.END);
-                if(!TextUtils.isEmpty(AppSharedPreferences.getInstance(getApplicationContext()).getString(AppSharedPreferences.KEY_SESSION_ID))){
+                if(!TextUtils.isEmpty(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID))){
                     baseBinding.navigationLayout.navView.getHeaderView(0).setVisibility(View.VISIBLE);
                     baseBinding.navigationLayout.navInfoLoginView.setVisibility(View.VISIBLE);
                     baseBinding.navigationLayout.navInfoLayout.navInfoView.setVisibility(View.GONE);
                     baseBinding.navigationLayout.navToolBarIcon.setImageResource(R.drawable.baseline_account_circle);
 
                     String site_text = String.format(getApplicationContext().getResources().getString(R.string.site_info),
-                            AppSharedPreferences.getInstance(getApplicationContext()).getString(AppSharedPreferences.KEY_SITE_NAME));
+                            AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SITE_NAME));
                     baseBinding.navigationLayout.siteHeader.setText(site_text);
                     baseBinding.navigationLayout.logout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            AppSharedPreferences.getInstance(getApplicationContext()).removeAllSession();
+                            AppSharedPreferences.getInstance().removeAllSession();
                         }
                     });
                 }else {

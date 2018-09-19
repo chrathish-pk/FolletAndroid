@@ -20,7 +20,6 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.RowPatronListBinding;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
@@ -54,7 +53,7 @@ public class PatronListAdapter extends RecyclerView.Adapter<PatronListViewHolder
 
         holder.rowPatronListBinding.patronLayout.setOnClickListener(this);
 
-        FollettLog.d("patronImg", AppRemoteRepository.getInstance(AppSharedPreferences.getInstance(context)).getString(SERVER_URI_VALUE) + patron.getPatronPictureFileName());
+        FollettLog.d("patronImg", AppRemoteRepository.getInstance().getString(SERVER_URI_VALUE) + patron.getPatronPictureFileName());
 
         RequestOptions requestOptions = new RequestOptions()
                 .fitCenter()
@@ -62,7 +61,7 @@ public class PatronListAdapter extends RecyclerView.Adapter<PatronListViewHolder
                 .transforms(new CenterCrop(), new RoundedCorners(500));
 
         Glide.with(context)
-                .load(AppRemoteRepository.getInstance(AppSharedPreferences.getInstance(context)).getString(SERVER_URI_VALUE) + patron.getPatronPictureFileName() + "?contextName=dvpdt_devprodtest")
+                .load(AppRemoteRepository.getInstance().getString(SERVER_URI_VALUE) + patron.getPatronPictureFileName() + "?contextName=dvpdt_devprodtest")
                 .apply(requestOptions)
                 .into(holder.rowPatronListBinding.patronImg);
     }

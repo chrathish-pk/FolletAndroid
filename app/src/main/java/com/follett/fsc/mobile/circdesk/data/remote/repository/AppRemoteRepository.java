@@ -8,8 +8,6 @@ package com.follett.fsc.mobile.circdesk.data.remote.repository;
 
 import android.support.annotation.Nullable;
 
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppPrefHelper;
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppPreferencesHelper;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.api.FollettAPIManager;
@@ -38,18 +36,16 @@ import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferen
 public class AppRemoteRepository {
 
     private APIInterface apiService;
-    private AppPrefHelper appPreferencesHelper;
     private static AppRemoteRepository mInstance;
 
-    public static AppRemoteRepository getInstance(AppSharedPreferences appSharedPreferences) {
+    public static AppRemoteRepository getInstance() {
         if (mInstance == null)
-            mInstance = new AppRemoteRepository(appSharedPreferences);
+            mInstance = new AppRemoteRepository();
 
         return mInstance;
     }
 
-    public AppRemoteRepository(AppSharedPreferences appPref) {
-        appPreferencesHelper = new AppPreferencesHelper(appPref);
+    public AppRemoteRepository() {
         apiService = FollettAPIManager.getClient(getString(SERVER_URI_VALUE))
                 .create(APIInterface.class);
     }
@@ -348,34 +344,34 @@ public class AppRemoteRepository {
 
 
     public void setString(String key, String value) {
-        appPreferencesHelper.setString(key, value);
+        AppSharedPreferences.getInstance().setString(key,value);
     }
 
     public String getString(String key) {
-        return appPreferencesHelper.getString(key);
+        return AppSharedPreferences.getInstance().getString(key);
     }
 
     public void setInt(String key, int value) {
-        appPreferencesHelper.setInt(key, value);
+        AppSharedPreferences.getInstance().setInt(key, value);
     }
 
     public int getInt(String key) {
-        return appPreferencesHelper.getInt(key);
+        return AppSharedPreferences.getInstance().getInt(key);
     }
 
     public void setBoolean(String key, Boolean value) {
-        appPreferencesHelper.setBoolean(key, value);
+        AppSharedPreferences.getInstance().setBoolean(key, value);
     }
 
     public Boolean getBoolean(String key) {
-        return appPreferencesHelper.getBoolean(key);
+        return AppSharedPreferences.getInstance().getBoolean(key);
     }
 
     public void removeValues(String key) {
-        appPreferencesHelper.removeValues(key);
+        AppSharedPreferences.getInstance().removeValues(key);
     }
 
     public void removeAllSession() {
-        appPreferencesHelper.removeAllSession();
+        AppSharedPreferences.getInstance().removeAllSession();
     }
 }

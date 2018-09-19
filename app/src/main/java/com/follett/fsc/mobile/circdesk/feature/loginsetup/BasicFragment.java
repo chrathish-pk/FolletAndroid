@@ -125,7 +125,7 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
                     .showNoInternetAlertDialog(getBaseActivity());
             return;
         }
-        AppSharedPreferences.getInstance(getBaseActivity()).setString(SERVER_URI_VALUE, libraryURI);
+        AppSharedPreferences.getInstance().setString(SERVER_URI_VALUE, libraryURI);
         mBasicViewModel.savePreference(libraryURI, port, sslPort);
     }
 
@@ -221,7 +221,7 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
         });
         basicLayoutBinding.setBasicListener(this);
         navigationListener = (NavigationListener) getBaseActivity();
-        mBasicViewModel.setStoredSchoolUri(AppSharedPreferences.getInstance(getBaseActivity())
+        mBasicViewModel.setStoredSchoolUri(AppSharedPreferences.getInstance()
                 .getString(SERVER_URI_VALUE));
         mBasicViewModel.getStatus()
                 .observe(this, new Observer<Status>() {

@@ -187,7 +187,7 @@ public class AppUtils {
 
             GlideApp.with(context)
                     .setDefaultRequestOptions(requestOptions)
-                    .load(AppRemoteRepository.getInstance(AppSharedPreferences.getInstance(context)).getString(SERVER_URI_VALUE) + imageUrl)
+                    .load(AppRemoteRepository.getInstance().getString(SERVER_URI_VALUE) + imageUrl)
                     .into(view);
 
         }
@@ -204,7 +204,7 @@ public class AppUtils {
 
             GlideApp.with(context)
                     .setDefaultRequestOptions(requestOptions)
-                    .load(AppRemoteRepository.getInstance(AppSharedPreferences.getInstance(context))
+                    .load(AppRemoteRepository.getInstance()
                             + imageUrl + "?contextName=dvpdt_devprodtest")
                     .into(view);
 
@@ -268,7 +268,7 @@ public class AppUtils {
         
         Map<String, String> map = new HashMap<>();
         map.put("Accept", "application/json");
-        map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance(context)
+        map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance()
                 .getString(AppSharedPreferences.KEY_SESSION_ID));
         map.put("text/xml", "gzip");
         return map;

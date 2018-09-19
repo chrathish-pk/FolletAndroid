@@ -42,7 +42,7 @@ public class SchoolListViewModel extends BaseViewModel<CTAButtonListener> implem
     
     public void fetchSchoolList() {
         setIsLoding(true);
-        AppRemoteRepository.getInstance(AppSharedPreferences.getInstance(mApplication)).getSchoolList(this, AppSharedPreferences.getInstance(mApplication)
+        AppRemoteRepository.getInstance().getSchoolList(this, AppSharedPreferences.getInstance()
                 .getString(KEY_CONTEXT_NAME));
     }
     
@@ -58,17 +58,17 @@ public class SchoolListViewModel extends BaseViewModel<CTAButtonListener> implem
             int size = siteResults.sites.size();
             List<SiteRecord> schoolList = siteResults.sites;
             if (size == 0) {
-                String districtName = getApplication().getString(R.string.double_quote) + AppSharedPreferences.getInstance(getApplication())
+                String districtName = getApplication().getString(R.string.double_quote) + AppSharedPreferences.getInstance()
                         .getString(KEY_DISTRICT_NAME) + getApplication().getString(R.string.double_quote);
                 noSchoolFoundMsg.setValue(getApplication().getString(R.string.no_schools, districtName));
             } else if (size == 1) {
-                AppSharedPreferences.getInstance(getApplication())
+                AppSharedPreferences.getInstance()
                         .setString(KEY_SITE_SHORT_NAME, schoolList.get(0)
                                 .getSiteShortName());
-                AppSharedPreferences.getInstance(getApplication())
+                AppSharedPreferences.getInstance()
                         .setString(KEY_SITE_ID, schoolList.get(0)
                                 .getSiteID());
-                AppSharedPreferences.getInstance(getApplication())
+                AppSharedPreferences.getInstance()
                         .setString(KEY_SITE_NAME, schoolList.get(0)
                                 .getSiteName());
                 setStatus(Status.SUCCESS);
@@ -86,11 +86,11 @@ public class SchoolListViewModel extends BaseViewModel<CTAButtonListener> implem
     }
     
     public void clearSchoolPref() {
-        AppSharedPreferences.getInstance(mApplication)
+        AppSharedPreferences.getInstance()
                 .removeValues(KEY_SITE_SHORT_NAME);
-        AppSharedPreferences.getInstance(mApplication)
+        AppSharedPreferences.getInstance()
                 .removeValues(KEY_SITE_ID);
-        AppSharedPreferences.getInstance(mApplication)
+        AppSharedPreferences.getInstance()
                 .removeValues(KEY_SITE_NAME);
     }
 }
