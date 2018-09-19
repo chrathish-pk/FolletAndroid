@@ -15,12 +15,12 @@ import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentNewInventoryBinding;
 
 /**
- * Created by muthulakshmi on 12/09/18.
+ * Created by muthulakshmi on 18/09/18.
  */
 
-public class NewInventory extends BaseFragment<FragmentNewInventoryBinding, NewInventoryViewModel> {
-
-    private NewInventoryViewModel newInventoryViewModel;
+public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBinding, NewInventoryViewModel> {
+    private NewInventoryViewModel  newInventoryViewModel;
+    private FragmentNewInventoryBinding fragmentNewInventoryBinding;
 
     @Override
     public int getLayoutId() {
@@ -29,7 +29,7 @@ public class NewInventory extends BaseFragment<FragmentNewInventoryBinding, NewI
 
     @Override
     public NewInventoryViewModel getViewModel() {
-        newInventoryViewModel = new NewInventoryViewModel(getBaseActivity().getApplication());
+          newInventoryViewModel = new NewInventoryViewModel(getBaseActivity().getApplication());
         return newInventoryViewModel;
     }
 
@@ -41,6 +41,8 @@ public class NewInventory extends BaseFragment<FragmentNewInventoryBinding, NewI
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        fragmentNewInventoryBinding = getViewDataBinding();
+
 
 
     }

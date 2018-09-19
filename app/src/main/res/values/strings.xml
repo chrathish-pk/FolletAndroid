@@ -156,9 +156,10 @@
     <string name="change_site">CHANGE SITE</string>
     <string name="logout">LOG OUT</string>
 
-    <!-- Inventory-->
+    <!--Inventory-->
     <string name="inventoryTitle">Inventory</string>
     <string name="viewSelection">VIEW SELECTIONS</string>
+    <string name="selectInventory">Select Inventory</string>
 
     <!-- Inventory -->
     <string name="finalize_inventory">Finalize Inventory</string>
@@ -170,5 +171,16 @@
     <string name="call_num">Call Number</string>
     <string name="call_to">To:</string>
     <string name="enter_date">Enter Date</string>
-    <string name="view_selections">VIEW SELECTIONS</string>
+
+    <string name="newInventory">NEW INVENTORY</string>
+    <string name="newInventoryName">New Inventory Name</string>
+    <string name="limitedToLabel">Limited to: </string>
+    <string name="resourceTypesLabel">Resource Types</string>
+    <string name="purchasePriceLabel">Purchase Price</string>
+    <string name="includeItemsLabel">Include Items</string>
+    <string name="checkoutHandlingLabel">Checkout Handling</string>
+    <string name="excludeItems">Exclude Items Seen On or After</string>
+    <string name="mismatchedItemLocationLabel">Mismatched Item Location</string>
+    <string name="startInventory">Start Inventory</string>
+
 </resources>

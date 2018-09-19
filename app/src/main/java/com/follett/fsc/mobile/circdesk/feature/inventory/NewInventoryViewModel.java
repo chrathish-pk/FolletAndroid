@@ -12,10 +12,11 @@ import android.support.annotation.NonNull;
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 
 /**
- * Created by muthulakshmi on 12/09/18.
+ * Created by muthulakshmi on 18/09/18.
  */
 
-public class NewInventoryViewModel extends BaseViewModel {
+public class NewInventoryViewModel extends BaseViewModel{
+
     public NewInventoryViewModel(@NonNull Application application) {
         super(application);
     }

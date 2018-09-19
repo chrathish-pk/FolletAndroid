@@ -7,28 +7,23 @@
 package com.follett.fsc.mobile.circdesk.feature.inventory;
 
 import android.app.Application;
-import android.arch.lifecycle.MutableLiveData;
-import android.os.Bundle;
+import android.view.View;
 
-import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
+import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.AssetCheckOut;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.Checkout;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.CustomCheckoutItem;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.Hold;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.follett.fsc.mobile.circdesk.utils.AppConstants.PATRON_INFO_KEY;
-import static com.follett.fsc.mobile.circdesk.utils.AppConstants.PATRON_TITLE_KEY;
 
 public class InventoryViewModel extends BaseViewModel<CTAButtonListener> {
 
-    public InventoryViewModel(Application application) {
+    private ItemClickListener itemClickListener;
+
+    public InventoryViewModel(Application application, ItemClickListener itemClickListener) {
         super(application);
+        this.itemClickListener = itemClickListener;
     }
-    
+
+    public void OnItemClick(View view) {
+        itemClickListener.onItemClick(view, 0);
+    }
+
 }
