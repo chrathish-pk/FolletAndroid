@@ -57,6 +57,6 @@ public class ItemStatusViewModel extends BaseViewModel implements NetworkInterfa
 
     @Override
     public void onCallFailed(Throwable throwable) {
-        //onCallFailed
+        setIsLoding(false);
     }
 }

@@ -22,9 +22,11 @@ public class BaseTestClass {
     @Mock
     public Application mApplication;
     
-    @Mock SharedPreferences mPreferences;
+    @Mock
+    public SharedPreferences mPreferences;
     
-    @Mock SharedPreferences.Editor mEditor;
+    @Mock
+    public SharedPreferences.Editor mEditor;
    
     
     @Before
