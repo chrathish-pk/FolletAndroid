@@ -5,10 +5,6 @@
  */
 package com.follett.fsc.mobile.circdesk.feature.loginsetup;
 
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
-import com.follett.fsc.mobile.circdesk.databinding.DistrictListItemBinding;
-
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
@@ -16,6 +12,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.databinding.DistrictListItemBinding;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_DISTRICT_NAME;
@@ -67,11 +67,11 @@ public class DistrictListAdapter extends RecyclerView.Adapter<DistrictListAdapte
         
         @Override
         public void onClick(View view) {
-            AppSharedPreferences.getInstance(mContext)
+            AppSharedPreferences.getInstance()
                     .setString(KEY_CONTEXT_NAME, mDistrictList.getDistricts()
                             .get(getAdapterPosition())
                             .getContextName());
-            AppSharedPreferences.getInstance(mContext)
+            AppSharedPreferences.getInstance()
                     .setString(KEY_DISTRICT_NAME, mDistrictList.getDistricts()
                             .get(getAdapterPosition())
                             .getDistrictName());

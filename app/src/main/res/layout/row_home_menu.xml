@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -9,47 +7,34 @@
             name="menuItem"
             type="com.follett.fsc.mobile.circdesk.feature.homescreen.HomeMenu" />
 
-        <variable
-            name="listener"
-            type="com.follett.fsc.mobile.circdesk.app.ItemClickListener" />
     </data>
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:id="@+id/itemMenuLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:onClick="@{()->listener.onItemClicked()}"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <ImageView
             android:id="@+id/itemMenuImg"
             android:layout_width="75dp"
             android:layout_height="75dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/itemMenuName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="2dp"
             android:fontFamily="@font/opensans_bold"
             android:gravity="center_horizontal"
             android:text="@{menuItem.menuName}"
             android:textColor="@color/blueLabel"
             android:textSize="@dimen/text_size_16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textStyle="bold" />
 
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 
 </layout>

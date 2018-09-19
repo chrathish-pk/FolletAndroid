@@ -92,7 +92,7 @@ public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, Checki
 
     public void bindCheckinResult() {
 
-        if (AppSharedPreferences.getInstance(getActivity()).getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED))
+        if (AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED))
             fragmentCheckinBinding.checkinEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.VISIBLE);
         else
             fragmentCheckinBinding.checkinEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.INVISIBLE);
@@ -109,7 +109,7 @@ public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, Checki
                 AppUtils.getInstance()
                         .hideKeyBoard(getBaseActivity(), fragmentCheckinBinding.checkinEntryIncludeLayout.patronEntry);
                 if (AppUtils.getInstance().isEditTextNotEmpty(fragmentCheckinBinding.checkinEntryIncludeLayout.patronEntry)) {
-                    int collectionType = AppSharedPreferences.getInstance(getActivity()).getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED) ? 0 : 4;
+                    int collectionType = AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED) ? 0 : 4;
                     checkinViewModel.getCheckinData(fragmentCheckinBinding.checkinEntryIncludeLayout.patronEntry.getText().toString().trim(), String.valueOf(collectionType), isLibraryUse);
                 } else {
                     AppUtils.getInstance()

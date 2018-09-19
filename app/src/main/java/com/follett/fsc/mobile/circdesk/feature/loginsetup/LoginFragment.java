@@ -6,17 +6,6 @@
 
 package com.follett.fsc.mobile.circdesk.feature.loginsetup;
 
-import com.follett.fsc.mobile.circdesk.BR;
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
-import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
-import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
-import com.follett.fsc.mobile.circdesk.databinding.FragmentLoginLayoutBinding;
-import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
-import com.follett.fsc.mobile.circdesk.utils.AppUtils;
-import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
-
 import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.os.Bundle;
@@ -28,6 +17,16 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
+
+import com.follett.fsc.mobile.circdesk.BR;
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
+import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
+import com.follett.fsc.mobile.circdesk.databinding.FragmentLoginLayoutBinding;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
+import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
@@ -114,8 +113,8 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
                 return;
             }
 
-            mLoginViewModel.getLoginResults(AppSharedPreferences.getInstance(getBaseActivity())
-                    .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance(getBaseActivity())
+            mLoginViewModel.getLoginResults(AppSharedPreferences.getInstance()
+                    .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
                     .getString(KEY_SITE_SHORT_NAME), AppUtils.getInstance()
                     .getEditTextValue(mLayoutBinding.useridEditText), AppUtils.getInstance()
                     .getEditTextValue(mLayoutBinding.passwordEditText));

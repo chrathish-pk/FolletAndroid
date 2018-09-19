@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /*
+  ~  * Copyright (c) 2018 Follett. All rights reserved.
+  ~  */
+  -->
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="280dp">
+
+    <!-- Text gets updated programmatically  -->
+    <TextView
+        android:id="@+id/inventory_popup_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/layout_size_24"
+        android:layout_marginTop="@dimen/layout_size_19"
+        android:fontFamily="@font/opensans_semibold"
+        android:textSize="@dimen/text_size_20sp"
+        android:textColor="@color/black"
+        android:text="@string/finalize_inventory"/>
+
+    <!-- need to update font with Roboto-Regular. Text gets updated programmatically -->
+    <TextView
+        android:id="@+id/unaccounted_copies"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/unaccounted_copies"
+        android:layout_marginStart="@dimen/layout_size_24"
+        android:layout_marginTop="@dimen/layout_size_14"
+        android:layout_below="@+id/inventory_popup_title"
+        android:fontFamily="@font/opensans_regular"
+        android:textSize="@dimen/text_size_16sp"
+        android:maxHeight="@dimen/layout_size_24"/>
+
+    <!-- Should be displayed when finalizing inventory else should be hidden -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/unaccounted_copies"
+        android:visibility="gone">
+
+    <TextView
+        android:id="@+id/mark_lost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/mark_lost"
+        android:layout_marginTop="@dimen/layout_size_21"
+        android:layout_marginStart="@dimen/layout_size_11"
+        android:layout_marginEnd="@dimen/layout_size_11"
+        android:fontFamily="@font/opensans_regular"
+        android:textColor="@color/blueLabel"
+        android:background="@drawable/rounded_border_blue"
+        android:textSize="@dimen/text_size_13sp"
+        android:gravity="center_horizontal"
+        android:maxHeight="@dimen/layout_size_36"
+        android:padding="@dimen/layout_size_10"/>
+
+    <TextView
+        android:id="@+id/ignore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ignore"
+        android:layout_marginTop="@dimen/layout_size_21"
+        android:layout_marginStart="@dimen/layout_size_11"
+        android:layout_marginEnd="@dimen/layout_size_11"
+        android:layout_below="@+id/mark_lost"
+        android:fontFamily="@font/opensans_regular"
+        android:textColor="@color/blueLabel"
+        android:background="@drawable/rounded_border_blue"
+        android:textSize="@dimen/text_size_13sp"
+        android:gravity="center_horizontal"
+        android:maxHeight="@dimen/layout_size_36"
+        android:padding="@dimen/layout_size_10"/>
+
+    <TextView
+        android:id="@+id/cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel"
+        android:textAllCaps="true"
+        android:layout_marginTop="@dimen/layout_size_21"
+        android:layout_marginStart="@dimen/layout_size_11"
+        android:layout_marginEnd="@dimen/layout_size_11"
+        android:layout_below="@+id/ignore"
+        android:fontFamily="@font/opensans_regular"
+        android:textColor="@color/blueLabel"
+        android:background="@drawable/rounded_border_blue"
+        android:textSize="@dimen/text_size_13sp"
+        android:gravity="center_horizontal"
+        android:maxHeight="@dimen/layout_size_36"
+        android:padding="@dimen/layout_size_10"/>
+
+    </RelativeLayout>
+
+    <!-- need to update font with Roboto-Medium. Displayed only when barcode was not found -->
+
+    <TextView
+        android:id="@+id/ok_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="end"
+        android:layout_marginEnd="@dimen/layout_size_35"
+        android:layout_marginBottom="@dimen/layout_size_17"
+        android:fontFamily="@font/opensans_regular"
+        android:textSize="@dimen/text_size_14sp"
+        android:textColor="@color/blueLabel"
+        android:text="@string/ok"
+        android:visibility="gone"/>
+
+</RelativeLayout>

@@ -23,16 +23,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".feature.checkoutcheckin.CheckinCheckoutActivity" />
-        <activity android:name=".feature.checkoutcheckin.checkout.PatronListActivity" />
+
         <activity
-            android:name=".feature.homescreen.HomeActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".feature.iteminfo.TitleInfoActivity" />
-        <activity android:name=".feature.itemstatus.ItemStatusActivity" />
-        <activity android:name=".feature.iteminfo.AdditionalInfoActivity" />
-        <activity android:name=".feature.patronstatus.PatronStatusActivity" />
+            android:name=".feature.checkoutcheckin.checkout.PatronListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.iteminfo.TitleInfoActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.iteminfo.AdditionalInfoActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.patronstatus.PatronStatusActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".app.base.LegalActivity"></activity>
+
+
     </application>
 
 </manifest>
