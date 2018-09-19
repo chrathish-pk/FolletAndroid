@@ -6,17 +6,6 @@
 
 package com.follett.fsc.mobile.circdesk.feature.loginsetup;
 
-import com.follett.fsc.mobile.circdesk.BR;
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
-import com.follett.fsc.mobile.circdesk.app.CustomAlert;
-import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
-import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
-import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
-import com.follett.fsc.mobile.circdesk.databinding.FragmentBasicLayoutBinding;
-import com.follett.fsc.mobile.circdesk.utils.AppUtils;
-
 import android.arch.lifecycle.Observer;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -32,10 +21,10 @@ import android.widget.TextView;
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
+import com.follett.fsc.mobile.circdesk.app.CustomAlert;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
-import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentBasicLayoutBinding;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 

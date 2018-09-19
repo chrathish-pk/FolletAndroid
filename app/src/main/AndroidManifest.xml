@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.follett.fsc.mobile.circdesk">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -22,17 +22,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".feature.checkoutcheckin.CheckinCheckoutActivity" />
+        <activity android:name=".feature.checkoutcheckin.CheckinCheckoutFragment" />
 
         <activity android:name=".feature.checkoutcheckin.checkout.PatronListActivity" />
 
-        <activity android:name=".feature.homescreen.HomeActivity" />
-
         <activity android:name=".feature.iteminfo.TitleInfoActivity" />
-        <activity android:name=".feature.itemstatus.ItemStatusActivity"/>
         <activity android:name=".feature.iteminfo.AdditionalInfoActivity" />
-        <activity android:name=".feature.patronstatus.PatronStatusActivity"/>
-        <activity android:name=".feature.inventory.InventoryActivity"/>
+        <activity android:name=".feature.patronstatus.PatronStatusActivity" />
 
 
     </application>

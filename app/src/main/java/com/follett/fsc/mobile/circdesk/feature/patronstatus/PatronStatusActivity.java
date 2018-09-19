@@ -5,6 +5,13 @@
  */
 package com.follett.fsc.mobile.circdesk.feature.patronstatus;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.TitleInfoActivity;
@@ -13,29 +20,22 @@ import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.CustomCheckout
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronList;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.view.View;
-
 import java.util.ArrayList;
 
 public class PatronStatusActivity extends BaseActivity<PatronStatusViewModel> implements NavigationListener, View.OnClickListener {
-    
+
     private PatronStatusFragment mPatronStatusFragment;
-    
+
     private PatronListFragment mPatronListFragment;
 
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         putContentView(R.layout.activity_common);
         inItView();
     }
-    
+
     private void inItView() {
         setTitleBar(getString(R.string.patron_status_label));
         setBackBtnVisible();
@@ -44,22 +44,22 @@ public class PatronStatusActivity extends BaseActivity<PatronStatusViewModel> im
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.commonContainer, mPatronStatusFragment, "PatronStatusFragment")
                 .commit();
-        
+
     }
-    
+
     @Override
     public void onNavigation(int position) {
         // Do Nothing
     }
-    
+
     @Override
     public void setToolBarTitle(String titleText) {
         setTitleBar(titleText);
     }
-    
+
     @Override
     public void onNavigation(Object model, int position) {
-        
+
         if (position == 0 && model != null) {  //Show patron list
             navigateToPatronList((ArrayList<PatronList>) model, true);
         } else if (position == 1 && model != null) {  // pop patron list
@@ -83,7 +83,7 @@ public class PatronStatusActivity extends BaseActivity<PatronStatusViewModel> im
             startActivity(titleIntent);
         }
     }
-    
+
     private void popFragmentFromBackStack(Fragment fragment) {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction trans = manager.beginTransaction();
@@ -91,13 +91,13 @@ public class PatronStatusActivity extends BaseActivity<PatronStatusViewModel> im
         trans.commit();
         manager.popBackStack();
     }
-    
-    
+
+
     private void navigateToPatronList(ArrayList<PatronList> patronList, boolean isAddToBackStack) {
-    
+
         mPatronListFragment = PatronListFragment.newInstance(patronList);
         setToolBarTitle(getString(R.string.selectPatron));
-        
+
         final FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction()
                 .add(R.id.base_container, mPatronListFragment);
         if (isAddToBackStack) {
@@ -105,12 +105,12 @@ public class PatronStatusActivity extends BaseActivity<PatronStatusViewModel> im
         }
         fragmentTransaction.commit();
     }
-    
+
     private void navigateToPatronCheckout(PatronInfo patronInfo, boolean isAddToBackStack, String title) {
-    
+
         PatronItemCheckoutFragment patronItemCheckoutFragment = PatronItemCheckoutFragment.newInstance(patronInfo, title);
         setToolBarTitle(title);
-        
+
         final FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction()
                 .add(R.id.base_container, patronItemCheckoutFragment);
         if (isAddToBackStack) {
@@ -118,12 +118,12 @@ public class PatronStatusActivity extends BaseActivity<PatronStatusViewModel> im
         }
         fragmentTransaction.commit();
     }
-    
+
     private void navigateToFineList(PatronInfo patronInfo, boolean isAddToBackStack, String title) {
-    
+
         PatronFineListFragment patronFineListFragment = PatronFineListFragment.newInstance(patronInfo);
         setToolBarTitle(title);
-        
+
         final FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction()
                 .add(R.id.base_container, patronFineListFragment);
         if (isAddToBackStack) {
@@ -131,7 +131,7 @@ public class PatronStatusActivity extends BaseActivity<PatronStatusViewModel> im
         }
         fragmentTransaction.commit();
     }
-    
+
     @Override
     public void onClick(View view) {
         int id = view.getId();

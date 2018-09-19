@@ -26,7 +26,6 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -34,7 +33,7 @@ import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityBaseBinding;
 
-public abstract class BaseActivity<V extends BaseViewModel> extends AppCompatActivity {
+public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity {
 
     public ActivityBaseBinding baseBinding;
 
@@ -102,13 +101,13 @@ public abstract class BaseActivity<V extends BaseViewModel> extends AppCompatAct
     }
 
     public static class DatePickerFragment extends DialogFragment
-            implements DatePickerDialog.OnDateSetListener{
+            implements DatePickerDialog.OnDateSetListener {
 
         @TargetApi(Build.VERSION_CODES.N)
         @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState){
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-          DatePickerDialog dpd = new DatePickerDialog(getActivity());
+            DatePickerDialog dpd = new DatePickerDialog(getActivity());
             // Create a TextView programmatically.
             TextView tv = new TextView(getActivity());
 
@@ -119,7 +118,7 @@ public abstract class BaseActivity<V extends BaseViewModel> extends AppCompatAct
             tv.setLayoutParams(lp);
             tv.setPadding(10, 10, 10, 10);
             tv.setGravity(Gravity.LEFT);
-            tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP,14);
+            tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
             tv.setText("Seen On or After");
             tv.setTextColor(getResources().getColor(R.color.white));
             tv.setBackgroundColor(getResources().getColor(R.color.blueLabel));
@@ -127,25 +126,24 @@ public abstract class BaseActivity<V extends BaseViewModel> extends AppCompatAct
             dpd.setMessage(tv.getText()); // Uncomment this line to activate it
 
             // Return the DatePickerDialog
-            return  dpd;
+            return dpd;
         }
 
-        public void onDateSet(DatePicker view, int year, int month, int day){
+        public void onDateSet(DatePicker view, int year, int month, int day) {
             // Do something with the chosen date
         }
     }
-
 
 
     protected <T extends ViewDataBinding> T putContentView(@LayoutRes int resId) {
         return DataBindingUtil.inflate(getLayoutInflater(), resId, baseBinding.baseContainer, true);
     }
 
-    protected void setTitleBar(String titleBarText) {
+    public void setTitleBar(String titleBarText) {
         baseBinding.titleBar.setText(titleBarText);
     }
 
-    protected void setBackBtnVisible() {
+    public void setBackBtnVisible() {
         baseBinding.backBtn.setVisibility(View.VISIBLE);
     }
 
@@ -158,16 +156,28 @@ public abstract class BaseActivity<V extends BaseViewModel> extends AppCompatAct
         return false;
     }
 
-    protected void pushFragment(Fragment fragment, int container, String tag, boolean shouldAdd) {
+    public void pushFragment(Fragment fragment, int container, String tag, boolean shouldAdd) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(container, fragment);
         if (shouldAdd)
             ft.addToBackStack(tag);
+        else {
+            if (fm.getBackStackEntryCount() > 0) {
+                for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
+                    fm.popBackStack();
+                }
+            }
+            if (!fm.getFragments().isEmpty()) {
+                for (Fragment fragment1 : fm.getFragments()) {
+                    getSupportFragmentManager().beginTransaction().remove(fragment1).commit();
+                }
+            }
+        }
+        ft.replace(container, fragment);
         ft.commit();
     }
 
-    protected void popFragment(Fragment fragment) {
+    public void popFragment(Fragment fragment) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.remove(fragment);

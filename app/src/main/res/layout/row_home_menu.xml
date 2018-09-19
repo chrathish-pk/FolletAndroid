@@ -7,16 +7,13 @@
             name="menuItem"
             type="com.follett.fsc.mobile.circdesk.feature.homescreen.HomeMenu" />
 
-        <variable
-            name="listener"
-            type="com.follett.fsc.mobile.circdesk.app.ItemClickListener" />
     </data>
 
     <LinearLayout
+        android:id="@+id/itemMenuLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:onClick="@{()->listener.onItemClicked()}"
         android:orientation="vertical"
         android:padding="10dp">
 

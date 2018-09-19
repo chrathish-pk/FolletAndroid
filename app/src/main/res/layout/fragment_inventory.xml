@@ -19,7 +19,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/inventory"
+            android:id="@+id/inventorySelection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -37,7 +37,7 @@
             android:background="@color/editTextBorderColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inventory" />
+            app:layout_constraintTop_toBottomOf="@+id/inventorySelection" />
 
         <TextView
             android:id="@+id/inventoryLocation"
@@ -72,10 +72,11 @@
             android:id="@+id/inventoryCompletedStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
             android:fontFamily="@font/opensans_semibold"
             android:layout_marginTop="@dimen/layout_size_30"
             android:padding="10dp"
-            android:text="Currently completed status: 33% Complete"
+            android:text="Current status: 33% Complete"
             android:textColor="@color/blueLabel"
             android:textSize="@dimen/text_size_14sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -101,9 +102,9 @@
             android:fontFamily="@font/opensans_regular"
             android:gravity="center"
             android:padding="5dp"
-            android:text="@string/view_selections"
+            android:text="@string/viewSelection"
             android:textColor="@color/blueLabel"
-            android:textSize="@dimen/text_size_18sp"
+            android:textSize="@dimen/text_size_14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inventoryCompletedStatus" />
@@ -116,11 +117,11 @@
             android:background="@drawable/rounded_solid_blue"
             android:fontFamily="@font/opensans_regular"
             android:gravity="center"
-            android:padding="5dp"
+            android:padding="10dp"
             android:text="@string/finalize_inventory"
             android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_18sp"
+            android:textSize="@dimen/text_size_14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inventoryViewSelectionsBtn" />

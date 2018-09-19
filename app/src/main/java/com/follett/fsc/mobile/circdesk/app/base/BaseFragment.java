@@ -6,8 +6,6 @@
 
 package com.follett.fsc.mobile.circdesk.app.base;
 
-import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
@@ -23,11 +21,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.follett.fsc.mobile.circdesk.utils.FollettLog;
+
 public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseViewModel> extends Fragment {
     
     private static final String TAG = BaseFragment.class.getSimpleName();
     
-    protected Activity mActivity;
+    public BaseActivity mActivity;
 
     private View mRootView;
 
@@ -40,7 +40,7 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     public abstract V getViewModel();
     
     public abstract int getBindingVariable();
-    
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -55,6 +55,8 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mViewModel = getViewModel();
+
+
     }
     
     @Override

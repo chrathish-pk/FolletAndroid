@@ -1,13 +1,5 @@
 package com.follett.fsc.mobile.circdesk.feature.itemstatus;
 
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
-import com.follett.fsc.mobile.circdesk.databinding.FragmentItemStatusBinding;
-import com.follett.fsc.mobile.circdesk.feature.iteminfo.TitleInfoActivity;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
-import com.follett.fsc.mobile.circdesk.utils.AppUtils;
-import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-
 import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
@@ -21,14 +13,13 @@ import android.view.View;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
-import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentItemStatusBinding;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.TitleInfoActivity;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
-public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding,ItemStatusViewModel> implements View.OnClickListener,UpdateItemUIListener {
+public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, ItemStatusViewModel> implements View.OnClickListener, UpdateItemUIListener {
 
     private ItemDetails itemDetailsinfo;
     private FragmentItemStatusBinding fragmentItemStatusBinding;
@@ -72,6 +63,7 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding,I
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         fragmentItemStatusBinding = getViewDataBinding();
+        mActivity.setTitleBar(getString(R.string.item_status_title));
         initView();
 
     }
@@ -112,9 +104,8 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding,I
 
                     if (itemDetailsinfo.getSuccess()) {
                         fragmentItemStatusBinding.itemErrorMsgLayout.setVisibility(View.GONE);
-                            fragmentItemStatusBinding.setItemDetailsViewModel(itemDetailsinfo);
-                    }
-                    else if (!itemDetailsinfo.getSuccess()) {
+                        fragmentItemStatusBinding.setItemDetailsViewModel(itemDetailsinfo);
+                    } else if (!itemDetailsinfo.getSuccess()) {
                         fragmentItemStatusBinding.itemErrorMsgLayout.setVisibility(View.VISIBLE);
                         fragmentItemStatusBinding.itemStatusDetailLayout.setVisibility(View.GONE);
                         fragmentItemStatusBinding.itemStatusCheckoutDetailsLayout.setVisibility(View.GONE);
@@ -142,7 +133,7 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding,I
                     .hideKeyBoard(getActivity(), fragmentItemStatusBinding.itemStatusPatronEntry);
             if (AppUtils.getInstance().isEditTextNotEmpty(fragmentItemStatusBinding.itemStatusPatronEntry)) {
                 int collectionType = AppSharedPreferences.getInstance(getActivity()).getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED) ? 0 : 4;
-                itemStatusViewModel.getScanItem(fragmentItemStatusBinding.itemStatusPatronEntry.getText().toString().trim(),String.valueOf(collectionType));
+                itemStatusViewModel.getScanItem(fragmentItemStatusBinding.itemStatusPatronEntry.getText().toString().trim(), String.valueOf(collectionType));
             } else {
                 AppUtils.getInstance()
                         .showShortToastMessages(getActivity(), getString(R.string.errorPatronEntry));
@@ -155,23 +146,19 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding,I
             Log.i("TAG", "BIDID :" + bidID);
             startActivity(titleIntent);
 
-        }
-        else if(v.getId() == R.id.libraryBtn)
-        {
-            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.blueLabel));
-            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(getActivity(),R.color.white));
-            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.white));
-            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(getActivity(),R.color.blueLabel));
+        } else if (v.getId() == R.id.libraryBtn) {
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.blueLabel));
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.blueLabel));
             AppSharedPreferences.getInstance(getActivity()).setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, true);
             disableItemStatusView();
 
-        }
-        else if(v.getId() == R.id.resourceBtn)
-        {
-            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.blueLabel));
-            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(getActivity(),R.color.white));
-            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.white));
-            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(getActivity(),R.color.blueLabel));
+        } else if (v.getId() == R.id.resourceBtn) {
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.blueLabel));
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.blueLabel));
             AppSharedPreferences.getInstance(getActivity()).setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, false);
             disableItemStatusView();
         }
