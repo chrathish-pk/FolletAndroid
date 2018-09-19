@@ -48,6 +48,7 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
         fragmentInventoryBinding = getViewDataBinding();
         mActivity.setTitleBar(getString(R.string.inventory));
 
+        fragmentInventoryBinding.patronEntryIncludeLayout.patronEntry.setHint(getString(R.string.enterBarcode));
         fragmentInventoryBinding.patronEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.GONE);
 
     }
