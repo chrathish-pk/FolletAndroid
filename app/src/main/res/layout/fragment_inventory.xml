@@ -4,11 +4,168 @@
   ~  */
   -->
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="inventoryViewModel"
+            type="com.follett.fsc.mobile.circdesk.feature.inventory.InventoryViewModel" />
+    </data>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@+id/scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="32dp"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toTopOf="@+id/libraryResourceIncludeLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
+
+                <TextView
+                    android:id="@+id/inventorySelection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:drawableEnd="@drawable/right_arrow"
+                    android:gravity="center_vertical"
+                    android:onClick="@{(v)->inventoryViewModel.OnItemClick(v)}"
+                    android:padding="10dp"
+                    android:text="Tablets-Started 02/02/2018"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/inventoryBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/editTextBorderColor"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/inventorySelection" />
+
+                <TextView
+                    android:id="@+id/inventoryLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:drawableEnd="@drawable/right_arrow"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:onClick="@{(v)->inventoryViewModel.OnItemClick(v)}"
+                    android:text="Tablets-Started 02/02/2018"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/inventoryBar" />
+
+                <View
+                    android:id="@+id/inventoryLocationBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/editTextBorderColor"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/inventoryLocation" />
+
+                <include
+                    android:id="@+id/patronEntryIncludeLayout"
+                    layout="@layout/patron_entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/inventoryLocationBar" />
+
+                <TextView
+                    android:id="@+id/inventoryCompletedStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:padding="10dp"
+                    android:text="Current status: 33% Complete"
+                    android:textColor="@color/blueLabel"
+                    android:textSize="@dimen/text_size_16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/patronEntryIncludeLayout" />
+
+                <ImageView
+                    android:id="@+id/inventoryRefreshBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:paddingRight="40dp"
+                    android:src="@drawable/right_arrow"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/patronEntryIncludeLayout" />
+
+                <TextView
+                    android:id="@+id/inventoryViewSelectionsBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:background="@drawable/rounded_border_blue"
+                    android:fontFamily="@font/opensans_regular"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:text="@string/viewSelection"
+                    android:textColor="@color/blueLabel"
+                    android:textSize="@dimen/text_size_14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/inventoryCompletedStatus" />
+
+                <TextView
+                    android:id="@+id/finalizeInventoryBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:background="@drawable/rounded_solid_blue"
+                    android:fontFamily="@font/opensans_regular"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:text="@string/finalize_inventory"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/inventoryViewSelectionsBtn" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </ScrollView>
+
+        <include
+            android:id="@+id/libraryResourceIncludeLayout"
+            layout="@layout/library_resource"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
 
     </android.support.constraint.ConstraintLayout>
 

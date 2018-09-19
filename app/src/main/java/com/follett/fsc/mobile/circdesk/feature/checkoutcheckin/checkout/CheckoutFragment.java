@@ -59,7 +59,7 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
         fragmentCheckoutBinding.patronEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.GONE);
 
 
-        if (!TextUtils.isEmpty(AppSharedPreferences.getInstance(getActivity()).getString(AppSharedPreferences.KEY_SELECTED_BARCODE))) {
+        if (!TextUtils.isEmpty(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SELECTED_BARCODE))) {
             getPatronID();
         }
     }
@@ -70,12 +70,12 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
             AppUtils.getInstance()
                     .hideKeyBoard(getBaseActivity(), fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry);
             if (AppUtils.getInstance().isEditTextNotEmpty(fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry)) {
-                String barcode = AppSharedPreferences.getInstance(getActivity()).getString(AppSharedPreferences.KEY_SELECTED_BARCODE);
+                String barcode = AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SELECTED_BARCODE);
                 if (TextUtils.isEmpty(barcode)) {
                     checkoutViewModel.getScanPatron(fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.getText().toString().trim());
                 } else {
-                    int collectionType = AppSharedPreferences.getInstance(getActivity()).getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED) ? 0 : 4;
-                    checkoutViewModel.getCheckoutResult(AppSharedPreferences.getInstance(getActivity()).getString(AppSharedPreferences.KEY_PATRON_ID),
+                    int collectionType = AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED) ? 0 : 4;
+                    checkoutViewModel.getCheckoutResult(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_PATRON_ID),
                             fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.getText().toString().trim(), String.valueOf(collectionType));
                 }
             } else {
@@ -83,8 +83,8 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
                         .showShortToastMessages(getBaseActivity(), getString(R.string.errorPatronEntry));
             }
         } else if (v.getId() == R.id.checkoutCloseBtn && fragmentCheckoutBinding.patronDetailIncludeLayout.patronDetailLayout.getVisibility() == View.VISIBLE) {
-            AppSharedPreferences.getInstance(getActivity()).setString(AppSharedPreferences.KEY_PATRON_ID, null);
-            AppSharedPreferences.getInstance(getActivity()).setString(AppSharedPreferences.KEY_SELECTED_BARCODE, null);
+            AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_PATRON_ID, null);
+            AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_SELECTED_BARCODE, null);
             fragmentCheckoutBinding.patronDetailIncludeLayout.patronDetailLayout.setVisibility(View.GONE);
             fragmentCheckoutBinding.checkoutDetailIncludeLayout.checkedoutDetailLayout.setVisibility(View.GONE);
             fragmentCheckoutBinding.checkoutPatronErrorMsg.setVisibility(View.GONE);
@@ -100,7 +100,7 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
 
     public void getPatronID() {
         if (checkoutViewModel != null) {
-            String selectedBarcode = AppSharedPreferences.getInstance(getActivity()).getString(AppSharedPreferences.KEY_SELECTED_BARCODE);
+            String selectedBarcode = AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SELECTED_BARCODE);
             if (TextUtils.isEmpty(selectedBarcode))
                 checkoutViewModel.getScanPatron(fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.getText().toString().trim());
             else
@@ -136,10 +136,11 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
             if (scanPatron.getPatronList() != null) {
                 navigateToPatronListScreen(scanPatron);
             } else {
+                this.scanPatron = scanPatron;
                 bindPatronResult();
             }
         } else {
-            AppSharedPreferences.getInstance(getActivity()).setString(AppSharedPreferences.KEY_SELECTED_BARCODE, null);
+            AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_SELECTED_BARCODE, null);
             updatePatronErrorMsg(scanPatron);
         }
     }
@@ -192,7 +193,7 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
 
     public void bindPatronResult() {
         if (scanPatron != null) {
-            if (!TextUtils.isEmpty(AppSharedPreferences.getInstance(getActivity()).getString(AppSharedPreferences.KEY_SELECTED_BARCODE))) {
+            if (!TextUtils.isEmpty(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SELECTED_BARCODE))) {
                 fragmentCheckoutBinding.patronDetailIncludeLayout.patronDetailLayout.setVisibility(View.VISIBLE);
                 fragmentCheckoutBinding.checkoutDetailIncludeLayout.checkedoutDetailLayout.setVisibility(View.GONE);
                 fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.setText("");
@@ -200,13 +201,13 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
                 if (fragmentCheckoutBinding.checkoutPatronErrorMsg.getVisibility() == View.VISIBLE)
                     fragmentCheckoutBinding.checkoutPatronErrorMsg.setVisibility(View.GONE);
 
-                scanPatron.setLibrarySelected(AppSharedPreferences.getInstance(getActivity()).getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED));
+                scanPatron.setLibrarySelected(AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED));
 
                 fragmentCheckoutBinding.setScanPatron(scanPatron);
+            } else {
+                if (fragmentCheckoutBinding != null)
+                    fragmentCheckoutBinding.patronDetailIncludeLayout.patronDetailLayout.setVisibility(View.GONE);
             }
-        } else {
-            if (fragmentCheckoutBinding != null)
-                fragmentCheckoutBinding.patronDetailIncludeLayout.patronDetailLayout.setVisibility(View.GONE);
         }
     }
 
@@ -219,7 +220,7 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
 
     @Override
     public void onPositiveButtonClick(int statusCode) {
-       //Do Nothing
+        //Do Nothing
     }
 
     @Override

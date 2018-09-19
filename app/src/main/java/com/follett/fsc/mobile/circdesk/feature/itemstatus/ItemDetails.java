@@ -247,4 +247,26 @@ public class ItemDetails implements Parcelable
         else dest.writeByte((byte) (success == null ? 0 : 2));
         dest.writeString(barcode);
     }
+    
+    public ItemDetails(String location, String isbn, String title, String status, CurrentCheckout currentCheckout, String department, Integer bibID, String
+            author, Object callNumber, Object custodian, Object follettEBookURL, Object circType, List<Note> itemNotes, Boolean success, String barcode,
+            Object coverImage) {
+        this.location = location;
+        this.isbn = isbn;
+        this.title = title;
+        this.status = status;
+        this.currentCheckout = currentCheckout;
+        this.department = department;
+        this.bibID = bibID;
+        this.author = author;
+        this.callNumber = callNumber;
+        this.custodian = custodian;
+        this.follettEBookURL = follettEBookURL;
+        this.circType = circType;
+        this.itemNotes = itemNotes;
+        this.success = success;
+        this.barcode = barcode;
+        this.coverImage = coverImage;
+    }
+  
 }
