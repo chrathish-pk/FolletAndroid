@@ -25,18 +25,15 @@ public class LoginViewModel extends BaseViewModel<CTAButtonListener> implements 
 
     private Application mApplication;
 
-    private AppRemoteRepository mAppRemoteRepository;
-
     public LoginViewModel(@NonNull Application application) {
         super(application);
         mApplication = application;
-        mAppRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(getApplication()));
     }
 
 
     public void getLoginResults(String contextName, String site, String userName, String password) {
         setIsLoding(true);
-        mAppRemoteRepository.getLoginResults(this, contextName, site, userName, password);
+        AppRemoteRepository.getInstance(AppSharedPreferences.getInstance(mApplication)).getLoginResults(this, contextName, site, userName, password);
     }
 
     private void cancelProgressBar() {

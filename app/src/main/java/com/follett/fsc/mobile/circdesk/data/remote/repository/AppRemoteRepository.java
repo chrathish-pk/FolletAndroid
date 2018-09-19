@@ -38,14 +38,22 @@ import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferen
 public class AppRemoteRepository {
 
     private APIInterface apiService;
-
     private AppPrefHelper appPreferencesHelper;
+    private static AppRemoteRepository mInstance;
+
+    public static AppRemoteRepository getInstance(AppSharedPreferences appSharedPreferences) {
+        if (mInstance == null)
+            mInstance = new AppRemoteRepository(appSharedPreferences);
+
+        return mInstance;
+    }
 
     public AppRemoteRepository(AppSharedPreferences appPref) {
         appPreferencesHelper = new AppPreferencesHelper(appPref);
         apiService = FollettAPIManager.getClient(getString(SERVER_URI_VALUE))
                 .create(APIInterface.class);
     }
+
 
     public void getVersion(@Nullable final NetworkInterface networkInterface) {
         apiService.getVersion()
@@ -157,9 +165,8 @@ public class AppRemoteRepository {
                 });
     }
 
-    public void getScanPatron(Map<String, String> headers, @Nullable final NetworkInterface networkInterface,String contextName, String site, String patronBarcodeID) {
-        apiService.getScanPatron(headers, contextName, site, "COGNITE", patronBarcodeID, "DestinyCirc", "Android_24_7.0_lge_lucye_LG-H870DS", "1_Android",
-                "English")
+    public void getScanPatron(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, String patronBarcodeID) {
+        apiService.getScanPatron(headers, contextName, site, patronBarcodeID)
                 .subscribeWith(new Observer<ScanPatron>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -187,7 +194,7 @@ public class AppRemoteRepository {
                 });
     }
 
-    public void getCheckoutResult(Map<String, String> headers, @Nullable final NetworkInterface networkInterface,String contextName, String site, String patronID, String barcode, String collectionType) {
+    public void getCheckoutResult(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, String patronID, String barcode, String collectionType) {
 
         apiService.getCheckoutResult(headers, contextName, site, barcode, patronID, collectionType, "false")
                 .subscribeWith(new Observer<CheckoutResult>() {
@@ -217,7 +224,7 @@ public class AppRemoteRepository {
                 });
     }
 
-    public void getCheckinResult(Map<String, String> headers, @Nullable final NetworkInterface networkInterface,String contextName, String site, String barcode, String collectionType, boolean isLibraryUse) {
+    public void getCheckinResult(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, String barcode, String collectionType, boolean isLibraryUse) {
 
         apiService.getCheckinResult(headers, contextName, site, barcode, collectionType, String.valueOf(isLibraryUse))
                 .subscribeWith(new Observer<CheckinResult>() {
@@ -249,7 +256,7 @@ public class AppRemoteRepository {
                 });
     }
 
-    public void getTitleDetails(Map<String, String> headers, @Nullable final NetworkInterface networkInterface,String contextName, String site, String bibID) {
+    public void getTitleDetails(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, String bibID) {
         apiService.getTitleDetails(headers, contextName, site, bibID)
                 .subscribeWith(new Observer<TitleDetails>() {
                     @Override
@@ -270,6 +277,7 @@ public class AppRemoteRepository {
                             networkInterface.onCallFailed(throwable);
                         }
                     }
+
                     @Override
                     public void onComplete() {
                         //Do Nothing
@@ -277,34 +285,33 @@ public class AppRemoteRepository {
                 });
     }
 
-    public void getItemStatus(Map<String, String> headers,@Nullable final NetworkInterface networkInterface,String contextName, String site,String itemBarcodeID,String collectionType) {
+    public void getItemStatus(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, String itemBarcodeID, String collectionType) {
 
-        apiService.getScanItem(headers, contextName,site,itemBarcodeID,collectionType)
-               .subscribeWith(new Observer<ItemDetails>() {
-                   @Override
-                   public void onSubscribe(Disposable d) {
-                       //Do Nothing
+        apiService.getScanItem(headers, contextName, site, itemBarcodeID, collectionType)
+                .subscribeWith(new Observer<ItemDetails>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        //Do Nothing
 
-                   }
+                    }
 
-                   @Override
-                   public void onNext(ItemDetails itemDetails) {
-                       if(networkInterface!=null)
-                       {
-                           networkInterface.onCallCompleted(itemDetails);
-                       }
-                   }
+                    @Override
+                    public void onNext(ItemDetails itemDetails) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallCompleted(itemDetails);
+                        }
+                    }
 
-                   @Override
-                   public void onError(Throwable throwable) {
-                       if (networkInterface != null) {
-                           networkInterface.onCallFailed(throwable);
-                       }
-                   }
+                    @Override
+                    public void onError(Throwable throwable) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallFailed(throwable);
+                        }
+                    }
 
-                   @Override
-                   public void onComplete() {
-                       //Do Nothing
+                    @Override
+                    public void onComplete() {
+                        //Do Nothing
                     }
                 });
     }

@@ -53,9 +53,8 @@ public class PatronListAdapter extends RecyclerView.Adapter<PatronListViewHolder
         holder.rowPatronListBinding.patronLayout.setTag(position);
 
         holder.rowPatronListBinding.patronLayout.setOnClickListener(this);
-        AppRemoteRepository appRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(context));
 
-        FollettLog.d("patronImg", appRemoteRepository.getString(SERVER_URI_VALUE) + patron.getPatronPictureFileName());
+        FollettLog.d("patronImg", AppRemoteRepository.getInstance(AppSharedPreferences.getInstance(context)).getString(SERVER_URI_VALUE) + patron.getPatronPictureFileName());
 
         RequestOptions requestOptions = new RequestOptions()
                 .fitCenter()
@@ -63,7 +62,7 @@ public class PatronListAdapter extends RecyclerView.Adapter<PatronListViewHolder
                 .transforms(new CenterCrop(), new RoundedCorners(500));
 
         Glide.with(context)
-                .load(appRemoteRepository.getString(SERVER_URI_VALUE) + patron.getPatronPictureFileName() + "?contextName=dvpdt_devprodtest")
+                .load(AppRemoteRepository.getInstance(AppSharedPreferences.getInstance(context)).getString(SERVER_URI_VALUE) + patron.getPatronPictureFileName() + "?contextName=dvpdt_devprodtest")
                 .apply(requestOptions)
                 .into(holder.rowPatronListBinding.patronImg);
     }

@@ -6,6 +6,9 @@
 
 package com.follett.fsc.mobile.circdesk.feature.loginsetup;
 
+import android.app.Application;
+import android.arch.lifecycle.MutableLiveData;
+
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
@@ -14,9 +17,6 @@ import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-
-import android.app.Application;
-import android.arch.lifecycle.MutableLiveData;
 
 import java.util.List;
 
@@ -31,21 +31,18 @@ public class SchoolListViewModel extends BaseViewModel<CTAButtonListener> implem
     public final MutableLiveData<SiteResults> siteResult = new MutableLiveData<>();
     
     public final MutableLiveData<String> noSchoolFoundMsg = new MutableLiveData<>();
-    
-    private AppRemoteRepository mAppRemoteRepository;
-    
+
     private Application mApplication;
     
     public SchoolListViewModel(Application application) {
         super(application);
         mApplication = application;
-        mAppRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(application));
         fetchSchoolList();
     }
     
     public void fetchSchoolList() {
         setIsLoding(true);
-        mAppRemoteRepository.getSchoolList(this, AppSharedPreferences.getInstance(mApplication)
+        AppRemoteRepository.getInstance(AppSharedPreferences.getInstance(mApplication)).getSchoolList(this, AppSharedPreferences.getInstance(mApplication)
                 .getString(KEY_CONTEXT_NAME));
     }
     

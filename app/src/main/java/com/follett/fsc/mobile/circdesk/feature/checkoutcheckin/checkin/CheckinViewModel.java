@@ -30,13 +30,11 @@ public class CheckinViewModel extends BaseViewModel implements NetworkInterface 
 
     private Application mApplication;
     private UpdateUIListener updateUIListener;
-    private AppRemoteRepository mAppRemoteRepository;
 
     public CheckinViewModel(Application application, UpdateUIListener updateUIListener) {
         super(application);
         this.mApplication = application;
         this.updateUIListener = updateUIListener;
-        this.mAppRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(application));
 
     }
 
@@ -48,7 +46,7 @@ public class CheckinViewModel extends BaseViewModel implements NetworkInterface 
         map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance(mApplication).getString(AppSharedPreferences.KEY_SESSION_ID));
         map.put("text/xml", "gzip");
 
-        mAppRemoteRepository.getCheckinResult(map, this,AppSharedPreferences.getInstance(getApplication())
+        AppRemoteRepository.getInstance(AppSharedPreferences.getInstance(mApplication)).getCheckinResult(map, this,AppSharedPreferences.getInstance(getApplication())
                         .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance(getApplication())
                         .getString(KEY_SITE_SHORT_NAME),
                 checkinBarcode, collectionType, isLibraryUse);

@@ -28,13 +28,11 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
 
     private Application mApplication;
     private UpdateUIListener updateUIListener;
-    private AppRemoteRepository mAppRemoteRepository;
 
     public CheckoutViewModel(@NonNull Application application, UpdateUIListener updateUIListener) {
         super(application);
         this.mApplication = application;
         this.updateUIListener = updateUIListener;
-        this.mAppRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(application));
     }
 
     public void getScanPatron(String patronBarcodeID) {
@@ -45,7 +43,7 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
         map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance(mApplication).getString(AppSharedPreferences.KEY_SESSION_ID));
         map.put("text/xml", "gzip");
 
-        mAppRemoteRepository.getScanPatron(map, this,AppSharedPreferences.getInstance(getApplication())
+        AppRemoteRepository.getInstance(AppSharedPreferences.getInstance(mApplication)).getScanPatron(map, this,AppSharedPreferences.getInstance(getApplication())
                 .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance(getApplication())
                 .getString(KEY_SITE_SHORT_NAME), patronBarcodeID);
     }
@@ -58,7 +56,7 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
         map.put("Accept", "application/json");
         map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance(mApplication).getString(AppSharedPreferences.KEY_SESSION_ID));
         map.put("text/xml", "gzip");
-        mAppRemoteRepository.getCheckoutResult(map, this,AppSharedPreferences.getInstance(getApplication())
+        AppRemoteRepository.getInstance(AppSharedPreferences.getInstance(mApplication)).getCheckoutResult(map, this,AppSharedPreferences.getInstance(getApplication())
                 .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance(getApplication())
                 .getString(KEY_SITE_SHORT_NAME), patronID, barcode, collectionType);
     }

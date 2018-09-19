@@ -6,17 +6,6 @@
 
 package com.follett.fsc.mobile.circdesk.feature.loginsetup;
 
-import com.follett.fsc.mobile.circdesk.BR;
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
-import com.follett.fsc.mobile.circdesk.app.CustomAlert;
-import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
-import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
-import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
-import com.follett.fsc.mobile.circdesk.databinding.FragmentBasicLayoutBinding;
-import com.follett.fsc.mobile.circdesk.utils.AppUtils;
-
 import android.arch.lifecycle.Observer;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -32,27 +21,27 @@ import android.widget.TextView;
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
+import com.follett.fsc.mobile.circdesk.app.CustomAlert;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
-import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentBasicLayoutBinding;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.SERVER_URI_VALUE;
 
 public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, BasicViewModel> implements CTAButtonListener {
-    
+
     private static final String IS_BASIC_FRAGMENT = "isbasicfragment";
-    
+
     private FragmentBasicLayoutBinding mBasicLayoutBinding;
-    
+
     private BasicViewModel mBasicViewModel;
 
     private NavigationListener navigationListener;
-    
+
     private boolean mIsBaseFragment;
-    
+
     public static BasicFragment newInstance(boolean isBasicFragment) {
         Bundle args = new Bundle();
         args.putBoolean(IS_BASIC_FRAGMENT, isBasicFragment);
@@ -60,36 +49,36 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
         fragment.setArguments(args);
         return fragment;
     }
-    
+
     @Override
     public int getLayoutId() {
         return R.layout.fragment_basic_layout;
     }
-    
+
     @Override
     public BasicViewModel getViewModel() {
         mBasicViewModel = new BasicViewModel(getBaseApplication());
         return mBasicViewModel;
     }
-    
+
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
     }
-    
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBasicViewModel.setNavigator(this);
     }
-    
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mBasicLayoutBinding = getViewDataBinding();
         inItView(mBasicLayoutBinding);
     }
-    
+
     @Override
     public void ctaButtonOnClick(View view) {
         if (!AppUtils.getInstance()
@@ -139,14 +128,14 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
         AppSharedPreferences.getInstance(getBaseActivity()).setString(SERVER_URI_VALUE, libraryURI);
         mBasicViewModel.savePreference(libraryURI, port, sslPort);
     }
-    
+
     private void inItView(final FragmentBasicLayoutBinding basicLayoutBinding) {
         final Bundle arguments = getArguments();
         if (null != arguments) {
             mIsBaseFragment = arguments.getBoolean(IS_BASIC_FRAGMENT);
             mBasicViewModel.setAdvancedTabView(mIsBaseFragment);
         }
-        
+
         if (mIsBaseFragment) {
             basicLayoutBinding.libraryEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
         } else {
@@ -157,7 +146,7 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
         basicLayoutBinding.libraryEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                
+
                 if (i == EditorInfo.IME_ACTION_DONE) {
                     AppUtils.getInstance()
                             .hideKeyBoard(getBaseActivity(), textView);
@@ -179,24 +168,24 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
                 return true;
             }
         });
-        
+
         basicLayoutBinding.libraryEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 // Do Nothing
             }
-            
+
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 onTextChangedInEditText();
             }
-            
+
             @Override
             public void afterTextChanged(Editable editable) {
                 // Do Nothing
             }
         });
-        
+
         basicLayoutBinding.portEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

@@ -25,7 +25,6 @@ import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferen
 
 public class AdditionalInfoViewModel extends BaseViewModel implements NetworkInterface {
 
-    private AppRemoteRepository mAppRemoteRepository;
     AdditionalInfoListener additionalInfoListener;
     private Application mApplication;
     public final MutableLiveData<TitleDetails> mTitleDetails = new MutableLiveData<>();
@@ -34,7 +33,6 @@ public class AdditionalInfoViewModel extends BaseViewModel implements NetworkInt
         super(application);
         this.additionalInfoListener = additionalInfoListener;
         this.mApplication = application;
-        mAppRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(application));
     }
 
     public void getTitleDetails(String bibID) {
@@ -43,7 +41,7 @@ public class AdditionalInfoViewModel extends BaseViewModel implements NetworkInt
         map.put("Accept", "application/json");
         map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance(mApplication).getString(AppSharedPreferences.KEY_SESSION_ID));
         map.put("text/xml", "gzip");
-        mAppRemoteRepository.getTitleDetails(map, this,AppSharedPreferences.getInstance(getApplication())
+        AppRemoteRepository.getInstance(AppSharedPreferences.getInstance(mApplication)).getTitleDetails(map, this,AppSharedPreferences.getInstance(getApplication())
                 .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance(getApplication())
                 .getString(KEY_SITE_SHORT_NAME), bibID);
     }
