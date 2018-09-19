@@ -57,7 +57,11 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
     public void onItemClick(View view, int position) {
         switch (view.getId()) {
             case R.id.inventorySelection:
-                mActivity.pushFragment(new InventoryListFragment(), R.id.loginContainer, "InventoryListFragment", true);
+                mActivity.pushFragment(new SelectInventoryFragment(), R.id.loginContainer, "SelectInventoryFragment", true);
+                break;
+            case R.id.inventoryLocation:
+                mActivity.pushFragment(new InventoryLocationFragment(), R.id.loginContainer, "InventoryLocationFragment", true);
+                break;
         }
     }
 }

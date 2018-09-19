@@ -67,6 +67,7 @@
                     android:drawableEnd="@drawable/right_arrow"
                     android:gravity="center_vertical"
                     android:padding="10dp"
+                    android:onClick="@{(v)->inventoryViewModel.OnItemClick(v)}"
                     android:text="Tablets-Started 02/02/2018"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_16sp"
