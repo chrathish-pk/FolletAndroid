@@ -25,7 +25,7 @@
 
     <!--Home screen-->
     <string name="home">HOME</string>
-    <string name="checkInCheckout">" Check In\nCheck Out"</string>
+    <string name="checkInCheckout">" Check Out\nCheck In"</string>
     <string name="patronStatus">"Patron\nStatus"</string>
     <string name="itemStatus">Item Status</string>
     <string name="inventory">Inventory</string>
@@ -125,6 +125,7 @@
     <string name="noDataFound">no data found from api result</string>
 
     <!--Patron Status-->
+    <string name="patron_status">Patron \nStatus</string>
     <string name="patron_status_label">Patron Status</string>
     <string name="patron_not_found">Patron %s not found</string>
     <string name="items_overude_label">items overudue</string>
@@ -154,5 +155,34 @@
     <string name="rate_follett_destiny">RATE FOLLETT DESTINY</string>
     <string name="change_site">CHANGE SITE</string>
     <string name="logout">LOG OUT</string>
+
+    <!--Inventory-->
+    <string name="inventoryTitle">Inventory</string>
+    <string name="viewSelection">VIEW SELECTIONS</string>
+    <string name="selectInventory">Select Inventory</string>
+
+    <!--NewInventorytory-->
+    <string name="finalize_inventory">Finalize Inventory</string>
+    <string name="unaccounted_copies">%1$d copies unaccounted</string>
+    <string name="mark_lost">MARK LOST</string>
+    <string name="ignore">IGNORE</string>
+    <string name="call_numbers_text">To specify a call number range, enter at least the first 3 digits of each Dewy number or a complete call number prefix.</string>
+    <string name="call_from">Call Numbers from:</string>
+    <string name="call_num">Call Number</string>
+    <string name="call_to">To:</string>
+    <string name="enter_date">Enter Date</string>
+
+    <string name="newInventory">NEW INVENTORY</string>
+    <string name="newInventoryName">New Inventory Name</string>
+    <string name="limitedToLabel">Limited to: </string>
+    <string name="resourceTypesLabel">Resource Types</string>
+    <string name="purchasePriceLabel">Purchase Price</string>
+    <string name="includeItemsLabel">Include Items</string>
+    <string name="checkoutHandlingLabel">Checkout Handling</string>
+    <string name="excludeItems">Exclude Items Seen On or After</string>
+    <string name="mismatchedItemLocationLabel">Mismatched Item Location</string>
+    <string name="startInventory">Start Inventory</string>
+    <string name="scanLocation">SCAN LOCATION</string>
+    <string name="inventoryLocation">Inventory Location</string>
 
 </resources>

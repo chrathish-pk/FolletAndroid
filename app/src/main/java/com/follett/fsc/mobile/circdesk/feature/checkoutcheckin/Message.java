@@ -23,6 +23,12 @@ public class Message implements Parcelable {
     @Expose
     private Integer code;
 
+
+    public Message(String message, Integer code) {
+        this.message = message;
+        this.code = code;
+    }
+
     protected Message(Parcel in) {
         message = in.readString();
         if (in.readByte() == 0) {

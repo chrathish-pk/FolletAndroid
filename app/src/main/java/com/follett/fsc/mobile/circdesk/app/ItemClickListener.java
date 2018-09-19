@@ -8,6 +8,5 @@ package com.follett.fsc.mobile.circdesk.app;
 import android.view.View;
 
 public interface ItemClickListener {
-    void onItemClicked();
     void onItemClick(View view, int position);
 }

@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <variable name="versionDetails" type="com.follett.fsc.mobile.circdesk.BuildConfig"/>
-        <variable name="apiVersion" type="com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences"/>
+
+        <variable
+            name="versionDetails"
+            type="com.follett.fsc.mobile.circdesk.BuildConfig" />
+
+        <variable
+            name="apiVersion"
+            type="com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences" />
     </data>
 
     <RelativeLayout
         android:id="@+id/nav_info_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/layout_size_9">
+        android:layout_marginLeft="@dimen/layout_size_9"
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/navbarContent"
@@ -22,33 +27,33 @@
             android:fontFamily="@font/opensans_regular"
             android:text="@{@string/info(versionDetails.VERSION_NAME)}"
             android:textColor="@color/blueLabel"
-            android:textSize="@dimen/text_size_15sp"/>
+            android:textSize="@dimen/text_size_15sp" />
 
         <!-- As of now loading same version name for build (need to be changed later)-->
         <TextView
             android:id="@+id/navbarSubContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/navbarContent"
             android:fontFamily="@font/opensans_regular"
             android:text="@{@string/copyright_info(versionDetails.VERSION_NAME,apiVersion.FOLLETT_API_VERSION)}"
-            android:layout_below="@id/navbarContent"
             android:textColor="@color/blueLabel"
-            android:textSize="@dimen/text_size_12sp"/>
+            android:textSize="@dimen/text_size_12sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/navbarSubContent"
             android:layout_marginEnd="@dimen/layout_size_9"
-            android:gravity="center_horizontal"
-            android:maxHeight="@dimen/layout_size_36"
             android:layout_marginTop="@dimen/layout_size_25"
-            android:textSize="@dimen/text_size_13sp"
             android:background="@drawable/rounded_border_blue"
+            android:gravity="center_horizontal"
+            android:letterSpacing="0.3"
+            android:maxHeight="@dimen/layout_size_36"
+            android:padding="@dimen/layout_size_10"
             android:text="@string/view_legel"
             android:textColor="@color/blueLabel"
-            android:padding="@dimen/layout_size_10"
-            android:letterSpacing="0.3"
-            android:layout_below="@id/navbarSubContent"/>
+            android:textSize="@dimen/text_size_13sp" />
 
     </RelativeLayout>
 </layout>

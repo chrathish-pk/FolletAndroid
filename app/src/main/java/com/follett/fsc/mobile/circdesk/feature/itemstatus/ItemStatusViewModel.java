@@ -21,12 +21,10 @@ public class ItemStatusViewModel extends BaseViewModel implements NetworkInterfa
     public final MutableLiveData<ItemDetails> itemDetailsInfo = new MutableLiveData<>();
 
 
-    private AppRemoteRepository mAppRemoteRepository;
 
     public ItemStatusViewModel(Application application) {
         super(application);
         this.mApplication = application;
-        this.mAppRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(application));
     }
 
 
@@ -34,10 +32,10 @@ public class ItemStatusViewModel extends BaseViewModel implements NetworkInterfa
         setIsLoding(true);
         Map<String, String> map = new HashMap<>();
         map.put("Accept", "application/json");
-        map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance(mApplication).getString(AppSharedPreferences.KEY_SESSION_ID));
+        map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID));
         map.put("text/xml", "gzip");
-        mAppRemoteRepository.getItemStatus(map,this,AppSharedPreferences.getInstance(getApplication())
-                .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance(getApplication())
+        AppRemoteRepository.getInstance().getItemStatus(map,this,AppSharedPreferences.getInstance()
+                .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
                 .getString(KEY_SITE_SHORT_NAME), itemBarcodeID,collectionType);
     }
 

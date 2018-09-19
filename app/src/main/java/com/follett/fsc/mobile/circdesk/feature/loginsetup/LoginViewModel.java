@@ -25,18 +25,15 @@ public class LoginViewModel extends BaseViewModel<CTAButtonListener> implements 
 
     private Application mApplication;
 
-    private AppRemoteRepository mAppRemoteRepository;
-
     public LoginViewModel(@NonNull Application application) {
         super(application);
         mApplication = application;
-        mAppRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(getApplication()));
     }
 
 
     public void getLoginResults(String contextName, String site, String userName, String password) {
         setIsLoding(true);
-        mAppRemoteRepository.getLoginResults(this, contextName, site, userName, password);
+        AppRemoteRepository.getInstance().getLoginResults(this, contextName, site, userName, password);
     }
 
     private void cancelProgressBar() {
@@ -50,11 +47,11 @@ public class LoginViewModel extends BaseViewModel<CTAButtonListener> implements 
             LoginResults loginResults = (LoginResults) model;
             if (loginResults.getSuccess() != null && loginResults.getSuccess()
                     .equalsIgnoreCase("true")) {
-                AppSharedPreferences.getInstance(mApplication)
+                AppSharedPreferences.getInstance()
                         .setString(KEY_SESSION_ID, loginResults.getSessionID());
 
                 String permissionJSON = new Gson().toJson((loginResults.getPermissions()));
-                AppSharedPreferences.getInstance(mApplication).setString(KEY_PERMISSIONS, permissionJSON);
+                AppSharedPreferences.getInstance().setString(KEY_PERMISSIONS, permissionJSON);
 
                 setStatus(Status.SUCCESS);
             } else {

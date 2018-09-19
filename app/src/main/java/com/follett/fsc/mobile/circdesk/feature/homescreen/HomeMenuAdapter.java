@@ -21,15 +21,18 @@ import com.follett.fsc.mobile.circdesk.databinding.RowHomeMenuBinding;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.Permissions;
 import com.google.gson.Gson;
 
-public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuViewHolder> {
+import java.util.ArrayList;
+import java.util.List;
 
-
+public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuViewHolder> implements View.OnClickListener {
     private Context context;
-    private HomeViewModel homeViewModel;
+    private ItemClickListener itemClickListener;
+    private List<HomeMenu> homeMenuList = new ArrayList<>();
 
-    public HomeMenuAdapter(Context context, HomeViewModel homeViewModel) {
+    public HomeMenuAdapter(Context context,  List<HomeMenu> homeMenuList, ItemClickListener itemClickListener) {
         this.context = context;
-        this.homeViewModel = homeViewModel;
+        this.homeMenuList = homeMenuList;
+        this.itemClickListener = itemClickListener;
     }
 
     @NonNull
@@ -42,7 +45,7 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull HomeMenuViewHolder holder, final int position) {
 
-        String permissionValue = AppSharedPreferences.getInstance(context).getString(AppSharedPreferences.KEY_PERMISSIONS);
+        String permissionValue = AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_PERMISSIONS);
         Permissions permissions = new Gson().fromJson(permissionValue, Permissions.class);
 
         boolean canCheckoutShow = Boolean.parseBoolean(permissions.getCanCheckoutAsset()) || Boolean.parseBoolean(permissions.getCanCheckoutLibrary()) || Boolean.parseBoolean(permissions.getCanCheckoutTextbook());
@@ -50,29 +53,25 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuViewHolder> {
         boolean canShowPatronStatus = Boolean.parseBoolean(permissions.getCanViewPatronStatus());
         boolean canShowItemStatus = Boolean.parseBoolean(permissions.getCanViewItemsOutAsset()) || Boolean.parseBoolean(permissions.getCanViewItemsOutLibrary()) || Boolean.parseBoolean(permissions.getCanViewItemsOutTextbook());
 
-        if ((position == 0 && canCheckoutShow && canCheckinShow) || (position == 1 && canShowPatronStatus) || (position == 2 && canShowItemStatus)) {
-            holder.rowHomeMenuBinding.setMenuItem(homeViewModel.homeMenuItems.get(position));
-            holder.rowHomeMenuBinding.itemMenuImg.setImageResource(homeViewModel.homeMenuItems.get(position).getMenuImg());
+        if ((position == 0 && canCheckoutShow && canCheckinShow) || (position == 1 && canShowPatronStatus) || (position == 2 && canShowItemStatus) || position == 3) {
+            holder.rowHomeMenuBinding.setMenuItem(homeMenuList.get(position));
+            holder.rowHomeMenuBinding.itemMenuImg.setImageResource(homeMenuList.get(position).getMenuImg());
         }
 
-        ItemClickListener itemClickListener = new ItemClickListener() {
-            @Override
-            public void onItemClicked() {
-                homeViewModel.setOpenTaskEvent(homeViewModel.homeMenuItems.get(position).getMenuName());
-            }
-
-            @Override
-            public void onItemClick(View view, int position) {
-                //onItemClicked
-            }
-        };
-        holder.rowHomeMenuBinding.setListener(itemClickListener);
+        holder.rowHomeMenuBinding.itemMenuLayout.setTag(position);
+        holder.rowHomeMenuBinding.itemMenuLayout.setOnClickListener(this);
 
     }
 
     @Override
     public int getItemCount() {
-        return homeViewModel.homeMenuItems.size();
+        return homeMenuList.size();
     }
 
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.itemMenuLayout) {
+            itemClickListener.onItemClick(v, (Integer) v.getTag());
+        }
+    }
 }
