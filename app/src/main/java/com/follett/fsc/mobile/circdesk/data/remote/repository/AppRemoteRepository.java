@@ -17,6 +17,8 @@ import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin.CheckinResult;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.CheckoutResult;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.ScanPatron;
+import com.follett.fsc.mobile.circdesk.feature.inventory.CirculationTypeList;
+import com.follett.fsc.mobile.circdesk.feature.inventory.CirculationTypeViewModel;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.ItemDetails;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.DistrictList;
@@ -82,6 +84,33 @@ public class AppRemoteRepository {
                     public void onNext(DistrictList districtList) {
                         if (networkInterface != null) {
                             networkInterface.onCallCompleted(districtList);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallFailed(throwable);
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        // Do Nothing
+                    }
+                });
+    }
+
+
+    public void getCirculationTypeList(@Nullable final NetworkInterface networkInterface) {
+        apiService.getCirculationTypeList()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribeWith(new DisposableObserver<CirculationTypeList>() {
+                    @Override
+                    public void onNext(CirculationTypeList circulationTypeList) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallCompleted(circulationTypeList);
                         }
                     }
 

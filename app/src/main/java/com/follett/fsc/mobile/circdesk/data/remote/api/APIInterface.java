@@ -10,6 +10,7 @@ package com.follett.fsc.mobile.circdesk.data.remote.api;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin.CheckinResult;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.CheckoutResult;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.ScanPatron;
+import com.follett.fsc.mobile.circdesk.feature.inventory.CirculationTypeList;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.ItemDetails;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.DistrictList;
@@ -38,6 +39,12 @@ public interface APIInterface {
     @GET("/rest/v4/district/list")
     @JsonAndXmlConverters.Xml
     Observable<DistrictList> getDistrictList();
+
+    /* need to modify according to the api */
+    @Headers({"Accept: application/json", "text/xml: gzip"})
+    @GET("/rest/v4/circulationType/list")
+    @JsonAndXmlConverters.Xml
+    Observable<CirculationTypeList> getCirculationTypeList();
 
     @Headers({"Accept: application/json", "text/xml: gzip"})
     @GET("/rest/v4/district/sites")

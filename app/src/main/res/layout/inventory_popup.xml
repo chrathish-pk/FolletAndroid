@@ -22,7 +22,7 @@
         android:textColor="@color/black"
         android:text="@string/finalize_inventory"/>
 
-    <!-- need to update font with Roboto-Regular. Text gets updated programmatically -->
+    <!-- Text gets updated programmatically -->
     <TextView
         android:id="@+id/unaccounted_copies"
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
         android:layout_marginStart="@dimen/layout_size_24"
         android:layout_marginTop="@dimen/layout_size_14"
         android:layout_below="@+id/inventory_popup_title"
-        android:fontFamily="@font/opensans_regular"
+        android:fontFamily="@font/roboto_regular"
         android:textSize="@dimen/text_size_16sp"
         android:maxHeight="@dimen/layout_size_24"/>
 
@@ -105,7 +105,7 @@
         android:gravity="end"
         android:layout_marginEnd="@dimen/layout_size_35"
         android:layout_marginBottom="@dimen/layout_size_17"
-        android:fontFamily="@font/opensans_regular"
+        android:fontFamily="@font/roboto_medium"
         android:textSize="@dimen/text_size_14sp"
         android:textColor="@color/blueLabel"
         android:text="@string/ok"
