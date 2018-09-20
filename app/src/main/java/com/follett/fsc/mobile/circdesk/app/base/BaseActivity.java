@@ -57,7 +57,6 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
         }else {
             baseBinding.toolBarIcon.setImageResource(R.drawable.info_icon);
         }
-
         baseBinding.navigationLayout.navInfoSubLayout.legalBtn.setOnClickListener(this);
         baseBinding.toolBarIcon.setOnClickListener(new View.OnClickListener() {
             @Override
