@@ -5,11 +5,6 @@
  */
 package com.follett.fsc.mobile.circdesk.feature.patronstatus;
 
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.databinding.PatronListItemBinding;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronList;
-
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
@@ -17,6 +12,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.databinding.PatronListItemBinding;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronList;
 
 import java.util.List;
 
@@ -36,9 +36,9 @@ public class PatronListAdapter extends RecyclerView.Adapter<PatronListAdapter.Pa
         return new PatronListViewHolder(binding);
     }
     
-    public PatronListAdapter(Context context, List<PatronList> patronLists) {
+    public PatronListAdapter(Context context, List<PatronList> patronLists, NavigationListener navigationListener) {
         this.mPatronList = patronLists;
-        mNavigationListener = (NavigationListener) context;
+        mNavigationListener = navigationListener;
     }
     
     @Override
@@ -54,7 +54,7 @@ public class PatronListAdapter extends RecyclerView.Adapter<PatronListAdapter.Pa
         PatronList patronItem = mPatronList.get(position);
         holder.binding.setPatronItem(patronItem);
     }
-    
+
     public class PatronListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private PatronListItemBinding binding;
         

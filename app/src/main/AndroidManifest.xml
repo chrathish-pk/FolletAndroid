@@ -26,7 +26,7 @@
         </activity>
 
         <activity
-            android:name=".feature.checkoutcheckin.checkout.PatronListActivity"
+            android:name=".feature.checkoutcheckin.checkout.CheckoutPatronListFragment"
             android:screenOrientation="portrait" />
 
         <activity
@@ -35,10 +35,6 @@
 
         <activity
             android:name=".feature.iteminfo.AdditionalInfoActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".feature.patronstatus.PatronStatusActivity"
             android:screenOrientation="portrait" />
 
 

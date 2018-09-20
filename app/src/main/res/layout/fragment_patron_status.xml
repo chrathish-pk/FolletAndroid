@@ -1,25 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ /*
   ~  * Copyright (c) 2018 Follett. All rights reserved.
   ~  */
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
 
         <variable
             name="patronInfo"
-            type="com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo"/>
+            type="com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo" />
 
         <variable
             name="viewModel"
-            type="com.follett.fsc.mobile.circdesk.feature.patronstatus.PatronStatusViewModel"/>
+            type="com.follett.fsc.mobile.circdesk.feature.patronstatus.PatronStatusViewModel" />
     </data>
 
     <android.support.v4.widget.NestedScrollView
@@ -44,7 +42,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <include
                 android:id="@+id/patronEntryIncludeLayout"
@@ -53,7 +51,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <RelativeLayout
@@ -76,7 +74,7 @@
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:layout_centerVertical="true"
-                        app:imageUrl="@{patronInfo.pictureName}"/>
+                        app:imageUrl="@{patronInfo.pictureName}" />
 
                     <LinearLayout
                         android:id="@+id/patronLayout"
@@ -95,14 +93,14 @@
                             android:text="@{patronInfo.firstName + ' ' + patronInfo.lastName}"
                             android:textColor="@color/blueLabel"
                             android:textSize="@dimen/text_size_20sp"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/patronType"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/opensans_regular"
-                            android:textSize="@dimen/text_size_18sp"/>
+                            android:textSize="@dimen/text_size_18sp" />
 
                         <TextView
                             android:id="@+id/patronBarcodeID"
@@ -110,7 +108,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/opensans_regular"
                             android:text="@{patronInfo.barcode}"
-                            android:textSize="@dimen/text_size_18sp"/>
+                            android:textSize="@dimen/text_size_18sp" />
 
                     </LinearLayout>
 
@@ -121,7 +119,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="10dp"
                         android:layout_marginTop="10dp"
-                        android:src="@drawable/close"/>
+                        android:src="@drawable/close" />
 
                 </RelativeLayout>
 
@@ -131,7 +129,7 @@
                     android:layout_height="1dp"
                     android:layout_below="@+id/patronInfoLayout"
                     android:layout_marginTop="@dimen/layout_size_10"
-                    android:background="@color/mountain_mist"/>
+                    android:background="@color/mountain_mist" />
 
 
                 <RelativeLayout
@@ -151,7 +149,7 @@
                         android:paddingHorizontal="@dimen/layout_size_16"
                         android:paddingTop="@dimen/layout_size_14"
                         android:text="@{@string/item_checkout_count(String.valueOf(patronInfo.assetCheckOuts.size() + patronInfo.checkouts.size()))}"
-                        android:textSize="@dimen/text_size_16sp"/>
+                        android:textSize="@dimen/text_size_16sp" />
 
                     <LinearLayout
                         android:id="@+id/itemDesLinear"
@@ -169,7 +167,7 @@
                             android:gravity="center_horizontal"
                             android:paddingTop="@dimen/layout_size_2"
                             android:textColor="@color/white"
-                            app:overDueCount="@{patronInfo}"/>
+                            app:overDueCount="@{patronInfo}" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -178,7 +176,7 @@
                             android:gravity="start"
                             android:text="@string/items_overude_label"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="@dimen/text_size_14sp"/>
+                            android:textSize="@dimen/text_size_14sp" />
                     </LinearLayout>
 
 
@@ -187,7 +185,7 @@
                         android:layout_height="1dp"
                         android:layout_below="@+id/itemDesLinear"
                         android:layout_marginTop="@dimen/layout_size_9"
-                        android:background="@color/editTextBorderColor"/>
+                        android:background="@color/editTextBorderColor" />
 
                 </RelativeLayout>
 
@@ -209,7 +207,7 @@
                         android:paddingHorizontal="@dimen/layout_size_16"
                         android:paddingTop="@dimen/layout_size_14"
                         android:text="@{@string/fines_count(patronInfo.fines.size())}"
-                        android:textSize="@dimen/text_size_16sp"/>
+                        android:textSize="@dimen/text_size_16sp" />
 
                     <LinearLayout
                         android:id="@+id/fineDesLinear"
@@ -227,7 +225,7 @@
                             android:gravity="center_horizontal"
                             android:paddingTop="@dimen/layout_size_2"
                             android:text="@{String.valueOf(patronInfo.fines.size())}"
-                            android:textColor="@color/white"/>
+                            android:textColor="@color/white" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -236,7 +234,7 @@
                             android:gravity="start"
                             android:text="@{patronInfo.fineTotalString}"
                             android:textColor="@color/monza"
-                            android:textSize="@dimen/text_size_14sp"/>
+                            android:textSize="@dimen/text_size_14sp" />
                     </LinearLayout>
 
 
@@ -245,7 +243,7 @@
                         android:layout_height="1dp"
                         android:layout_below="@+id/fineDesLinear"
                         android:layout_marginTop="@dimen/layout_size_9"
-                        android:background="@color/editTextBorderColor"/>
+                        android:background="@color/editTextBorderColor" />
 
                 </RelativeLayout>
 
@@ -266,7 +264,7 @@
                         android:paddingHorizontal="@dimen/layout_size_16"
                         android:paddingTop="@dimen/layout_size_14"
                         android:text="@{@string/title_hold_count(String.valueOf(patronInfo.holds.size()))}"
-                        android:textSize="@dimen/text_size_16sp"/>
+                        android:textSize="@dimen/text_size_16sp" />
 
                     <LinearLayout
                         android:id="@+id/titleHoldDesLinear"
@@ -284,7 +282,7 @@
                             android:gravity="center_horizontal"
                             android:paddingTop="@dimen/layout_size_2"
                             android:text="@{String.valueOf(patronInfo.holds.size())}"
-                            android:textColor="@color/white"/>
+                            android:textColor="@color/white" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -293,7 +291,7 @@
                             android:gravity="start"
                             android:text="@string/onhold_label"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="@dimen/text_size_14sp"/>
+                            android:textSize="@dimen/text_size_14sp" />
                     </LinearLayout>
 
 
@@ -302,7 +300,7 @@
                         android:layout_height="1dp"
                         android:layout_below="@+id/titleHoldDesLinear"
                         android:layout_marginTop="@dimen/layout_size_9"
-                        android:background="@color/editTextBorderColor"/>
+                        android:background="@color/editTextBorderColor" />
 
                 </RelativeLayout>
 
@@ -325,7 +323,7 @@
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/patronEntryIncludeLayout"/>
+                app:layout_constraintTop_toBottomOf="@+id/patronEntryIncludeLayout" />
 
         </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>
