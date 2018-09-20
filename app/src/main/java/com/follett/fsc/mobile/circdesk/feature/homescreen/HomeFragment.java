@@ -54,6 +54,7 @@ public class HomeFragment extends BaseFragment<ActivityHomeBinding, HomeViewMode
         activityHomeBinding = getViewDataBinding();
 
         mActivity.setTitleBar(getString(R.string.home));
+        mActivity.changeInfoIcon();
 
         //checkPermissionToShowMenu();
 

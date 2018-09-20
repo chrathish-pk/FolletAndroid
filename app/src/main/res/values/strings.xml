@@ -57,7 +57,6 @@
     <string name="barcodeLabel">Barcode: </string>
     <string name="homeRoomLabel">HomeRoom: </string>
     <string name="gradeLevelLabel">Grade Level: </string>
-    <string name="patron_status">Patron \nStatus</string>
 
 
     <!--Login-->

@@ -85,11 +85,9 @@ public class TitleInfoActivity extends BaseActivity<AdditionalInfoViewModel> imp
                     additionalInfoDetails = titleDetails;
                     activityTitleDetailsBinding.additionalInfoBtn.setOnClickListener(TitleInfoActivity.this);
                     String site_text = String.format(getApplicationContext().getResources().getString(R.string.site_info),
-                            AppSharedPreferences.getInstance(getApplicationContext()).getString(AppSharedPreferences.KEY_SITE_NAME));
+                            AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SITE_NAME));
                     activityTitleDetailsBinding.itemAvailabilitySite.setText(site_text);
                     activityTitleDetailsBinding.setTitleDetailsViewModel(additionalInfoDetails);
-
-
                 }
             }
         });
