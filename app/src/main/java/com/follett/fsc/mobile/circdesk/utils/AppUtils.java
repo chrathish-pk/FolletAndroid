@@ -205,7 +205,7 @@ public class AppUtils {
 
             GlideApp.with(context)
                     .setDefaultRequestOptions(requestOptions)
-                    .load(AppRemoteRepository.getInstance()
+                    .load(AppRemoteRepository.getInstance().getString(SERVER_URI_VALUE)
                             + imageUrl + "?contextName="+AppSharedPreferences.getInstance()
                             .getString(KEY_CONTEXT_NAME))
                     .into(view);

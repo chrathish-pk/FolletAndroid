@@ -39,6 +39,7 @@ import com.follett.fsc.mobile.circdesk.databinding.ActivityBaseBinding;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.databinding.NavigationHeaderBinding;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginActivity;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
@@ -56,13 +57,13 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
         }else {
             baseBinding.toolBarIcon.setImageResource(R.drawable.info_icon);
         }
-        baseBinding.navigationLayout.navInfoSubLayout.legalBtn.setOnClickListener(this);
-        baseBinding.navigationLayout.navInfoLayout.legalBtn.setOnClickListener(this);
 
+        baseBinding.navigationLayout.navInfoSubLayout.legalBtn.setOnClickListener(this);
         baseBinding.toolBarIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 baseBinding.drawerLayout.openDrawer(GravityCompat.END);
+                View headerView;
                 if(!TextUtils.isEmpty(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID))){
                     baseBinding.navigationLayout.navView.getHeaderView(0).setVisibility(View.VISIBLE);
                     baseBinding.navigationLayout.navInfoLoginView.setVisibility(View.VISIBLE);
@@ -72,8 +73,13 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
                             AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SITE_NAME));
                     String apiVersion = String.format(getApplicationContext().getResources().getString(R.string.copyright_info),
                             BuildConfig.VERSION_NAME, AppSharedPreferences.getInstance().getString(AppSharedPreferences.FOLLETT_API_VERSION));
+                    String userName = String.format(getApplicationContext().getResources().getString(R.string.user_info),AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_USERNAME));
                     baseBinding.navigationLayout.navInfoSubLayout.navbarSubContent.setText(apiVersion);
                     baseBinding.navigationLayout.siteHeader.setText(site_text);
+                    headerView = baseBinding.navigationLayout.navView.getHeaderView(0);
+                    NavigationHeaderBinding headerBinding = DataBindingUtil.bind(headerView);
+                    headerBinding.siteInfo.setText(site_text);
+                    headerBinding.userInfo.setText(userName);
                     baseBinding.navigationLayout.logout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -215,6 +221,7 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
         {
             startActivity(new Intent(BaseActivity.this, LegalActivity.class));
         }
+
 
     }
 }

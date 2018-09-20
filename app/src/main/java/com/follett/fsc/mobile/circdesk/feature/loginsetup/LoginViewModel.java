@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_PERMISSIONS;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SESSION_ID;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_USERNAME;
 
 public class LoginViewModel extends BaseViewModel<CTAButtonListener> implements NetworkInterface {
 
@@ -52,6 +53,7 @@ public class LoginViewModel extends BaseViewModel<CTAButtonListener> implements 
 
                 String permissionJSON = new Gson().toJson((loginResults.getPermissions()));
                 AppSharedPreferences.getInstance().setString(KEY_PERMISSIONS, permissionJSON);
+                AppSharedPreferences.getInstance().setString(KEY_USERNAME,loginResults.getLastName());
 
                 setStatus(Status.SUCCESS);
             } else if(loginResults.getInvalidUsernameOrPassword()!=null && loginResults.getInvalidUsernameOrPassword()

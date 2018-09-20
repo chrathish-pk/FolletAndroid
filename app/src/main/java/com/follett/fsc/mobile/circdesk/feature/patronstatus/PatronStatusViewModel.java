@@ -43,7 +43,6 @@ public class PatronStatusViewModel extends BaseViewModel implements NetworkInter
     public void getPatronInfo(String typedText) {
         if (!TextUtils.isEmpty(typedText)) {
             setIsLoding(true);
-    
             Map<String, String> headerMap = new HashMap<>();
             headerMap.put("Accept", "application/json");
             headerMap.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance()

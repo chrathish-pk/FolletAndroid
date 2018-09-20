@@ -49,8 +49,6 @@ public class ItemStatusViewModel extends BaseViewModel implements NetworkInterfa
         } catch (Exception e) {
             FollettLog.d("Exception", e.getMessage());
         }
-
-
     }
 
     @Override

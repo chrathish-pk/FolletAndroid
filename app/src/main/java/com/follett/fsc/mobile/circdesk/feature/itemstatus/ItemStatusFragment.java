@@ -100,7 +100,7 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
             public void run() {
                 if (itemDetails != null) {
                     itemDetailsinfo = itemDetails;
-
+                    fragmentItemStatusBinding.progressBarItem.setVisibility(View.GONE);
                     if (itemDetailsinfo.getSuccess()) {
                         fragmentItemStatusBinding.itemErrorMsgLayout.setVisibility(View.GONE);
                         fragmentItemStatusBinding.setItemDetailsViewModel(itemDetailsinfo);
@@ -131,6 +131,7 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
             AppUtils.getInstance()
                     .hideKeyBoard(getActivity(), fragmentItemStatusBinding.itemStatusPatronEntry);
             if (AppUtils.getInstance().isEditTextNotEmpty(fragmentItemStatusBinding.itemStatusPatronEntry)) {
+                fragmentItemStatusBinding.progressBarItem.setVisibility(View.VISIBLE);
                 int collectionType = AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED) ? 0 : 4;
                 itemStatusViewModel.getScanItem(fragmentItemStatusBinding.itemStatusPatronEntry.getText().toString().trim(), String.valueOf(collectionType));
             } else {
