@@ -6,13 +6,13 @@
 
 package com.follett.fsc.mobile.circdesk.feature.utils;
 
-import org.junit.Before;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import org.junit.Before;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.SERVER_URI_VALUE;
 import static org.mockito.Mockito.when;
@@ -22,7 +22,7 @@ public class BaseTestClass {
     @Mock
     public Application mApplication;
     
-    @Mock SharedPreferences mPreferences;
+    @Mock public SharedPreferences mPreferences;
     
     @Mock SharedPreferences.Editor mEditor;
    
