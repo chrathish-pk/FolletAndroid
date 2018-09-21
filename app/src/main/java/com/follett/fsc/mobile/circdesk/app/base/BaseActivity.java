@@ -106,6 +106,21 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
             }
         });
 
+        baseBinding.navigationLayout.logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_PERMISSIONS);
+                AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SESSION_ID);
+
+                popFragment(null,true);
+
+                //pushFragment(new LoginFragment(),R.id.loginContainer,"LoginFragment",false);
+                //popFragment(null,true);
+                //finish();
+                //startActivity(new Intent(BaseActivity.this, LoginActivity.class));
+            }
+        });
+
         /* Please enable this for navigating to data picker screen by tapping Follet logo as of now. Need to remove this later */
 
        /* baseBinding.logo.setOnClickListener(new View.OnClickListener() {

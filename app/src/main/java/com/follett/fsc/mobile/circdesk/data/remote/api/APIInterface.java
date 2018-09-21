@@ -10,6 +10,8 @@ package com.follett.fsc.mobile.circdesk.data.remote.api;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin.CheckinResult;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.CheckoutResult;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.ScanPatron;
+import com.follett.fsc.mobile.circdesk.feature.inventory.CirculationTypeList;
+import com.follett.fsc.mobile.circdesk.feature.inventory.InProgressInventoryResults;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.ItemDetails;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.DistrictList;
@@ -39,6 +41,12 @@ public interface APIInterface {
     @JsonAndXmlConverters.Xml
     Observable<DistrictList> getDistrictList();
 
+    /* need to modify according to the api */
+    @Headers({"Accept: application/json", "text/xml: gzip"})
+    @GET("/rest/v4/circulationType/list")
+    @JsonAndXmlConverters.Xml
+    Observable<CirculationTypeList> getCirculationTypeList();
+
     @Headers({"Accept: application/json", "text/xml: gzip"})
     @GET("/rest/v4/district/sites")
     @JsonAndXmlConverters.Xml
@@ -67,6 +75,10 @@ public interface APIInterface {
     @JsonAndXmlConverters.Xml
     Observable<LoginResults> getLoginResults(@Query("contextName") String contextName, @Query("site") String site, @Query("userName") String userName, @Query
             ("password") String password);
+
+    @Headers({"Cookie: JSESSIONID=VgqSLiSmTdGFbCqUwQqguRclJadUdeMZahCKhldw", "Accept: application/json", "text/xml: gzip"})
+    @GET("rest/v6/circulation/inprogressinventories")
+    Observable<InProgressInventoryResults> getInProgressInventoryResults(@Query("site") String site, @Query("contextName") String contextName, @Query("collectionType") int collectionType);
 
     @GET("rest/v4/circulation/checkin")
     Observable<CheckinResult> getCheckinResult(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site,

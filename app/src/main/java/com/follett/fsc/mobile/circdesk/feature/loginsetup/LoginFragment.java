@@ -202,7 +202,6 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
     
     @Override
     public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-        
         if (i == EditorInfo.IME_ACTION_NEXT) {
             mLayoutBinding.passwordEditText.requestFocus();
         } else if (i == EditorInfo.IME_ACTION_DONE) {
