@@ -24,9 +24,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".feature.checkoutcheckin.checkout.PatronListActivity"
-            android:screenOrientation="portrait" />
 
         <activity
             android:name=".feature.iteminfo.TitleInfoActivity"
@@ -36,9 +33,7 @@
             android:name=".feature.iteminfo.AdditionalInfoActivity"
             android:screenOrientation="portrait" />
 
-        <activity
-            android:name=".feature.patronstatus.PatronStatusActivity"
-            android:screenOrientation="portrait" />
+
         <activity android:name=".app.base.LegalActivity"></activity>
 
 

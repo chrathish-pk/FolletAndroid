@@ -5,11 +5,6 @@
  */
 package com.follett.fsc.mobile.circdesk.feature.patronstatus;
 
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.databinding.PatronFineItemBinding;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.Fine;
-
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
@@ -18,6 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.databinding.PatronFineItemBinding;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.Fine;
+
 import java.util.List;
 
 public class PatronFineListAdapter extends RecyclerView.Adapter<PatronFineListAdapter.PatronFineListViewHolder> {
@@ -25,7 +25,7 @@ public class PatronFineListAdapter extends RecyclerView.Adapter<PatronFineListAd
     private List<Fine> mFineList;
     
     private NavigationListener mNavigationListener;
-    
+
     @NonNull
     @Override
     public PatronFineListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -33,9 +33,9 @@ public class PatronFineListAdapter extends RecyclerView.Adapter<PatronFineListAd
         return new PatronFineListViewHolder(binding);
     }
     
-    public PatronFineListAdapter(Context context, List<Fine> fines) {
+    public PatronFineListAdapter(Context context, List<Fine> fines, NavigationListener navigationListener) {
         this.mFineList = fines;
-        mNavigationListener = (NavigationListener) context;
+        mNavigationListener = navigationListener;
     }
     
     @Override
@@ -62,8 +62,8 @@ public class PatronFineListAdapter extends RecyclerView.Adapter<PatronFineListAd
         
         @Override
         public void onClick(View view) {
-            int position = getAdapterPosition();
-            mNavigationListener.onNavigation(mFineList.get(position), 1);
+            /*int position = getAdapterPosition();
+            mNavigationListener.onNavigation(mFineList.get(position), 1);*/
         }
     }
 }

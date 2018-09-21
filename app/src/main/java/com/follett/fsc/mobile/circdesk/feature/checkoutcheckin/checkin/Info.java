@@ -34,6 +34,16 @@ public class Info implements Parcelable {
     @Expose
     private String coverURL;
 
+
+    public Info(String title, String dueDate, Integer bibID, Integer materialType, String barcode, String coverURL) {
+        this.title = title;
+        this.dueDate = dueDate;
+        this.bibID = bibID;
+        this.materialType = materialType;
+        this.barcode = barcode;
+        this.coverURL = coverURL;
+    }
+
     protected Info(Parcel in) {
         title = in.readString();
         dueDate = in.readString();

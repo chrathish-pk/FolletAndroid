@@ -214,9 +214,8 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
 
 
     private void navigateToPatronListScreen(ScanPatron scanPatron) {
-        Intent patronListIntent = new Intent(getActivity(), com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.PatronListActivity.class);
-        patronListIntent.putExtra(getString(R.string.scanPatron), scanPatron);
-        startActivity(patronListIntent);
+        CheckoutPatronListFragment checkoutPatronListFragment =  CheckoutPatronListFragment.getInstance(scanPatron);
+        mActivity.pushFragment(checkoutPatronListFragment,R.id.loginContainer,"CheckoutPatronListFragment",true);
     }
 
     @Override
