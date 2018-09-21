@@ -18,7 +18,7 @@ import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin.CheckinRe
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.CheckoutResult;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.ScanPatron;
 import com.follett.fsc.mobile.circdesk.feature.inventory.CirculationTypeList;
-import com.follett.fsc.mobile.circdesk.feature.inventory.CirculationTypeViewModel;
+import com.follett.fsc.mobile.circdesk.feature.inventory.InProgressInventoryResults;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.ItemDetails;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.DistrictList;
@@ -169,6 +169,38 @@ public class AppRemoteRepository {
                     public void onNext(LoginResults loginResults) {
                         if (networkInterface != null) {
                             networkInterface.onCallCompleted(loginResults);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallFailed(throwable);
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        //Do Nothing
+                    }
+                });
+    }
+
+    public void getInProgressInventoryResults(@Nullable final NetworkInterface networkInterface, String site, String contextName, int collectionType) {
+
+        apiService.getInProgressInventoryResults(site, contextName, collectionType)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribeWith(new Observer<InProgressInventoryResults>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        // Do Nothing
+                    }
+
+                    @Override
+                    public void onNext(InProgressInventoryResults inventoryResults) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallCompleted(inventoryResults);
                         }
                     }
 

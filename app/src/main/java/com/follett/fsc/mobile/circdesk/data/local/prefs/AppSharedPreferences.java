@@ -50,6 +50,7 @@ public class AppSharedPreferences {
     public static final String FOLLETT_API_VERSION = "apiversion";
     public static final String KEY_IS_LIBRARY_SELECTED = "isLibrarySelected";
     public static final String KEY_PERMISSIONS = "permissions";
+    public static final String KEY_COLLECTION_TYPE = "collectionType";
 
 
     private static AppSharedPreferences mSessionInstance = null;
