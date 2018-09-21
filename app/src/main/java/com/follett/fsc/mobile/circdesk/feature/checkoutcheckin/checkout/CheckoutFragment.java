@@ -19,7 +19,6 @@ import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentCheckoutBinding;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.UpdateUIListener;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.PatronListActivity;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.TitleInfoActivity;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
@@ -137,7 +136,8 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
             if (scanPatron.getPatronList() != null) {
                 navigateToPatronListScreen(scanPatron);
             } else {
-                this.scanPatron = scanPatron;
+                AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_SELECTED_BARCODE,scanPatron.getBarcode());
+                AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_PATRON_ID,scanPatron.getPatronID());
                 bindPatronResult();
             }
         } else {

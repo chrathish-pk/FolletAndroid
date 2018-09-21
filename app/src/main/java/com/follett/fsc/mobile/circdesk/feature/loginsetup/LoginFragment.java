@@ -8,6 +8,7 @@ package com.follett.fsc.mobile.circdesk.feature.loginsetup;
 
 import android.arch.lifecycle.Observer;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -93,7 +94,9 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
         int v = view.getId();
         if(v == R.id.changeServerBtn)
         {
-            getBaseActivity().onBackPressed();
+            //mActivity.popFragment(null,true);
+
+
         }
         else if(v == R.id.login_textview)
         {

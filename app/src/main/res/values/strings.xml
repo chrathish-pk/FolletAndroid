@@ -110,6 +110,7 @@
     <string name="intent_titlemoredetails">titleMoreDetails</string>
     <string name="available_txt">\tAvailable</string>
     <string name="one">1</string>
+    <string name="nullCheck">Null</string>
 
     //Item Status
     <string name="findItem">Find Item</string>

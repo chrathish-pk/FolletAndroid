@@ -41,6 +41,7 @@ import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.NavigationHeaderBinding;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginActivity;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginFragment;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity implements View.OnClickListener {
@@ -85,6 +86,9 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
                             AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_PERMISSIONS);
                             AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SESSION_ID);
 
+
+                            //pushFragment(new LoginFragment(),R.id.loginContainer,"LoginFragment",false);
+                            //popFragment(null,true);
                             finish();
                             startActivity(new Intent(BaseActivity.this, LoginActivity.class));
                         }
@@ -207,11 +211,23 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
         ft.commit();
     }
 
-    public void popFragment(String fragmentTag) {
+    public void popFragment(String fragmentTag, boolean isNeedToPop) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        fm.popBackStackImmediate();
-        ft.remove(fm.findFragmentByTag(fragmentTag));
+
+        if(isNeedToPop) {
+            if (fm.getBackStackEntryCount() > 0) {
+                for (int i = 0; i <= fm.getBackStackEntryCount(); i++) {
+                    fm.popBackStack();
+                    fm.beginTransaction().remove(fm.getFragments().get(i)).commit();
+                }
+            }
+
+        }else {
+
+            fm.popBackStackImmediate();
+            ft.remove(fm.findFragmentByTag(fragmentTag));
+        }
         ft.commit();
     }
     @Override
