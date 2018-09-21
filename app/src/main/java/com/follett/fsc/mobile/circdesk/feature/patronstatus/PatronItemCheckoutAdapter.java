@@ -5,11 +5,6 @@
  */
 package com.follett.fsc.mobile.circdesk.feature.patronstatus;
 
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.databinding.PatronCheckoutItemBinding;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.CustomCheckoutItem;
-
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
@@ -17,6 +12,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.databinding.PatronCheckoutItemBinding;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.CustomCheckoutItem;
 
 import java.util.List;
 
@@ -33,9 +33,9 @@ public class PatronItemCheckoutAdapter extends RecyclerView.Adapter<PatronItemCh
         return new PatronItemCheckoutViewHolder(binding);
     }
     
-    public PatronItemCheckoutAdapter(Context context, List<CustomCheckoutItem> checkoutItemList) {
+    public PatronItemCheckoutAdapter(Context context, List<CustomCheckoutItem> checkoutItemList, NavigationListener navigationListener) {
         this.mCheckoutItemList = checkoutItemList;
-        mNavigationListener = (NavigationListener) context;
+        mNavigationListener = navigationListener;
     }
     
     @Override

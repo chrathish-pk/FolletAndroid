@@ -18,6 +18,7 @@ import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
+import com.follett.fsc.mobile.circdesk.feature.itemstatus.UpdateItemUIListener;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.AssetCheckOut;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.Checkout;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
@@ -33,10 +34,12 @@ public class PatronStatusViewModel extends BaseViewModel implements NetworkInter
     public final MutableLiveData<PatronInfo> mPatronInfo = new MutableLiveData<>();
     
     private Application mApplication;
+    private UpdateItemUIListener updateItemUIListener;
 
-    public PatronStatusViewModel(@NonNull Application application) {
+    public PatronStatusViewModel(@NonNull Application application, UpdateItemUIListener updateItemUIListener) {
         super(application);
         this.mApplication = application;
+        this.updateItemUIListener=updateItemUIListener;
     }
     
     public void getPatronInfo(String typedText) {
@@ -57,6 +60,7 @@ public class PatronStatusViewModel extends BaseViewModel implements NetworkInter
         setIsLoding(false);
         try {
             if (model instanceof PatronInfo) {
+                updateItemUIListener.updateUI(model);
                 mPatronInfo.postValue((PatronInfo) model);
 
             }

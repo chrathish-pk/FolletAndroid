@@ -177,10 +177,11 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity {
         ft.commit();
     }
 
-    public void popFragment(Fragment fragment) {
+    public void popFragment(String fragmentTag) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        ft.remove(fragment);
+        fm.popBackStackImmediate();
+        ft.remove(fm.findFragmentByTag(fragmentTag));
         ft.commit();
     }
 }
