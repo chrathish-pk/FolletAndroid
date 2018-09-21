@@ -31,6 +31,24 @@ public class PatronInfo implements Parcelable {
     @SerializedName("firstName") @Expose private String firstName;
     @SerializedName("checkouts") @Expose private List<Checkout> checkouts = null;
     
+    public PatronInfo(List<AssetCheckOut> assetCheckOuts, List<PatronList> patronList, List<Object> notes, Boolean success, List<Object> textbookCheckOuts,
+            Object pictureName, String barcode, List<Hold> holds, String fineTotalString, List<Fine> fines, String lastName, String firstName, List<Checkout>
+            checkouts) {
+        this.assetCheckOuts = assetCheckOuts;
+        this.patronList = patronList;
+        this.notes = notes;
+        this.success = success;
+        this.textbookCheckOuts = textbookCheckOuts;
+        this.pictureName = pictureName;
+        this.barcode = barcode;
+        this.holds = holds;
+        this.fineTotalString = fineTotalString;
+        this.fines = fines;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.checkouts = checkouts;
+    }
+    
     protected PatronInfo(Parcel in) {
         assetCheckOuts = in.createTypedArrayList(AssetCheckOut.CREATOR);
         byte tmpSuccess = in.readByte();

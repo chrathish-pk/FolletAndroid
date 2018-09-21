@@ -22,10 +22,9 @@ import com.follett.fsc.mobile.circdesk.feature.itemstatus.UpdateItemUIListener;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.AssetCheckOut;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.Checkout;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
@@ -46,13 +45,8 @@ public class PatronStatusViewModel extends BaseViewModel implements NetworkInter
     public void getPatronInfo(String typedText) {
         if (!TextUtils.isEmpty(typedText)) {
             setIsLoding(true);
-            Map<String, String> headerMap = new HashMap<>();
-            headerMap.put("Accept", "application/json");
-            headerMap.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance()
-                    .getString(AppSharedPreferences.KEY_SESSION_ID));
-            headerMap.put("text/xml", "gzip");
-
-            AppRemoteRepository.getInstance().getPatronStatus(this, headerMap, AppSharedPreferences.getInstance()
+    
+            AppRemoteRepository.getInstance().getPatronStatus(this, AppUtils.getHeader(mApplication), AppSharedPreferences.getInstance()
                     .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
                     .getString(KEY_SITE_SHORT_NAME), typedText);
         } else {

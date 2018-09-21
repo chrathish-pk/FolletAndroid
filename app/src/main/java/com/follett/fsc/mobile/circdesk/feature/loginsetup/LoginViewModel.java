@@ -24,11 +24,8 @@ import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferen
 
 public class LoginViewModel extends BaseViewModel<CTAButtonListener> implements NetworkInterface {
 
-    private Application mApplication;
-
     public LoginViewModel(@NonNull Application application) {
         super(application);
-        mApplication = application;
     }
 
 

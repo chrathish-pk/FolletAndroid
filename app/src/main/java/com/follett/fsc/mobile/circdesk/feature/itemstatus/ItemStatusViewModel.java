@@ -17,14 +17,10 @@ import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferen
 
 public class ItemStatusViewModel extends BaseViewModel implements NetworkInterface {
 
-    private Application mApplication;
     public final MutableLiveData<ItemDetails> itemDetailsInfo = new MutableLiveData<>();
-
-
 
     public ItemStatusViewModel(Application application) {
         super(application);
-        this.mApplication = application;
     }
 
 
@@ -53,6 +49,6 @@ public class ItemStatusViewModel extends BaseViewModel implements NetworkInterfa
 
     @Override
     public void onCallFailed(Throwable throwable) {
-        //onCallFailed
+        setIsLoding(false);
     }
 }

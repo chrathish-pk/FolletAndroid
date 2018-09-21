@@ -92,5 +92,6 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
         transitive = true;
     }
+    testImplementation "android.arch.core:core-testing:${android_arch_core}"
 
 }

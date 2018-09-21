@@ -269,7 +269,7 @@ public class AppUtils {
 
         Map<String, String> map = new HashMap<>();
         map.put("Accept", "application/json");
-        map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance()
+        map.put("Cookie", "JSESSIONID=" + AppRemoteRepository.getInstance()
                 .getString(AppSharedPreferences.KEY_SESSION_ID));
         map.put("text/xml", "gzip");
         return map;

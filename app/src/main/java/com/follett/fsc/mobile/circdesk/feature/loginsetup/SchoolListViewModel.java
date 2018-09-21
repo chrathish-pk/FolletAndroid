@@ -32,11 +32,8 @@ public class SchoolListViewModel extends BaseViewModel<CTAButtonListener> implem
     
     public final MutableLiveData<String> noSchoolFoundMsg = new MutableLiveData<>();
 
-    private Application mApplication;
-    
     public SchoolListViewModel(Application application) {
         super(application);
-        mApplication = application;
         fetchSchoolList();
     }
     

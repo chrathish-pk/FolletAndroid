@@ -15,6 +15,63 @@ import android.os.Parcelable;
 
 public class Checkout implements Parcelable {
     
+    public Checkout(Integer id, String isbn, String copyBarcode, String title, String lexile, Boolean temporary, Integer reviewCount, String dueDate, Integer
+            status, String siteName, Object follettDesignation, Object dcpiRecordGUID, String fountasAndPinnell, String electronicResourceDisplayable, String
+            providerIconLink, String contentImageLink, Object isInUsersBooklist, Boolean electronicResourceIsRelative, Boolean canViewTitleDetails, Object
+            dcpiProviderName, Boolean follettShelfEBook, String electronicResourceURL, String titleDetailsLink, String pubYear, Integer lostLocal, Boolean
+            renewable, Integer totalLocal, Integer totalOffsite, Object myRating, String reviewAverage, Integer resoldMaterialType, Integer materialType,
+            String author, String extent, Object siteShortName, String callNumber, String summary, Integer availableOffsite, Integer availableLocal, Boolean
+            myRatingApproved, Object resoldShelfID, Object shelfNumber, Object ktsID, Boolean digitalRecord, Boolean reviewPending, Boolean overDue, Integer
+            copyid) {
+        this.id = id;
+        this.isbn = isbn;
+        this.copyBarcode = copyBarcode;
+        this.title = title;
+        this.lexile = lexile;
+        this.temporary = temporary;
+        this.reviewCount = reviewCount;
+        this.dueDate = dueDate;
+        this.status = status;
+        this.siteName = siteName;
+        this.follettDesignation = follettDesignation;
+        this.dcpiRecordGUID = dcpiRecordGUID;
+        this.fountasAndPinnell = fountasAndPinnell;
+        this.electronicResourceDisplayable = electronicResourceDisplayable;
+        this.providerIconLink = providerIconLink;
+        this.contentImageLink = contentImageLink;
+        this.isInUsersBooklist = isInUsersBooklist;
+        this.electronicResourceIsRelative = electronicResourceIsRelative;
+        this.canViewTitleDetails = canViewTitleDetails;
+        this.dcpiProviderName = dcpiProviderName;
+        this.follettShelfEBook = follettShelfEBook;
+        this.electronicResourceURL = electronicResourceURL;
+        this.titleDetailsLink = titleDetailsLink;
+        this.pubYear = pubYear;
+        this.lostLocal = lostLocal;
+        this.renewable = renewable;
+        this.totalLocal = totalLocal;
+        this.totalOffsite = totalOffsite;
+        this.myRating = myRating;
+        this.reviewAverage = reviewAverage;
+        this.resoldMaterialType = resoldMaterialType;
+        this.materialType = materialType;
+        this.author = author;
+        this.extent = extent;
+        this.siteShortName = siteShortName;
+        this.callNumber = callNumber;
+        this.summary = summary;
+        this.availableOffsite = availableOffsite;
+        this.availableLocal = availableLocal;
+        this.myRatingApproved = myRatingApproved;
+        this.resoldShelfID = resoldShelfID;
+        this.shelfNumber = shelfNumber;
+        this.ktsID = ktsID;
+        this.digitalRecord = digitalRecord;
+        this.reviewPending = reviewPending;
+        this.overDue = overDue;
+        this.copyid = copyid;
+    }
+    
     @SerializedName("id") @Expose private Integer id;
     @SerializedName("isbn") @Expose private String isbn;
     @SerializedName("copyBarcode") @Expose private String copyBarcode;

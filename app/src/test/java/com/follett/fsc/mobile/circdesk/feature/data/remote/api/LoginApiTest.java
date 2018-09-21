@@ -10,6 +10,7 @@ import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginResults;
 import com.follett.fsc.mobile.circdesk.feature.utils.BaseTestClass;
 
+import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -29,10 +30,6 @@ import static org.mockito.Mockito.when;
 
 public class LoginApiTest extends BaseTestClass {
     
-    private final String mContextName = "dvpdt_devprodtest";
-    
-    private final String mSite = "FDPSA";
-    
     private final String mUsername = "pk";
     
     private final String mPassword = "pk";
@@ -49,21 +46,14 @@ public class LoginApiTest extends BaseTestClass {
                 return Schedulers.trampoline();
             }
         });
-        
-        RxAndroidPlugins.setInitMainThreadSchedulerHandler(new Function<Callable<Scheduler>, Scheduler>() {
-            @Override
-            public Scheduler apply(Callable<Scheduler> schedulerCallable) throws Exception {
-                return Schedulers.trampoline();
-            }
-        });
     }
     
     @Test
     public void VerifyLoginApi() {
         mLoginResults = generateLoginResult();
-        when(mApiInterface.getLoginResults(mContextName, mSite, mUsername, mPassword)).thenReturn(Observable.just(mLoginResults));
+        when(mApiInterface.getLoginResults(CONTEXT_NAME, SITE_NAME, mUsername, mPassword)).thenReturn(Observable.just(mLoginResults));
         
-        Observable<LoginResults> loginResultsObservable = mApiInterface.getLoginResults(mContextName, mSite, mUsername, mPassword);
+        Observable<LoginResults> loginResultsObservable = mApiInterface.getLoginResults(CONTEXT_NAME, SITE_NAME, mUsername, mPassword);
         loginResultsObservable.blockingForEach(new Consumer<LoginResults>() {
             @Override
             public void accept(LoginResults loginResults) throws Exception {
@@ -83,6 +73,12 @@ public class LoginApiTest extends BaseTestClass {
     private LoginResults generateLoginResult() {
         return new LoginResults("", "false", "false", "Karma", "1796924", "0", "false", "Pro", "0", "1", "false", "false", null,
                 "-Z2NPmvWVLETtrcYkkaNOFt0qxMbrYoBVHeO_TrN", "1800000", "true");
-        
+    }
+    
+    @After
+    public void tearDown() throws Exception {
+        mLoginResults = null;
+        mApiInterface = null;
+        mPreferences = null;
     }
 }
