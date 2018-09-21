@@ -74,5 +74,6 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
     testImplementation "org.mockito:mockito-core:${mockito_lib}"
+    testImplementation "android.arch.core:core-testing:${android_arch_core}"
 
 }

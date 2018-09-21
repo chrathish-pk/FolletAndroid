@@ -28,6 +28,16 @@ public class SiteRecord implements Parcelable {
     @Element(required = false) String siteShortName;
     
     @Element(required = false) String textbook;
+    
+    public SiteRecord(String asset, String library, String media, String siteID, String siteName, String siteShortName, String textbook) {
+        this.asset = asset;
+        this.library = library;
+        this.media = media;
+        this.siteID = siteID;
+        this.siteName = siteName;
+        this.siteShortName = siteShortName;
+        this.textbook = textbook;
+    }
 
     protected SiteRecord(Parcel in) {
         asset = in.readString();
@@ -50,7 +60,6 @@ public class SiteRecord implements Parcelable {
             return new SiteRecord[size];
         }
     };
-
     public String getAsset() {
         return asset;
     }

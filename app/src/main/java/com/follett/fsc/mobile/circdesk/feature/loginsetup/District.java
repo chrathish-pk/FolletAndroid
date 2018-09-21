@@ -14,6 +14,11 @@ import android.os.Parcelable;
 
 public class District implements Parcelable {
     
+    public District(String contextName, String districtName) {
+        this.contextName = contextName;
+        this.districtName = districtName;
+    }
+    
     @SerializedName("contextName") @Expose private String contextName;
     @SerializedName("districtName") @Expose private String districtName;
     
