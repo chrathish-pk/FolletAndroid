@@ -8,6 +8,7 @@ package com.follett.fsc.mobile.circdesk.feature.itemstatus;
 
 import com.follett.fsc.mobile.circdesk.feature.utils.BaseTestClass;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -29,12 +30,6 @@ import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferen
 import static org.mockito.Mockito.when;
 
 public class ItemStatusViewModelTest extends BaseTestClass {
-    
-    private final String mSessionId = "-Z2NPmvWVLETtrcYkkaNOFt0qxMbrYoBVHeO_TrN";
-    
-    private final String mContextName = "dvpdt_devprodtest";
-    
-    private final String mSite = "FDPSA";
     
     private ItemStatusViewModel mViewModel;
     
@@ -90,9 +85,9 @@ public class ItemStatusViewModelTest extends BaseTestClass {
     }
     
     private void createMockSharedPref() {
-        when(mPreferences.getString(KEY_SESSION_ID, "")).thenReturn(mSessionId);
-        when(mPreferences.getString(KEY_CONTEXT_NAME, "")).thenReturn(mContextName);
-        when(mPreferences.getString(KEY_SITE_SHORT_NAME, "")).thenReturn(mSite);
+        when(mPreferences.getString(KEY_SESSION_ID, "")).thenReturn(SESSION_ID);
+        when(mPreferences.getString(KEY_CONTEXT_NAME, "")).thenReturn(CONTEXT_NAME);
+        when(mPreferences.getString(KEY_SITE_SHORT_NAME, "")).thenReturn(SITE_NAME);
     }
     
     
@@ -108,5 +103,11 @@ public class ItemStatusViewModelTest extends BaseTestClass {
         Assert.assertEquals(expectedResult.getStatus(), actualResult.getStatus());
         Assert.assertEquals(expectedResult.getDepartment(), actualResult.getDepartment());
         Assert.assertEquals(expectedResult.getAuthor(), actualResult.getAuthor());
+    }
+    
+    @After
+    public void tearDown() {
+        mViewModel = null;
+        mPreferences = null;
     }
 }

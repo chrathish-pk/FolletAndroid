@@ -21,6 +21,14 @@ public class Fine implements Parcelable {
     @SerializedName("fineID") @Expose private Integer fineID;
     @SerializedName("amountOwed") @Expose private String amountOwed;
     
+    public Fine(Object siteName, String description, String reason, Integer fineID, String amountOwed) {
+        this.siteName = siteName;
+        this.description = description;
+        this.reason = reason;
+        this.fineID = fineID;
+        this.amountOwed = amountOwed;
+    }
+    
     protected Fine(Parcel in) {
         description = in.readString();
         reason = in.readString();
