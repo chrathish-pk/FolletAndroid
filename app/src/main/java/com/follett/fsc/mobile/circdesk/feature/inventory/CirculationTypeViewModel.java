@@ -21,7 +21,7 @@ public class CirculationTypeViewModel extends BaseViewModel implements NetworkIn
     public CirculationTypeViewModel(Application application) {
         super(application);
         mApplication = application;
-        mAppRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(application));
+        mAppRemoteRepository = new AppRemoteRepository();
         fetchCirculationTypeList();
     }
 

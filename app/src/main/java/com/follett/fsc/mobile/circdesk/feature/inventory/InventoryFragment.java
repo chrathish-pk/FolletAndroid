@@ -60,7 +60,7 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                 libraryBtn.setTextColor(mActivity.getResources().getColor(R.color.white));
                 resourceBtn.setBackgroundColor(mActivity.getResources().getColor(R.color.white));
                 resourceBtn.setTextColor(mActivity.getResources().getColor(R.color.blueLabel));
-                AppSharedPreferences.getInstance(getBaseActivity()).setInt(KEY_COLLECTION_TYPE, 0);
+                AppSharedPreferences.getInstance().setInt(KEY_COLLECTION_TYPE, 0);
 
                 break;
             case R.id.resourceBtn:
@@ -70,7 +70,7 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                 libraryBtn.setTextColor(mActivity.getResources().getColor(R.color.blueLabel));
                 resourceBtn.setBackgroundColor(mActivity.getResources().getColor(R.color.blueLabel));
                 resourceBtn.setTextColor(mActivity.getResources().getColor(R.color.white));
-                AppSharedPreferences.getInstance(getBaseActivity()).setInt(KEY_COLLECTION_TYPE, 4);
+                AppSharedPreferences.getInstance().setInt(KEY_COLLECTION_TYPE, 4);
 
                 break;
             default:
@@ -83,9 +83,9 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
         super.onActivityCreated(savedInstanceState);
         fragmentInventoryBinding = getViewDataBinding();
 
-        inventoryViewModel.getInProgressInventoryResults(AppSharedPreferences.getInstance(getBaseActivity())
-                .getString(AppSharedPreferences.KEY_SITE_SHORT_NAME), AppSharedPreferences.getInstance(getBaseActivity())
-                .getString(AppSharedPreferences.KEY_CONTEXT_NAME), AppSharedPreferences.getInstance(getBaseActivity())
+        inventoryViewModel.getInProgressInventoryResults(AppSharedPreferences.getInstance()
+                .getString(AppSharedPreferences.KEY_SITE_SHORT_NAME), AppSharedPreferences.getInstance()
+                .getString(AppSharedPreferences.KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
                 .getInt(KEY_COLLECTION_TYPE));
         initViews();
 

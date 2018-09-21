@@ -25,7 +25,7 @@ public class InventoryViewModel extends BaseViewModel<CTAButtonListener> impleme
     public InventoryViewModel(Application application, ItemClickListener itemClickListener) {
         super(application);
         this.itemClickListener = itemClickListener;
-        mAppRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(getApplication()));
+        mAppRemoteRepository = new AppRemoteRepository();
     }
 
     public void getInProgressInventoryResults(String site, String contextName, int collectionType) {
