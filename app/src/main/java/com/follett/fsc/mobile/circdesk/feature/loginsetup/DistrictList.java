@@ -16,6 +16,10 @@ import java.util.List;
 
 public class DistrictList implements Parcelable {
     
+    public DistrictList(List<District> districts) {
+        this.districts = districts;
+    }
+    
     @SerializedName("districts") @Expose private List<District> districts = null;
     
     protected DistrictList(Parcel in) {

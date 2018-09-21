@@ -17,7 +17,11 @@ import java.util.List;
 @Root(name = "siteResults")
 public class SiteResults implements Parcelable {
     @ElementList(name = "sites") public List<SiteRecord> sites;
-
+    
+    public SiteResults(List<SiteRecord> sites) {
+        this.sites = sites;
+    }
+    
     protected SiteResults(Parcel in) {
         sites = in.createTypedArrayList(SiteRecord.CREATOR);
     }

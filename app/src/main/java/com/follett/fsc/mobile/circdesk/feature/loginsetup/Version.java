@@ -14,6 +14,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class Version implements Parcelable {
     
+    public Version(String version) {
+        this.version = version;
+    }
+    
     @SerializedName("version") @Expose private String version;
 
     protected Version(Parcel in) {
