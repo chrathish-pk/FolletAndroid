@@ -81,7 +81,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/portEditText"/>
 
-        <TextView
+        <Button
             android:id="@+id/connectTextview"
             style="@style/ActionButtonTheme"
             android:layout_marginBottom="24dp"

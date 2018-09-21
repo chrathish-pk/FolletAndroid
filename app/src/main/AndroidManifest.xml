@@ -25,6 +25,7 @@
             </intent-filter>
         </activity>
 
+
         <activity
             android:name=".feature.iteminfo.TitleInfoActivity"
             android:screenOrientation="portrait" />
@@ -34,6 +35,12 @@
             android:screenOrientation="portrait" />
 
 
+        <activity android:name=".app.base.LegalActivity"></activity>
+
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="1bb15e4c7a3143f2a83f909d034598bb60365d06" />
     </application>
 
 </manifest>

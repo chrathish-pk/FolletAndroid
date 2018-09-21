@@ -8,6 +8,7 @@ package com.follett.fsc.mobile.circdesk.feature.iteminfo;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityTitleDetailsBinding;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
@@ -32,6 +33,9 @@ public class TitleInfoActivity extends BaseActivity<AdditionalInfoViewModel> imp
         setTitleBar(getString(R.string.titleDetails));
         setBackBtnVisible();
         baseBinding.backBtn.setOnClickListener(this);
+        activityTitleDetailsBinding.topLayout.setVisibility(View.GONE);
+        activityTitleDetailsBinding.descriptionLinearLayout.setVisibility(View.GONE);
+        activityTitleDetailsBinding.availablityLayout.setVisibility(View.GONE);
         additionalInfoViewModel = new AdditionalInfoViewModel(this.getApplication(), this);
 
         if (getIntent() != null) {
@@ -82,10 +86,15 @@ public class TitleInfoActivity extends BaseActivity<AdditionalInfoViewModel> imp
             public void run() {
                 if (titleDetails != null) {
                     additionalInfoDetails = titleDetails;
+                    activityTitleDetailsBinding.topLayout.setVisibility(View.VISIBLE);
+                    activityTitleDetailsBinding.descriptionLinearLayout.setVisibility(View.VISIBLE);
+                    activityTitleDetailsBinding.availablityLayout.setVisibility(View.VISIBLE);
                     activityTitleDetailsBinding.additionalInfoBtn.setOnClickListener(TitleInfoActivity.this);
+                    activityTitleDetailsBinding.progressBar.setVisibility(View.GONE);
+                    String site_text = String.format(getApplicationContext().getResources().getString(R.string.site_info),
+                            AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SITE_NAME));
+                    activityTitleDetailsBinding.itemAvailabilitySite.setText(site_text);
                     activityTitleDetailsBinding.setTitleDetailsViewModel(additionalInfoDetails);
-
-
                 }
             }
         });

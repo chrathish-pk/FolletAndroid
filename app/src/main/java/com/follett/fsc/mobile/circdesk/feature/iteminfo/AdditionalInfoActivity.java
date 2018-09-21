@@ -24,7 +24,7 @@ public class AdditionalInfoActivity extends BaseActivity<AdditionalInfoViewModel
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityMoreDetailsBinding = putContentView(R.layout.activity_more_details);
-        setTitleBar(getString(R.string.titleDetails));
+        setTitleBar(getString(R.string.additional_info_title));
         setBackBtnVisible();
         baseBinding.backBtn.setOnClickListener(this);
 

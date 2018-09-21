@@ -38,6 +38,7 @@ import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferen
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_ID;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_NAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.SERVER_URI_VALUE;
 
 public class AppUtils {
@@ -203,18 +204,18 @@ public class AppUtils {
         if (context != null) {
             RequestOptions requestOptions = new RequestOptions()
                     .fitCenter()
-                    .placeholder(R.drawable.inventory)
+                    .placeholder(R.drawable.avatar)
                     .transforms(new CenterCrop(), new RoundedCorners(500));
 
             GlideApp.with(context)
                     .setDefaultRequestOptions(requestOptions)
-                    .load(AppRemoteRepository.getInstance()
-                            + imageUrl + "?contextName=dvpdt_devprodtest")
+                    .load(AppRemoteRepository.getInstance().getString(SERVER_URI_VALUE)
+                            + imageUrl + "?contextName="+AppSharedPreferences.getInstance()
+                            .getString(KEY_CONTEXT_NAME))
                     .into(view);
 
         }
     }
-
     public void showAlertDialog(final Context context, String title, final String msg, String positiveBtnName, String negativeBtnName, final AlertDialogListener alertDialogListener, final int statusCode) {
         try {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(new ContextThemeWrapper(
@@ -264,12 +265,12 @@ public class AppUtils {
         }
 
     }
-    
+
     public static Map<String, String> getHeader(Context context) {
         if (context == null) {
             return new HashMap<>();
         }
-        
+
         Map<String, String> map = new HashMap<>();
         map.put("Accept", "application/json");
         map.put("Cookie", "JSESSIONID=" + AppRemoteRepository.getInstance()

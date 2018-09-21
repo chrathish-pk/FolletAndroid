@@ -19,6 +19,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
+                android:layout_marginStart="-15dp"
                 android:background="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -27,23 +28,23 @@
                 app:titleTextColor="@color/white">
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    >
 
                     <ImageView
                         android:id="@+id/logo"
                         android:layout_width="100dp"
                         android:layout_height="25dp"
+                        android:layout_centerVertical="true"
                         android:src="@drawable/logo_full_wht" />
 
-                    <TextView
+                    <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="25dp"
                         android:layout_centerInParent="true"
-                        android:text="@string/app_status_title"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/text_size_20sp"
-                        android:textStyle="bold" />
+                        android:src="@drawable/destiny"
+ />
 
                 </RelativeLayout>
 
@@ -55,8 +56,9 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="12dp"
                 android:contentDescription="logo"
+                android:layout_centerVertical="true"
                 android:src="@drawable/info_icon"
                 app:layout_constraintEnd_toEndOf="@+id/toolbar"
                 app:layout_constraintTop_toTopOf="parent" />

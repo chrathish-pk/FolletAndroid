@@ -9,6 +9,7 @@ package com.follett.fsc.mobile.circdesk.feature.loginsetup;
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
+import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentDistrictListBinding;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
@@ -105,6 +106,7 @@ public class DistrictListFragment extends BaseFragment<FragmentDistrictListBindi
     public void ctaButtonOnClick(View view) {
         mViewModel.clearDistrictPref();
         getBaseActivity().onBackPressed();
+
     }
 }
 

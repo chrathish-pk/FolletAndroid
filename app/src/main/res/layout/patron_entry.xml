@@ -13,7 +13,8 @@
             android:id="@+id/card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            card_view:cardElevation="1dp"
+            card_view:cardCornerRadius="2dp"
+            card_view:cardElevation="10dp"
             card_view:cardUseCompatPadding="true">
 
             <LinearLayout
@@ -71,16 +72,19 @@
 
                 <Switch
                     android:id="@+id/checkinLibRecordSwitch"
+                    android:theme="@style/SCBSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
                     android:checked="true"
-                    android:shadowColor="@color/blueLabel"
+                    android:shadowColor="@color/switchcolor"
                     android:text="Record Library Use"
+                    android:fontFamily="@font/opensans_semibold"
                     android:textColor="@color/blueLabel"
-                    android:textSize="@dimen/text_size_16sp" />
+                    android:textSize="@dimen/text_size_16sp"
+                    android:visibility="invisible"/>
 
             </LinearLayout>
 

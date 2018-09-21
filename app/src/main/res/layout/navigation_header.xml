@@ -19,7 +19,6 @@
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_15sp"
             android:fontFamily="@font/opensans_regular"
-            android:text="@{@string/site_info(userDetails.KEY_SITE_NAME)}"
             android:layout_marginStart="@dimen/layout_size_9"
             android:layout_above="@+id/user_info"/>
 
@@ -30,7 +29,6 @@
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_15sp"
             android:fontFamily="@font/opensans_regular"
-            android:text="@{@string/user_info(userDetails.KEY_USERNAME)}"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/layout_size_14"
             android:layout_marginStart="@dimen/layout_size_9"/>

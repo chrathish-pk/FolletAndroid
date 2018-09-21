@@ -8,6 +8,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.net.ConnectivityManager;
@@ -28,12 +29,22 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.follett.fsc.mobile.circdesk.BuildConfig;
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.databinding.ActivityBaseBinding;
+
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
-import com.follett.fsc.mobile.circdesk.databinding.ActivityBaseBinding;
+import com.follett.fsc.mobile.circdesk.databinding.NavigationHeaderBinding;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginActivity;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginFragment;
+import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
-public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity {
+public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity implements View.OnClickListener {
 
     public ActivityBaseBinding baseBinding;
 
@@ -47,31 +58,50 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity {
         }else {
             baseBinding.toolBarIcon.setImageResource(R.drawable.info_icon);
         }
-
+        baseBinding.navigationLayout.navInfoSubLayout.legalBtn.setOnClickListener(this);
         baseBinding.toolBarIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 baseBinding.drawerLayout.openDrawer(GravityCompat.END);
+                View headerView;
                 if(!TextUtils.isEmpty(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID))){
                     baseBinding.navigationLayout.navView.getHeaderView(0).setVisibility(View.VISIBLE);
                     baseBinding.navigationLayout.navInfoLoginView.setVisibility(View.VISIBLE);
                     baseBinding.navigationLayout.navInfoLayout.navInfoView.setVisibility(View.GONE);
                     baseBinding.navigationLayout.navToolBarIcon.setImageResource(R.drawable.baseline_account_circle);
-
                     String site_text = String.format(getApplicationContext().getResources().getString(R.string.site_info),
                             AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SITE_NAME));
+                    String apiVersion = String.format(getApplicationContext().getResources().getString(R.string.copyright_info),
+                            BuildConfig.VERSION_NAME, AppSharedPreferences.getInstance().getString(AppSharedPreferences.FOLLETT_API_VERSION));
+                    String userName = String.format(getApplicationContext().getResources().getString(R.string.user_info),AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_USERNAME));
+                    baseBinding.navigationLayout.navInfoSubLayout.navbarSubContent.setText(apiVersion);
                     baseBinding.navigationLayout.siteHeader.setText(site_text);
+                    headerView = baseBinding.navigationLayout.navView.getHeaderView(0);
+                    NavigationHeaderBinding headerBinding = DataBindingUtil.bind(headerView);
+                    headerBinding.siteInfo.setText(site_text);
+                    headerBinding.userInfo.setText(userName);
                     baseBinding.navigationLayout.logout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            AppSharedPreferences.getInstance().removeAllSession();
+                            AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_PERMISSIONS);
+                            AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SESSION_ID);
+
+
+                            //pushFragment(new LoginFragment(),R.id.loginContainer,"LoginFragment",false);
+                            //popFragment(null,true);
+                            finish();
+                            startActivity(new Intent(BaseActivity.this, LoginActivity.class));
                         }
                     });
                 } else {
+
                     baseBinding.navigationLayout.navView.getHeaderView(0).setVisibility(View.GONE);
                     baseBinding.navigationLayout.navInfoLoginView.setVisibility(View.GONE);
                     baseBinding.navigationLayout.navInfoLayout.navInfoView.setVisibility(View.VISIBLE);
                     baseBinding.navigationLayout.navToolBarIcon.setImageResource(R.drawable.info_icon_dark);
+                    String apiVersion = String.format(getApplicationContext().getResources().getString(R.string.copyright_info),
+                            BuildConfig.VERSION_NAME, AppSharedPreferences.getInstance().getString(AppSharedPreferences.FOLLETT_API_VERSION));
+                    baseBinding.navigationLayout.navInfoLayout.navbarSubContent.setText(apiVersion);
                 }
             }
         });
@@ -157,6 +187,10 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity {
     public void setTitleBar(String titleBarText) {
         baseBinding.titleBar.setText(titleBarText);
     }
+    public void changeInfoIcon()
+    {
+        baseBinding.toolBarIcon.setImageResource(R.drawable.baseline_account_circle);
+    }
 
     public void setBackBtnVisible() {
         baseBinding.backBtn.setVisibility(View.VISIBLE);
@@ -210,5 +244,15 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity {
             ft.remove(fm.findFragmentByTag(fragmentTag));
         }
         ft.commit();
+    }
+    @Override
+    public void onClick(View v) {
+
+        if(v.getId() == R.id.legalBtn)
+        {
+            startActivity(new Intent(BaseActivity.this, LegalActivity.class));
+        }
+
+
     }
 }
