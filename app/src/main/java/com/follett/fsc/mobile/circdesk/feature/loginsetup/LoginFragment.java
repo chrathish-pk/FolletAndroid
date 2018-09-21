@@ -8,6 +8,7 @@ package com.follett.fsc.mobile.circdesk.feature.loginsetup;
 
 import android.arch.lifecycle.Observer;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -90,7 +91,15 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
     
     @Override
     public void ctaButtonOnClick(View view) {
-        
+        int v = view.getId();
+        if(v == R.id.changeServerBtn)
+        {
+            //mActivity.popFragment(null,true);
+
+
+        }
+        else if(v == R.id.login_textview)
+        {
         AppUtils.getInstance().hideKeyBoard(getBaseActivity(), mLayoutBinding.getRoot());
         if (!AppUtils.getInstance()
                 .isEditTextNotEmpty(mLayoutBinding.useridEditText)) {
@@ -106,12 +115,13 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
                         .showNoInternetAlertDialog(getBaseActivity());
                 return;
             }
-            
+
             mLoginViewModel.getLoginResults(AppSharedPreferences.getInstance()
                     .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
                     .getString(KEY_SITE_SHORT_NAME), AppUtils.getInstance()
                     .getEditTextValue(mLayoutBinding.useridEditText), AppUtils.getInstance()
                     .getEditTextValue(mLayoutBinding.passwordEditText));
+        }
         }
     }
 

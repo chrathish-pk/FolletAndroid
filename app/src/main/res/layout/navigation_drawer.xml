@@ -28,9 +28,9 @@
             android:src="@drawable/info_icon_dark" />
 
         <include
-            android:id="@+id/nav_info_layout"
-            layout="@layout/navigation_info_view"
-            android:visibility="gone" />
+        android:id="@+id/nav_info_layout"
+        layout="@layout/navigation_info_view"
+        android:visibility="gone" />
 
 
         <ScrollView

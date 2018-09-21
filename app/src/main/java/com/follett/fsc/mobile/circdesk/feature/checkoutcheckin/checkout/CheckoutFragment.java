@@ -136,7 +136,8 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
             if (scanPatron.getPatronList() != null) {
                 navigateToPatronListScreen(scanPatron);
             } else {
-                this.scanPatron = scanPatron;
+                AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_SELECTED_BARCODE,scanPatron.getBarcode());
+                AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_PATRON_ID,scanPatron.getPatronID());
                 bindPatronResult();
             }
         } else {

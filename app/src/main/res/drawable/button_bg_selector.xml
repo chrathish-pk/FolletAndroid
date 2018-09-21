@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ /*
+  ~  * Copyright (c) 2018 Follett. All rights reserved.
+  ~  */
+  -->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="false">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/editTextBorderColor"/>
+            <stroke android:width="2dp" android:color="@color/editTextBorderColor"/>
+            <corners android:radius="5dp"/>
+        </shape>
+        <!--<color android:color="@color/editTextBorderColor"></color>-->
+    </item>
+    <item android:state_selected="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/colorPrimary"/>
+            <stroke android:width="2dp" android:color="@color/colorPrimary"/>
+            <corners android:radius="5dp"/>
+        </shape>
+        <!--<color android:color="@color/colorPrimary"/>-->
+    </item>
+</selector>

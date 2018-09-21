@@ -41,7 +41,7 @@
         <item name="android:layout_height">@dimen/layout_size_36</item>
         <item name="android:layout_marginEnd">@dimen/layout_size_16</item>
         <item name="android:layout_marginStart">@dimen/layout_size_16</item>
-        <item name="android:background">@drawable/text_view_bg_selector</item>
+        <item name="android:background">@drawable/button_bg_selector</item>
         <item name="android:gravity">center</item>
         <item name="android:padding">10dp</item>
         <item name="android:textAllCaps">true</item>
