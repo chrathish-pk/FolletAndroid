@@ -34,6 +34,10 @@ import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepositor
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_ID;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_NAME;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.SERVER_URI_VALUE;
 
 public class AppUtils {
@@ -274,4 +278,14 @@ public class AppUtils {
         return map;
     }
 
+    public void clearSchoolPref() {
+        AppSharedPreferences.getInstance()
+                .removeValues(KEY_SITE_SHORT_NAME);
+        AppSharedPreferences.getInstance()
+                .removeValues(KEY_SITE_ID);
+        AppSharedPreferences.getInstance()
+                .removeValues(KEY_SITE_NAME);
+        AppSharedPreferences.getInstance()
+                .removeValues(KEY_CONTEXT_NAME);
+    }
 }

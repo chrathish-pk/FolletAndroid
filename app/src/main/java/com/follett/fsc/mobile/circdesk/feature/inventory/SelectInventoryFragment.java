@@ -59,9 +59,10 @@ public class SelectInventoryFragment extends BaseFragment<FragmentInventoryListB
 
         fragmentInventoryListBinding.newInventoryBtn.setOnClickListener(this);
 
-        inventoryListData.add(new Inventory("first", false));
-        inventoryListData.add(new Inventory("Second", false));
-        inventoryListData.add(new Inventory("Third", false));
+        inventoryListData.clear();
+        inventoryListData.add(new Inventory("000-999 Started 02/02/2018", false));
+        inventoryListData.add(new Inventory("1000-0199 Started 02/03/2018", false));
+        inventoryListData.add(new Inventory("2000-2099 Started 02/05/2018", false));
 
         selectInventoryListAdapter = new SelectInventoryListAdapter(getActivity(), inventoryListData, SelectInventoryFragment.this);
         fragmentInventoryListBinding.inventoryRecyclerView.setAdapter(selectInventoryListAdapter);

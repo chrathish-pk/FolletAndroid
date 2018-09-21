@@ -6,16 +6,6 @@
 
 package com.follett.fsc.mobile.circdesk.feature.loginsetup;
 
-import com.follett.fsc.mobile.circdesk.BR;
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
-import com.follett.fsc.mobile.circdesk.app.CustomAlert;
-import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
-import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
-import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
-import com.follett.fsc.mobile.circdesk.databinding.FragmentSchoolListBinding;
-import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-
 import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,7 +15,17 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
-public class SchoolListFragment extends BaseFragment<FragmentSchoolListBinding, SchoolListViewModel> implements CTAButtonListener {
+import com.follett.fsc.mobile.circdesk.BR;
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
+import com.follett.fsc.mobile.circdesk.app.CustomAlert;
+import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
+import com.follett.fsc.mobile.circdesk.databinding.FragmentSchoolListBinding;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
+import com.follett.fsc.mobile.circdesk.utils.FollettLog;
+
+public class SchoolListFragment extends BaseFragment<FragmentSchoolListBinding, SchoolListViewModel> implements CTAButtonListener, View.OnClickListener {
     
     private static final String TAG = LoginFragment.class.getSimpleName();
     
@@ -71,6 +71,8 @@ public class SchoolListFragment extends BaseFragment<FragmentSchoolListBinding, 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         FragmentSchoolListBinding binding = getViewDataBinding();
+
+        mActivity.baseBinding.backBtn.setOnClickListener(this);
         inItView(binding);
     }
     
@@ -115,8 +117,8 @@ public class SchoolListFragment extends BaseFragment<FragmentSchoolListBinding, 
     
     @Override
     public void ctaButtonOnClick(View view) {
-        mViewModel.clearSchoolPref();
-        getBaseActivity().onBackPressed();
+        AppUtils.getInstance().clearSchoolPref();
+        mActivity.onBackPressed();
     }
     
     private void showAlert(String msg) {
@@ -138,5 +140,12 @@ public class SchoolListFragment extends BaseFragment<FragmentSchoolListBinding, 
         CustomAlert.showDialog(getBaseActivity(), null, msg, getString(R.string.ok), onClickListener, null, onClickListener);
         
     }
+
+    @Override
+    public void onClick(View v) {
+        AppUtils.getInstance().clearSchoolPref();
+        mActivity.onBackPressed();
+    }
+
 }
 

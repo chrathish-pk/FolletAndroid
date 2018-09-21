@@ -73,6 +73,13 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                 AppSharedPreferences.getInstance().setInt(KEY_COLLECTION_TYPE, 4);
 
                 break;
+            case R.id.finalizeInventoryBtn:
+              /*  DialogFragment fragment = new FinalizePopupFragment();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                fragment.show(ft,"FinalizePopupFragment");
+                //mActivity.pushFragment(fragment, R.id.loginContainer, "FinalizePopupFragment", true);
+                break;*/
+                break;
             default:
                 break;
         }
@@ -100,6 +107,8 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
         resourceBtn = (TextView) mActivity.findViewById(R.id.resourceBtn);
         resourceBtn.setOnClickListener(this);
 
+        fragmentInventoryBinding.finalizeInventoryBtn.setOnClickListener(this);
+
         fragmentInventoryBinding.patronEntryIncludeLayout.patronEntry.setHint(getString(R.string.enterBarcode));
         fragmentInventoryBinding.patronEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.GONE);
     }
@@ -114,6 +123,7 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
             case R.id.inventoryLocation:
                 mActivity.pushFragment(new InventoryLocationFragment(), R.id.loginContainer, "InventoryLocationFragment", true);
                 break;
+
         }
     }
 }

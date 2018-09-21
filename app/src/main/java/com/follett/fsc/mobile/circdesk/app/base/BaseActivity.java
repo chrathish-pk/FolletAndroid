@@ -76,6 +76,21 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity {
             }
         });
 
+        baseBinding.navigationLayout.logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_PERMISSIONS);
+                AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SESSION_ID);
+
+                popFragment(null,true);
+
+                //pushFragment(new LoginFragment(),R.id.loginContainer,"LoginFragment",false);
+                //popFragment(null,true);
+                //finish();
+                //startActivity(new Intent(BaseActivity.this, LoginActivity.class));
+            }
+        });
+
         /* Please enable this for navigating to data picker screen by tapping Follet logo as of now. Need to remove this later */
 
        /* baseBinding.logo.setOnClickListener(new View.OnClickListener() {
@@ -177,11 +192,23 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity {
         ft.commit();
     }
 
-    public void popFragment(String fragmentTag) {
+    public void popFragment(String fragmentTag, boolean isNeedToPop) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        fm.popBackStackImmediate();
-        ft.remove(fm.findFragmentByTag(fragmentTag));
+
+        if(isNeedToPop) {
+            if (fm.getBackStackEntryCount() > 0) {
+                for (int i = 0; i <= fm.getBackStackEntryCount(); i++) {
+                    fm.popBackStack();
+                    fm.beginTransaction().remove(fm.getFragments().get(i)).commit();
+                }
+            }
+
+        }else {
+
+            fm.popBackStackImmediate();
+            ft.remove(fm.findFragmentByTag(fragmentTag));
+        }
         ft.commit();
     }
 }

@@ -219,7 +219,7 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
             }
         });
         basicLayoutBinding.setBasicListener(this);
-        navigationListener = (NavigationListener) getBaseActivity();
+        navigationListener = (NavigationListener) getActivity();
         mBasicViewModel.setStoredSchoolUri(AppSharedPreferences.getInstance()
                 .getString(SERVER_URI_VALUE));
         mBasicViewModel.getStatus()

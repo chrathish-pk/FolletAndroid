@@ -82,12 +82,5 @@ public class SchoolListViewModel extends BaseViewModel<CTAButtonListener> implem
         dismissProgrssBar();
     }
     
-    public void clearSchoolPref() {
-        AppSharedPreferences.getInstance()
-                .removeValues(KEY_SITE_SHORT_NAME);
-        AppSharedPreferences.getInstance()
-                .removeValues(KEY_SITE_ID);
-        AppSharedPreferences.getInstance()
-                .removeValues(KEY_SITE_NAME);
-    }
+
 }
