@@ -6,27 +6,23 @@
 
 package com.follett.fsc.mobile.circdesk.feature.patronstatus;
 
-import com.follett.fsc.mobile.circdesk.R;
-import android.app.Application;
-import android.arch.lifecycle.MutableLiveData;
-import android.support.annotation.NonNull;
-import android.text.TextUtils;
-
-import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
-import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
-import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.AssetCheckOut;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.Checkout;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
-import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-
 import android.app.Application;
 import android.arch.lifecycle.MutableLiveData;
 import android.databinding.BindingAdapter;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.widget.TextView;
+
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
+import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
+import com.follett.fsc.mobile.circdesk.feature.itemstatus.UpdateItemUIListener;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.AssetCheckOut;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.Checkout;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
+import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,13 +35,12 @@ public class PatronStatusViewModel extends BaseViewModel implements NetworkInter
     public final MutableLiveData<PatronInfo> mPatronInfo = new MutableLiveData<>();
     
     private Application mApplication;
-    
-    private AppRemoteRepository mAppRemoteRepository;
-    
-    public PatronStatusViewModel(@NonNull Application application) {
+    private UpdateItemUIListener updateItemUIListener;
+
+    public PatronStatusViewModel(@NonNull Application application, UpdateItemUIListener updateItemUIListener) {
         super(application);
         this.mApplication = application;
-        mAppRemoteRepository = new AppRemoteRepository(AppSharedPreferences.getInstance(getApplication()));
+        this.updateItemUIListener=updateItemUIListener;
     }
     
     public void getPatronInfo(String typedText) {
@@ -54,12 +49,12 @@ public class PatronStatusViewModel extends BaseViewModel implements NetworkInter
     
             Map<String, String> headerMap = new HashMap<>();
             headerMap.put("Accept", "application/json");
-            headerMap.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance(mApplication)
+            headerMap.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance()
                     .getString(AppSharedPreferences.KEY_SESSION_ID));
             headerMap.put("text/xml", "gzip");
-            
-            mAppRemoteRepository.getPatronStatus(this, headerMap, AppSharedPreferences.getInstance(getApplication())
-                    .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance(getApplication())
+
+            AppRemoteRepository.getInstance().getPatronStatus(this, headerMap, AppSharedPreferences.getInstance()
+                    .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
                     .getString(KEY_SITE_SHORT_NAME), typedText);
         } else {
             setErrorMessage(getApplication().getString(R.string.errorPatronEntry));
@@ -72,6 +67,7 @@ public class PatronStatusViewModel extends BaseViewModel implements NetworkInter
         setIsLoding(false);
         try {
             if (model instanceof PatronInfo) {
+                updateItemUIListener.updateUI(model);
                 mPatronInfo.postValue((PatronInfo) model);
 
             }

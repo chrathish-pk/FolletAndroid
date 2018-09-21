@@ -60,7 +60,7 @@ public class HomeFragment extends BaseFragment<ActivityHomeBinding, HomeViewMode
     }
 
     private void checkPermissionToShowMenu() {
-        String permissionValue = AppSharedPreferences.getInstance(getActivity()).getString(AppSharedPreferences.KEY_PERMISSIONS);
+        String permissionValue = AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_PERMISSIONS);
         Permissions permissions = new Gson().fromJson(permissionValue, Permissions.class);
 
         boolean canCheckoutShow = Boolean.parseBoolean(permissions.getCanCheckoutAsset()) || Boolean.parseBoolean(permissions.getCanCheckoutLibrary()) || Boolean.parseBoolean(permissions.getCanCheckoutTextbook());

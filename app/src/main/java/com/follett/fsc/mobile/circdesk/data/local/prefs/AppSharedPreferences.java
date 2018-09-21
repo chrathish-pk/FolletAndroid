@@ -54,18 +54,18 @@ public class AppSharedPreferences {
 
 
     private static AppSharedPreferences mSessionInstance = null;
-    private final SharedPreferences prefs;
-    private final SharedPreferences.Editor editor;
+    private  SharedPreferences prefs;
+    private  SharedPreferences.Editor editor;
 
-    public static AppSharedPreferences getInstance(Context context) {
+    public static AppSharedPreferences getInstance() {
         if (mSessionInstance == null) {
-            mSessionInstance = new AppSharedPreferences(context);
+            mSessionInstance = new AppSharedPreferences();
             return mSessionInstance;
         }
         return mSessionInstance;
     }
 
-    private AppSharedPreferences(Context context) {
+    public void initializeSharedPreference(Context context) {
         String sharedPerferenceName = "Follett";
         prefs = context.getSharedPreferences(sharedPerferenceName, Context.MODE_PRIVATE);
         editor = prefs.edit();

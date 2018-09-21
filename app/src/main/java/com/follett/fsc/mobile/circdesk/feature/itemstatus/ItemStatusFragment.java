@@ -19,7 +19,7 @@ import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
-public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, ItemStatusViewModel> implements View.OnClickListener, UpdateItemUIListener {
+public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, ItemStatusViewModel> implements View.OnClickListener {
 
     private ItemDetails itemDetailsinfo;
     private FragmentItemStatusBinding fragmentItemStatusBinding;
@@ -54,8 +54,7 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
 
     @Override
     public ItemStatusViewModel getViewModel() {
-        itemStatusViewModel = new ItemStatusViewModel(getBaseActivity().getApplication()
-                , this);
+        itemStatusViewModel = new ItemStatusViewModel(getBaseActivity().getApplication());
         return itemStatusViewModel;
     }
 
@@ -132,7 +131,7 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
             AppUtils.getInstance()
                     .hideKeyBoard(getActivity(), fragmentItemStatusBinding.itemStatusPatronEntry);
             if (AppUtils.getInstance().isEditTextNotEmpty(fragmentItemStatusBinding.itemStatusPatronEntry)) {
-                int collectionType = AppSharedPreferences.getInstance(getActivity()).getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED) ? 0 : 4;
+                int collectionType = AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED) ? 0 : 4;
                 itemStatusViewModel.getScanItem(fragmentItemStatusBinding.itemStatusPatronEntry.getText().toString().trim(), String.valueOf(collectionType));
             } else {
                 AppUtils.getInstance()
@@ -151,7 +150,7 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
             fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
             fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
             fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.blueLabel));
-            AppSharedPreferences.getInstance(getActivity()).setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, true);
+            AppSharedPreferences.getInstance().setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, true);
             disableItemStatusView();
 
         } else if (v.getId() == R.id.resourceBtn) {
@@ -159,7 +158,7 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
             fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
             fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
             fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.blueLabel));
-            AppSharedPreferences.getInstance(getActivity()).setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, false);
+            AppSharedPreferences.getInstance().setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, false);
             disableItemStatusView();
         }
     }
@@ -172,8 +171,4 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
     }
 
 
-    @Override
-    public void updateUI(final Object itemDetails) {
-        //Do Nothing
-    }
 }

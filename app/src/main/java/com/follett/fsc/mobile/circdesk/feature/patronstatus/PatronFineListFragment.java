@@ -24,7 +24,7 @@ import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 import static com.follett.fsc.mobile.circdesk.utils.AppConstants.PATRON_INFO_KEY;
 
-public class PatronFineListFragment extends BaseFragment<FragmentPatronListBinding, PatronListViewModel> implements CTAButtonListener {
+public class PatronFineListFragment extends BaseFragment<FragmentPatronListBinding, PatronListViewModel> implements CTAButtonListener, NavigationListener {
     
     private static final String TAG = PatronFineListFragment.class.getSimpleName();
 
@@ -76,7 +76,7 @@ public class PatronFineListFragment extends BaseFragment<FragmentPatronListBindi
         final Bundle arguments = getArguments();
         if (arguments != null) {
             PatronInfo patronInfo = arguments.getParcelable(PATRON_INFO_KEY);
-            PatronFineListAdapter adapter = new PatronFineListAdapter(getBaseActivity(), patronInfo.getFines());
+            PatronFineListAdapter adapter = new PatronFineListAdapter(getBaseActivity(), patronInfo.getFines(),this);
             lBinding.patronListRecyclerview.setAdapter(adapter);
         }
     }
@@ -90,6 +90,21 @@ public class PatronFineListFragment extends BaseFragment<FragmentPatronListBindi
     @Override
     public void ctaButtonOnClick(View view) {
         getBaseActivity().onBackPressed();
+    }
+
+    @Override
+    public void onNavigation(int position) {
+
+    }
+
+    @Override
+    public void setToolBarTitle(String titleText) {
+
+    }
+
+    @Override
+    public void onNavigation(Object model, int position) {
+
     }
 }
 

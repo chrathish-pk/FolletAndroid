@@ -84,6 +84,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Navig
     }
 
     private void navigateToHome() {
+        mLoginBinding.tabLayout.removeAllTabs();
         pushFragment(new HomeFragment(), R.id.loginContainer, "HomeFragment", false);
     }
 
@@ -105,19 +106,18 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Navig
         }
     }
 
-
     private void navigateToFragment() {
-        if (!TextUtils.isEmpty(AppSharedPreferences.getInstance(this)
+        if (!TextUtils.isEmpty(AppSharedPreferences.getInstance()
                 .getString(KEY_SESSION_ID))) {
             AppUtils.getInstance()
                     .hideKeyBoard(this, mLoginBinding.getRoot());
             navigateToHome();
-        } else if (!TextUtils.isEmpty(AppSharedPreferences.getInstance(this)
+        } else if (!TextUtils.isEmpty(AppSharedPreferences.getInstance()
                 .getString(KEY_SITE_SHORT_NAME))) {
             AppUtils.getInstance()
                     .hideKeyBoard(this, mLoginBinding.getRoot());
             navigateToLogin(false);
-        } else if (!TextUtils.isEmpty(AppSharedPreferences.getInstance(this)
+        } else if (!TextUtils.isEmpty(AppSharedPreferences.getInstance()
                 .getString(KEY_CONTEXT_NAME))) {
             AppUtils.getInstance()
                     .hideKeyBoard(this, mLoginBinding.getRoot());
@@ -126,5 +126,6 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Navig
             loadBasicFragment();
         }
     }
+
 }
 
