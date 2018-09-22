@@ -24,6 +24,7 @@ import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.SiteResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.Version;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
+import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 import java.util.Map;
 
@@ -38,20 +39,20 @@ import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferen
 public class AppRemoteRepository {
 
     private static APIInterface apiService;
-    private static AppRemoteRepository mInstance;
+    public static AppRemoteRepository mInstance;
 
     public static AppRemoteRepository getInstance() {
         if (mInstance == null)
             mInstance = new AppRemoteRepository();
-
-        apiService = FollettAPIManager.getClient(AppSharedPreferences.getInstance().getString(SERVER_URI_VALUE))
-                .create(APIInterface.class);
-
         return mInstance;
     }
 
 
     public AppRemoteRepository() {
+        apiService = FollettAPIManager.getClient(getString(SERVER_URI_VALUE))
+                .create(APIInterface.class);
+        FollettLog.e("urllllllllll???????",getString(SERVER_URI_VALUE));
+        FollettLog.e("urlretorurl???????",apiService.toString());
 
     }
 

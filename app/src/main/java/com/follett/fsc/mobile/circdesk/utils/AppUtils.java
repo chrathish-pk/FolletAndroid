@@ -285,7 +285,7 @@ public class AppUtils {
                 .removeValues(KEY_SITE_ID);
         AppSharedPreferences.getInstance()
                 .removeValues(KEY_SITE_NAME);
-        AppSharedPreferences.getInstance()
-                .removeValues(KEY_CONTEXT_NAME);
+//        AppSharedPreferences.getInstance()
+//                .removeValues(KEY_CONTEXT_NAME);
     }
 }
