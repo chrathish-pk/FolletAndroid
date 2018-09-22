@@ -29,20 +29,13 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.follett.fsc.mobile.circdesk.BuildConfig;
 import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.databinding.ActivityBaseBinding;
-
-
-import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.databinding.ActivityBaseBinding;
 import com.follett.fsc.mobile.circdesk.databinding.NavigationHeaderBinding;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginActivity;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginFragment;
-import com.follett.fsc.mobile.circdesk.utils.FollettLog;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.SetupActivity;
 
 public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity implements View.OnClickListener {
 
@@ -90,7 +83,7 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
                             //pushFragment(new LoginFragment(),R.id.loginContainer,"LoginFragment",false);
                             //popFragment(null,true);
                             finish();
-                            startActivity(new Intent(BaseActivity.this, LoginActivity.class));
+                            startActivity(new Intent(BaseActivity.this, SetupActivity.class));
                         }
                     });
                 } else {
@@ -112,12 +105,13 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
                 AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_PERMISSIONS);
                 AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SESSION_ID);
 
-                popFragment(null,true);
+                //popFragment(null,true);
 
                 //pushFragment(new LoginFragment(),R.id.loginContainer,"LoginFragment",false);
+
                 //popFragment(null,true);
-                //finish();
-                //startActivity(new Intent(BaseActivity.this, LoginActivity.class));
+                finish();
+                startActivity(new Intent(BaseActivity.this, SetupActivity.class));
             }
         });
 

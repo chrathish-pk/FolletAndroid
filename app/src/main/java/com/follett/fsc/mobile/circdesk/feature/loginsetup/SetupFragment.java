@@ -14,6 +14,7 @@ import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityLoginBinding;
 import com.follett.fsc.mobile.circdesk.feature.homescreen.HomeFragment;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
