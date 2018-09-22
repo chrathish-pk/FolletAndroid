@@ -110,7 +110,14 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
                         fragmentItemStatusBinding.itemStatusCheckoutDetailsLayout.setVisibility(View.GONE);
                         String itemErrorMsg = getString(R.string.double_quote) + AppUtils.getInstance()
                                 .getEditTextValue(fragmentItemStatusBinding.itemStatusPatronEntry) + getString(R.string.double_quote);
-                        fragmentItemStatusBinding.itemErrorMsg.setText(getString(R.string.item_not_found, itemErrorMsg));
+                        if(AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED)) {
+                            fragmentItemStatusBinding.itemErrorMsg.setText(getString(R.string.item_not_found, itemErrorMsg));
+                        }
+                        else
+                        {
+                            fragmentItemStatusBinding.itemErrorMsg.setText(getString(R.string.copyitem_not_found, itemErrorMsg));
+
+                        }
                     }
 
                 }

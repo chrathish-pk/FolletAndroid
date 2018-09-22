@@ -90,7 +90,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/opensans_regular"
-                            android:text="@{patronInfo.firstName + ' ' + patronInfo.lastName}"
+                            android:text="@{patronInfo.lastName + ',' + patronInfo.firstName}"
                             android:textColor="@color/blueLabel"
                             android:textSize="@dimen/text_size_20sp"
                             android:textStyle="bold" />

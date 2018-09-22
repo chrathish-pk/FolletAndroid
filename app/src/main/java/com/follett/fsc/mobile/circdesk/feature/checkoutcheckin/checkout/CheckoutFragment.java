@@ -173,6 +173,7 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
     private void updateCheckoutErrorMsg(CheckoutResult checkoutResult) {
 
         if (checkoutResult != null) {
+            fragmentCheckoutBinding.checkoutDetailIncludeLayout.checkedoutDetailLayout.setVisibility(View.GONE);
             if (!checkoutResult.getMessages().isEmpty()) {
                 if (checkoutResult.getMessages().size() == 1) {
                     String errorMsg = checkoutResult.getMessages().get(0).getMessage();
