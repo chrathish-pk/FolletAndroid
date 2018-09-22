@@ -37,6 +37,17 @@ public class CheckoutResult {
     @Expose
     private Boolean success;
 
+
+    public CheckoutResult(CheckoutInfo info, Integer textbookCheckouts, Integer libraryCheckouts, Integer assetCheckouts, List<Message> messages, List<Object> notes, Boolean success) {
+        this.info = info;
+        this.textbookCheckouts = textbookCheckouts;
+        this.libraryCheckouts = libraryCheckouts;
+        this.assetCheckouts = assetCheckouts;
+        this.messages = messages;
+        this.notes = notes;
+        this.success = success;
+    }
+
     public CheckoutInfo getInfo() {
         return info;
     }

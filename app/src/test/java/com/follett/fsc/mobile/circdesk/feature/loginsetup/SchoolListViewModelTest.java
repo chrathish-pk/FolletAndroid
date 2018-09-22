@@ -6,18 +6,21 @@
 
 package com.follett.fsc.mobile.circdesk.feature.loginsetup;
 
+import android.arch.core.executor.testing.InstantTaskExecutorRule;
+
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
 import com.follett.fsc.mobile.circdesk.feature.utils.BaseTestClass;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
+
+import junit.framework.Assert;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
-
-import android.arch.core.executor.testing.InstantTaskExecutorRule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +31,6 @@ import io.reactivex.android.plugins.RxAndroidPlugins;
 import io.reactivex.functions.Function;
 import io.reactivex.plugins.RxJavaPlugins;
 import io.reactivex.schedulers.Schedulers;
-import junit.framework.Assert;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_DISTRICT_NAME;
@@ -101,7 +103,7 @@ public class SchoolListViewModelTest extends BaseTestClass {
     
     @Test
     public void clearSchoolPref() {
-        mViewModel.clearSchoolPref();
+        AppUtils.getInstance().clearSchoolPref();
         Assert.assertNull(AppSharedPreferences.getInstance()
                 .getString(KEY_SITE_SHORT_NAME));
         Assert.assertNull(AppSharedPreferences.getInstance()

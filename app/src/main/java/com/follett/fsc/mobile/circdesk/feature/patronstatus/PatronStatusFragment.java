@@ -205,7 +205,7 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
         if (position == 0 && model != null) {  //Show patron list
             navigateToPatronList((ArrayList<PatronList>) model, true);
         } else if (position == 1 && model != null) {  // pop patron list
-            mActivity.popFragment("PatronListFrgment",false);
+            mActivity.popFragment("PatronListFrgment");
             //popFragmentFromBackStack(mPatronListFragment);
             requestPatronId((PatronList) model);
         } else if (position == 2 && model != null) {    // PatronItemCheckoutFragment checkout
@@ -230,7 +230,7 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
     private void navigateToPatronList(ArrayList<PatronList> patronList, boolean isAddToBackStack) {
         mPatronListFragment = PatronListFragment.newInstance(patronList);
         setToolBarTitle(getString(R.string.selectPatron));
-        mActivity.pushFragment(mPatronListFragment, R.id.loginContainer, "PatronListFrgment", true);
+        mActivity.replaceFragment(mPatronListFragment, R.id.loginContainer, "PatronListFrgment", true);
     }
 
     private void navigateToPatronCheckout(PatronInfo patronInfo, boolean isAddToBackStack, String title) {

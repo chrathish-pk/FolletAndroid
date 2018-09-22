@@ -62,6 +62,29 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
         if (!TextUtils.isEmpty(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SELECTED_BARCODE))) {
             getPatronID();
         }
+
+        /*checkoutViewModel.scanPatronMutableLiveData.observeForever(new Observer<ScanPatron>() {
+            @Override
+            public void onChanged(@Nullable ScanPatron scanPatronValue) {
+                scanPatron = scanPatronValue;
+                scanPatronUpdate(scanPatron);
+            }
+        });
+
+        checkoutViewModel.checkoutResultMutableLiveData.observeForever(new Observer<CheckoutResult>() {
+            @Override
+            public void onChanged(@Nullable CheckoutResult checkoutResultValue) {
+                checkoutResult = checkoutResultValue;
+                if (checkoutResult.getSuccess()) {
+                    FollettLog.e("sucess", "checkout value");
+                    bindCheckoutResult(checkoutResult);
+                } else {
+                    FollettLog.e("failure", "checkout value");
+
+                    updateCheckoutErrorMsg(checkoutResult);
+                }
+            }
+        });*/
     }
 
     @Override
@@ -76,7 +99,7 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
                 } else {
                     int collectionType = AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED) ? 0 : 4;
                     checkoutViewModel.getCheckoutResult(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_PATRON_ID),
-                            fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.getText().toString().trim(), String.valueOf(collectionType));
+                            fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.getText().toString().trim(), String.valueOf(collectionType), false);
                 }
             } else {
                 AppUtils.getInstance()
@@ -136,8 +159,8 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
             if (scanPatron.getPatronList() != null) {
                 navigateToPatronListScreen(scanPatron);
             } else {
-                AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_SELECTED_BARCODE,scanPatron.getBarcode());
-                AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_PATRON_ID,scanPatron.getPatronID());
+                AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_SELECTED_BARCODE, scanPatron.getBarcode());
+                AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_PATRON_ID, scanPatron.getPatronID());
                 bindPatronResult();
             }
         } else {
@@ -214,13 +237,17 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
 
 
     private void navigateToPatronListScreen(ScanPatron scanPatron) {
-        CheckoutPatronListFragment checkoutPatronListFragment =  CheckoutPatronListFragment.getInstance(scanPatron);
-        mActivity.pushFragment(checkoutPatronListFragment,R.id.loginContainer,"CheckoutPatronListFragment",true);
+        CheckoutPatronListFragment checkoutPatronListFragment = CheckoutPatronListFragment.getInstance(scanPatron);
+        mActivity.replaceFragment(checkoutPatronListFragment, R.id.loginContainer, "CheckoutPatronListFragment", true);
     }
 
     @Override
     public void onPositiveButtonClick(int statusCode) {
-        //Do Nothing
+        if (statusCode == 0) {
+            int collectionType = AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED) ? 0 : 4;
+            checkoutViewModel.getCheckoutResult(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_PATRON_ID),
+                    fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.getText().toString().trim(), String.valueOf(collectionType), true);
+        }
     }
 
     @Override

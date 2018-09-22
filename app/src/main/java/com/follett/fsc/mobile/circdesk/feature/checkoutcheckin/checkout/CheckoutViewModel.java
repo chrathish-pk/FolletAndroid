@@ -7,6 +7,7 @@
 package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout;
 
 import android.app.Application;
+import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
@@ -28,6 +29,9 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
 
     private Application mApplication;
     private UpdateUIListener updateUIListener;
+    public final MutableLiveData<CheckoutResult> checkoutResultMutableLiveData = new MutableLiveData<>();
+    public final MutableLiveData<ScanPatron> scanPatronMutableLiveData = new MutableLiveData<>();
+
 
     public CheckoutViewModel(@NonNull Application application, UpdateUIListener updateUIListener) {
         super(application);
@@ -48,7 +52,7 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
                 .getString(KEY_SITE_SHORT_NAME), patronBarcodeID);
     }
 
-    public void getCheckoutResult(String patronID, String barcode, String collectionType) {
+    public void getCheckoutResult(String patronID, String barcode, String collectionType, boolean overrideBlocks ) {
         setIsLoding(true);
         AppUtils.getInstance().showProgressDialog(mApplication, null, null, false);
 
@@ -58,7 +62,7 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
         map.put("text/xml", "gzip");
         AppRemoteRepository.getInstance().getCheckoutResult(map, this,AppSharedPreferences.getInstance()
                 .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
-                .getString(KEY_SITE_SHORT_NAME), patronID, barcode, collectionType);
+                .getString(KEY_SITE_SHORT_NAME), patronID, barcode, collectionType,overrideBlocks);
     }
 
     @Override
@@ -73,8 +77,10 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
                     AppSharedPreferences.getInstance()
                             .setString(AppSharedPreferences.KEY_PATRON_ID, scanPatron.getPatronID());
                 }
+                scanPatronMutableLiveData.postValue(scanPatron);
                 updateUIListener.updateUI(scanPatron);
             } else if (model instanceof CheckoutResult) {
+                checkoutResultMutableLiveData.postValue((CheckoutResult)model);
                 CheckoutResult checkoutResult = (CheckoutResult) model;
                 updateUIListener.updateUI(checkoutResult);
             }

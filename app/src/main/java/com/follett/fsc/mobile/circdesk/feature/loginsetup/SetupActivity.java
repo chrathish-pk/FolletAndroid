@@ -10,7 +10,6 @@ import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.ActivitySetupBinding;
 import com.follett.fsc.mobile.circdesk.feature.homescreen.HomeFragment;
-import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 public class SetupActivity extends BaseActivity<LoginViewModel> implements NavigationListener {
 
@@ -21,9 +20,6 @@ public class SetupActivity extends BaseActivity<LoginViewModel> implements Navig
         super.onCreate(savedInstanceState);
 
         activitySetupBinding = putContentView(R.layout.activity_setup);
-
-        FollettLog.e("Context name valueeeeeee",""+AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_CONTEXT_NAME));
-        FollettLog.e("KEY_SESSION_ID name valueeeeeee",AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID));
 
         if (!TextUtils.isEmpty(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_CONTEXT_NAME)) &&
                 TextUtils.isEmpty(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID)))

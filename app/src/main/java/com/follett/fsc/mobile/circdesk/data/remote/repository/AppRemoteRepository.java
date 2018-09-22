@@ -254,9 +254,9 @@ public class AppRemoteRepository {
                 });
     }
 
-    public void getCheckoutResult(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, String patronID, String barcode, String collectionType) {
+    public void getCheckoutResult(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, String patronID, String barcode, String collectionType, boolean overrideBlocks) {
 
-        apiService.getCheckoutResult(headers, contextName, site, barcode, patronID, collectionType, "false")
+        apiService.getCheckoutResult(headers, contextName, site, barcode, patronID, collectionType, String.valueOf(overrideBlocks))
                 .subscribeWith(new Observer<CheckoutResult>() {
                     @Override
                     public void onSubscribe(Disposable d) {

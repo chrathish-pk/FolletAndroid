@@ -92,15 +92,20 @@ public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, Checki
 
     public void bindCheckinResult() {
 
-        if (AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED))
-            fragmentCheckinBinding.checkinEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.VISIBLE);
-        else
-            fragmentCheckinBinding.checkinEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.INVISIBLE);
+        try {
+            if (AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED))
+                fragmentCheckinBinding.checkinEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.VISIBLE);
+            else
+                fragmentCheckinBinding.checkinEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.INVISIBLE);
 
-        fragmentCheckinBinding.checkinDetailIncludeLayout.checkedoutDetailLayout.setVisibility(View.GONE);
-        fragmentCheckinBinding.checkinPatronErrorMsg.setVisibility(View.GONE);
-        fragmentCheckinBinding.checkinEntryIncludeLayout.patronEntry.setText("");
+            fragmentCheckinBinding.checkinDetailIncludeLayout.checkedoutDetailLayout.setVisibility(View.GONE);
+            fragmentCheckinBinding.checkinPatronErrorMsg.setVisibility(View.GONE);
+            fragmentCheckinBinding.checkinEntryIncludeLayout.patronEntry.setText("");
+        } catch (Exception e) {
+            FollettLog.e("error", e.getMessage());
+        }
     }
+
 
     @Override
     public void onClick(View v) {

@@ -28,6 +28,14 @@ public class Patron implements Parcelable{
     @Expose
     private String patronPictureFileName;
 
+
+    public Patron(String barcode, String lastFirstMiddleName, String patronID, String patronPictureFileName) {
+        this.barcode = barcode;
+        this.lastFirstMiddleName = lastFirstMiddleName;
+        this.patronID = patronID;
+        this.patronPictureFileName = patronPictureFileName;
+    }
+
     protected Patron(Parcel in) {
         barcode = in.readString();
         lastFirstMiddleName = in.readString();

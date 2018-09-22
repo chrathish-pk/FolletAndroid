@@ -46,9 +46,9 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
         super.onCreate(savedInstanceState);
         baseBinding = DataBindingUtil.setContentView(this, R.layout.activity_base);
 
-        if(!TextUtils.isEmpty(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID))){
+        if (!TextUtils.isEmpty(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID))) {
             baseBinding.toolBarIcon.setImageResource(R.drawable.baseline_account_circle);
-        }else {
+        } else {
             baseBinding.toolBarIcon.setImageResource(R.drawable.info_icon);
         }
         baseBinding.navigationLayout.navInfoSubLayout.legalBtn.setOnClickListener(this);
@@ -57,7 +57,7 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
             public void onClick(View view) {
                 baseBinding.drawerLayout.openDrawer(GravityCompat.END);
                 View headerView;
-                if(!TextUtils.isEmpty(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID))){
+                if (!TextUtils.isEmpty(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID))) {
                     baseBinding.navigationLayout.navView.getHeaderView(0).setVisibility(View.VISIBLE);
                     baseBinding.navigationLayout.navInfoLoginView.setVisibility(View.VISIBLE);
                     baseBinding.navigationLayout.navInfoLayout.navInfoView.setVisibility(View.GONE);
@@ -66,7 +66,7 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
                             AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SITE_NAME));
                     String apiVersion = String.format(getApplicationContext().getResources().getString(R.string.copyright_info),
                             BuildConfig.VERSION_NAME, AppSharedPreferences.getInstance().getString(AppSharedPreferences.FOLLETT_API_VERSION));
-                    String userName = String.format(getApplicationContext().getResources().getString(R.string.user_info),AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_USERNAME));
+                    String userName = String.format(getApplicationContext().getResources().getString(R.string.user_info), AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_USERNAME));
                     baseBinding.navigationLayout.navInfoSubLayout.navbarSubContent.setText(apiVersion);
                     baseBinding.navigationLayout.siteHeader.setText(site_text);
                     headerView = baseBinding.navigationLayout.navView.getHeaderView(0);
@@ -181,8 +181,8 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
     public void setTitleBar(String titleBarText) {
         baseBinding.titleBar.setText(titleBarText);
     }
-    public void changeInfoIcon()
-    {
+
+    public void changeInfoIcon() {
         baseBinding.toolBarIcon.setImageResource(R.drawable.baseline_account_circle);
     }
 
@@ -216,34 +216,31 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
                 }
             }
         }
+        ft.add(container, fragment);
+        ft.commit();
+    }
+
+    public void replaceFragment(Fragment fragment, int container, String tag, boolean shouldAdd) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        if (shouldAdd)
+            ft.addToBackStack(tag);
         ft.replace(container, fragment);
         ft.commit();
     }
 
-    public void popFragment(String fragmentTag, boolean isNeedToPop) {
+    public void popFragment(String fragmentTag) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-
-        if(isNeedToPop) {
-            if (fm.getBackStackEntryCount() > 0) {
-                for (int i = 0; i <= fm.getBackStackEntryCount(); i++) {
-                    fm.popBackStack();
-                    fm.beginTransaction().remove(fm.getFragments().get(i)).commit();
-                }
-            }
-
-        }else {
-
-            fm.popBackStackImmediate();
-            ft.remove(fm.findFragmentByTag(fragmentTag));
-        }
+        fm.popBackStackImmediate();
+        ft.remove(fm.findFragmentByTag(fragmentTag));
         ft.commit();
     }
+
     @Override
     public void onClick(View v) {
 
-        if(v.getId() == R.id.legalBtn)
-        {
+        if (v.getId() == R.id.legalBtn) {
             startActivity(new Intent(BaseActivity.this, LegalActivity.class));
         }
 
