@@ -116,6 +116,8 @@
     <string name="findItem">Find Item</string>
     <string name="item_status_title">Item Status</string>
     <string name="item_not_found">Copy %s not found</string>
+    <string name="copyitem_not_found">Item %s not found</string>
+
 
 
     <!-- Intent data passing strings-->

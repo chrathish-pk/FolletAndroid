@@ -36,6 +36,16 @@ public class CheckoutInfo implements Parcelable {
     @Expose
     private String title;
 
+
+    public CheckoutInfo(String barcode, String bibID, String coverURL, String dueDate, String materialType, String title) {
+        this.barcode = barcode;
+        this.bibID = bibID;
+        this.coverURL = coverURL;
+        this.dueDate = dueDate;
+        this.materialType = materialType;
+        this.title = title;
+    }
+
     protected CheckoutInfo(Parcel in) {
         barcode = in.readString();
         bibID = in.readString();

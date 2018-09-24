@@ -24,6 +24,7 @@ import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.SiteResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.Version;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
+import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 import java.util.Map;
 
@@ -37,13 +38,12 @@ import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferen
 
 public class AppRemoteRepository {
 
-    private APIInterface apiService;
-    private static AppRemoteRepository mInstance;
+    private static APIInterface apiService;
+    public static AppRemoteRepository mInstance;
 
     public static AppRemoteRepository getInstance() {
         if (mInstance == null)
             mInstance = new AppRemoteRepository();
-
         return mInstance;
     }
 
@@ -51,6 +51,9 @@ public class AppRemoteRepository {
     public AppRemoteRepository() {
         apiService = FollettAPIManager.getClient(getString(SERVER_URI_VALUE))
                 .create(APIInterface.class);
+        FollettLog.e("urllllllllll???????",getString(SERVER_URI_VALUE));
+        FollettLog.e("urlretorurl???????",apiService.toString());
+
     }
 
     public void getVersion(@Nullable final NetworkInterface networkInterface) {
@@ -251,9 +254,9 @@ public class AppRemoteRepository {
                 });
     }
 
-    public void getCheckoutResult(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, String patronID, String barcode, String collectionType) {
+    public void getCheckoutResult(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, String patronID, String barcode, String collectionType, boolean overrideBlocks) {
 
-        apiService.getCheckoutResult(headers, contextName, site, barcode, patronID, collectionType, "false")
+        apiService.getCheckoutResult(headers, contextName, site, barcode, patronID, collectionType, String.valueOf(overrideBlocks))
                 .subscribeWith(new Observer<CheckoutResult>() {
                     @Override
                     public void onSubscribe(Disposable d) {

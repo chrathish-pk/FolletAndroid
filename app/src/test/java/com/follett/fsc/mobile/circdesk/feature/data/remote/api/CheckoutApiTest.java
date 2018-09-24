@@ -1,14 +1,8 @@
-/*
- *
- *  * Copyright (c) 2018 Follett. All rights reserved.
- *
- */
-
 package com.follett.fsc.mobile.circdesk.feature.data.remote.api;
 
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin.CheckinResult;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin.Info;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.CheckoutInfo;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.CheckoutResult;
 import com.follett.fsc.mobile.circdesk.feature.utils.BaseTestClass;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 
@@ -31,15 +25,12 @@ import io.reactivex.schedulers.Schedulers;
 import static org.mockito.Mockito.when;
 
 /**
- * Created by muthulakshmi on 19/09/18.
+ * Created by muthulakshmi on 22/09/18.
  */
 
-public class CheckinApiTest extends BaseTestClass {
+public class CheckoutApiTest extends BaseTestClass {
 
-    private CheckinResult mCheckinResult;
-    private String checkinBarcode = "2";
-    private String collectionType = "0";
-    private String isLibraryUse = "false";
+    private CheckoutResult mCheckoutResult;
 
     @Mock
     APIInterface apiInterface;
@@ -61,25 +52,23 @@ public class CheckinApiTest extends BaseTestClass {
         });
     }
 
-
     @Test
-    public void verifyCheckinApi() {
-        mCheckinResult = generateChecinResult();
+    public void verifyCheckoutApi() {
+        mCheckoutResult = generateCheckoutResult();
 
-        when(apiInterface.getCheckinResult(AppUtils.getHeader(mApplication), CONTEXT_NAME, SITE_NAME,
-                checkinBarcode, collectionType, isLibraryUse)).thenReturn(Observable.just(mCheckinResult));
+        when(apiInterface.getCheckoutResult(AppUtils.getHeader(mApplication), CONTEXT_NAME, SITE_NAME, "1","861","0","false")).thenReturn(Observable.just(mCheckoutResult));
 
-        Observable<CheckinResult> checkinResultObservable = apiInterface.getCheckinResult(AppUtils.getHeader(mApplication), CONTEXT_NAME, SITE_NAME,
-                checkinBarcode, collectionType, isLibraryUse);
-        checkinResultObservable.blockingForEach(new Consumer<CheckinResult>() {
+        final Observable<CheckoutResult> patronResultsObservable = apiInterface.getCheckoutResult(AppUtils.getHeader(mApplication), CONTEXT_NAME, SITE_NAME, "1","861","0","false");
+        patronResultsObservable.subscribe(new Consumer<CheckoutResult>() {
             @Override
-            public void accept(CheckinResult checkinResult) throws Exception {
-                verifyCheckinResult(checkinResult, mCheckinResult);
+            public void accept(CheckoutResult checkoutResult) throws Exception {
+                verifyCheckoutApi(checkoutResult, mCheckoutResult);
             }
         });
+
     }
 
-    private void verifyCheckinResult(CheckinResult actualResult, CheckinResult expectedResult) {
+    private void verifyCheckoutApi(CheckoutResult actualResult, CheckoutResult expectedResult) {
         Assert.assertNotNull(actualResult);
         Assert.assertTrue(actualResult.getSuccess());
         Assert.assertEquals(expectedResult.getInfo().getBarcode(), actualResult.getInfo().getBarcode());
@@ -87,9 +76,8 @@ public class CheckinApiTest extends BaseTestClass {
         Assert.assertEquals(expectedResult.getInfo().getMaterialType(), actualResult.getInfo().getMaterialType());
     }
 
-    private CheckinResult generateChecinResult() {
-        return new CheckinResult(
-                new Info("To kill a mockingbird", "", 14129, 2, "T 2", "/passthrough?image=12375/9780061120084.gif"),
-                null, null, true);
+    public CheckoutResult generateCheckoutResult() {
+        return new CheckoutResult(new CheckoutInfo("T 1", "14129", "/passthrough?image=12375/9780061120084.gif", "10/8/2018", "2", "To kill a mockingbird"),
+                0, 7, 1, null, null, true);
     }
 }

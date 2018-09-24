@@ -42,6 +42,7 @@ public class LoginViewModel extends BaseViewModel<CTAButtonListener> implements 
     public void onCallCompleted(Object model) {
         cancelProgressBar();
         try {
+            FollettLog.d("Login context value",AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_CONTEXT_NAME));
             LoginResults loginResults = (LoginResults) model;
             if (loginResults.getSuccess() != null && loginResults.getSuccess()
                     .equalsIgnoreCase("true")) {

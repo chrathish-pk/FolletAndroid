@@ -35,7 +35,7 @@
             android:screenOrientation="portrait" />
 
 
-        <activity android:name=".app.base.LegalActivity"></activity>
+        <activity android:name=".app.base.LegalActivity"/>
 
 
         <meta-data

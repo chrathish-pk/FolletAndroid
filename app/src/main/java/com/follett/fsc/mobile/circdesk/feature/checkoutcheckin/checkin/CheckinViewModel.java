@@ -7,6 +7,7 @@
 package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin;
 
 import android.app.Application;
+import android.arch.lifecycle.MutableLiveData;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
@@ -30,6 +31,7 @@ public class CheckinViewModel extends BaseViewModel implements NetworkInterface 
 
     private Application mApplication;
     private UpdateUIListener updateUIListener;
+    public MutableLiveData<CheckinResult> checkinResultMutableLiveData = new MutableLiveData<>();
 
     public CheckinViewModel(Application application, UpdateUIListener updateUIListener) {
         super(application);
@@ -60,6 +62,7 @@ public class CheckinViewModel extends BaseViewModel implements NetworkInterface 
 
         try {
             if (model instanceof CheckinResult) {
+                checkinResultMutableLiveData.postValue((CheckinResult) model);
                 CheckinResult checkinResult = (CheckinResult) model;
                 updateUIListener.updateUI(checkinResult);
             }

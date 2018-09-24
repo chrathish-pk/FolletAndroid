@@ -6,7 +6,13 @@
 
 package com.follett.fsc.mobile.circdesk.feature.itemstatus;
 
+import android.arch.core.executor.testing.InstantTaskExecutorRule;
+import android.arch.lifecycle.Observer;
+import android.support.annotation.Nullable;
+
 import com.follett.fsc.mobile.circdesk.feature.utils.BaseTestClass;
+
+import junit.framework.Assert;
 
 import org.junit.After;
 import org.junit.Before;
@@ -14,15 +20,10 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 
-import android.arch.core.executor.testing.InstantTaskExecutorRule;
-import android.arch.lifecycle.Observer;
-import android.support.annotation.Nullable;
-
 import io.reactivex.Scheduler;
 import io.reactivex.functions.Function;
 import io.reactivex.plugins.RxJavaPlugins;
 import io.reactivex.schedulers.Schedulers;
-import junit.framework.Assert;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SESSION_ID;
@@ -30,13 +31,14 @@ import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferen
 import static org.mockito.Mockito.when;
 
 public class ItemStatusViewModelTest extends BaseTestClass {
-    
+
     private ItemStatusViewModel mViewModel;
-    
+
     private ItemDetails mItemDetails;
-    
-    @Rule public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
-    
+
+    @Rule
+    public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
+
     @BeforeClass
     public static void setupRxJavaPlugins() {
         RxJavaPlugins.setIoSchedulerHandler(new Function<Scheduler, Scheduler>() {
@@ -46,13 +48,13 @@ public class ItemStatusViewModelTest extends BaseTestClass {
             }
         });
     }
-    
+
     @Before
     public void setUp() {
         mViewModel = new ItemStatusViewModel(mApplication);
         mItemDetails = getItemDetail();
     }
-    
+
     @Test
     public void onCallCompleted() {
         mViewModel.onCallCompleted(mItemDetails);
@@ -64,7 +66,7 @@ public class ItemStatusViewModelTest extends BaseTestClass {
             }
         });
     }
-    
+
     @Test
     public void getScanItem() {
         createMockSharedPref();
@@ -76,26 +78,26 @@ public class ItemStatusViewModelTest extends BaseTestClass {
             }
         });
     }
-    
+
     @Test
     public void onCallFailed() {
         mViewModel.onCallFailed(new Throwable());
         Assert.assertFalse(mViewModel.getIsLoading()
                 .get());
     }
-    
+
     private void createMockSharedPref() {
         when(mPreferences.getString(KEY_SESSION_ID, "")).thenReturn(SESSION_ID);
         when(mPreferences.getString(KEY_CONTEXT_NAME, "")).thenReturn(CONTEXT_NAME);
         when(mPreferences.getString(KEY_SITE_SHORT_NAME, "")).thenReturn(SITE_NAME);
     }
-    
-    
+
+
     private ItemDetails getItemDetail() {
         return new ItemDetails("Math Lab", "ISBN: 978-0-07-663923-6", "Algebra 1", "Available", null, "Mathematics", 0, "Lee, Harper.", null, null, null,
                 null, null, true, "00000000000002", null);
     }
-    
+
     private void verifyItemDetailResult(ItemDetails actualResult, ItemDetails expectedResult) {
         Assert.assertNotNull(actualResult);
         Assert.assertEquals(expectedResult.getLocation(), actualResult.getLocation());
@@ -104,7 +106,7 @@ public class ItemStatusViewModelTest extends BaseTestClass {
         Assert.assertEquals(expectedResult.getDepartment(), actualResult.getDepartment());
         Assert.assertEquals(expectedResult.getAuthor(), actualResult.getAuthor());
     }
-    
+
     @After
     public void tearDown() {
         mViewModel = null;

@@ -46,7 +46,7 @@ public class SetupFragment extends BaseFragment<ActivityLoginBinding, LoginViewM
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mLoginBinding = getViewDataBinding();
-        AppUtils.getInstance().clearSchoolPref();
+        //AppUtils.getInstance().clearSchoolPref();
         navigateToFragment();
     }
 

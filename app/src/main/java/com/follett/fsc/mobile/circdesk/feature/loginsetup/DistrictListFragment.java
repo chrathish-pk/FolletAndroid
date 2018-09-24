@@ -6,20 +6,20 @@
 
 package com.follett.fsc.mobile.circdesk.feature.loginsetup;
 
-import com.follett.fsc.mobile.circdesk.BR;
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
-import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
-import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
-import com.follett.fsc.mobile.circdesk.databinding.FragmentDistrictListBinding;
-import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+
+import com.follett.fsc.mobile.circdesk.BR;
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
+import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
+import com.follett.fsc.mobile.circdesk.databinding.FragmentDistrictListBinding;
+import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 import static com.follett.fsc.mobile.circdesk.utils.AppConstants.DISTRICT_LIST_KEY;
 
@@ -105,8 +105,9 @@ public class DistrictListFragment extends BaseFragment<FragmentDistrictListBindi
     @Override
     public void ctaButtonOnClick(View view) {
         mViewModel.clearDistrictPref();
-        getBaseActivity().onBackPressed();
-
+        //mActivity.onBackPressed();
+        AppRemoteRepository.mInstance = null;
+        mActivity.pushFragment(new SetupFragment(),R.id.loginContainer,"SetupFragment",false);
     }
 }
 

@@ -7,12 +7,13 @@
 
 package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout;
 
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.Message;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.Message;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class ScanPatron implements Parcelable{
@@ -83,6 +84,27 @@ public class ScanPatron implements Parcelable{
 
     private boolean isLibrarySelected;
 
+    public ScanPatron(String assetCheckouts, String assetOverdues, String libraryCheckouts, String libraryOverdues, List<Message> messages, List<Patron> patronList, List<Note> patronNotes, String success, String textbookCheckouts, String textbookOverdues, String patronPictureFileName, String libraryFines, String textbookFines, String assetFines, String patronID, String lastFirstMiddleName, String barcode, String patronType, boolean isLibrarySelected) {
+        this.assetCheckouts = assetCheckouts;
+        this.assetOverdues = assetOverdues;
+        this.libraryCheckouts = libraryCheckouts;
+        this.libraryOverdues = libraryOverdues;
+        this.messages = messages;
+        this.patronList = patronList;
+        this.patronNotes = patronNotes;
+        this.success = success;
+        this.textbookCheckouts = textbookCheckouts;
+        this.textbookOverdues = textbookOverdues;
+        this.patronPictureFileName = patronPictureFileName;
+        this.libraryFines = libraryFines;
+        this.textbookFines = textbookFines;
+        this.assetFines = assetFines;
+        this.patronID = patronID;
+        this.lastFirstMiddleName = lastFirstMiddleName;
+        this.barcode = barcode;
+        this.patronType = patronType;
+        this.isLibrarySelected = isLibrarySelected;
+    }
 
     protected ScanPatron(Parcel in) {
         assetCheckouts = in.readString();
