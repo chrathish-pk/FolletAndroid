@@ -193,9 +193,9 @@ public class AppRemoteRepository {
                 });
     }
 
-    public void getInProgressInventoryResults(@Nullable final NetworkInterface networkInterface, String site, String contextName, int collectionType) {
+    public void getInProgressInventoryResults(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String site, String contextName, int collectionType) {
 
-        apiService.getInProgressInventoryResults(site, contextName, collectionType)
+        apiService.getInProgressInventoryResults(headers, site, contextName, collectionType)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribeWith(new Observer<InProgressInventoryResults>() {
