@@ -4,7 +4,7 @@
  *
  */
 
-package com.follett.fsc.mobile.circdesk.feature.loginsetup;
+package com.follett.fsc.mobile.circdesk.feature.loginsetup.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

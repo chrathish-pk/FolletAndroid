@@ -6,6 +6,7 @@
 
 package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +19,7 @@ import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentCheckinBinding;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.UpdateUIListener;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckinResult;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.TitleInfoActivity;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
@@ -36,9 +38,12 @@ public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, Checki
 
     @Override
     public CheckinViewModel getViewModel() {
-        checkinViewModel = new CheckinViewModel(getBaseActivity().getApplication()
+        if (getBaseApplication() == null) {
+            return null;
+        }
+        checkinViewModel = new CheckinViewModel(getBaseApplication()
                 , this);
-        return null;
+        return checkinViewModel;
     }
 
     @Override
@@ -64,8 +69,12 @@ public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, Checki
 
     @Override
     public void updateUI(final Object value) {
-
-        getActivity().runOnUiThread(new Runnable() {
+        Activity activity = getBaseActivity();
+        if (activity == null) {
+            return;
+        }
+    
+        activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -109,20 +118,26 @@ public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, Checki
 
     @Override
     public void onClick(View v) {
+        
+        Activity activity = getBaseActivity();
+        if (activity == null) {
+            return;
+        }
+        
         switch (v.getId()) {
             case R.id.patronGoBtn:
                 AppUtils.getInstance()
-                        .hideKeyBoard(getBaseActivity(), fragmentCheckinBinding.checkinEntryIncludeLayout.patronEntry);
+                        .hideKeyBoard(activity, fragmentCheckinBinding.checkinEntryIncludeLayout.patronEntry);
                 if (AppUtils.getInstance().isEditTextNotEmpty(fragmentCheckinBinding.checkinEntryIncludeLayout.patronEntry)) {
                     int collectionType = AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED) ? 0 : 4;
                     checkinViewModel.getCheckinData(fragmentCheckinBinding.checkinEntryIncludeLayout.patronEntry.getText().toString().trim(), String.valueOf(collectionType), isLibraryUse);
                 } else {
                     AppUtils.getInstance()
-                            .showShortToastMessages(getBaseActivity(), getString(R.string.errorPatronEntry));
+                            .showShortToastMessages(activity, getString(R.string.errorPatronEntry));
                 }
                 break;
             case R.id.checkedoutInfoBtn:
-                Intent titleIntent = new Intent(getActivity(), TitleInfoActivity.class);
+                Intent titleIntent = new Intent(activity, TitleInfoActivity.class);
                 titleIntent.putExtra("bibID", checkinResult.getInfo().getBibID().toString().trim());
                 startActivity(titleIntent);
                 break;

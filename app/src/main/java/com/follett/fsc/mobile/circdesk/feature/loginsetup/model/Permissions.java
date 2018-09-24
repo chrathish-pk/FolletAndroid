@@ -4,13 +4,13 @@
  *
  */
 
-package com.follett.fsc.mobile.circdesk.feature.loginsetup;
-
-import android.os.Parcel;
-import android.os.Parcelable;
+package com.follett.fsc.mobile.circdesk.feature.loginsetup.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import android.os.Parcel;
+import android.os.Parcelable;
 
 public class Permissions implements Parcelable {
 

@@ -11,7 +11,7 @@
 
         <variable
             name="schoolData"
-            type="com.follett.fsc.mobile.circdesk.feature.loginsetup.SiteRecord"/>
+            type="com.follett.fsc.mobile.circdesk.feature.loginsetup.model.SiteRecord"/>
     </data>
 
     <LinearLayout

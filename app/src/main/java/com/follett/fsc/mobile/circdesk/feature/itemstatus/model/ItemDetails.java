@@ -1,12 +1,18 @@
 
-package com.follett.fsc.mobile.circdesk.feature.itemstatus;
+/*
+ *
+ *  * Copyright (c) 2018 Follett. All rights reserved.
+ *
+ */
+
+package com.follett.fsc.mobile.circdesk.feature.itemstatus.model;
+
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.Note;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.Note;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 

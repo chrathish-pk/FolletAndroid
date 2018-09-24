@@ -6,6 +6,7 @@
 
 package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +20,8 @@ import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentCheckoutBinding;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.UpdateUIListener;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckoutResult;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.ScanPatron;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.TitleInfoActivity;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
@@ -37,7 +40,10 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
 
     @Override
     public CheckoutViewModel getViewModel() {
-        checkoutViewModel = new CheckoutViewModel(getBaseActivity().getApplication()
+        if (getBaseApplication() == null) {
+            return null;
+        }
+        checkoutViewModel = new CheckoutViewModel(getBaseApplication()
                 , this);
         return checkoutViewModel;
     }
@@ -89,9 +95,15 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
 
     @Override
     public void onClick(View v) {
+    
+        Activity activity = getBaseActivity();
+        if (activity == null) {
+            return;
+        }
+        
         if (v.getId() == R.id.patronGoBtn) {
             AppUtils.getInstance()
-                    .hideKeyBoard(getBaseActivity(), fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry);
+                    .hideKeyBoard(activity, fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry);
             if (AppUtils.getInstance().isEditTextNotEmpty(fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry)) {
                 String barcode = AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SELECTED_BARCODE);
                 if (TextUtils.isEmpty(barcode)) {
@@ -103,7 +115,7 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
                 }
             } else {
                 AppUtils.getInstance()
-                        .showShortToastMessages(getBaseActivity(), getString(R.string.errorPatronEntry));
+                        .showShortToastMessages(activity, getString(R.string.errorPatronEntry));
             }
         } else if (v.getId() == R.id.checkoutCloseBtn && fragmentCheckoutBinding.patronDetailIncludeLayout.patronDetailLayout.getVisibility() == View.VISIBLE) {
             AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_PATRON_ID, null);
@@ -114,7 +126,7 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
             fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.setText("");
             fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.setHint(R.string.findPatron);
         } else if (v.getId() == R.id.checkedoutInfoBtn) {
-            Intent titleIntent = new Intent(getActivity(), TitleInfoActivity.class);
+            Intent titleIntent = new Intent(activity, TitleInfoActivity.class);
             titleIntent.putExtra("bibID", checkoutResult.getInfo().getBibID());
             startActivity(titleIntent);
 
@@ -134,8 +146,12 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
 
     @Override
     public void updateUI(Object result) {
+        Activity activity = getBaseActivity();
+        if (activity == null) {
+            return;
+        }
         final Object value = result;
-        getActivity().runOnUiThread(new Runnable() {
+        activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (value instanceof ScanPatron) {
@@ -171,6 +187,10 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
 
 
     private void updateCheckoutErrorMsg(CheckoutResult checkoutResult) {
+        Activity activity = getBaseActivity();
+        if (activity == null) {
+            return;
+        }
 
         if (checkoutResult != null) {
             fragmentCheckoutBinding.checkoutDetailIncludeLayout.checkedoutDetailLayout.setVisibility(View.GONE);
@@ -181,7 +201,7 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
                     fragmentCheckoutBinding.checkoutPatronErrorMsg.setText(errorMsg);
                 } else if (checkoutResult.getMessages().size() > 1) {
                     String errorMsg = checkoutResult.getMessages().get(0).getMessage() + "\n\n" + checkoutResult.getMessages().get(1).getMessage();
-                    AppUtils.getInstance().showAlertDialog(getActivity(), "Checkout Blocked", errorMsg, "allow", "cancel", this, 0);
+                    AppUtils.getInstance().showAlertDialog(activity, "Checkout Blocked", errorMsg, "allow", "cancel", this, 0);
                 }
             } else {
                 FollettLog.e(getString(R.string.error), "Empty Error Message from api result");

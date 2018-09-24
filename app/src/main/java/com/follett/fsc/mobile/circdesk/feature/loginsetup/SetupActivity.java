@@ -1,26 +1,24 @@
 package com.follett.fsc.mobile.circdesk.feature.loginsetup;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.text.TextUtils;
-
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.ActivitySetupBinding;
 import com.follett.fsc.mobile.circdesk.feature.homescreen.HomeFragment;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.DistrictList;
+
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 public class SetupActivity extends BaseActivity<LoginViewModel> implements NavigationListener {
-
-    private ActivitySetupBinding activitySetupBinding;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        activitySetupBinding = putContentView(R.layout.activity_setup);
-
+        putContentView(R.layout.activity_setup);
         if (!TextUtils.isEmpty(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_CONTEXT_NAME)) &&
                 TextUtils.isEmpty(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID)))
             pushFragment(new LoginFragment(), R.id.loginContainer, "SetupFragment", false);

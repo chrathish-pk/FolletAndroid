@@ -6,6 +6,18 @@
 
 package com.follett.fsc.mobile.circdesk.feature.loginsetup;
 
+import com.follett.fsc.mobile.circdesk.BR;
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
+import com.follett.fsc.mobile.circdesk.app.CustomAlert;
+import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
+import com.follett.fsc.mobile.circdesk.databinding.FragmentBasicLayoutBinding;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.DistrictList;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
+
+import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -17,16 +29,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
-
-import com.follett.fsc.mobile.circdesk.BR;
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
-import com.follett.fsc.mobile.circdesk.app.CustomAlert;
-import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
-import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
-import com.follett.fsc.mobile.circdesk.databinding.FragmentBasicLayoutBinding;
-import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.SERVER_URI_VALUE;
 
@@ -81,6 +83,9 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
 
     @Override
     public void ctaButtonOnClick(View view) {
+        if (getBaseActivity() == null) {
+            return;
+        }
         if (!AppUtils.getInstance()
                 .isEditTextNotEmpty(mBasicLayoutBinding.libraryEditText)) {
             AppUtils.getInstance()
@@ -107,28 +112,39 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
 
 
     public void displayErrorToast(final String message) {
-        getBaseActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                AppUtils.getInstance()
-                        .showShortToastMessages(getBaseActivity(), message);
-            }
-        });
+        final Activity activity = getBaseActivity();
+        if (activity != null) {
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    AppUtils.getInstance()
+                            .showShortToastMessages(activity, message);
+                }
+            });
+        }
     }
 
 
     private void savePreference(String libraryURI, String port, String sslPort) {
-        AppUtils.getInstance()
-                .hideKeyBoard(getBaseActivity(), mBasicLayoutBinding.libraryEditText);
-        if (!isNetworkConnected()) {
+    
+        Activity activity = getBaseActivity();
+        if (activity != null) {
             AppUtils.getInstance()
-                    .showNoInternetAlertDialog(getBaseActivity());
-            return;
+                    .hideKeyBoard(activity, mBasicLayoutBinding.libraryEditText);
+            if (!isNetworkConnected()) {
+                AppUtils.getInstance()
+                        .showNoInternetAlertDialog(activity);
+                return;
+            }
+            mBasicViewModel.savePreference(libraryURI, port, sslPort);
         }
-        mBasicViewModel.savePreference(libraryURI, port, sslPort);
     }
 
     private void inItView(final FragmentBasicLayoutBinding basicLayoutBinding) {
+        if (getBaseActivity() == null) {
+            return;
+        }
+        
         final Bundle arguments = getArguments();
         if (null != arguments) {
             mIsBaseFragment = arguments.getBoolean(IS_BASIC_FRAGMENT);
@@ -251,6 +267,9 @@ public class BasicFragment extends BaseFragment<FragmentBasicLayoutBinding, Basi
     }
 
     private void showAlert(String msg) {
+        if (getBaseActivity() == null) {
+            return;
+        }
 
         DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
             @Override

@@ -4,13 +4,13 @@
  *
  */
 
-package com.follett.fsc.mobile.circdesk.feature.loginsetup;
-
-import android.os.Parcel;
-import android.os.Parcelable;
+package com.follett.fsc.mobile.circdesk.feature.loginsetup.model;
 
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
+
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.util.List;
 

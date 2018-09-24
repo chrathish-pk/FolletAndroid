@@ -6,13 +6,9 @@
 
 package com.follett.fsc.mobile.circdesk.feature.inventory;
 
-import android.support.v7.widget.RecyclerView;
-
 import com.follett.fsc.mobile.circdesk.databinding.RowInventoryBinding;
 
-/**
- * Created by muthulakshmi on 18/09/18.
- */
+import android.support.v7.widget.RecyclerView;
 
 public class SelectInventoryListViewHolder extends RecyclerView.ViewHolder {
 

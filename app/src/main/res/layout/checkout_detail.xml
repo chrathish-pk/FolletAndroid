@@ -11,11 +11,11 @@
 
         <variable
             name="checkoutResult"
-            type="com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.CheckoutResult" />
+            type="com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckoutResult" />
 
         <variable
             name="checkinResult"
-            type="com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin.CheckinResult" />
+            type="com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckinResult" />
 
     </data>
 

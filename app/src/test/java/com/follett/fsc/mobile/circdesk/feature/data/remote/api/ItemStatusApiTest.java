@@ -7,7 +7,7 @@
 package com.follett.fsc.mobile.circdesk.feature.data.remote.api;
 
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
-import com.follett.fsc.mobile.circdesk.feature.itemstatus.ItemDetails;
+import com.follett.fsc.mobile.circdesk.feature.itemstatus.model.ItemDetails;
 import com.follett.fsc.mobile.circdesk.feature.utils.BaseTestClass;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 

@@ -8,7 +8,7 @@
 
         <variable
             name="checkinResult"
-            type="com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin.CheckinResult" />
+            type="com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckinResult" />
 
         <variable
             name="checkinViewModel"

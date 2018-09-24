@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.SchoolListItemBinding;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.SiteRecord;
 
 import java.util.List;
 

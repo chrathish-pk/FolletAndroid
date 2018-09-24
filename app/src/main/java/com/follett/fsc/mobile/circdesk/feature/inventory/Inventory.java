@@ -6,10 +6,6 @@
 
 package com.follett.fsc.mobile.circdesk.feature.inventory;
 
-/**
- * Created by muthulakshmi on 18/09/18.
- */
-
 public class Inventory {
 
     private String inventoryName;

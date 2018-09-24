@@ -6,6 +6,10 @@
 
 package com.follett.fsc.mobile.circdesk.feature.inventory;
 
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
+import com.follett.fsc.mobile.circdesk.databinding.RowInventoryBinding;
+
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
@@ -14,16 +18,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
-import com.follett.fsc.mobile.circdesk.databinding.RowInventoryBinding;
-
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by muthulakshmi on 18/09/18.
- */
 
 public class SelectInventoryListAdapter extends RecyclerView.Adapter<SelectInventoryListViewHolder> implements View.OnClickListener {
 

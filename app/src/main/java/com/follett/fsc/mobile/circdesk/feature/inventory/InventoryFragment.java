@@ -20,10 +20,6 @@ import com.follett.fsc.mobile.circdesk.databinding.FragmentInventoryBinding;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_COLLECTION_TYPE;
 
-/**
- * Created by muthulakshmi on 11/09/18.
- */
-
 public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, InventoryViewModel> implements ItemClickListener, View.OnClickListener {
 
     private InventoryViewModel inventoryViewModel;
@@ -38,7 +34,10 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
 
     @Override
     public InventoryViewModel getViewModel() {
-        inventoryViewModel = new InventoryViewModel(getBaseActivity().getApplication(), this);
+        if (getBaseApplication() == null) {
+            return null;
+        }
+        inventoryViewModel = new InventoryViewModel(getBaseApplication(), this);
         return inventoryViewModel;
     }
 
