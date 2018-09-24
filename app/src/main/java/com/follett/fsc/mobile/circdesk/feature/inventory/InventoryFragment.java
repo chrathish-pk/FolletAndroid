@@ -9,7 +9,6 @@ package com.follett.fsc.mobile.circdesk.feature.inventory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.TextView;
 
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
@@ -22,16 +21,10 @@ import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_COLLECTION_TYPE;
 
-/**
- * Created by muthulakshmi on 11/09/18.
- */
-
 public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, InventoryViewModel> implements ItemClickListener, View.OnClickListener, UpdateUIListener {
 
     private InventoryViewModel inventoryViewModel;
     private FragmentInventoryBinding fragmentInventoryBinding;
-    private TextView libraryBtn;
-    private TextView resourceBtn;
     private InProgressInventoryResults inProgressInventoryResults;
 
     @Override
@@ -51,44 +44,6 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.backBtn:
-                mActivity.onBackPressed();
-                break;
-            case R.id.libraryBtn:
-                fragmentInventoryBinding.inventoryLocation.setVisibility(View.GONE);
-                fragmentInventoryBinding.inventoryLocationBar.setVisibility(View.GONE);
-                libraryBtn.setBackgroundColor(mActivity.getResources().getColor(R.color.blueLabel));
-                libraryBtn.setTextColor(mActivity.getResources().getColor(R.color.white));
-                resourceBtn.setBackgroundColor(mActivity.getResources().getColor(R.color.white));
-                resourceBtn.setTextColor(mActivity.getResources().getColor(R.color.blueLabel));
-                AppSharedPreferences.getInstance().setInt(KEY_COLLECTION_TYPE, 0);
-
-                break;
-            case R.id.resourceBtn:
-                fragmentInventoryBinding.inventoryLocation.setVisibility(View.VISIBLE);
-                fragmentInventoryBinding.inventoryLocationBar.setVisibility(View.VISIBLE);
-                libraryBtn.setBackgroundColor(mActivity.getResources().getColor(R.color.white));
-                libraryBtn.setTextColor(mActivity.getResources().getColor(R.color.blueLabel));
-                resourceBtn.setBackgroundColor(mActivity.getResources().getColor(R.color.blueLabel));
-                resourceBtn.setTextColor(mActivity.getResources().getColor(R.color.white));
-                AppSharedPreferences.getInstance().setInt(KEY_COLLECTION_TYPE, 4);
-
-                break;
-            case R.id.finalizeInventoryBtn:
-              /*  DialogFragment fragment = new FinalizePopupFragment();
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                fragment.show(ft,"FinalizePopupFragment");
-                //mActivity.pushFragment(fragment, R.id.loginContainer, "FinalizePopupFragment", true);
-                break;*/
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         fragmentInventoryBinding = getViewDataBinding();
@@ -105,16 +60,53 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
         mActivity.setTitleBar(getString(R.string.inventory));
         mActivity.setBackBtnVisible();
         mActivity.baseBinding.backBtn.setOnClickListener(this);
-        libraryBtn = (TextView) mActivity.findViewById(R.id.libraryBtn);
-        libraryBtn.setOnClickListener(this);
-        resourceBtn = (TextView) mActivity.findViewById(R.id.resourceBtn);
-        resourceBtn.setOnClickListener(this);
+        fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setOnClickListener(this);
+        fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setOnClickListener(this);
 
         fragmentInventoryBinding.finalizeInventoryBtn.setOnClickListener(this);
 
         fragmentInventoryBinding.patronEntryIncludeLayout.patronEntry.setHint(getString(R.string.enterBarcode));
         fragmentInventoryBinding.patronEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.GONE);
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.backBtn:
+                mActivity.onBackPressed();
+                break;
+            case R.id.libraryBtn:
+                fragmentInventoryBinding.inventoryLocation.setVisibility(View.GONE);
+                fragmentInventoryBinding.inventoryLocationBar.setVisibility(View.GONE);
+                fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(mActivity.getResources().getColor(R.color.blueLabel));
+                fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(mActivity.getResources().getColor(R.color.white));
+                fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(mActivity.getResources().getColor(R.color.white));
+                fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(mActivity.getResources().getColor(R.color.blueLabel));
+                AppSharedPreferences.getInstance().setInt(KEY_COLLECTION_TYPE, 0);
+
+                break;
+            case R.id.resourceBtn:
+                fragmentInventoryBinding.inventoryLocation.setVisibility(View.VISIBLE);
+                fragmentInventoryBinding.inventoryLocationBar.setVisibility(View.VISIBLE);
+                fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(mActivity.getResources().getColor(R.color.white));
+                fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(mActivity.getResources().getColor(R.color.blueLabel));
+                fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(mActivity.getResources().getColor(R.color.blueLabel));
+                fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(mActivity.getResources().getColor(R.color.white));
+                AppSharedPreferences.getInstance().setInt(KEY_COLLECTION_TYPE, 4);
+
+                break;
+            case R.id.finalizeInventoryBtn:
+              /*  DialogFragment fragment = new FinalizePopupFragment();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                fragment.show(ft,"FinalizePopupFragment");
+                //mActivity.pushFragment(fragment, R.id.loginContainer, "FinalizePopupFragment", true);
+                break;*/
+                break;
+            default:
+                break;
+        }
+    }
+
 
     @Override
     public void updateUI(final Object value) {
@@ -129,7 +121,7 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                         if (inProgressInventoryResults.getInventoryList().size() > 0) {
                             fragmentInventoryBinding.inventorySelection.setVisibility(View.VISIBLE);
                             fragmentInventoryBinding.inventorySelection.setText(inProgressInventoryResults.getInventoryList().get(0).getName()
-                                    +" - "+inProgressInventoryResults.getInventoryList().get(0).getDateStarted());
+                                    + " - " + inProgressInventoryResults.getInventoryList().get(0).getDateStarted());
                         } else {
                             fragmentInventoryBinding.inventorySelection.setVisibility(View.GONE);
 
@@ -141,7 +133,6 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
             }
         });
     }
-
 
 
     @Override
