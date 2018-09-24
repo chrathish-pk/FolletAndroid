@@ -17,6 +17,8 @@ import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentInventoryBinding;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.UpdateUIListener;
+import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_COLLECTION_TYPE;
 
@@ -24,12 +26,13 @@ import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferen
  * Created by muthulakshmi on 11/09/18.
  */
 
-public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, InventoryViewModel> implements ItemClickListener, View.OnClickListener {
+public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, InventoryViewModel> implements ItemClickListener, View.OnClickListener, UpdateUIListener {
 
     private InventoryViewModel inventoryViewModel;
     private FragmentInventoryBinding fragmentInventoryBinding;
     private TextView libraryBtn;
     private TextView resourceBtn;
+    private InProgressInventoryResults inProgressInventoryResults;
 
     @Override
     public int getLayoutId() {
@@ -38,7 +41,7 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
 
     @Override
     public InventoryViewModel getViewModel() {
-        inventoryViewModel = new InventoryViewModel(getBaseActivity().getApplication(), this);
+        inventoryViewModel = new InventoryViewModel(getBaseActivity().getApplication(), this, this);
         return inventoryViewModel;
     }
 
@@ -112,6 +115,33 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
         fragmentInventoryBinding.patronEntryIncludeLayout.patronEntry.setHint(getString(R.string.enterBarcode));
         fragmentInventoryBinding.patronEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.GONE);
     }
+
+    @Override
+    public void updateUI(final Object value) {
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (value instanceof InProgressInventoryResults) {
+                        inProgressInventoryResults = (InProgressInventoryResults) value;
+
+                        if (inProgressInventoryResults.getInventoryList().size() > 0) {
+                            fragmentInventoryBinding.inventorySelection.setVisibility(View.VISIBLE);
+                            fragmentInventoryBinding.inventorySelection.setText(inProgressInventoryResults.getInventoryList().get(0).getName()
+                                    +" - "+inProgressInventoryResults.getInventoryList().get(0).getDateStarted());
+                        } else {
+                            fragmentInventoryBinding.inventorySelection.setVisibility(View.GONE);
+
+                        }
+                    }
+                } catch (Exception e) {
+                    FollettLog.e(getString(R.string.error), e.getMessage());
+                }
+            }
+        });
+    }
+
 
 
     @Override
