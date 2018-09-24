@@ -1,16 +1,15 @@
 package com.follett.fsc.mobile.circdesk.feature.itemstatus;
 
-import android.app.Application;
-import android.arch.lifecycle.MutableLiveData;
-
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
+import com.follett.fsc.mobile.circdesk.feature.itemstatus.model.ItemDetails;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
-import java.util.HashMap;
-import java.util.Map;
+import android.app.Application;
+import android.arch.lifecycle.MutableLiveData;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
@@ -18,19 +17,18 @@ import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferen
 public class ItemStatusViewModel extends BaseViewModel implements NetworkInterface {
 
     public final MutableLiveData<ItemDetails> itemDetailsInfo = new MutableLiveData<>();
+    
+    private Application mApplication;
 
     public ItemStatusViewModel(Application application) {
         super(application);
+        mApplication = application;
     }
 
 
     public void getScanItem(String itemBarcodeID,String collectionType) {
         setIsLoding(true);
-        Map<String, String> map = new HashMap<>();
-        map.put("Accept", "application/json");
-        map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID));
-        map.put("text/xml", "gzip");
-        AppRemoteRepository.getInstance().getItemStatus(map,this,AppSharedPreferences.getInstance()
+        AppRemoteRepository.getInstance().getItemStatus(AppUtils.getHeader(mApplication),this,AppSharedPreferences.getInstance()
                 .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
                 .getString(KEY_SITE_SHORT_NAME), itemBarcodeID,collectionType);
     }

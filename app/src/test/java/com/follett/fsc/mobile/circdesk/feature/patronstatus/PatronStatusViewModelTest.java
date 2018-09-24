@@ -6,22 +6,21 @@
 
 package com.follett.fsc.mobile.circdesk.feature.patronstatus;
 
-import android.arch.core.executor.testing.InstantTaskExecutorRule;
-import android.arch.lifecycle.Observer;
-import android.support.annotation.Nullable;
-
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.UpdateItemUIListener;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.Fine;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 import com.follett.fsc.mobile.circdesk.feature.utils.BaseTestClass;
-
-import junit.framework.Assert;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.Mock;
+
+import android.arch.core.executor.testing.InstantTaskExecutorRule;
+import android.arch.lifecycle.Observer;
+import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,17 +31,20 @@ import io.reactivex.android.plugins.RxAndroidPlugins;
 import io.reactivex.functions.Function;
 import io.reactivex.plugins.RxJavaPlugins;
 import io.reactivex.schedulers.Schedulers;
+import junit.framework.Assert;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SESSION_ID;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
 import static org.mockito.Mockito.when;
 
-public class PatronStatusViewModelTest extends BaseTestClass implements UpdateItemUIListener {
+public class PatronStatusViewModelTest extends BaseTestClass {
     
     private PatronStatusViewModel mViewModel;
     
     private PatronInfo mPatronResults;
+    
+    @Mock UpdateItemUIListener updateItemUIListener;
     
     @Rule public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
     
@@ -67,7 +69,7 @@ public class PatronStatusViewModelTest extends BaseTestClass implements UpdateIt
     public void setUp() {
         createMockData();
         if (mViewModel == null) {
-            mViewModel = new PatronStatusViewModel(mApplication,this);
+            mViewModel = new PatronStatusViewModel(mApplication, updateItemUIListener);
             mPatronResults = generatePatronInfoResult();
         }
     }
@@ -125,10 +127,5 @@ public class PatronStatusViewModelTest extends BaseTestClass implements UpdateIt
     public void tearDown() {
         mViewModel = null;
         mPreferences = null;
-    }
-
-    @Override
-    public void updateUI(Object value) {
-
     }
 }

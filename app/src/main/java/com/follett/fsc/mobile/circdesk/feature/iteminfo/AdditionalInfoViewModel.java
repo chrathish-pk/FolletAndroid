@@ -6,16 +6,16 @@
 
 package com.follett.fsc.mobile.circdesk.feature.iteminfo;
 
-import android.app.Application;
-import android.arch.lifecycle.MutableLiveData;
-import android.support.annotation.NonNull;
-
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
+
+import android.app.Application;
+import android.arch.lifecycle.MutableLiveData;
+import android.support.annotation.NonNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,13 +26,11 @@ import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferen
 public class AdditionalInfoViewModel extends BaseViewModel implements NetworkInterface {
 
     AdditionalInfoListener additionalInfoListener;
-    private Application mApplication;
     public final MutableLiveData<TitleDetails> mTitleDetails = new MutableLiveData<>();
 
     public AdditionalInfoViewModel(@NonNull Application application, AdditionalInfoListener additionalInfoListener) {
         super(application);
         this.additionalInfoListener = additionalInfoListener;
-        this.mApplication = application;
     }
 
     public void getTitleDetails(String bibID) {

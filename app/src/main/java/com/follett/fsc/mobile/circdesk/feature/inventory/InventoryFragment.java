@@ -34,7 +34,10 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
 
     @Override
     public InventoryViewModel getViewModel() {
-        inventoryViewModel = new InventoryViewModel(getBaseActivity().getApplication(), this, this);
+        if (getBaseApplication() == null) {
+            return null;
+        }
+        inventoryViewModel = new InventoryViewModel(getBaseApplication(), this, this);
         return inventoryViewModel;
     }
 

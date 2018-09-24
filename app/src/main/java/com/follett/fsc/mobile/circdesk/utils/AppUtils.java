@@ -4,6 +4,16 @@
 
 package com.follett.fsc.mobile.circdesk.utils;
 
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.AlertDialogListener;
+import com.follett.fsc.mobile.circdesk.app.CustomAlert;
+import com.follett.fsc.mobile.circdesk.app.GlideApp;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
+
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
@@ -22,16 +32,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.AlertDialogListener;
-import com.follett.fsc.mobile.circdesk.app.CustomAlert;
-import com.follett.fsc.mobile.circdesk.app.GlideApp;
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
-import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 
 import java.util.HashMap;
 import java.util.List;

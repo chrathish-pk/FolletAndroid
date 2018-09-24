@@ -14,10 +14,6 @@ import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentNewInventoryBinding;
 
-/**
- * Created by muthulakshmi on 18/09/18.
- */
-
 public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBinding, NewInventoryViewModel> {
     private NewInventoryViewModel  newInventoryViewModel;
     private FragmentNewInventoryBinding fragmentNewInventoryBinding;
@@ -29,7 +25,10 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
 
     @Override
     public NewInventoryViewModel getViewModel() {
-          newInventoryViewModel = new NewInventoryViewModel(getBaseActivity().getApplication());
+        if (getBaseApplication() == null) {
+            return null;
+        }
+        newInventoryViewModel = new NewInventoryViewModel(getBaseApplication());
         return newInventoryViewModel;
     }
 

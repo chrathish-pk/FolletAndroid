@@ -6,13 +6,8 @@
 
 package com.follett.fsc.mobile.circdesk.feature.itemstatus;
 
-import android.arch.core.executor.testing.InstantTaskExecutorRule;
-import android.arch.lifecycle.Observer;
-import android.support.annotation.Nullable;
-
+import com.follett.fsc.mobile.circdesk.feature.itemstatus.model.ItemDetails;
 import com.follett.fsc.mobile.circdesk.feature.utils.BaseTestClass;
-
-import junit.framework.Assert;
 
 import org.junit.After;
 import org.junit.Before;
@@ -20,10 +15,15 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 
+import android.arch.core.executor.testing.InstantTaskExecutorRule;
+import android.arch.lifecycle.Observer;
+import android.support.annotation.Nullable;
+
 import io.reactivex.Scheduler;
 import io.reactivex.functions.Function;
 import io.reactivex.plugins.RxJavaPlugins;
 import io.reactivex.schedulers.Schedulers;
+import junit.framework.Assert;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SESSION_ID;

@@ -139,41 +139,6 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
         setSupportActionBar(baseBinding.toolbar);
     }
 
-    public static class DatePickerFragment extends DialogFragment
-            implements DatePickerDialog.OnDateSetListener {
-
-        @TargetApi(Build.VERSION_CODES.N)
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-            DatePickerDialog dpd = new DatePickerDialog(getActivity());
-            // Create a TextView programmatically.
-            TextView tv = new TextView(getActivity());
-
-            // Create a TextView programmatically
-            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.WRAP_CONTENT, // Width of TextView
-                    RelativeLayout.LayoutParams.WRAP_CONTENT); // Height of TextView
-            tv.setLayoutParams(lp);
-            tv.setPadding(10, 10, 10, 10);
-            tv.setGravity(Gravity.LEFT);
-            tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
-            tv.setText("Seen On or After");
-            tv.setTextColor(getResources().getColor(R.color.white));
-            tv.setBackgroundColor(getResources().getColor(R.color.blueLabel));
-
-            dpd.setMessage(tv.getText()); // Uncomment this line to activate it
-
-            // Return the DatePickerDialog
-            return dpd;
-        }
-
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            // Do something with the chosen date
-        }
-    }
-
-
     protected <T extends ViewDataBinding> T putContentView(@LayoutRes int resId) {
         return DataBindingUtil.inflate(getLayoutInflater(), resId, baseBinding.baseContainer, true);
     }

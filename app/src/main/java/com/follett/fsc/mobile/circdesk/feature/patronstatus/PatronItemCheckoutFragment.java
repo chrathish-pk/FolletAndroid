@@ -6,15 +6,6 @@
 
 package com.follett.fsc.mobile.circdesk.feature.patronstatus;
 
-import android.arch.lifecycle.Observer;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
-
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
@@ -25,6 +16,17 @@ import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.CustomCheckoutItem;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
+
+import android.app.Activity;
+import android.app.Application;
+import android.arch.lifecycle.Observer;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 
 import java.util.List;
 
@@ -66,7 +68,11 @@ public class PatronItemCheckoutFragment extends BaseFragment<FragmentPatronListB
 
     @Override
     public PatronListViewModel getViewModel() {
-        mViewModel = new PatronListViewModel(getBaseActivity().getApplication());
+        Application application = getBaseApplication();
+        if (application == null) {
+            return null;
+        }
+        mViewModel = new PatronListViewModel(application);
         return mViewModel;
     }
 
@@ -83,6 +89,9 @@ public class PatronItemCheckoutFragment extends BaseFragment<FragmentPatronListB
     }
 
     public void inItView(final FragmentPatronListBinding lBinding) {
+        if (getBaseActivity() == null) {
+            return;
+        }
 
         lBinding.patronListRecyclerview.setLayoutManager(new LinearLayoutManager(getBaseActivity()));
         mViewModel.createCheckoutModelData(getArguments());
@@ -98,13 +107,16 @@ public class PatronItemCheckoutFragment extends BaseFragment<FragmentPatronListB
 
     @Override
     public void onDetach() {
-        mNavigationListener.setToolBarTitle(getActivity().getString(R.string.patron_status_label));
+        mNavigationListener.setToolBarTitle(getString(R.string.patron_status_label));
         super.onDetach();
     }
 
     @Override
     public void ctaButtonOnClick(View view) {
-        getBaseActivity().onBackPressed();
+        Activity activity = getBaseActivity();
+        if (activity != null) {
+            activity.onBackPressed();
+        }
     }
 
     @Override
@@ -119,12 +131,11 @@ public class PatronItemCheckoutFragment extends BaseFragment<FragmentPatronListB
 
     @Override
     public void onNavigation(Object model, int position) {
-        if (position == 5) {
-            if ((CustomCheckoutItem) model != null) {
-                Intent titleIntent = new Intent(getActivity(), TitleInfoActivity.class);
+        Activity activity = getBaseActivity();
+        if (activity != null && model != null && position == 5 ) {
+                Intent titleIntent = new Intent(activity, TitleInfoActivity.class);
                 titleIntent.putExtra("bibID", String.valueOf(((CustomCheckoutItem) model).getId()));
                 startActivity(titleIntent);
-            }
         }
     }
 }

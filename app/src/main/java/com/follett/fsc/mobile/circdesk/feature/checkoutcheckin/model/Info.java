@@ -5,13 +5,13 @@
  *
  */
 
-package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin;
-
-import android.os.Parcel;
-import android.os.Parcelable;
+package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import android.os.Parcel;
+import android.os.Parcelable;
 
 public class Info implements Parcelable {
 

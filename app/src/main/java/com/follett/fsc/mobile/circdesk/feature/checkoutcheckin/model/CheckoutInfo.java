@@ -4,12 +4,13 @@
  *
  */
 
-package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout;
+package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by muthulakshmi on 29/08/18.

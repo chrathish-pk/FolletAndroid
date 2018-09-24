@@ -16,10 +16,6 @@ import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentInventoryListBinding;
 
-/**
- * Created by muthulakshmi on 19/09/18.
- */
-
 public class InventoryLocationFragment extends BaseFragment<FragmentInventoryListBinding, SelectInventoryViewModel> implements ItemClickListener {
 
     private FragmentInventoryListBinding fragmentInventoryListBinding;
@@ -32,7 +28,10 @@ public class InventoryLocationFragment extends BaseFragment<FragmentInventoryLis
 
     @Override
     public SelectInventoryViewModel getViewModel() {
-        selectInventoryViewModel = new SelectInventoryViewModel(getBaseActivity().getApplication(), this);
+        if (getBaseApplication() == null) {
+            return null;
+        }
+        selectInventoryViewModel = new SelectInventoryViewModel(getBaseApplication(), this);
         return selectInventoryViewModel;
     }
 

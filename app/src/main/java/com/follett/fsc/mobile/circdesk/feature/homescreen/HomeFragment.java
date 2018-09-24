@@ -19,13 +19,9 @@ import com.follett.fsc.mobile.circdesk.databinding.ActivityHomeBinding;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.CheckinCheckoutFragment;
 import com.follett.fsc.mobile.circdesk.feature.inventory.InventoryFragment;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.ItemStatusFragment;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.Permissions;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.Permissions;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.PatronStatusFragment;
 import com.google.gson.Gson;
-
-/**
- * Created by muthulakshmi on 17/09/18.
- */
 
 public class HomeFragment extends BaseFragment<ActivityHomeBinding, HomeViewModel> implements ItemClickListener {
     private HomeViewModel homeViewModel;
@@ -38,7 +34,11 @@ public class HomeFragment extends BaseFragment<ActivityHomeBinding, HomeViewMode
 
     @Override
     public HomeViewModel getViewModel() {
-        homeViewModel = new HomeViewModel(getBaseActivity().getApplication(), this);
+    
+        if (getBaseApplication() == null) {
+            return null;
+        }
+        homeViewModel = new HomeViewModel(getBaseApplication(), this);
         return homeViewModel;
     }
 

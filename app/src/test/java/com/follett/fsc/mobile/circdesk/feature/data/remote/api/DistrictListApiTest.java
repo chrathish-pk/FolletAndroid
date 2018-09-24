@@ -7,8 +7,8 @@
 package com.follett.fsc.mobile.circdesk.feature.data.remote.api;
 
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.District;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.DistrictList;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.District;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.DistrictList;
 import com.follett.fsc.mobile.circdesk.feature.utils.BaseTestClass;
 
 import org.junit.After;

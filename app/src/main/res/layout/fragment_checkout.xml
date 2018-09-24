@@ -8,7 +8,7 @@
 
         <variable
             name="scanPatron"
-            type="com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.ScanPatron" />
+            type="com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.ScanPatron" />
 
         <variable
             name="checkoutViewModel"

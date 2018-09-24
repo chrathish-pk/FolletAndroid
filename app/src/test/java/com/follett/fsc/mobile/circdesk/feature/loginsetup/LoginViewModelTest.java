@@ -7,6 +7,7 @@
 package com.follett.fsc.mobile.circdesk.feature.loginsetup;
 
 import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.LoginResults;
 import com.follett.fsc.mobile.circdesk.feature.utils.BaseTestClass;
 
 import org.junit.After;

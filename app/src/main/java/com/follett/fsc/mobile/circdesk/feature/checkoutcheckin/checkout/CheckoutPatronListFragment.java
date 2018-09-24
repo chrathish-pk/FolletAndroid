@@ -6,16 +6,18 @@
 
 package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
-
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityPatronListBinding;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.ScanPatron;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 
 public class CheckoutPatronListFragment extends BaseFragment<ActivityPatronListBinding, CheckoutViewModel> implements ItemClickListener {
     private ScanPatron scanPatron;
@@ -50,8 +52,12 @@ public class CheckoutPatronListFragment extends BaseFragment<ActivityPatronListB
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         activityPatronListBinding = getViewDataBinding();
+        Activity activity = getBaseActivity();
+        if (activity == null) {
+            return;
+        }
 
-        activityPatronListBinding.patronListView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        activityPatronListBinding.patronListView.setLayoutManager(new LinearLayoutManager(activity));
 
 
         if (getArguments()!= null) {
@@ -60,7 +66,7 @@ public class CheckoutPatronListFragment extends BaseFragment<ActivityPatronListB
 
         mActivity.setTitleBar(getString(R.string.selectPatron));
 
-        PatronListAdapter patronListAdapter = new PatronListAdapter(getActivity(), scanPatron, this);
+        PatronListAdapter patronListAdapter = new PatronListAdapter(activity, scanPatron, this);
         activityPatronListBinding.patronListView.setAdapter(patronListAdapter);
     }
 

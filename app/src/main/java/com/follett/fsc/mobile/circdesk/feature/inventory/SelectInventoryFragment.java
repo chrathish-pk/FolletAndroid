@@ -6,6 +6,8 @@
 
 package com.follett.fsc.mobile.circdesk.feature.inventory;
 
+import android.app.Activity;
+import android.app.Application;
 import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,10 +23,6 @@ import com.follett.fsc.mobile.circdesk.databinding.FragmentInventoryListBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by muthulakshmi on 12/09/18.
- */
-
 public class SelectInventoryFragment extends BaseFragment<FragmentInventoryListBinding, SelectInventoryViewModel> implements ItemClickListener, View.OnClickListener {
 
     private FragmentInventoryListBinding fragmentInventoryListBinding;
@@ -39,7 +37,11 @@ public class SelectInventoryFragment extends BaseFragment<FragmentInventoryListB
 
     @Override
     public SelectInventoryViewModel getViewModel() {
-        selectInventoryViewModel = new SelectInventoryViewModel(getBaseActivity().getApplication(),this);
+        Application application = getBaseApplication();
+        if (application == null) {
+            return null;
+        }
+        selectInventoryViewModel = new SelectInventoryViewModel(application,this);
         return selectInventoryViewModel;
     }
 
@@ -51,11 +53,16 @@ public class SelectInventoryFragment extends BaseFragment<FragmentInventoryListB
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        final Activity activity = getBaseActivity();
+        if (activity == null) {
+            return;
+        }
+        
         fragmentInventoryListBinding = getViewDataBinding();
 
         mActivity.setTitleBar(getString(R.string.selectInventory));
 
-        fragmentInventoryListBinding.inventoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        fragmentInventoryListBinding.inventoryRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
 
         fragmentInventoryListBinding.newInventoryBtn.setOnClickListener(this);
 
@@ -64,7 +71,7 @@ public class SelectInventoryFragment extends BaseFragment<FragmentInventoryListB
         inventoryListData.add(new Inventory("1000-0199 Started 02/03/2018", false));
         inventoryListData.add(new Inventory("2000-2099 Started 02/05/2018", false));
 
-        selectInventoryListAdapter = new SelectInventoryListAdapter(getActivity(), inventoryListData, SelectInventoryFragment.this);
+        selectInventoryListAdapter = new SelectInventoryListAdapter(activity, inventoryListData, SelectInventoryFragment.this);
         fragmentInventoryListBinding.inventoryRecyclerView.setAdapter(selectInventoryListAdapter);
 
 
@@ -73,7 +80,7 @@ public class SelectInventoryFragment extends BaseFragment<FragmentInventoryListB
             public void onChanged(@Nullable List<Inventory> inventoryList) {
                 inventoryListData = inventoryList;
 
-                selectInventoryListAdapter = new SelectInventoryListAdapter(getActivity(), inventoryListData, SelectInventoryFragment.this);
+                selectInventoryListAdapter = new SelectInventoryListAdapter(activity, inventoryListData, SelectInventoryFragment.this);
                 fragmentInventoryListBinding.inventoryRecyclerView.setAdapter(selectInventoryListAdapter);
 
             }

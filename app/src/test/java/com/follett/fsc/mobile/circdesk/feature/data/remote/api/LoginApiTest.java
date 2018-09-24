@@ -7,7 +7,7 @@
 package com.follett.fsc.mobile.circdesk.feature.data.remote.api;
 
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.LoginResults;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.LoginResults;
 import com.follett.fsc.mobile.circdesk.feature.utils.BaseTestClass;
 
 import org.junit.After;
@@ -15,11 +15,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import java.util.concurrent.Callable;
-
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
-import io.reactivex.android.plugins.RxAndroidPlugins;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.plugins.RxJavaPlugins;
