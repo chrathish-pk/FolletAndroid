@@ -77,7 +77,7 @@ public class CheckoutViewModelTest extends BaseTestClass implements UpdateUIList
     public void getCheckoutResult() {
         isCheckout = true;
         createMockSharedPref();
-        checkoutViewModel.getCheckoutResult("861", "1", "0");
+        checkoutViewModel.getCheckoutResult("861", "1", "0",false);
         checkoutViewModel.checkoutResultMutableLiveData.observeForever(new Observer<CheckoutResult>() {
             @Override
             public void onChanged(@Nullable CheckoutResult checkoutResult) {
