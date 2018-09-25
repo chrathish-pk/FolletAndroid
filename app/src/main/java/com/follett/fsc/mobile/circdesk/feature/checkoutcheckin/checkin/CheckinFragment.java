@@ -42,7 +42,7 @@ public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, Checki
 
     @Override
     public int getBindingVariable() {
-        return BR.checkinViewModel;
+        return BR.viewModel;
     }
 
     @Override
