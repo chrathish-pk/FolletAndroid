@@ -7,7 +7,7 @@
 package com.follett.fsc.mobile.circdesk.feature.data.remote.api;
 
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.Version;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.Version;
 import com.follett.fsc.mobile.circdesk.feature.utils.BaseTestClass;
 
 import org.junit.After;

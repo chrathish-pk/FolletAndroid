@@ -5,14 +5,13 @@
  *
  */
 
-package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin;
+package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.Message;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 

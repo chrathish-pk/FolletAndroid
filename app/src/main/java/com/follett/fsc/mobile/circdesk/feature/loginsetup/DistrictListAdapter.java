@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.DistrictListItemBinding;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.DistrictList;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_DISTRICT_NAME;

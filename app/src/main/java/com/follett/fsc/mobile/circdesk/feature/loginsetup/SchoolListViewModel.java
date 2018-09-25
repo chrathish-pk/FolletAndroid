@@ -6,9 +6,6 @@
 
 package com.follett.fsc.mobile.circdesk.feature.loginsetup;
 
-import android.app.Application;
-import android.arch.lifecycle.MutableLiveData;
-
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
@@ -16,7 +13,12 @@ import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.SiteRecord;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.SiteResults;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
+
+import android.app.Application;
+import android.arch.lifecycle.MutableLiveData;
 
 import java.util.List;
 

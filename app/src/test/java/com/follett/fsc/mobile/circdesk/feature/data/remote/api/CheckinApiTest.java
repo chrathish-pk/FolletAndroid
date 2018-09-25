@@ -7,12 +7,10 @@
 package com.follett.fsc.mobile.circdesk.feature.data.remote.api;
 
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin.CheckinResult;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin.Info;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckinResult;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.Info;
 import com.follett.fsc.mobile.circdesk.feature.utils.BaseTestClass;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
-
-import junit.framework.Assert;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -27,6 +25,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.plugins.RxJavaPlugins;
 import io.reactivex.schedulers.Schedulers;
+import junit.framework.Assert;
 
 import static org.mockito.Mockito.when;
 

@@ -6,15 +6,6 @@
 
 package com.follett.fsc.mobile.circdesk.feature.patronstatus;
 
-import android.arch.lifecycle.Observer;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
-
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
@@ -23,12 +14,22 @@ import com.follett.fsc.mobile.circdesk.databinding.FragmentPatronStatusBinding;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.TitleInfoActivity;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.UpdateItemUIListener;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.Permissions;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.Permissions;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.CustomCheckoutItem;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronList;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.google.gson.Gson;
+
+import android.app.Activity;
+import android.arch.lifecycle.Observer;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +84,9 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
     }
 
     private void inItView() {
-
+        if (getBaseActivity() == null) {
+            return;
+        }
         mBinding.patronEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.GONE);
         mBinding.patronEntryIncludeLayout.patronEntry.setImeOptions(EditorInfo.IME_ACTION_DONE);
         mViewModel.getErrorMessage()
@@ -146,6 +149,9 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
     }
 
     private void getPatronInfo(String patronID) {
+        if (getBaseActivity() == null) {
+            return;
+        }
         AppUtils.getInstance()
                 .hideKeyBoard(getBaseActivity(), mBinding.patronEntryIncludeLayout.patronEntry);
         mViewModel.getPatronInfo(patronID);
@@ -222,8 +228,9 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
     }
 
     private void navigateToTitleDetail(CustomCheckoutItem checkoutItem) {
-        if (checkoutItem != null) {
-            Intent titleIntent = new Intent(getActivity(), TitleInfoActivity.class);
+        Activity activity = getBaseActivity();
+        if (activity != null && checkoutItem != null) {
+            Intent titleIntent = new Intent(activity, TitleInfoActivity.class);
             titleIntent.putExtra("bibID", String.valueOf(checkoutItem.getId()));
             startActivity(titleIntent);
         }

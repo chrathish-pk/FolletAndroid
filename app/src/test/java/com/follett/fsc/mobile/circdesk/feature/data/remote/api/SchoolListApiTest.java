@@ -7,8 +7,8 @@
 package com.follett.fsc.mobile.circdesk.feature.data.remote.api;
 
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.SiteRecord;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.SiteResults;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.SiteRecord;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.SiteResults;
 import com.follett.fsc.mobile.circdesk.feature.utils.BaseTestClass;
 
 import org.junit.After;

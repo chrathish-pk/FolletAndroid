@@ -6,6 +6,19 @@
 
 package com.follett.fsc.mobile.circdesk.feature.loginsetup;
 
+import com.follett.fsc.mobile.circdesk.BR;
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
+import com.follett.fsc.mobile.circdesk.app.CustomAlert;
+import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
+import com.follett.fsc.mobile.circdesk.databinding.FragmentSchoolListBinding;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.SiteResults;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
+import com.follett.fsc.mobile.circdesk.utils.FollettLog;
+
+import android.app.Activity;
+import android.app.Application;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,16 +27,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-
-import com.follett.fsc.mobile.circdesk.BR;
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
-import com.follett.fsc.mobile.circdesk.app.CustomAlert;
-import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
-import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
-import com.follett.fsc.mobile.circdesk.databinding.FragmentSchoolListBinding;
-import com.follett.fsc.mobile.circdesk.utils.AppUtils;
-import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 public class SchoolListFragment extends BaseFragment<FragmentSchoolListBinding, SchoolListViewModel> implements CTAButtonListener, View.OnClickListener {
     
@@ -58,7 +61,11 @@ public class SchoolListFragment extends BaseFragment<FragmentSchoolListBinding, 
     
     @Override
     public SchoolListViewModel getViewModel() {
-        mViewModel = new SchoolListViewModel(getBaseActivity().getApplication());
+        Application application = getBaseApplication();
+        if (application == null) {
+            return null;
+        }
+        mViewModel = new SchoolListViewModel(application);
         return mViewModel;
     }
     
@@ -77,7 +84,10 @@ public class SchoolListFragment extends BaseFragment<FragmentSchoolListBinding, 
     }
     
     public void inItView(final FragmentSchoolListBinding lBinding) {
-    
+        
+        if (getBaseActivity() == null) {
+            return;
+        }
         lBinding.setCtaListener(this);
         lBinding.schoolRecyclerview.setLayoutManager(new LinearLayoutManager(getBaseActivity()));
         
@@ -111,17 +121,23 @@ public class SchoolListFragment extends BaseFragment<FragmentSchoolListBinding, 
     
     @Override
     public void onDetach() {
-        mNavigationListener.setToolBarTitle(getActivity().getString(R.string.connect_your_school_label));
+        mNavigationListener.setToolBarTitle(getString(R.string.connect_your_school_label));
         super.onDetach();
     }
     
     @Override
     public void ctaButtonOnClick(View view) {
         AppUtils.getInstance().clearSchoolPref();
-        mActivity.onBackPressed();
+        Activity activity = getBaseActivity();
+        if (activity != null) {
+            activity.onBackPressed();
+        }
     }
     
     private void showAlert(String msg) {
+        if (getBaseActivity() == null) {
+            return;
+        }
         
         DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
             @Override

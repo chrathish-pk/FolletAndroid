@@ -6,14 +6,10 @@
 
 package com.follett.fsc.mobile.circdesk.feature.inventory;
 
-import android.app.Application;
-import android.support.annotation.NonNull;
-
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 
-/**
- * Created by muthulakshmi on 18/09/18.
- */
+import android.app.Application;
+import android.support.annotation.NonNull;
 
 public class NewInventoryViewModel extends BaseViewModel{
 

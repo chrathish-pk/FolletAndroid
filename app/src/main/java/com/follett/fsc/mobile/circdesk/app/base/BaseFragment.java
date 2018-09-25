@@ -6,6 +6,9 @@
 
 package com.follett.fsc.mobile.circdesk.app.base;
 
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.utils.FollettLog;
+
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
@@ -20,9 +23,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseViewModel> extends Fragment {
     
@@ -81,6 +81,10 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     }
     
     protected Application getBaseApplication() {
+        if (mActivity == null) {
+            return null;
+        }
+        
         return mActivity.getApplication();
     }
     

@@ -11,7 +11,7 @@
 
         <variable
             name="districtData"
-            type="com.follett.fsc.mobile.circdesk.feature.loginsetup.District"/>
+            type="com.follett.fsc.mobile.circdesk.feature.loginsetup.model.District"/>
     </data>
 
     <LinearLayout

@@ -6,13 +6,6 @@
 
 package com.follett.fsc.mobile.circdesk.feature.patronstatus;
 
-import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
-
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
@@ -21,6 +14,15 @@ import com.follett.fsc.mobile.circdesk.databinding.FragmentPatronListBinding;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
+
+import android.app.Activity;
+import android.app.Application;
+import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 
 import static com.follett.fsc.mobile.circdesk.utils.AppConstants.PATRON_INFO_KEY;
 
@@ -55,7 +57,11 @@ public class PatronFineListFragment extends BaseFragment<FragmentPatronListBindi
     
     @Override
     public PatronListViewModel getViewModel() {
-        return new PatronListViewModel(getBaseActivity().getApplication());
+        Application application = getBaseApplication();
+        if (application == null) {
+            return null;
+        }
+        return new PatronListViewModel(application);
     }
     
     @Override
@@ -71,6 +77,9 @@ public class PatronFineListFragment extends BaseFragment<FragmentPatronListBindi
     }
     
     public void inItView(final FragmentPatronListBinding lBinding) {
+        if (getBaseActivity() == null) {
+            return;
+        }
         
         lBinding.patronListRecyclerview.setLayoutManager(new LinearLayoutManager(getBaseActivity()));
         final Bundle arguments = getArguments();
@@ -83,13 +92,16 @@ public class PatronFineListFragment extends BaseFragment<FragmentPatronListBindi
     
     @Override
     public void onDetach() {
-        navigationListener.setToolBarTitle(getActivity().getString(R.string.patron_status_label));
+        navigationListener.setToolBarTitle(getString(R.string.patron_status_label));
         super.onDetach();
     }
     
     @Override
     public void ctaButtonOnClick(View view) {
-        getBaseActivity().onBackPressed();
+        Activity activity = getBaseActivity();
+        if (activity != null) {
+            activity.onBackPressed();
+        }
     }
 
     @Override

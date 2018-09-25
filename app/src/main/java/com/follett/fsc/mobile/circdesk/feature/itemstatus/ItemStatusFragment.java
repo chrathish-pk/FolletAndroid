@@ -1,5 +1,6 @@
 package com.follett.fsc.mobile.circdesk.feature.itemstatus;
 
+import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentItemStatusBinding;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.TitleInfoActivity;
+import com.follett.fsc.mobile.circdesk.feature.itemstatus.model.ItemDetails;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
@@ -54,7 +56,10 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
 
     @Override
     public ItemStatusViewModel getViewModel() {
-        itemStatusViewModel = new ItemStatusViewModel(getBaseActivity().getApplication());
+        if (getBaseApplication() == null) {
+            return null;
+        }
+        itemStatusViewModel = new ItemStatusViewModel(getBaseApplication());
         return itemStatusViewModel;
     }
 
@@ -110,8 +115,11 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
     }
 
     private void updateItemStatusUI(final ItemDetails itemDetails) {
-
-        getActivity().runOnUiThread(new Runnable() {
+        Activity activity = getBaseActivity();
+        if (activity == null) {
+            return;
+        }
+        activity.runOnUiThread(new Runnable() {
 
             @Override
             public void run() {
@@ -150,10 +158,15 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
 
     @Override
     public void onClick(View v) {
+        
+        Activity activity = getBaseActivity();
+        if (activity == null) {
+            return;
+        }
 
         if (v.getId() == R.id.itemStatusPatronGoBtn) {
             AppUtils.getInstance()
-                    .hideKeyBoard(getActivity(), fragmentItemStatusBinding.itemStatusPatronEntry);
+                    .hideKeyBoard(activity, fragmentItemStatusBinding.itemStatusPatronEntry);
             if (AppUtils.getInstance().isEditTextNotEmpty(fragmentItemStatusBinding.itemStatusPatronEntry)) {
                 fragmentItemStatusBinding.progressBarItem.setVisibility(View.VISIBLE);
                 int collectionType = AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED) ? 0 : 4;
@@ -161,29 +174,29 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
                 itemStatusViewModel.getScanItem(fragmentItemStatusBinding.itemStatusPatronEntry.getText().toString().trim(), String.valueOf(collectionType));
             } else {
                 AppUtils.getInstance()
-                        .showShortToastMessages(getActivity(), getString(R.string.errorPatronEntry));
+                        .showShortToastMessages(activity, getString(R.string.errorPatronEntry));
             }
         } else if (v.getId() == R.id.itemStatusCheckedoutInfoBtn) {
 
-            Intent titleIntent = new Intent(getActivity(), TitleInfoActivity.class);
+            Intent titleIntent = new Intent(activity, TitleInfoActivity.class);
             String bidID = Integer.toString(itemDetailsinfo.getBibID());
             titleIntent.putExtra("bibID", bidID);
             Log.i("TAG", "BIDID :" + bidID);
             startActivity(titleIntent);
 
         } else if (v.getId() == R.id.libraryBtn) {
-            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.blueLabel));
-            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
-            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
-            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.blueLabel));
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(activity, R.color.blueLabel));
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(activity, R.color.white));
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(activity, R.color.white));
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(activity, R.color.blueLabel));
             AppSharedPreferences.getInstance().setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, true);
             disableItemStatusView();
 
         } else if (v.getId() == R.id.resourceBtn) {
-            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.blueLabel));
-            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
-            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
-            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.blueLabel));
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(activity, R.color.blueLabel));
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(activity, R.color.white));
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(activity, R.color.white));
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(activity, R.color.blueLabel));
             AppSharedPreferences.getInstance().setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, false);
             disableItemStatusView();
         }

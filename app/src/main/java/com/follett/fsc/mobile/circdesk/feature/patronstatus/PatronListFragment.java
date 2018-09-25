@@ -6,14 +6,6 @@
 
 package com.follett.fsc.mobile.circdesk.feature.patronstatus;
 
-import android.content.Context;
-import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
-
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
@@ -22,6 +14,15 @@ import com.follett.fsc.mobile.circdesk.databinding.FragmentPatronListBinding;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronList;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
+
+import android.app.Application;
+import android.content.Context;
+import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +60,11 @@ public class PatronListFragment extends BaseFragment<FragmentPatronListBinding, 
 
     @Override
     public PatronListViewModel getViewModel() {
-        return new PatronListViewModel(getBaseActivity().getApplication());
+        Application application = getBaseApplication();
+        if (application == null) {
+            return null;
+        }
+        return new PatronListViewModel(application);
     }
 
     @Override
@@ -76,7 +81,10 @@ public class PatronListFragment extends BaseFragment<FragmentPatronListBinding, 
     }
 
     public void inItView(final FragmentPatronListBinding lBinding) {
-
+        
+        if (getBaseActivity() == null) {
+            return;
+        }
         final Bundle arguments = getArguments();
         if (arguments != null) {
             List<PatronList> patronList = arguments.getParcelableArrayList(PATRON_LIST_KEY);
@@ -88,7 +96,7 @@ public class PatronListFragment extends BaseFragment<FragmentPatronListBinding, 
 
     @Override
     public void onDetach() {
-        navigationListener.setToolBarTitle(getActivity().getString(R.string.patron_status_label));
+        navigationListener.setToolBarTitle(getString(R.string.patron_status_label));
         super.onDetach();
     }
 
