@@ -12,12 +12,13 @@ import android.view.View;
 
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentNewInventoryBinding;
 
-public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBinding, NewInventoryViewModel> {
+public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBinding, NewInventoryViewModel> implements ItemClickListener {
     private NewInventoryViewModel newInventoryViewModel;
     private FragmentNewInventoryBinding fragmentNewInventoryBinding;
 
@@ -31,7 +32,7 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
         if (getBaseApplication() == null) {
             return null;
         }
-        newInventoryViewModel = new NewInventoryViewModel(getBaseApplication());
+        newInventoryViewModel = new NewInventoryViewModel(getBaseApplication(), this);
         return newInventoryViewModel;
     }
 
@@ -60,5 +61,14 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
         }
 
 
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        switch (view.getId()) {
+            case R.id.circulationTypesLayout:
+                mActivity.pushFragment(new CirculationTypeFragment(), R.id.loginContainer, "CirculationTypeFragment", true);
+                break;
+        }
     }
 }

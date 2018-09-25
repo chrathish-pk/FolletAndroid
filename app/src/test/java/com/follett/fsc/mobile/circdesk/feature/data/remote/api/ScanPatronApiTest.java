@@ -58,9 +58,9 @@ public class ScanPatronApiTest extends BaseTestClass {
     public void verifyScanPatronApi(){
         mScanPatron = generateScanPatron();
 
-        when(apiInterface.getScanPatron(AppUtils.getHeader(mApplication), CONTEXT_NAME, SITE_NAME, "tom")).thenReturn(Observable.just(mScanPatron));
+        when(apiInterface.getScanPatron(AppUtils.getInstance().getHeader(mApplication), CONTEXT_NAME, SITE_NAME, "tom")).thenReturn(Observable.just(mScanPatron));
 
-        final Observable<ScanPatron> patronResultsObservable = apiInterface.getScanPatron(AppUtils.getHeader(mApplication), CONTEXT_NAME, SITE_NAME, "tom");
+        final Observable<ScanPatron> patronResultsObservable = apiInterface.getScanPatron(AppUtils.getInstance().getHeader(mApplication), CONTEXT_NAME, SITE_NAME, "tom");
         patronResultsObservable.subscribe(new Consumer<ScanPatron>() {
             @Override
             public void accept(ScanPatron scanPatron) throws Exception {

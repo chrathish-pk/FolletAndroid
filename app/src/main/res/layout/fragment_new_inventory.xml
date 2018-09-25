@@ -7,6 +7,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+            name="newInventoryViewModel"
+            type="com.follett.fsc.mobile.circdesk.feature.inventory.NewInventoryViewModel" />
+    </data>
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -400,6 +407,7 @@
                     android:id="@+id/circulationTypesLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="@{(v)->newInventoryViewModel.onItemClicked(v)}"
                     android:orientation="vertical"
                     android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
