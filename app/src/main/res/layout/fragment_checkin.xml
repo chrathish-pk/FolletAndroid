@@ -11,13 +11,14 @@
             type="com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckinResult" />
 
         <variable
-            name="checkinViewModel"
+            name="viewModel"
             type="com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin.CheckinViewModel" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clickable="true">
 
         <include
             android:id="@+id/checkinEntryIncludeLayout"
@@ -50,7 +51,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:visibility="@{checkinViewModel.isLoading ? View.VISIBLE : View.GONE}" />
+            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
+             />
 
 
     </RelativeLayout>

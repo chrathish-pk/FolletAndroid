@@ -13,12 +13,13 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 public class SetupActivity extends BaseActivity<LoginViewModel> implements NavigationListener {
+    private ActivitySetupBinding activitySetupBinding;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        putContentView(R.layout.activity_setup);
+        activitySetupBinding = putContentView(R.layout.activity_setup);
         if (!TextUtils.isEmpty(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_CONTEXT_NAME)) &&
                 TextUtils.isEmpty(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID)))
             pushFragment(new LoginFragment(), R.id.loginContainer, "SetupFragment", false);

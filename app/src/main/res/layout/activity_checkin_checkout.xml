@@ -34,10 +34,10 @@
         <include
             android:id="@+id/libraryResourceIncludeLayout"
             layout="@layout/library_resource"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_margin="10dp" />
+            />
     </RelativeLayout>
 
 </layout>

@@ -51,6 +51,7 @@ public class AppSharedPreferences {
     public static final String KEY_IS_LIBRARY_SELECTED = "isLibrarySelected";
     public static final String KEY_PERMISSIONS = "permissions";
     public static final String KEY_COLLECTION_TYPE = "collectionType";
+    public static final String KEY_PARTIALID = "partialID";
 
 
     private static AppSharedPreferences mSessionInstance = null;

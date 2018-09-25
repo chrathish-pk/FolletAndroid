@@ -58,15 +58,14 @@
                         android:fontFamily="@font/opensans_regular"
                         android:text="@{scanPatron.lastFirstMiddleName}"
                         android:textColor="@color/blueLabel"
-                        android:textSize="@dimen/text_size_18sp"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/text_size_16sp"/>
 
                     <TextView
                         android:id="@+id/checkoutPatronType"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/opensans_regular"
-                        android:text="@{scanPatron.patronType}"
+                        android:text="@{@string/squareB(scanPatron.patronType)}"
                         android:textSize="@dimen/text_size_16sp" />
 
                     <TextView
@@ -100,7 +99,7 @@
                 android:fontFamily="@font/opensans_regular"
                 android:text="@{scanPatron.librarySelected ? @string/checkoutLabel +scanPatron.libraryCheckouts : @string/checkoutLabel +scanPatron.assetCheckouts}"
                 android:textColor="@color/blueLabel"
-                android:textSize="@dimen/text_size_16sp" />
+                android:textSize="@dimen/text_size_14sp" />
 
             <TextView
                 android:id="@+id/overdue"
@@ -113,7 +112,7 @@
                 android:fontFamily="@font/opensans_regular"
                 android:text="@{scanPatron.librarySelected ? @string/overdueLabel +scanPatron.libraryOverdues : @string/overdueLabel +scanPatron.assetOverdues}"
                 android:textColor="@color/blueLabel"
-                android:textSize="@dimen/text_size_16sp" />
+                android:textSize="@dimen/text_size_14sp" />
 
 
         </RelativeLayout>

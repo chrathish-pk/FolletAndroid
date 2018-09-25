@@ -48,7 +48,7 @@ public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, Checki
 
     @Override
     public int getBindingVariable() {
-        return BR.checkoutViewModel;
+        return BR.viewModel;
     }
 
     @Override
@@ -73,7 +73,7 @@ public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, Checki
         if (activity == null) {
             return;
         }
-    
+
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -118,12 +118,12 @@ public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, Checki
 
     @Override
     public void onClick(View v) {
-        
+
         Activity activity = getBaseActivity();
         if (activity == null) {
             return;
         }
-        
+
         switch (v.getId()) {
             case R.id.patronGoBtn:
                 AppUtils.getInstance()

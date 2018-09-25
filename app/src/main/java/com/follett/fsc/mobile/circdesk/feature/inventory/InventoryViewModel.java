@@ -23,6 +23,7 @@ public class InventoryViewModel extends BaseViewModel<CTAButtonListener> impleme
 
     private ItemClickListener itemClickListener;
     public MutableLiveData<InProgressInventoryResults> inventoryListMutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<InventoryDetails> inventoryDetailsMutableLiveData = new MutableLiveData<>();
     private AppRemoteRepository mAppRemoteRepository;
     private UpdateUIListener updateUIListener;
     private Application mApplication;
@@ -51,12 +52,40 @@ public class InventoryViewModel extends BaseViewModel<CTAButtonListener> impleme
                 inventoryListMutableLiveData.postValue((InProgressInventoryResults) model);
                 InProgressInventoryResults inProgressInventoryResults = (InProgressInventoryResults) model;
                 updateUIListener.updateUI(inProgressInventoryResults);
+                AppSharedPreferences.getInstance().setInt(AppSharedPreferences.KEY_PARTIALID, inProgressInventoryResults.getInventoryList().get(0).getPartialID());
 
-            }
+                getInventoryDetails(AppSharedPreferences.getInstance()
+                        .getString(AppSharedPreferences.KEY_SITE_SHORT_NAME), AppSharedPreferences.getInstance()
+                        .getString(AppSharedPreferences.KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
+                        .getInt(AppSharedPreferences.KEY_PARTIALID));
+            }if (model instanceof InventoryDetails) {
+                inventoryDetailsMutableLiveData.postValue((InventoryDetails) model);
+                InventoryDetails inventoryDetails = (InventoryDetails) model;
+                updateUIListener.updateUI(inventoryDetails);            }
         } catch (Exception e) {
             FollettLog.d("Exception", e.getMessage());
         }
         setIsLoding(false);
+    }
+
+    public void getInProgressInventoryResults(String site, String contextName, int collectionType) {
+        setIsLoding(true);
+        Map<String, String> map = new HashMap<>();
+        map.put("Accept", "application/json");
+        map.put("Cookie", "JSESSIONID=" + "IU9FapmnTaXrV7DMcpDWwJoLepJUXwlL9A_rkf8Z"/*AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID)*/);
+        map.put("text/xml", "gzip");
+
+        mAppRemoteRepository.getInProgressInventoryResults(map,this, site, contextName, collectionType);
+    }
+
+    public void getInventoryDetails(String site, String contextName, int partialID) {
+        setIsLoding(true);
+        Map<String, String> map = new HashMap<>();
+        map.put("Accept", "application/json");
+        map.put("Cookie", "JSESSIONID=" + "IU9FapmnTaXrV7DMcpDWwJoLepJUXwlL9A_rkf8Z"/*AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID)*/);
+        map.put("text/xml", "gzip");
+
+        mAppRemoteRepository.getInventoryDetails(map,this, site, contextName, partialID);
     }
 
     @Override

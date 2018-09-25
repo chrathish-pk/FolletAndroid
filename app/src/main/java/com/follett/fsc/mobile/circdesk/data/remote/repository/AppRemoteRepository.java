@@ -15,6 +15,7 @@ import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckoutRes
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.ScanPatron;
 import com.follett.fsc.mobile.circdesk.feature.inventory.CirculationTypeList;
 import com.follett.fsc.mobile.circdesk.feature.inventory.InProgressInventoryResults;
+import com.follett.fsc.mobile.circdesk.feature.inventory.InventoryDetails;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.model.ItemDetails;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.DistrictList;
@@ -208,6 +209,38 @@ public class AppRemoteRepository {
                     public void onNext(InProgressInventoryResults inventoryResults) {
                         if (networkInterface != null) {
                             networkInterface.onCallCompleted(inventoryResults);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallFailed(throwable);
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        //Do Nothing
+                    }
+                });
+    }
+
+    public void getInventoryDetails(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String site, String contextName, int partialID) {
+
+        apiService.getInventoryDetails(headers, site, contextName, partialID)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribeWith(new Observer<InventoryDetails>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        // Do Nothing
+                    }
+
+                    @Override
+                    public void onNext(InventoryDetails inventoryDetails) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallCompleted(inventoryDetails);
                         }
                     }
 

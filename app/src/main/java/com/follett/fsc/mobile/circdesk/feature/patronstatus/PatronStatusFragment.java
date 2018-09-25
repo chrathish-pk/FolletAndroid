@@ -142,6 +142,8 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
                 onNavigation(mPatronInfo, 4);
             }
         } else if (v.getId() == R.id.backBtn) {
+            mActivity.setTitleBar(getString(R.string.home));
+            mActivity.baseBinding.backBtn.setVisibility(View.GONE);
             mActivity.onBackPressed();
         }
     }

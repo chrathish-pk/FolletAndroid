@@ -21,6 +21,7 @@ import com.follett.fsc.mobile.circdesk.feature.inventory.InventoryFragment;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.ItemStatusFragment;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.Permissions;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.PatronStatusFragment;
+import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import com.google.gson.Gson;
 
 public class HomeFragment extends BaseFragment<ActivityHomeBinding, HomeViewModel> implements ItemClickListener {
@@ -52,9 +53,21 @@ public class HomeFragment extends BaseFragment<ActivityHomeBinding, HomeViewMode
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         activityHomeBinding = getViewDataBinding();
-
+        FollettLog.i("TAG","Home Fragment");
         mActivity.setTitleBar(getString(R.string.home));
         mActivity.changeInfoIcon();
+//        Boolean IsLibrarySelected = AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED);
+//        FollettLog.i("TAG","Library"+IsLibrarySelected);
+//        if(IsLibrarySelected != null)
+//        {
+//            AppSharedPreferences.getInstance().setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, true);
+//        }
+//        else
+//        {
+//            AppSharedPreferences.getInstance().setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, false);
+//
+//        }
+
 
         //checkPermissionToShowMenu();
 

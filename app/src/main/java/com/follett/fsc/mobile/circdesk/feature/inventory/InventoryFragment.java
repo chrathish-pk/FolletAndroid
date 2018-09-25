@@ -26,6 +26,7 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
     private InventoryViewModel inventoryViewModel;
     private FragmentInventoryBinding fragmentInventoryBinding;
     private InProgressInventoryResults inProgressInventoryResults;
+    private InventoryDetails inventoryDetails;
 
     @Override
     public int getLayoutId() {
@@ -50,12 +51,11 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         fragmentInventoryBinding = getViewDataBinding();
-
+        initViews();
         inventoryViewModel.getInProgressInventoryResults(AppSharedPreferences.getInstance()
                 .getString(AppSharedPreferences.KEY_SITE_SHORT_NAME), AppSharedPreferences.getInstance()
                 .getString(AppSharedPreferences.KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
                 .getInt(KEY_COLLECTION_TYPE));
-        initViews();
 
     }
 
@@ -76,8 +76,10 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.backBtn:
+                mActivity.setTitleBar(getString(R.string.home));
+                mActivity.baseBinding.backBtn.setVisibility(View.GONE);
                 mActivity.onBackPressed();
-                break;
+            break;
             case R.id.libraryBtn:
                 fragmentInventoryBinding.inventoryLocation.setVisibility(View.GONE);
                 fragmentInventoryBinding.inventoryLocationBar.setVisibility(View.GONE);
@@ -129,6 +131,10 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                             fragmentInventoryBinding.inventorySelection.setVisibility(View.GONE);
 
                         }
+                    }
+                    if(value instanceof InventoryDetails){
+                        inventoryDetails = (InventoryDetails) value;
+                        fragmentInventoryBinding.inventoryCompletedStatus.setText("Current status: "+inventoryDetails.getCompletePercentage()+" Complete");
                     }
                 } catch (Exception e) {
                     FollettLog.e(getString(R.string.error), e.getMessage());
