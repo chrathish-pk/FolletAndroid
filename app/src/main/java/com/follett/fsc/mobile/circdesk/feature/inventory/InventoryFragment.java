@@ -73,8 +73,10 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.backBtn:
+                mActivity.setTitleBar(getString(R.string.home));
+                mActivity.baseBinding.backBtn.setVisibility(View.GONE);
                 mActivity.onBackPressed();
-                break;
+            break;
             case R.id.libraryBtn:
                 fragmentInventoryBinding.inventoryLocation.setVisibility(View.GONE);
                 fragmentInventoryBinding.inventoryLocationBar.setVisibility(View.GONE);

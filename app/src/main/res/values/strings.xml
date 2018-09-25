@@ -54,6 +54,7 @@
     <string name="checkedOut">Checked Out</string>
     <string name="checkedOutBlocked">Checkout Blocked</string>
     <string name="allow">Allow</string>
+    <string name="squareB">[%s]</string>
 
 
     <!--Patron Screen-->

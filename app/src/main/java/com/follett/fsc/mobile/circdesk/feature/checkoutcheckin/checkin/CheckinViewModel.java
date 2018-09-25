@@ -37,7 +37,6 @@ public class CheckinViewModel extends BaseViewModel implements NetworkInterface 
         super(application);
         this.mApplication = application;
         this.updateUIListener = updateUIListener;
-
     }
 
     public void getCheckinData(String checkinBarcode, String collectionType, boolean isLibraryUse) {

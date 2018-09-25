@@ -20,7 +20,6 @@ public class SetupActivity extends BaseActivity<LoginViewModel> implements Navig
         super.onCreate(savedInstanceState);
 
         activitySetupBinding = putContentView(R.layout.activity_setup);
-
         if (!TextUtils.isEmpty(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_CONTEXT_NAME)) &&
                 TextUtils.isEmpty(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID)))
             pushFragment(new LoginFragment(), R.id.loginContainer, "SetupFragment", false);

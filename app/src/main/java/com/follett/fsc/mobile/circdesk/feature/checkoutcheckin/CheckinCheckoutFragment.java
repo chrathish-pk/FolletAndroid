@@ -44,7 +44,7 @@ public class CheckinCheckoutFragment extends BaseFragment<ActivityCheckinCheckou
 
     @Override
     public int getBindingVariable() {
-        return BR.checkinViewModel;
+        return BR.viewModel;
     }
 
     @Override
@@ -98,6 +98,8 @@ public class CheckinCheckoutFragment extends BaseFragment<ActivityCheckinCheckou
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.backBtn:
+                mActivity.setTitleBar(getString(R.string.home));
+                mActivity.baseBinding.backBtn.setVisibility(View.GONE);
                 mActivity.onBackPressed();
                 break;
             case R.id.libraryBtn:

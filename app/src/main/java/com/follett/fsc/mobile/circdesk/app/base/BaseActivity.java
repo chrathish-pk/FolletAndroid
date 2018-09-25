@@ -45,7 +45,6 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         baseBinding = DataBindingUtil.setContentView(this, R.layout.activity_base);
-
         if (!TextUtils.isEmpty(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID))) {
             baseBinding.toolBarIcon.setImageResource(R.drawable.baseline_account_circle);
         } else {

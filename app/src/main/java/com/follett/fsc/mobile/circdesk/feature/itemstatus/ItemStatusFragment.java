@@ -69,6 +69,8 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
 
     private void initView() {
 
+        mActivity.setBackBtnVisible();
+        mActivity.baseBinding.backBtn.setOnClickListener(this);
         fragmentItemStatusBinding.itemStatusPatronGoBtn.setOnClickListener(this);
         fragmentItemStatusBinding.itemStatusCheckedoutInfoBtn.setOnClickListener(this);
         fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setOnClickListener(this);
@@ -90,6 +92,21 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
 
 
         });
+        updateLibraryResourceBg();
+    }
+
+    private void updateLibraryResourceBg() {
+        if (AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED)) {
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.blueLabel));
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.blueLabel));
+        } else {
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.blueLabel));
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.blueLabel));
+        }
     }
 
     private void updateItemStatusUI(final ItemDetails itemDetails) {
@@ -140,6 +157,7 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
             if (AppUtils.getInstance().isEditTextNotEmpty(fragmentItemStatusBinding.itemStatusPatronEntry)) {
                 fragmentItemStatusBinding.progressBarItem.setVisibility(View.VISIBLE);
                 int collectionType = AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED) ? 0 : 4;
+                FollettLog.i("TAG","Library CollectionType"+collectionType);
                 itemStatusViewModel.getScanItem(fragmentItemStatusBinding.itemStatusPatronEntry.getText().toString().trim(), String.valueOf(collectionType));
             } else {
                 AppUtils.getInstance()
@@ -168,6 +186,12 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
             fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.blueLabel));
             AppSharedPreferences.getInstance().setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, false);
             disableItemStatusView();
+        }
+        else if(v.getId() == R.id.backBtn)
+        {
+            mActivity.setTitleBar(getString(R.string.home));
+            mActivity.baseBinding.backBtn.setVisibility(View.GONE);
+            mActivity.onBackPressed();
         }
     }
 
