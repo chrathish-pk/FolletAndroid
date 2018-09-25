@@ -33,6 +33,7 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
     private TextView libraryBtn;
     private TextView resourceBtn;
     private InProgressInventoryResults inProgressInventoryResults;
+    private InventoryDetails inventoryDetails;
 
     @Override
     public int getLayoutId() {
@@ -92,12 +93,15 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         fragmentInventoryBinding = getViewDataBinding();
+        initViews();
+        callApis();
+    }
 
+    private void callApis() {
         inventoryViewModel.getInProgressInventoryResults(AppSharedPreferences.getInstance()
                 .getString(AppSharedPreferences.KEY_SITE_SHORT_NAME), AppSharedPreferences.getInstance()
                 .getString(AppSharedPreferences.KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
                 .getInt(KEY_COLLECTION_TYPE));
-        initViews();
 
     }
 
@@ -134,6 +138,10 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                             fragmentInventoryBinding.inventorySelection.setVisibility(View.GONE);
 
                         }
+                    }
+                    if(value instanceof InventoryDetails){
+                        inventoryDetails = (InventoryDetails) value;
+                        fragmentInventoryBinding.inventoryCompletedStatus.setText("Current status: "+inventoryDetails.getCompletePercentage()+" Complete");
                     }
                 } catch (Exception e) {
                     FollettLog.e(getString(R.string.error), e.getMessage());

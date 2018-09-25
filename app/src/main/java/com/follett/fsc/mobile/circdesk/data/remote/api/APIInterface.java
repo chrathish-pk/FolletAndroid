@@ -12,6 +12,7 @@ import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.Checkout
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.ScanPatron;
 import com.follett.fsc.mobile.circdesk.feature.inventory.CirculationTypeList;
 import com.follett.fsc.mobile.circdesk.feature.inventory.InProgressInventoryResults;
+import com.follett.fsc.mobile.circdesk.feature.inventory.InventoryDetails;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.ItemDetails;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.DistrictList;
@@ -88,4 +89,7 @@ public interface APIInterface {
     Observable<PatronInfo> getPatronStatus(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site,
             @Query("barcode") String barcode);
 
+    @GET("rest/v6/circulation/inventorydetails")
+    Observable<InventoryDetails> getInventoryDetails(@HeaderMap Map<String, String> headers, @Query("site") String site, @Query("contextName") String contextName,
+                                                     @Query("partialID") int partialID);
 }
