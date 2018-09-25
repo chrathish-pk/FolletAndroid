@@ -5,7 +5,9 @@
 package com.follett.fsc.mobile.circdesk.utils;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -32,6 +34,7 @@ import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
@@ -111,8 +114,8 @@ public class AppUtils {
     private void showProgressDialog(Context ctx, String title, String body, Drawable icon, boolean isCancellable) {
 
         try {
-            if (ctx instanceof Activity) {
-                if (!((Activity) ctx).isFinishing()) {
+            if (ctx instanceof Application) {
+                if (applicationInForeground(ctx)) {
                     mProgressDialog = ProgressDialog.show(ctx, title, body, true);
                     mProgressDialog.setIcon(icon);
                     mProgressDialog.setCancelable(isCancellable);
@@ -121,6 +124,22 @@ public class AppUtils {
         } catch (Exception e) {
             FollettLog.d(AppConstants.EXCEPTION, e.getMessage());
         }
+    }
+
+    private boolean applicationInForeground(Context context) {
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> services = null;
+        if (activityManager != null) {
+            services = activityManager.getRunningAppProcesses();
+            boolean isActivityFound = false;
+
+            if (services.get(0).processName
+                    .equalsIgnoreCase(context.getPackageName())) {
+                isActivityFound = true;
+            }
+            return isActivityFound;
+        }
+        return false;
     }
 
     /**
@@ -168,8 +187,7 @@ public class AppUtils {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                if(which == DialogInterface.BUTTON_POSITIVE)
-                {
+                if (which == DialogInterface.BUTTON_POSITIVE) {
                     dialog.dismiss();
                 }
             }
@@ -209,12 +227,13 @@ public class AppUtils {
             GlideApp.with(context)
                     .setDefaultRequestOptions(requestOptions)
                     .load(AppRemoteRepository.getInstance().getString(SERVER_URI_VALUE)
-                            + imageUrl + "?contextName="+AppSharedPreferences.getInstance()
+                            + imageUrl + "?contextName=" + AppSharedPreferences.getInstance()
                             .getString(KEY_CONTEXT_NAME))
                     .into(view);
 
         }
     }
+
     public void showAlertDialog(final Context context, String title, final String msg, String positiveBtnName, String negativeBtnName, final AlertDialogListener alertDialogListener, final int statusCode) {
         try {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(new ContextThemeWrapper(
@@ -246,18 +265,18 @@ public class AppUtils {
                 alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
             }
-          if(context != null) {
-              TextView messageView = alertDialog.findViewById(android.R.id.message);
-              messageView.setTextColor(context.getResources().getColor(R.color.editTextBgColor));
+            if (context != null) {
+                TextView messageView = alertDialog.findViewById(android.R.id.message);
+                messageView.setTextColor(context.getResources().getColor(R.color.editTextBgColor));
 
-              Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-              Button negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-              Button neutralButton = alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL);
+                Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                Button negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+                Button neutralButton = alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL);
 
-              positiveButton.setTextColor(context.getResources().getColor(R.color.blueLabel));
-              negativeButton.setTextColor(context.getResources().getColor(R.color.blueLabel));
-              neutralButton.setTextColor(context.getResources().getColor(R.color.blueLabel));
-          }
+                positiveButton.setTextColor(context.getResources().getColor(R.color.blueLabel));
+                negativeButton.setTextColor(context.getResources().getColor(R.color.blueLabel));
+                neutralButton.setTextColor(context.getResources().getColor(R.color.blueLabel));
+            }
 
         } catch (Exception e) {
             FollettLog.d(AppConstants.EXCEPTION, e.getMessage());

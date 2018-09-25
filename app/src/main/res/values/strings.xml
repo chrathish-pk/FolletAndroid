@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Follett Destiny</string>
 
+    <!--Fragment name-->
+    <string name="CheckoutPatronListFragment">CheckoutPatronListFragment</string>
+
     <!-- Custom CustomAlert Text-->
     <string name="alert_wait">Loading. Please wait</string>
     <string name="alert_text">Alert Message!</string>
@@ -49,6 +52,8 @@
     <string name="overdueLabel">"Overdue: "</string>
     <string name="checkedin">Checked In</string>
     <string name="checkedOut">Checked Out</string>
+    <string name="checkedOutBlocked">Checkout Blocked</string>
+    <string name="allow">Allow</string>
 
 
     <!--Patron Screen-->
@@ -112,12 +117,11 @@
     <string name="one">1</string>
     <string name="nullCheck">Null</string>
 
-    //Item Status
+    <!--Item Status-->
     <string name="findItem">Find Item</string>
     <string name="item_status_title">Item Status</string>
     <string name="item_not_found">Copy %s not found</string>
     <string name="copyitem_not_found">Item %s not found</string>
-
 
 
     <!-- Intent data passing strings-->

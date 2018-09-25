@@ -72,8 +72,7 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
         });
 
         checkoutViewModel.checkoutResultMutableLiveData.observeForever(new Observer<CheckoutResult>() {
-            @Override
-            public void onChanged(@Nullable CheckoutResult checkoutResultValue) {
+            @Override            public void onChanged(@Nullable CheckoutResult checkoutResultValue) {
                 checkoutResult = checkoutResultValue;
                 if (checkoutResult.getSuccess()) {
                     FollettLog.e("sucess", "checkout value");
@@ -181,7 +180,7 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
                     fragmentCheckoutBinding.checkoutPatronErrorMsg.setText(errorMsg);
                 } else if (checkoutResult.getMessages().size() > 1) {
                     String errorMsg = checkoutResult.getMessages().get(0).getMessage() + "\n\n" + checkoutResult.getMessages().get(1).getMessage();
-                    AppUtils.getInstance().showAlertDialog(getActivity(), "Checkout Blocked", errorMsg, "allow", "cancel", this, 0);
+                    AppUtils.getInstance().showAlertDialog(getActivity(), getString(R.string.checkedOutBlocked), errorMsg, getString(R.string.allow), getString(R.string.cancel), this, 0);
                 }
             } else {
                 FollettLog.e(getString(R.string.error), "Empty Error Message from api result");
@@ -239,7 +238,7 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
 
     private void navigateToPatronListScreen(ScanPatron scanPatron) {
         CheckoutPatronListFragment checkoutPatronListFragment = CheckoutPatronListFragment.getInstance(scanPatron);
-        mActivity.replaceFragment(checkoutPatronListFragment, R.id.loginContainer, "CheckoutPatronListFragment", true);
+        mActivity.replaceFragment(checkoutPatronListFragment, R.id.loginContainer, getString(R.string.CheckoutPatronListFragment), true);
     }
 
     @Override
