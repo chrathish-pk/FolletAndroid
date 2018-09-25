@@ -56,9 +56,9 @@ public class CheckoutApiTest extends BaseTestClass {
     public void verifyCheckoutApi() {
         mCheckoutResult = generateCheckoutResult();
 
-        when(apiInterface.getCheckoutResult(AppUtils.getHeader(mApplication), CONTEXT_NAME, SITE_NAME, "1","861","0","false")).thenReturn(Observable.just(mCheckoutResult));
+        when(apiInterface.getCheckoutResult(AppUtils.getInstance().getHeader(mApplication), CONTEXT_NAME, SITE_NAME, "1","861","0","false")).thenReturn(Observable.just(mCheckoutResult));
 
-        final Observable<CheckoutResult> patronResultsObservable = apiInterface.getCheckoutResult(AppUtils.getHeader(mApplication), CONTEXT_NAME, SITE_NAME, "1","861","0","false");
+        final Observable<CheckoutResult> patronResultsObservable = apiInterface.getCheckoutResult(AppUtils.getInstance().getHeader(mApplication), CONTEXT_NAME, SITE_NAME, "1","861","0","false");
         patronResultsObservable.subscribe(new Consumer<CheckoutResult>() {
             @Override
             public void accept(CheckoutResult checkoutResult) throws Exception {

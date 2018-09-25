@@ -28,7 +28,7 @@ public class ItemStatusViewModel extends BaseViewModel implements NetworkInterfa
 
     public void getScanItem(String itemBarcodeID,String collectionType) {
         setIsLoding(true);
-        AppRemoteRepository.getInstance().getItemStatus(AppUtils.getHeader(mApplication),this,AppSharedPreferences.getInstance()
+        AppRemoteRepository.getInstance().getItemStatus(AppUtils.getInstance().getHeader(mApplication),this,AppSharedPreferences.getInstance()
                 .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
                 .getString(KEY_SITE_SHORT_NAME), itemBarcodeID,collectionType);
     }

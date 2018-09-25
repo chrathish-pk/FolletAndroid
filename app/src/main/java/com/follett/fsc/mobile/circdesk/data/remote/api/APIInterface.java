@@ -10,9 +10,9 @@ package com.follett.fsc.mobile.circdesk.data.remote.api;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckinResult;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckoutResult;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.ScanPatron;
-import com.follett.fsc.mobile.circdesk.feature.inventory.CirculationTypeList;
 import com.follett.fsc.mobile.circdesk.feature.inventory.InProgressInventoryResults;
 import com.follett.fsc.mobile.circdesk.feature.inventory.InventoryDetails;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.CirculationTypeList;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.model.ItemDetails;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.DistrictList;
@@ -43,10 +43,9 @@ public interface APIInterface {
     Observable<DistrictList> getDistrictList();
 
     /* need to modify according to the api */
-    @Headers({"Accept: application/json", "text/xml: gzip"})
-    @GET("/rest/v4/circulationType/list")
+    @GET("/rest/v6/circulation/circtypelist")
     @JsonAndXmlConverters.Xml
-    Observable<CirculationTypeList> getCirculationTypeList();
+    Observable<CirculationTypeList> getCirculationTypeList(@HeaderMap Map<String, String> headers, @Query("site") String site, @Query("contextName") String contextName);
 
     @Headers({"Accept: application/json", "text/xml: gzip"})
     @GET("/rest/v4/district/sites")

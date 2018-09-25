@@ -284,7 +284,7 @@ public class AppUtils {
 
     }
 
-    public static Map<String, String> getHeader(Context context) {
+    public Map<String, String> getHeader(Context context) {
         if (context == null) {
             return new HashMap<>();
         }

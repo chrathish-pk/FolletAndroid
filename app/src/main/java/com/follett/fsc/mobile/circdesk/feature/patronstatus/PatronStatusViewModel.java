@@ -46,7 +46,7 @@ public class PatronStatusViewModel extends BaseViewModel implements NetworkInter
         if (!TextUtils.isEmpty(typedText)) {
             setIsLoding(true);
     
-            AppRemoteRepository.getInstance().getPatronStatus(this, AppUtils.getHeader(mApplication), AppSharedPreferences.getInstance()
+            AppRemoteRepository.getInstance().getPatronStatus(this, AppUtils.getInstance().getHeader(mApplication), AppSharedPreferences.getInstance()
                     .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
                     .getString(KEY_SITE_SHORT_NAME), typedText);
         } else {
