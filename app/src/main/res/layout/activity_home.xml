@@ -5,7 +5,7 @@
 
         <variable
             name="homeViewModel"
-            type="com.follett.fsc.mobile.circdesk.feature.homescreen.HomeViewModel" />
+            type="com.follett.fsc.mobile.circdesk.feature.homescreen.viewmodel.HomeViewModel" />
 
     </data>
 

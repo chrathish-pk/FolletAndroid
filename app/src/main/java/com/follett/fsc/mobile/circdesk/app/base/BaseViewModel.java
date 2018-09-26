@@ -3,17 +3,16 @@
  */
 package com.follett.fsc.mobile.circdesk.app.base;
 
+import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
+
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.databinding.ObservableBoolean;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
-
-import com.follett.fsc.mobile.circdesk.app.SingleLiveEvent;
-import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
 
 import java.lang.ref.WeakReference;
 
@@ -23,9 +22,9 @@ public abstract class BaseViewModel<N> extends AndroidViewModel {
     
     private final ObservableBoolean mIsLoading = new ObservableBoolean(false);
     
-    private SingleLiveEvent<String> mErrorMessage = new SingleLiveEvent<>();
+    private MutableLiveData<String> mErrorMessage = new MutableLiveData<>();
 
-    private final SingleLiveEvent<Status> mStatus = new SingleLiveEvent<>();
+    private final MutableLiveData<Status> mStatus = new MutableLiveData<>();
 
     private WeakReference<N> mNavigator;
     
@@ -50,21 +49,21 @@ public abstract class BaseViewModel<N> extends AndroidViewModel {
         mIsLoading.set(isLoading);
     }
     
-    public LiveData<Status> getStatus() {
+    public MutableLiveData<Status> getStatus() {
         return mStatus;
     }
 
     public void setStatus(Status status) {
         mStatus.postValue(status);
     }
-    public SingleLiveEvent<String> getErrorMessage() {
+    
+    public MutableLiveData<String> getErrorMessage() {
         return mErrorMessage;
     }
 
     public void setErrorMessage(String errorMessage) {
-        this.mErrorMessage.setValue(errorMessage);
+        mErrorMessage.postValue(errorMessage);
     }
-
 
     protected boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) mApplication.getSystemService(Context.CONNECTIVITY_SERVICE);

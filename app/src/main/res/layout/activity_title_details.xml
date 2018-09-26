@@ -15,7 +15,7 @@
 
         <variable
             name="viewModel"
-            type="com.follett.fsc.mobile.circdesk.feature.iteminfo.AdditionalInfoViewModel"/>
+            type="com.follett.fsc.mobile.circdesk.feature.iteminfo.viewmodel.AdditionalInfoViewModel"/>
 
         <variable
             name="titleDetailsViewModel"

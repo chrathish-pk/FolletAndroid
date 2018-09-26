@@ -19,7 +19,7 @@
 
         <variable
             name="viewModel"
-            type="com.follett.fsc.mobile.circdesk.feature.loginsetup.SchoolListViewModel"/>
+            type="com.follett.fsc.mobile.circdesk.feature.loginsetup.viewmodel.SchoolListViewModel"/>
 
     </data>
 
