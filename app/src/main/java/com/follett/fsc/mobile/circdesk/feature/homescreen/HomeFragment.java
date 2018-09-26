@@ -56,18 +56,6 @@ public class HomeFragment extends BaseFragment<ActivityHomeBinding, HomeViewMode
         FollettLog.i("TAG","Home Fragment");
         mActivity.setTitleBar(getString(R.string.home));
         mActivity.changeInfoIcon();
-//        Boolean IsLibrarySelected = AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED);
-//        FollettLog.i("TAG","Library"+IsLibrarySelected);
-//        if(IsLibrarySelected != null)
-//        {
-//            AppSharedPreferences.getInstance().setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, true);
-//        }
-//        else
-//        {
-//            AppSharedPreferences.getInstance().setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, false);
-//
-//        }
-
 
         //checkPermissionToShowMenu();
 
@@ -112,6 +100,8 @@ public class HomeFragment extends BaseFragment<ActivityHomeBinding, HomeViewMode
                 break;
             case R.id.menuInventoryLayout:
                 mActivity.pushFragment(new InventoryFragment(), R.id.loginContainer, "InventoryFragment", true);
+                break;
+            default:
                 break;
         }
     }

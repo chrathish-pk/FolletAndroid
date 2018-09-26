@@ -55,6 +55,7 @@
     <string name="checkedOutBlocked">Checkout Blocked</string>
     <string name="allow">Allow</string>
     <string name="squareB">[%s]</string>
+    <string name="recordInLibrary">Record In-Library Usage</string>
 
 
     <!--Patron Screen-->
@@ -105,8 +106,8 @@
     <string name="item_edition">Edition</string>
     <string name="item_format">Format</string>
     <string name="item_isbn">ISBN</string>
-    <string name="item_target">Target</string>
-    <string name="item_accelerated">Accelerated</string>
+    <string name="item_target">Target Audience </string>
+    <string name="item_accelerated">AR</string>
     <string name="item_status_in">Status : IN</string>
     <string name="item_status_out">Status : Out</string>
     <string name="item_callno">Call# </string>
@@ -138,20 +139,20 @@
     <string name="patron_status">Patron \nStatus</string>
     <string name="patron_status_label">Patron Status</string>
     <string name="patron_not_found">Patron %s not found</string>
-    <string name="items_overude_label">items overudue</string>
+    <string name="items_overude_label">items overdue</string>
     <string name="onhold_label">items on hold</string>
     <string name="title_hold_count">Titles On Hold (%s)</string>
-    <string name="item_checkout_count">Items Checked Out (%s)</string>
+    <string name="item_checkout_count">Check Outs Holds (%s)</string>
     <string name="fines_count">Fines (%s)</string>
     <string name="barcodelabel">Barcode: %s</string>
     <string name="homeroomlabel">HomeRoom: %s</string>
     <string name="gradelevellabel">Grade Level: %s</string>
     <string name="barcode_label">Barcode: %s</string>
     <string name="due_label">Due: %s</string>
-    <string name="item_checkout_label">Items Checked Out</string>
+    <string name="item_checkout_label">Check Outs Holds</string>
     <string name="library_title_label">Library Titles</string>
     <string name="resource_item_label">Resource Items</string>
-    <string name="on_hold_label">On Hold</string>
+    <string name="on_hold_label">Hold</string>
     <string name="fine_label">Fines</string>
     <string name="overdue_label">Overdue</string>
 

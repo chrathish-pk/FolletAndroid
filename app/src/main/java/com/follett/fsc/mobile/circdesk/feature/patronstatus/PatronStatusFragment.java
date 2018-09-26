@@ -143,6 +143,8 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
             }
         } else if (v.getId() == R.id.backBtn) {
             mActivity.setTitleBar(getString(R.string.home));
+            AppUtils.getInstance()
+                    .hideKeyBoard(mActivity, mBinding.patronEntryIncludeLayout.patronEntry);
             mActivity.baseBinding.backBtn.setVisibility(View.GONE);
             mActivity.onBackPressed();
         }
@@ -154,6 +156,12 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
         }
         AppUtils.getInstance()
                 .hideKeyBoard(getBaseActivity(), mBinding.patronEntryIncludeLayout.patronEntry);
+
+        if (!isNetworkConnected()) {
+            AppUtils.getInstance()
+                    .showNoInternetAlertDialog(mActivity);
+            return;
+        }
         mViewModel.getPatronInfo(patronID);
     }
 
@@ -168,6 +176,7 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
                             navigateToPatronListFragment(patronInfo.getPatronList());
                         } else {
                             mBinding.setPatronInfo(patronInfo);
+                            rightArrowDisable(patronInfo);
                         }
                     } else if (patronInfo != null && !patronInfo.getSuccess()) {
                         mBinding.patronErrorMsg.setVisibility(View.VISIBLE);
@@ -177,6 +186,27 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
                     }
                 }
             });
+        }
+    }
+
+    private void rightArrowDisable(PatronInfo patronInfo) {
+
+        if (patronInfo.getHolds().size() == 0) {
+            mBinding.titleHoldTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        } else {
+            mBinding.titleHoldTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.right_arrow, 0);
+        }
+        if(patronInfo.getCheckouts().size() == 0)
+        {
+            mBinding.itemTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        } else {
+            mBinding.itemTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.right_arrow, 0);
+        }
+        if(patronInfo.getFines().size() == 0)
+        {
+            mBinding.fineTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        } else {
+            mBinding.fineTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.right_arrow, 0);
         }
     }
 
@@ -230,6 +260,11 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
     private void navigateToTitleDetail(CustomCheckoutItem checkoutItem) {
         Activity activity = getBaseActivity();
         if (activity != null && checkoutItem != null) {
+            if (!isNetworkConnected()) {
+                AppUtils.getInstance()
+                        .showNoInternetAlertDialog(activity);
+                return;
+            }
             Intent titleIntent = new Intent(activity, TitleInfoActivity.class);
             titleIntent.putExtra("bibID", String.valueOf(checkoutItem.getId()));
             startActivity(titleIntent);
@@ -244,12 +279,14 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
 
     private void navigateToPatronCheckout(PatronInfo patronInfo, boolean isAddToBackStack, String title) {
         PatronItemCheckoutFragment patronItemCheckoutFragment = PatronItemCheckoutFragment.newInstance(patronInfo, title);
+        mActivity.setBackBtnVisible();
         setToolBarTitle(title);
         mActivity.pushFragment(patronItemCheckoutFragment, R.id.loginContainer, "PatronItemCheckoutFragment", true);
     }
 
     private void navigateToFineList(PatronInfo patronInfo, boolean isAddToBackStack, String title) {
         PatronFineListFragment patronFineListFragment = PatronFineListFragment.newInstance(patronInfo);
+        mActivity.setBackBtnVisible();
         setToolBarTitle(title);
         mActivity.pushFragment(patronFineListFragment, R.id.loginContainer, "PatronFineListFragment", true);
     }

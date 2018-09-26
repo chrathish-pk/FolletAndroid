@@ -6,7 +6,10 @@ package com.follett.fsc.mobile.circdesk.app.base;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.content.Context;
 import android.databinding.ObservableBoolean;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 
 import com.follett.fsc.mobile.circdesk.app.SingleLiveEvent;
@@ -15,6 +18,8 @@ import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
 import java.lang.ref.WeakReference;
 
 public abstract class BaseViewModel<N> extends AndroidViewModel {
+
+    private Application mApplication;
     
     private final ObservableBoolean mIsLoading = new ObservableBoolean(false);
     
@@ -26,6 +31,7 @@ public abstract class BaseViewModel<N> extends AndroidViewModel {
     
     public BaseViewModel(@NonNull Application application) {
         super(application);
+        mApplication = application;
     }
     
     public N getNavigator() {
@@ -60,4 +66,12 @@ public abstract class BaseViewModel<N> extends AndroidViewModel {
     }
 
 
+    protected boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) mApplication.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm != null) {
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        }
+        return false;
+    }
 }

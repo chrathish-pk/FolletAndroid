@@ -129,6 +129,11 @@ public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, Checki
                 AppUtils.getInstance()
                         .hideKeyBoard(activity, fragmentCheckinBinding.checkinEntryIncludeLayout.patronEntry);
                 if (AppUtils.getInstance().isEditTextNotEmpty(fragmentCheckinBinding.checkinEntryIncludeLayout.patronEntry)) {
+                    if (!isNetworkConnected()) {
+                        AppUtils.getInstance()
+                                .showNoInternetAlertDialog(activity);
+                        return;
+                    }
                     int collectionType = AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED) ? 0 : 4;
                     checkinViewModel.getCheckinData(fragmentCheckinBinding.checkinEntryIncludeLayout.patronEntry.getText().toString().trim(), String.valueOf(collectionType), isLibraryUse);
                 } else {
@@ -137,6 +142,11 @@ public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, Checki
                 }
                 break;
             case R.id.checkedoutInfoBtn:
+                if (!isNetworkConnected()) {
+                    AppUtils.getInstance()
+                            .showNoInternetAlertDialog(activity);
+                    return;
+                }
                 Intent titleIntent = new Intent(activity, TitleInfoActivity.class);
                 titleIntent.putExtra("bibID", checkinResult.getInfo().getBibID().toString().trim());
                 startActivity(titleIntent);

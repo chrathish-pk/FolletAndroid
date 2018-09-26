@@ -195,7 +195,6 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:padding="10dp"
-                android:visibility="@{itemDetailsViewModel.currentCheckout.empty ? View.GONE : View.VISIBLE}"
                 android:src="@drawable/checkedout_info" />
 
         </RelativeLayout>
