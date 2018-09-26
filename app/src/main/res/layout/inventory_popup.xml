@@ -9,7 +9,7 @@
 
         <variable
             name="finalizeViewModel"
-            type="com.follett.fsc.mobile.circdesk.feature.inventory.FinalizeViewModel" />
+            type="com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.FinalizeViewModel" />
     </data>
 
     <LinearLayout

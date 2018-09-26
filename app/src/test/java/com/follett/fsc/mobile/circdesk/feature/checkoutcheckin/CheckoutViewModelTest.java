@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.CheckoutInfo;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.CheckoutResult;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.CheckoutViewModel;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.viewmodel.CheckoutViewModel;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.Patron;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.ScanPatron;
 import com.follett.fsc.mobile.circdesk.feature.utils.BaseTestClass;

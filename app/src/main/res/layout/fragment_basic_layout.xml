@@ -19,7 +19,7 @@
 
         <variable
             name="viewModel"
-            type="com.follett.fsc.mobile.circdesk.feature.loginsetup.BasicViewModel"/>
+            type="com.follett.fsc.mobile.circdesk.feature.loginsetup.viewmodel.BasicViewModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout

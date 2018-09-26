@@ -7,10 +7,12 @@
 package com.follett.fsc.mobile.circdesk.app.base;
 
 import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 import android.app.Activity;
 import android.app.Application;
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
@@ -74,6 +76,22 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         mViewDataBinding.setVariable(getBindingVariable(), mViewModel);
         mViewDataBinding.setLifecycleOwner(this);
         mViewDataBinding.executePendingBindings();
+        inIt();
+    }
+    
+    private void inIt() {
+        final Activity activity = getBaseActivity();
+        if (activity == null) {
+            return;
+        }
+        mViewModel.getErrorMessage()
+                .observe(this, new Observer() {
+                    @Override
+                    public void onChanged(@Nullable Object o) {
+                        AppUtils.getInstance()
+                                .showAlertDialog(activity, String.valueOf(o));
+                    }
+                });
     }
     
     protected Activity getBaseActivity() {

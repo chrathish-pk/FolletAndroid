@@ -6,14 +6,10 @@
 
 package com.follett.fsc.mobile.circdesk.app.base;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import com.follett.fsc.mobile.circdesk.R;
+
 import android.os.Bundle;
 import android.view.View;
-
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.feature.iteminfo.AdditionalInfoActivity;
-import com.follett.fsc.mobile.circdesk.feature.iteminfo.AdditionalInfoViewModel;
 
 public class LegalActivity extends BaseActivity implements View.OnClickListener {
 

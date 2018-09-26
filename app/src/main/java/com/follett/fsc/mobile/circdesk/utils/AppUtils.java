@@ -197,6 +197,22 @@ public class AppUtils {
                     .string.ok), onClickListener, null, onClickListener);
         }
     }
+    
+    public void showAlertDialog(Activity activity, String message) {
+        
+        DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                
+                if (which == DialogInterface.BUTTON_POSITIVE) {
+                    dialog.dismiss();
+                }
+            }
+        };
+        if (null != activity) {
+            CustomAlert.showDialog(activity, null, message, activity.getString(R.string.ok), onClickListener, null, onClickListener);
+        }
+    }
 
     @BindingAdapter({"bind:itemImageUrl"})
     public static void loadItemImage(ImageView view, String imageUrl) {

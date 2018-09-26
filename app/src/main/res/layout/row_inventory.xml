@@ -9,7 +9,7 @@
 
         <variable
             name="inventory"
-            type="com.follett.fsc.mobile.circdesk.feature.inventory.Inventory" />
+            type="com.follett.fsc.mobile.circdesk.feature.inventory.model.Inventory" />
 
     </data>
 
