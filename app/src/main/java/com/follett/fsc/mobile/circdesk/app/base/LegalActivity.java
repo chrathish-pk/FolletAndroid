@@ -6,14 +6,10 @@
 
 package com.follett.fsc.mobile.circdesk.app.base;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-
 import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.feature.iteminfo.AdditionalInfoActivity;
-import com.follett.fsc.mobile.circdesk.feature.iteminfo.AdditionalInfoViewModel;
+
 
 public class LegalActivity extends BaseActivity implements View.OnClickListener {
 
@@ -28,12 +24,10 @@ public class LegalActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.backBtn:
-                finish();
-                break;
-            default:
-                break;
+
+        if(v.getId() == R.id.backBtn)
+        {
+            finish();
         }
     }
 

@@ -8,6 +8,7 @@ package com.follett.fsc.mobile.circdesk.feature.inventory;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 import com.follett.fsc.mobile.circdesk.BR;
@@ -87,19 +88,19 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
             case R.id.libraryBtn:
                 fragmentInventoryBinding.inventoryLocation.setVisibility(View.GONE);
                 fragmentInventoryBinding.inventoryLocationBar.setVisibility(View.GONE);
-                fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(mActivity.getResources().getColor(R.color.blueLabel));
-                fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(mActivity.getResources().getColor(R.color.white));
-                fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(mActivity.getResources().getColor(R.color.white));
-                fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(mActivity.getResources().getColor(R.color.blueLabel));
+                fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(mActivity,R.color.blueLabel));
+                fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(mActivity,R.color.white));
+                fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(mActivity,R.color.white));
+                fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(mActivity,R.color.blueLabel));
                 AppRemoteRepository.getInstance().setBoolean(KEY_IS_LIBRARY_SELECTED, true);
                 break;
             case R.id.resourceBtn:
                 fragmentInventoryBinding.inventoryLocation.setVisibility(View.VISIBLE);
                 fragmentInventoryBinding.inventoryLocationBar.setVisibility(View.VISIBLE);
-                fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(mActivity.getResources().getColor(R.color.white));
-                fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(mActivity.getResources().getColor(R.color.blueLabel));
-                fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(mActivity.getResources().getColor(R.color.blueLabel));
-                fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(mActivity.getResources().getColor(R.color.white));
+                fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(mActivity,R.color.white));
+                fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(mActivity,R.color.blueLabel));
+                fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(mActivity,R.color.blueLabel));
+                fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(mActivity,R.color.white));
                 AppRemoteRepository.getInstance().setBoolean(KEY_IS_LIBRARY_SELECTED, false);
                 break;
             case R.id.finalizeInventoryBtn:
@@ -125,7 +126,7 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                     if (value instanceof InProgressInventoryResults) {
                         inProgressInventoryResults = (InProgressInventoryResults) value;
 
-                        if (inProgressInventoryResults.getInventoryList().size() > 0) {
+                        if (!inProgressInventoryResults.getInventoryList().isEmpty()) {
                             fragmentInventoryBinding.inventorySelection.setVisibility(View.VISIBLE);
                             fragmentInventoryBinding.inventorySelection.setText(inProgressInventoryResults.getInventoryList().get(0).getName()
                                     + " - " + inProgressInventoryResults.getInventoryList().get(0).getDateStarted());
@@ -148,14 +149,13 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
 
     @Override
     public void onItemClick(View view, int position) {
-        switch (view.getId()) {
-            case R.id.inventorySelection:
-                mActivity.pushFragment(new SelectInventoryFragment(), R.id.loginContainer, "SelectInventoryFragment", true);
-                break;
-            case R.id.inventoryLocation:
-                mActivity.pushFragment(new InventoryLocationFragment(), R.id.loginContainer, "InventoryLocationFragment", true);
-                break;
-
+        if(view.getId() == R.id.inventorySelection)
+        {
+            mActivity.pushFragment(new SelectInventoryFragment(), R.id.loginContainer, "SelectInventoryFragment", true);
+        }
+        else if(view.getId() == R.id.inventoryLocation)
+        {
+            mActivity.pushFragment(new InventoryLocationFragment(), R.id.loginContainer, "InventoryLocationFragment", true);
         }
     }
 }
