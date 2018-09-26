@@ -6,18 +6,17 @@
 
 package com.follett.fsc.mobile.circdesk.data.remote.repository;
 
-import android.support.annotation.Nullable;
-
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.api.FollettAPIManager;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
+import com.follett.fsc.mobile.circdesk.data.remote.apicommon.DisposableObserverWrapper;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckinResult;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckoutResult;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.ScanPatron;
-import com.follett.fsc.mobile.circdesk.feature.inventory.InProgressInventoryResults;
 import com.follett.fsc.mobile.circdesk.feature.inventory.InventoryDetails;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CirculationTypeList;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.InProgressInventoryResults;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.model.ItemDetails;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.DistrictList;
@@ -26,446 +25,344 @@ import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.SiteResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.Version;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 
+import android.support.annotation.Nullable;
+
 import java.util.Map;
 
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.SERVER_URI_VALUE;
 
 public class AppRemoteRepository {
-
+    
     private static APIInterface apiService;
     public static AppRemoteRepository mInstance;
-
+    
     public static AppRemoteRepository getInstance() {
-        if (mInstance == null)
-            mInstance = new AppRemoteRepository();
+        if (mInstance == null) { mInstance = new AppRemoteRepository(); }
         return mInstance;
     }
-
-
+    
+    
     public AppRemoteRepository() {
         apiService = FollettAPIManager.getClient(getString(SERVER_URI_VALUE))
                 .create(APIInterface.class);
-
     }
-
+    
     public void getVersion(@Nullable final NetworkInterface networkInterface) {
         apiService.getVersion()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribeWith(new DisposableObserver<Version>() {
+                .subscribeWith(new DisposableObserverWrapper<Version>() {
                     @Override
-                    public void onNext(Version version) {
+                    protected void onSuccess(Version version) {
                         if (networkInterface != null) {
                             networkInterface.onCallCompleted(version);
                         }
                     }
-
+                    
                     @Override
-                    public void onError(Throwable throwable) {
+                    protected void onFailed(Throwable throwable, String errorMessage) {
                         if (networkInterface != null) {
-                            networkInterface.onCallFailed(throwable);
+                            networkInterface.onCallFailed(throwable, errorMessage);
                         }
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        // Do Nothing
                     }
                 });
     }
-
+    
     public void getDistrictList(@Nullable final NetworkInterface networkInterface) {
         apiService.getDistrictList()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribeWith(new DisposableObserver<DistrictList>() {
+                .subscribeWith(new DisposableObserverWrapper<DistrictList>() {
                     @Override
-                    public void onNext(DistrictList districtList) {
+                    protected void onSuccess(DistrictList districtList) {
                         if (networkInterface != null) {
                             networkInterface.onCallCompleted(districtList);
                         }
                     }
-
+                    
                     @Override
-                    public void onError(Throwable throwable) {
+                    protected void onFailed(Throwable throwable, String errorMessage) {
                         if (networkInterface != null) {
-                            networkInterface.onCallFailed(throwable);
+                            networkInterface.onCallFailed(throwable, errorMessage);
                         }
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        // Do Nothing
                     }
                 });
     }
-
-
+    
+    
     public void getCirculationTypeList(@Nullable final NetworkInterface networkInterface, Map<String, String> headers, String site, String contextName) {
         apiService.getCirculationTypeList(headers, site,contextName)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribeWith(new DisposableObserver<CirculationTypeList>() {
+                .subscribeWith(new DisposableObserverWrapper<CirculationTypeList>() {
                     @Override
-                    public void onNext(CirculationTypeList circulationTypeList) {
+                    protected void onSuccess(CirculationTypeList circulationTypeList) {
                         if (networkInterface != null) {
                             networkInterface.onCallCompleted(circulationTypeList);
                         }
                     }
-
+                    
                     @Override
-                    public void onError(Throwable throwable) {
+                    protected void onFailed(Throwable throwable, String errorMessage) {
                         if (networkInterface != null) {
-                            networkInterface.onCallFailed(throwable);
+                            networkInterface.onCallFailed(throwable, errorMessage);
                         }
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        // Do Nothing
                     }
                 });
     }
-
+    
     public void getSchoolList(@Nullable final NetworkInterface networkInterface, String contextName) {
         apiService.getSchoolList(contextName)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribeWith(new DisposableObserver<SiteResults>() {
+                .subscribeWith(new DisposableObserverWrapper<SiteResults>() {
                     @Override
-                    public void onNext(SiteResults siteResults) {
+                    protected void onSuccess(SiteResults siteResults) {
                         if (networkInterface != null) {
                             networkInterface.onCallCompleted(siteResults);
                         }
                     }
-
+                    
                     @Override
-                    public void onError(Throwable throwable) {
+                    protected void onFailed(Throwable throwable, String errorMessage) {
                         if (networkInterface != null) {
-                            networkInterface.onCallFailed(throwable);
+                            networkInterface.onCallFailed(throwable, errorMessage);
                         }
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        // Do Nothing
                     }
                 });
     }
-
+    
     public void getLoginResults(@Nullable final NetworkInterface networkInterface, String contextName, String site, String userName, String password) {
-
+        
         apiService.getLoginResults(contextName, site, userName, password)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribeWith(new Observer<LoginResults>() {
+                .subscribeWith(new DisposableObserverWrapper<LoginResults>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-                        // Do Nothing
-                    }
-
-                    @Override
-                    public void onNext(LoginResults loginResults) {
+                    protected void onSuccess(LoginResults loginResults) {
                         if (networkInterface != null) {
                             networkInterface.onCallCompleted(loginResults);
                         }
                     }
-
+                    
                     @Override
-                    public void onError(Throwable throwable) {
+                    protected void onFailed(Throwable throwable, String errorMessage) {
                         if (networkInterface != null) {
-                            networkInterface.onCallFailed(throwable);
+                            networkInterface.onCallFailed(throwable, errorMessage);
                         }
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        //Do Nothing
                     }
                 });
     }
-
-    public void getInProgressInventoryResults(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String site, String contextName, int collectionType) {
-
+    
+    public void getInProgressInventoryResults(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String site, String
+            contextName, int collectionType) {
+        
         apiService.getInProgressInventoryResults(headers, site, contextName, collectionType)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribeWith(new Observer<InProgressInventoryResults>() {
+                .subscribeWith(new DisposableObserverWrapper<InProgressInventoryResults>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-                        // Do Nothing
-                    }
-
-                    @Override
-                    public void onNext(InProgressInventoryResults inventoryResults) {
+                    protected void onSuccess(InProgressInventoryResults inProgressInventoryResults) {
                         if (networkInterface != null) {
-                            networkInterface.onCallCompleted(inventoryResults);
+                            networkInterface.onCallCompleted(inProgressInventoryResults);
                         }
                     }
-
+                    
                     @Override
-                    public void onError(Throwable throwable) {
+                    protected void onFailed(Throwable throwable, String errorMessage) {
                         if (networkInterface != null) {
-                            networkInterface.onCallFailed(throwable);
+                            networkInterface.onCallFailed(throwable, errorMessage);
                         }
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        //Do Nothing
                     }
                 });
     }
-
+    
     public void getInventoryDetails(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String site, String contextName, int partialID) {
-
+        
         apiService.getInventoryDetails(headers, site, contextName, partialID)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribeWith(new Observer<InventoryDetails>() {
+                .subscribeWith(new DisposableObserverWrapper<InventoryDetails>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-                        // Do Nothing
-                    }
-
-                    @Override
-                    public void onNext(InventoryDetails inventoryDetails) {
+                    protected void onSuccess(InventoryDetails inventoryDetails) {
                         if (networkInterface != null) {
                             networkInterface.onCallCompleted(inventoryDetails);
                         }
                     }
-
+    
                     @Override
-                    public void onError(Throwable throwable) {
+                    protected void onFailed(Throwable throwable, String errorMessage) {
                         if (networkInterface != null) {
-                            networkInterface.onCallFailed(throwable);
+                            networkInterface.onCallFailed(throwable, errorMessage);
                         }
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        //Do Nothing
                     }
                 });
     }
-
-    public void getScanPatron(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, String patronBarcodeID) {
+    
+    public void getScanPatron(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, String
+            patronBarcodeID) {
         apiService.getScanPatron(headers, contextName, site, patronBarcodeID)
-                .subscribeWith(new Observer<ScanPatron>() {
+                .subscribeWith(new DisposableObserverWrapper<ScanPatron>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-                        // Do Nothing
-                    }
-
-                    @Override
-                    public void onNext(ScanPatron scanPatron) {
+                    protected void onSuccess(ScanPatron scanPatron) {
                         if (networkInterface != null) {
                             networkInterface.onCallCompleted(scanPatron);
                         }
                     }
-
+                    
                     @Override
-                    public void onError(Throwable throwable) {
+                    protected void onFailed(Throwable throwable, String errorMessage) {
                         if (networkInterface != null) {
-                            networkInterface.onCallFailed(throwable);
+                            networkInterface.onCallFailed(throwable, errorMessage);
                         }
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        //Do Nothing
                     }
                 });
     }
-
-    public void getCheckoutResult(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, String patronID, String barcode, String collectionType, boolean overrideBlocks) {
-
+    
+    public void getCheckoutResult(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, String
+            patronID, String barcode, String collectionType, boolean overrideBlocks) {
+        
         apiService.getCheckoutResult(headers, contextName, site, barcode, patronID, collectionType, String.valueOf(overrideBlocks))
-                .subscribeWith(new Observer<CheckoutResult>() {
+                .subscribeWith(new DisposableObserverWrapper<CheckoutResult>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-                        //Do Nothing
-                    }
-
-                    @Override
-                    public void onNext(CheckoutResult checkoutResult) {
+                    protected void onSuccess(CheckoutResult checkoutResult) {
                         if (networkInterface != null) {
                             networkInterface.onCallCompleted(checkoutResult);
                         }
                     }
-
+                    
                     @Override
-                    public void onError(Throwable throwable) {
+                    protected void onFailed(Throwable throwable, String errorMessage) {
                         if (networkInterface != null) {
-                            networkInterface.onCallFailed(throwable);
+                            networkInterface.onCallFailed(throwable, errorMessage);
                         }
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        //onComplete
                     }
                 });
     }
-
-    public void getCheckinResult(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, String barcode, String collectionType, boolean isLibraryUse) {
-
+    
+    public void getCheckinResult(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, String
+            barcode, String collectionType, boolean isLibraryUse) {
+        
         apiService.getCheckinResult(headers, contextName, site, barcode, collectionType, String.valueOf(isLibraryUse))
-                .subscribeWith(new Observer<CheckinResult>() {
+                .subscribeWith(new DisposableObserverWrapper<CheckinResult>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-                        //onSubscribe
-
-                    }
-
-                    @Override
-                    public void onNext(CheckinResult checkinResult) {
+                    protected void onSuccess(CheckinResult checkinResult) {
                         if (networkInterface != null) {
                             networkInterface.onCallCompleted(checkinResult);
                         }
                     }
-
+                    
                     @Override
-                    public void onError(Throwable throwable) {
+                    protected void onFailed(Throwable throwable, String errorMessage) {
                         if (networkInterface != null) {
-                            networkInterface.onCallFailed(throwable);
+                            networkInterface.onCallFailed(throwable, errorMessage);
                         }
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        //onComplete
-
                     }
                 });
     }
-
+    
     public void getTitleDetails(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, String bibID) {
         apiService.getTitleDetails(headers, contextName, site, bibID)
-                .subscribeWith(new Observer<TitleDetails>() {
+                .subscribeWith(new DisposableObserverWrapper<TitleDetails>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-                        //Do Nothing
-                    }
-
-                    @Override
-                    public void onNext(TitleDetails titleDetails) {
+                    protected void onSuccess(TitleDetails titleDetails) {
                         if (networkInterface != null) {
                             networkInterface.onCallCompleted(titleDetails);
                         }
                     }
-
+                    
                     @Override
-                    public void onError(Throwable throwable) {
+                    protected void onFailed(Throwable throwable, String errorMessage) {
                         if (networkInterface != null) {
-                            networkInterface.onCallFailed(throwable);
+                            networkInterface.onCallFailed(throwable, errorMessage);
                         }
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        //Do Nothing
                     }
                 });
     }
-
-    public void getItemStatus(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, String itemBarcodeID, String collectionType) {
-
+    
+    public void getItemStatus(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, String
+            itemBarcodeID, String collectionType) {
+        
         apiService.getScanItem(headers, contextName, site, itemBarcodeID, collectionType)
-                .subscribeWith(new Observer<ItemDetails>() {
+                .subscribeWith(new DisposableObserverWrapper<ItemDetails>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-                        //Do Nothing
-
-                    }
-
-                    @Override
-                    public void onNext(ItemDetails itemDetails) {
+                    protected void onSuccess(ItemDetails itemDetails) {
                         if (networkInterface != null) {
                             networkInterface.onCallCompleted(itemDetails);
                         }
                     }
-
+                    
                     @Override
-                    public void onError(Throwable throwable) {
+                    protected void onFailed(Throwable throwable, String errorMessage) {
                         if (networkInterface != null) {
-                            networkInterface.onCallFailed(throwable);
+                            networkInterface.onCallFailed(throwable, errorMessage);
                         }
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        //Do Nothing
                     }
                 });
     }
-
-    public void getPatronStatus(@Nullable final NetworkInterface networkInterface, Map<String, String> headerMap, String contextName, String site, String patronBarcode) {
-
+    
+    public void getPatronStatus(@Nullable final NetworkInterface networkInterface, Map<String, String> headerMap, String contextName, String site, String
+            patronBarcode) {
+        
         apiService.getPatronStatus(headerMap, contextName, site, patronBarcode)
-                .subscribeWith(new Observer<PatronInfo>() {
+                .subscribeWith(new DisposableObserverWrapper<PatronInfo>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-                        //Do Nothing
-                    }
-
-                    @Override
-                    public void onNext(PatronInfo patronInfoResult) {
+                    protected void onSuccess(PatronInfo patronInfo) {
                         if (networkInterface != null) {
-                            networkInterface.onCallCompleted(patronInfoResult);
+                            networkInterface.onCallCompleted(patronInfo);
                         }
                     }
-
+                    
                     @Override
-                    public void onError(Throwable throwable) {
+                    protected void onFailed(Throwable throwable, String errorMessage) {
                         if (networkInterface != null) {
-                            networkInterface.onCallFailed(throwable);
+                            networkInterface.onCallFailed(throwable, errorMessage);
                         }
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        //Do Nothing
                     }
                 });
     }
-
-
+    
+    
     public void setString(String key, String value) {
-        AppSharedPreferences.getInstance().setString(key,value);
+        AppSharedPreferences.getInstance()
+                .setString(key, value);
     }
-
+    
     public String getString(String key) {
-        return AppSharedPreferences.getInstance().getString(key);
+        return AppSharedPreferences.getInstance()
+                .getString(key);
     }
-
+    
     public void setInt(String key, int value) {
-        AppSharedPreferences.getInstance().setInt(key, value);
+        AppSharedPreferences.getInstance()
+                .setInt(key, value);
     }
-
+    
     public int getInt(String key) {
-        return AppSharedPreferences.getInstance().getInt(key);
+        return AppSharedPreferences.getInstance()
+                .getInt(key);
     }
-
+    
     public void setBoolean(String key, Boolean value) {
-        AppSharedPreferences.getInstance().setBoolean(key, value);
+        AppSharedPreferences.getInstance()
+                .setBoolean(key, value);
     }
-
+    
     public Boolean getBoolean(String key) {
-        return AppSharedPreferences.getInstance().getBoolean(key);
+        return AppSharedPreferences.getInstance()
+                .getBoolean(key);
     }
-
+    
     public void removeValues(String key) {
-        AppSharedPreferences.getInstance().removeValues(key);
+        AppSharedPreferences.getInstance()
+                .removeValues(key);
     }
-
+    
     public void removeAllSession() {
-        AppSharedPreferences.getInstance().removeAllSession();
+        AppSharedPreferences.getInstance()
+                .removeAllSession();
     }
 }

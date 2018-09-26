@@ -4,7 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.support.annotation.Nullable;
 
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin.CheckinResult;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin.CheckinViewModel;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin.viewmodel.CheckinViewModel;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin.Info;
 import com.follett.fsc.mobile.circdesk.feature.utils.BaseTestClass;
 
