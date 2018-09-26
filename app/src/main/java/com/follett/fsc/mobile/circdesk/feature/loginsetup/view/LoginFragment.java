@@ -104,8 +104,6 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
             AppSharedPreferences.getInstance().removeAllSession();
             mActivity.finish();
             startActivity(new Intent(getActivity(), SetupActivity.class));
-            //mActivity.pushFragment(new SetupFragment(), R.id.loginContainer, "SetupFragment", false);
-
         }
         else if(v == R.id.login_textview)
         {

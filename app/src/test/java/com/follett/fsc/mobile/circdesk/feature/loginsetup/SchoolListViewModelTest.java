@@ -80,7 +80,7 @@ public class SchoolListViewModelTest extends BaseTestClass {
         when(mApplication.getString(R.string.no_schools, DISTRICT_NAME)).thenReturn(DISTRICT_NAME);
         
         mViewModel.onCallCompleted(generateZeroSchoolResult());
-        Assert.assertEquals(DISTRICT_NAME, mViewModel.noSchoolFoundMsg.getValue());
+        Assert.assertEquals(DISTRICT_NAME, mViewModel.getErrorMessage().getValue());
     }
     
     @Test
@@ -98,7 +98,7 @@ public class SchoolListViewModelTest extends BaseTestClass {
     
     @Test
     public void onCallFailed() {
-        mViewModel.onCallFailed(new Throwable());
+        mViewModel.onCallFailed(new Throwable(),"");
         Assert.assertFalse(mViewModel.getIsLoading()
                 .get());
     }

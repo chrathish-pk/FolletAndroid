@@ -92,17 +92,6 @@ public class DistrictListFragment extends BaseFragment<FragmentDistrictListBindi
             DistrictListAdapter adapter = new DistrictListAdapter(getBaseActivity(), districtList);
             lBinding.districtRecyclerview.setAdapter(adapter);
         }
-
-
-//        lBinding.schoolRecyclerview.setLayoutManager(new LinearLayoutManager(getBaseActivity()));
-
-//        mViewModel.siteResult.observe(this, new Observer<SiteResults>() {
-//            @Override
-//            public void onChanged(@Nullable SiteResults siteResults) {
-//                SchoolListAdapter adapter = new SchoolListAdapter(getBaseActivity(), siteResults.sites);
-//                lBinding.schoolRecyclerview.setAdapter(adapter);
-//            }
-//        });
     }
     
     @Override

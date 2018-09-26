@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CircTypeList;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CirculationTypeList;
+import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.CirculationTypeViewModel;
 import com.follett.fsc.mobile.circdesk.feature.utils.BaseTestClass;
 
 import junit.framework.Assert;
@@ -92,7 +93,7 @@ public class CirculationTypeViewModelTest extends BaseTestClass {
 
     @Test
     public void onCallFailed() {
-        circulationTypeViewModel.onCallFailed(new Throwable());
+        circulationTypeViewModel.onCallFailed(new Throwable(),"");
         Assert.assertFalse(circulationTypeViewModel.getIsLoading()
                 .get());
     }

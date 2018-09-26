@@ -21,6 +21,9 @@ import android.app.Application;
 import android.arch.lifecycle.MutableLiveData;
 import android.view.View;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class InventoryViewModel extends BaseViewModel<CTAButtonListener> implements NetworkInterface {
 
     private ItemClickListener itemClickListener;

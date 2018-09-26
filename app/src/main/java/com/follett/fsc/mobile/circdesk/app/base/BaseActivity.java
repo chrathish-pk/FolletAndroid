@@ -28,13 +28,6 @@ import android.text.TextUtils;
 import android.view.View;
 
 
-import com.follett.fsc.mobile.circdesk.BuildConfig;
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
-import com.follett.fsc.mobile.circdesk.databinding.ActivityBaseBinding;
-import com.follett.fsc.mobile.circdesk.databinding.NavigationHeaderBinding;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.SetupActivity;
-
 public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity implements View.OnClickListener {
 
     public ActivityBaseBinding baseBinding;

@@ -37,8 +37,6 @@ import java.util.List;
 
 public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBinding, PatronStatusViewModel> implements NavigationListener, View.OnClickListener, UpdateItemUIListener {
 
-    private static final String TAG = PatronStatusFragment.class.getSimpleName();
-
     private PatronStatusViewModel mViewModel;
 
     private FragmentPatronStatusBinding mBinding;
@@ -93,7 +91,7 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
         mViewModel.mPatronInfo.observe(this, new Observer<PatronInfo>() {
             @Override
             public void onChanged(@Nullable PatronInfo patronInfo) {
-
+                //do nothing
             }
         });
 
@@ -164,7 +162,6 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
                 @Override
                 public void run() {
                     if (patronInfo != null && patronInfo.getSuccess()) {
-//                        mBinding.patronErrorMsg.setVisibility(View.GONE);
                         if (patronInfo.getPatronList() != null) {
                             navigateToPatronListFragment(patronInfo.getPatronList());
                         } else {
@@ -172,7 +169,6 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
                             rightArrowDisable(patronInfo);
                         }
                     } else if (patronInfo != null && !patronInfo.getSuccess()) {
-//                        mBinding.patronErrorMsg.setVisibility(View.VISIBLE);
                         String msg = getString(R.string.double_quote) + AppUtils.getInstance()
                                 .getEditTextValue(mBinding.patronEntryIncludeLayout.patronEntry) + getString(R.string.double_quote);
                         mBinding.patronErrorMsg.setText(getString(R.string.patron_not_found, msg));
@@ -184,18 +180,18 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
 
     private void rightArrowDisable(PatronInfo patronInfo) {
 
-        if (patronInfo.getHolds().size() == 0) {
+        if (patronInfo.getHolds().isEmpty()) {
             mBinding.titleHoldTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         } else {
             mBinding.titleHoldTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.right_arrow, 0);
         }
-        if(patronInfo.getCheckouts().size() == 0)
+        if(patronInfo.getCheckouts().isEmpty())
         {
             mBinding.itemTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         } else {
             mBinding.itemTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.right_arrow, 0);
         }
-        if(patronInfo.getFines().size() == 0)
+        if(patronInfo.getFines().isEmpty())
         {
             mBinding.fineTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         } else {
@@ -222,7 +218,7 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
 
     @Override
     public void onNavigation(int position) {
-
+        // do nothing
     }
 
     @Override
@@ -237,7 +233,6 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
             navigateToPatronList((ArrayList<PatronList>) model, true);
         } else if (position == 1 && model != null) {  // pop patron list
             mActivity.popFragment("PatronListFrgment");
-            //popFragmentFromBackStack(mPatronListFragment);
             requestPatronId((PatronList) model);
         } else if (position == 2 && model != null) {    // PatronItemCheckoutFragment checkout
             navigateToPatronCheckout((PatronInfo) model, true, getString(R.string.item_checkout_label));

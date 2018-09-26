@@ -13,7 +13,7 @@
 
         <variable
             name="viewModel"
-            type="com.follett.fsc.mobile.circdesk.feature.inventory.CirculationTypeViewModel" />
+            type="com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.CirculationTypeViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout
