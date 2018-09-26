@@ -29,4 +29,10 @@ public class CircTypeList {
         this.circTypeDescription = circTypeDescription;
     }
 
+
+    public CircTypeList(Integer circTypeID, String circTypeDescription) {
+        this.circTypeID = circTypeID;
+        this.circTypeDescription = circTypeDescription;
+    }
+
 }
