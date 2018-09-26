@@ -15,6 +15,7 @@ import com.follett.fsc.mobile.circdesk.feature.iteminfo.TitleInfoActivity;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.NavigationListener;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.CustomCheckoutItem;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 import android.app.Activity;
@@ -133,6 +134,11 @@ public class PatronItemCheckoutFragment extends BaseFragment<FragmentPatronListB
     public void onNavigation(Object model, int position) {
         Activity activity = getBaseActivity();
         if (activity != null && model != null && position == 5 ) {
+            if (!isNetworkConnected()) {
+                AppUtils.getInstance()
+                        .showNoInternetAlertDialog(activity);
+                return;
+            }
                 Intent titleIntent = new Intent(activity, TitleInfoActivity.class);
                 titleIntent.putExtra("bibID", String.valueOf(((CustomCheckoutItem) model).getId()));
                 startActivity(titleIntent);

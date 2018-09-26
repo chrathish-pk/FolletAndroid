@@ -93,8 +93,8 @@
                             android:fontFamily="@font/opensans_regular"
                             android:text="@{patronInfo.lastName + ',' + patronInfo.firstName}"
                             android:textColor="@color/blueLabel"
-                            android:textSize="@dimen/text_size_20sp"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/text_size_16sp"
+                             />
 
                         <TextView
                             android:id="@+id/patronType"

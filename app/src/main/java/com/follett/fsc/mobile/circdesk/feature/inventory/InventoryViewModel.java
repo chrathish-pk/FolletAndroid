@@ -22,6 +22,9 @@ import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import java.util.HashMap;
 import java.util.Map;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class InventoryViewModel extends BaseViewModel<CTAButtonListener> implements NetworkInterface {
 
     private ItemClickListener itemClickListener;
@@ -88,6 +91,7 @@ public class InventoryViewModel extends BaseViewModel<CTAButtonListener> impleme
 
     @Override
     public void onCallFailed(Throwable throwable) {
+        //do nothing
 
     }
 }

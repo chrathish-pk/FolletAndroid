@@ -9,7 +9,6 @@ package com.follett.fsc.mobile.circdesk.feature.iteminfo;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
-import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityTitleDetailsBinding;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
@@ -91,9 +90,9 @@ public class TitleInfoActivity extends BaseActivity<AdditionalInfoViewModel> imp
                     activityTitleDetailsBinding.availablityLayout.setVisibility(View.VISIBLE);
                     activityTitleDetailsBinding.additionalInfoBtn.setOnClickListener(TitleInfoActivity.this);
                     activityTitleDetailsBinding.progressBar.setVisibility(View.GONE);
-                    String site_text = String.format(getApplicationContext().getResources().getString(R.string.site_info),
+                    String siteText = String.format(getApplicationContext().getResources().getString(R.string.site_info),
                             AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SITE_NAME));
-                    activityTitleDetailsBinding.itemAvailabilitySite.setText(site_text);
+                    activityTitleDetailsBinding.itemAvailabilitySite.setText(siteText);
                     activityTitleDetailsBinding.setTitleDetailsViewModel(additionalInfoDetails);
                 }
             }
