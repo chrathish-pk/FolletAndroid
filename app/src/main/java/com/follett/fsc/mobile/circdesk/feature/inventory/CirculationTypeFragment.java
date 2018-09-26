@@ -12,20 +12,22 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
+import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
-import com.follett.fsc.mobile.circdesk.databinding.RecyclerviewLayoutBinding;
+
+import com.follett.fsc.mobile.circdesk.databinding.FragmentCirculationtypeLayoutBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CirculationTypeList;
 
-public class CirculationTypeFragment extends BaseFragment<RecyclerviewLayoutBinding, CirculationTypeViewModel> implements ItemClickListener {
+public class CirculationTypeFragment extends BaseFragment<FragmentCirculationtypeLayoutBinding, CirculationTypeViewModel> implements ItemClickListener {
 
-    private RecyclerviewLayoutBinding recyclerviewLayoutBinding;
+    private FragmentCirculationtypeLayoutBinding recyclerviewLayoutBinding;
     private CirculationTypeViewModel circulationTypeViewModel;
 
     @Override
     public int getLayoutId() {
-        return R.layout.recyclerview_layout;
+        return R.layout.fragment_circulationtype_layout;
     }
 
     @Override
@@ -36,7 +38,7 @@ public class CirculationTypeFragment extends BaseFragment<RecyclerviewLayoutBind
 
     @Override
     public int getBindingVariable() {
-        return 0;
+        return BR.viewModel;
     }
 
     @Override
