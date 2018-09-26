@@ -9,6 +9,7 @@ package com.follett.fsc.mobile.circdesk.feature.inventory;
 import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.UpdateUIListener;
@@ -18,6 +19,9 @@ import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import android.app.Application;
 import android.arch.lifecycle.MutableLiveData;
 import android.view.View;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class InventoryViewModel extends BaseViewModel<CTAButtonListener> implements NetworkInterface {
 
@@ -34,11 +38,6 @@ public class InventoryViewModel extends BaseViewModel<CTAButtonListener> impleme
         this.updateUIListener = updateUIListener;
         mAppRemoteRepository = new AppRemoteRepository();
         mApplication = application;
-    }
-
-    public void getInProgressInventoryResults(String site, String contextName, int collectionType) {
-        setIsLoding(true);
-        mAppRemoteRepository.getInProgressInventoryResults(AppUtils.getHeader(mApplication),this, site, contextName, collectionType);
     }
 
     public void OnItemClick(View view) {
@@ -90,6 +89,7 @@ public class InventoryViewModel extends BaseViewModel<CTAButtonListener> impleme
 
     @Override
     public void onCallFailed(Throwable throwable) {
+        //do nothing
 
     }
 }

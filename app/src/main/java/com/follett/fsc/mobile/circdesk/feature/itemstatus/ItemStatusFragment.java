@@ -128,7 +128,7 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
                     fragmentItemStatusBinding.progressBarItem.setVisibility(View.GONE);
                     if (itemDetailsinfo.getSuccess()) {
                         fragmentItemStatusBinding.itemErrorMsgLayout.setVisibility(View.GONE);
-                        fragmentItemStatusBinding.setItemDetailsViewModel(itemDetailsinfo);
+                        titleInfoBtnShow(itemDetailsinfo);
                     } else if (!itemDetailsinfo.getSuccess()) {
                         fragmentItemStatusBinding.itemErrorMsgLayout.setVisibility(View.VISIBLE);
                         fragmentItemStatusBinding.itemStatusDetailLayout.setVisibility(View.GONE);
@@ -150,6 +150,24 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
         });
     }
 
+    private void titleInfoBtnShow(ItemDetails itemDetails) {
+        fragmentItemStatusBinding.setItemDetailsViewModel(itemDetailsinfo);
+        if (AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED)) {
+            if(!itemDetails.getCurrentCheckout().isEmpty()) {
+                fragmentItemStatusBinding.itemStatusCheckedoutInfoBtn.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                fragmentItemStatusBinding.itemStatusCheckedoutInfoBtn.setVisibility(View.GONE);
+            }
+        }
+        else
+        {
+            fragmentItemStatusBinding.itemStatusCheckedoutInfoBtn.setVisibility(View.GONE);
+
+        }
+    }
+
     @Override
     public int getBindingVariable() {
         return 0;
@@ -169,15 +187,24 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
                     .hideKeyBoard(activity, fragmentItemStatusBinding.itemStatusPatronEntry);
             if (AppUtils.getInstance().isEditTextNotEmpty(fragmentItemStatusBinding.itemStatusPatronEntry)) {
                 fragmentItemStatusBinding.progressBarItem.setVisibility(View.VISIBLE);
+                if (!isNetworkConnected()) {
+                    AppUtils.getInstance()
+                            .showNoInternetAlertDialog(activity);
+                    fragmentItemStatusBinding.progressBarItem.setVisibility(View.GONE);
+                    return;
+                }
                 int collectionType = AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED) ? 0 : 4;
-                FollettLog.i("TAG","Library CollectionType"+collectionType);
                 itemStatusViewModel.getScanItem(fragmentItemStatusBinding.itemStatusPatronEntry.getText().toString().trim(), String.valueOf(collectionType));
             } else {
                 AppUtils.getInstance()
                         .showShortToastMessages(activity, getString(R.string.errorPatronEntry));
             }
         } else if (v.getId() == R.id.itemStatusCheckedoutInfoBtn) {
-
+            if (!isNetworkConnected()) {
+                AppUtils.getInstance()
+                        .showNoInternetAlertDialog(activity);
+                return;
+            }
             Intent titleIntent = new Intent(activity, TitleInfoActivity.class);
             String bidID = Integer.toString(itemDetailsinfo.getBibID());
             titleIntent.putExtra("bibID", bidID);
@@ -202,6 +229,8 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
         }
         else if(v.getId() == R.id.backBtn)
         {
+            AppUtils.getInstance()
+                    .hideKeyBoard(activity, fragmentItemStatusBinding.itemStatusPatronEntry);
             mActivity.setTitleBar(getString(R.string.home));
             mActivity.baseBinding.backBtn.setVisibility(View.GONE);
             mActivity.onBackPressed();

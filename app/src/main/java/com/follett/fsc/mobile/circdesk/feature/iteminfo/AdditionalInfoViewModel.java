@@ -34,7 +34,6 @@ public class AdditionalInfoViewModel extends BaseViewModel implements NetworkInt
     }
 
     public void getTitleDetails(String bibID) {
-        setIsLoding(true);
         Map<String, String> map = new HashMap<>();
         map.put("Accept", "application/json");
         map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID));
@@ -46,7 +45,6 @@ public class AdditionalInfoViewModel extends BaseViewModel implements NetworkInt
 
     @Override
     public void onCallCompleted(Object model) {
-        //setIsLoding(false);
         try {
             if (model instanceof TitleDetails) {
                 mTitleDetails.postValue((TitleDetails) model);
@@ -58,7 +56,6 @@ public class AdditionalInfoViewModel extends BaseViewModel implements NetworkInt
 
     @Override
     public void onCallFailed(Throwable throwable) {
-        //setIsLoding(false);
         FollettLog.d("Exception", throwable.getMessage());
     }
 }

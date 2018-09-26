@@ -68,28 +68,6 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
         if (!TextUtils.isEmpty(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SELECTED_BARCODE))) {
             getPatronID();
         }
-
-        /*checkoutViewModel.scanPatronMutableLiveData.observeForever(new Observer<ScanPatron>() {
-            @Override
-            public void onChanged(@Nullable ScanPatron scanPatronValue) {
-                scanPatron = scanPatronValue;
-                scanPatronUpdate(scanPatron);
-            }
-        });
-
-        checkoutViewModel.checkoutResultMutableLiveData.observeForever(new Observer<CheckoutResult>() {
-            @Override            public void onChanged(@Nullable CheckoutResult checkoutResultValue) {
-                checkoutResult = checkoutResultValue;
-                if (checkoutResult.getSuccess()) {
-                    FollettLog.e("sucess", "checkout value");
-                    bindCheckoutResult(checkoutResult);
-                } else {
-                    FollettLog.e("failure", "checkout value");
-
-                    updateCheckoutErrorMsg(checkoutResult);
-                }
-            }
-        });*/
     }
 
     @Override
@@ -106,8 +84,18 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
             if (AppUtils.getInstance().isEditTextNotEmpty(fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry)) {
                 String barcode = AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SELECTED_BARCODE);
                 if (TextUtils.isEmpty(barcode)) {
+                    if (!isNetworkConnected()) {
+                        AppUtils.getInstance()
+                                .showNoInternetAlertDialog(activity);
+                        return;
+                    }
                     checkoutViewModel.getScanPatron(fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.getText().toString().trim());
                 } else {
+                    if (!isNetworkConnected()) {
+                        AppUtils.getInstance()
+                                .showNoInternetAlertDialog(activity);
+                        return;
+                    }
                     int collectionType = AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED) ? 0 : 4;
                     checkoutViewModel.getCheckoutResult(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_PATRON_ID),
                             fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.getText().toString().trim(), String.valueOf(collectionType), false);
@@ -125,6 +113,11 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
             fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.setText("");
             fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.setHint(R.string.findPatron);
         } else if (v.getId() == R.id.checkedoutInfoBtn) {
+            if (!isNetworkConnected()) {
+                AppUtils.getInstance()
+                        .showNoInternetAlertDialog(activity);
+                return;
+            }
             Intent titleIntent = new Intent(activity, TitleInfoActivity.class);
             titleIntent.putExtra("bibID", checkoutResult.getInfo().getBibID());
             startActivity(titleIntent);

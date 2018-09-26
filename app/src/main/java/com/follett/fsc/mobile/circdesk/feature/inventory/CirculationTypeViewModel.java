@@ -9,7 +9,6 @@ package com.follett.fsc.mobile.circdesk.feature.inventory;
 import android.app.Application;
 
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 
@@ -32,11 +31,12 @@ public class CirculationTypeViewModel extends BaseViewModel implements NetworkIn
 
     @Override
     public void onCallCompleted(Object model) {
-
+        //do nothing
     }
 
     @Override
     public void onCallFailed(Throwable throwable) {
+        //do nothing
 
     }
 }

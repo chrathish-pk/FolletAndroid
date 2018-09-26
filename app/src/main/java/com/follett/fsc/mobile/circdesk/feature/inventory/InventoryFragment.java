@@ -17,6 +17,7 @@ import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentInventoryBinding;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.UpdateUIListener;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_COLLECTION_TYPE;
@@ -76,6 +77,8 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.backBtn:
+                AppUtils.getInstance()
+                        .hideKeyBoard(mActivity, fragmentInventoryBinding.inventoryCompletedStatus);
                 mActivity.setTitleBar(getString(R.string.home));
                 mActivity.baseBinding.backBtn.setVisibility(View.GONE);
                 mActivity.onBackPressed();
