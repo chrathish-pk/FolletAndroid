@@ -3,11 +3,11 @@ package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.Nullable;
 
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.CheckoutInfo;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.CheckoutResult;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.CheckoutViewModel;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.Patron;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.ScanPatron;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckoutInfo;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckoutResult;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.Patron;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.ScanPatron;
 import com.follett.fsc.mobile.circdesk.feature.utils.BaseTestClass;
 
 import junit.framework.Assert;

@@ -1,8 +1,8 @@
 package com.follett.fsc.mobile.circdesk.feature.data.remote.api;
 
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.CheckoutInfo;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.CheckoutResult;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckoutInfo;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckoutResult;
 import com.follett.fsc.mobile.circdesk.feature.utils.BaseTestClass;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 
