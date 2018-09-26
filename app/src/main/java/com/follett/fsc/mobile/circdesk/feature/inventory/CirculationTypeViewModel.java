@@ -7,36 +7,40 @@
 package com.follett.fsc.mobile.circdesk.feature.inventory;
 
 import android.app.Application;
+import android.arch.lifecycle.MutableLiveData;
 
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.CirculationTypeList;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 
 public class CirculationTypeViewModel extends BaseViewModel implements NetworkInterface {
 
-    private AppRemoteRepository mAppRemoteRepository;
     private Application mApplication;
+    public MutableLiveData<CirculationTypeList> circulationTypeListMutableLiveData = new MutableLiveData<>();
 
     public CirculationTypeViewModel(Application application) {
         super(application);
         mApplication = application;
-        mAppRemoteRepository = new AppRemoteRepository();
-        fetchCirculationTypeList();
     }
 
     public void fetchCirculationTypeList() {
         setIsLoding(true);
-        mAppRemoteRepository.getCirculationTypeList(this);
+        AppRemoteRepository.getInstance().getCirculationTypeList(this, AppUtils.getInstance().getHeader(mApplication),
+                AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SITE_SHORT_NAME),
+                AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_CONTEXT_NAME));
     }
 
     @Override
     public void onCallCompleted(Object model) {
-        //do nothing
+        setIsLoding(false);
+        circulationTypeListMutableLiveData.postValue((CirculationTypeList) model);
     }
 
     @Override
     public void onCallFailed(Throwable throwable) {
-        //do nothing
+        setIsLoding(false);
 
     }
 }

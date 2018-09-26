@@ -32,9 +32,9 @@ public class ItemStatusApiTest extends BaseTestClass {
     public void VerifyItemStatusApi() {
         mItemDetails = generateItemDetail();
         when(mPreferences.getString(KEY_SESSION_ID, "")).thenReturn(SESSION_ID);
-        when(mApiInterface.getScanItem(AppUtils.getHeader(mApplication), CONTEXT_NAME, SITE_NAME, "1", "0")).thenReturn(Observable.just(mItemDetails));
+        when(mApiInterface.getScanItem(AppUtils.getInstance().getHeader(mApplication), CONTEXT_NAME, SITE_NAME, "1", "0")).thenReturn(Observable.just(mItemDetails));
         
-        final Observable<ItemDetails> itemDetailsObservable = mApiInterface.getScanItem(AppUtils.getHeader(mApplication), CONTEXT_NAME, SITE_NAME, "1", "0");
+        final Observable<ItemDetails> itemDetailsObservable = mApiInterface.getScanItem(AppUtils.getInstance().getHeader(mApplication), CONTEXT_NAME, SITE_NAME, "1", "0");
         itemDetailsObservable.subscribe(new Consumer<ItemDetails>() {
             @Override
             public void accept(ItemDetails itemDetails) throws Exception {

@@ -34,9 +34,9 @@ public class PatronStatusApiTest extends BaseTestClass {
     @Test
     public void VerifyPatronStatusApi() {
         mPatronResults = generatePatronInfoResult();
-        when(mApiInterface.getPatronStatus(AppUtils.getHeader(mApplication), CONTEXT_NAME, SITE_NAME, "p1")).thenReturn(Observable.just(mPatronResults));
+        when(mApiInterface.getPatronStatus(AppUtils.getInstance().getHeader(mApplication), CONTEXT_NAME, SITE_NAME, "p1")).thenReturn(Observable.just(mPatronResults));
         
-        final Observable<PatronInfo> patronResultsObservable = mApiInterface.getPatronStatus(AppUtils.getHeader(mApplication), CONTEXT_NAME, SITE_NAME, "p1");
+        final Observable<PatronInfo> patronResultsObservable = mApiInterface.getPatronStatus(AppUtils.getInstance().getHeader(mApplication), CONTEXT_NAME, SITE_NAME, "p1");
         patronResultsObservable.subscribe(new Consumer<PatronInfo>() {
             @Override
             public void accept(PatronInfo patronInfo) throws Exception {

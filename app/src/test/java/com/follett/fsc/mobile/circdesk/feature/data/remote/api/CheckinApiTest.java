@@ -12,6 +12,8 @@ import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.Info;
 import com.follett.fsc.mobile.circdesk.feature.utils.BaseTestClass;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 
+import junit.framework.Assert;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -25,7 +27,6 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.plugins.RxJavaPlugins;
 import io.reactivex.schedulers.Schedulers;
-import junit.framework.Assert;
 
 import static org.mockito.Mockito.when;
 
@@ -65,10 +66,10 @@ public class CheckinApiTest extends BaseTestClass {
     public void verifyCheckinApi() {
         mCheckinResult = generateChecinResult();
 
-        when(apiInterface.getCheckinResult(AppUtils.getHeader(mApplication), CONTEXT_NAME, SITE_NAME,
+        when(apiInterface.getCheckinResult(AppUtils.getInstance().getHeader(mApplication), CONTEXT_NAME, SITE_NAME,
                 checkinBarcode, collectionType, isLibraryUse)).thenReturn(Observable.just(mCheckinResult));
 
-        Observable<CheckinResult> checkinResultObservable = apiInterface.getCheckinResult(AppUtils.getHeader(mApplication), CONTEXT_NAME, SITE_NAME,
+        Observable<CheckinResult> checkinResultObservable = apiInterface.getCheckinResult(AppUtils.getInstance().getHeader(mApplication), CONTEXT_NAME, SITE_NAME,
                 checkinBarcode, collectionType, isLibraryUse);
         checkinResultObservable.blockingForEach(new Consumer<CheckinResult>() {
             @Override

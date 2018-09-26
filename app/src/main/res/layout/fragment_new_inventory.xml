@@ -7,6 +7,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+            name="newInventoryViewModel"
+            type="com.follett.fsc.mobile.circdesk.feature.inventory.NewInventoryViewModel" />
+    </data>
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,9 +38,9 @@
                     android:id="@+id/newInventoryName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
                     android:background="@drawable/rounded_border_edittext"
                     android:hint="@string/newInventoryName"
                     android:padding="10dp"
@@ -56,6 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view1">
 
@@ -74,9 +82,9 @@
                         android:id="@+id/limitedToValue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
                         android:drawableRight="@drawable/right_arrow"
                         android:fontFamily="@font/opensans_regular"
                         android:text="Unlimited"
@@ -98,6 +106,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/limitedToLayout">
 
@@ -116,9 +125,9 @@
                         android:id="@+id/resourceTypesValue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
                         android:drawableRight="@drawable/right_arrow"
                         android:fontFamily="@font/opensans_regular"
                         android:text="All Resource Types"
@@ -140,6 +149,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/resourceTypeLayout">
 
@@ -158,9 +168,9 @@
                         android:id="@+id/purchasePriceValue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
                         android:drawableRight="@drawable/right_arrow"
                         android:fontFamily="@font/opensans_regular"
                         android:text="All Resource Types"
@@ -184,6 +194,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/purchasePriceLayout">
 
@@ -202,9 +213,9 @@
                         android:id="@+id/includeItemsValue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
                         android:drawableRight="@drawable/right_arrow"
                         android:fontFamily="@font/opensans_regular"
                         android:text="With all tracking attributes"
@@ -226,6 +237,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/includeItemsLayout">
 
@@ -245,9 +257,9 @@
                         android:id="@+id/checkoutHandlingValue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
                         android:drawableRight="@drawable/right_arrow"
                         android:fontFamily="@font/opensans_regular"
                         android:text="Checked Out, In Circulation"
@@ -269,6 +281,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/checkoutHandlingLayout">
 
@@ -287,9 +300,9 @@
                         android:id="@+id/excludeItemsValue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
                         android:drawableRight="@drawable/right_arrow"
                         android:fontFamily="@font/opensans_regular"
                         android:text="No exclusions"
@@ -311,8 +324,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/excludeItemsLayout">
+                    app:layout_constraintTop_toBottomOf="@id/excludeItemsLayout">
 
                     <TextView
                         android:id="@+id/mismatchedItemLocationLabel"
@@ -329,9 +343,9 @@
                         android:id="@+id/mismatchedItemLocationValue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
                         android:drawableRight="@drawable/right_arrow"
                         android:fontFamily="@font/opensans_regular"
                         android:text="Do Nothing"
@@ -340,7 +354,133 @@
                         app:layout_constraintHorizontal_bias="0.281" />
 
                     <View
-                        android:id="@+id/view9"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@color/editTextBgColor" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/callNumberLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/mismatchedItemLocationLayout">
+
+                    <TextView
+                        android:id="@+id/callNumbersLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:text="@string/callNumbersLabel"
+                        android:textColor="@color/blueLabel"
+                        android:textSize="@dimen/text_size_16sp" />
+
+                    <TextView
+                        android:id="@+id/callNumbersValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:drawableRight="@drawable/right_arrow"
+                        android:fontFamily="@font/opensans_regular"
+                        android:text="All"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_16sp"
+                        app:layout_constraintHorizontal_bias="0.281" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@color/editTextBgColor" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/circulationTypesLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{(v)->newInventoryViewModel.onItemClicked(v)}"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/callNumberLayout">
+
+                    <TextView
+                        android:id="@+id/circulationTypesLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:text="@string/circulationTypeLabel"
+                        android:textColor="@color/blueLabel"
+                        android:textSize="@dimen/text_size_16sp" />
+
+                    <TextView
+                        android:id="@+id/circulationTypesValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:drawableRight="@drawable/right_arrow"
+                        android:fontFamily="@font/opensans_regular"
+                        android:text="All Ciruculation Types"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_16sp"
+                        app:layout_constraintHorizontal_bias="0.281" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@color/editTextBgColor" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/libExcludeItemsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/circulationTypesLayout">
+
+                    <TextView
+                        android:id="@+id/libExcludeItemsLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:text="@string/excludeItems"
+                        android:textColor="@color/blueLabel"
+                        android:textSize="@dimen/text_size_16sp" />
+
+                    <TextView
+                        android:id="@+id/libExcludeItemsValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:drawableRight="@drawable/right_arrow"
+                        android:fontFamily="@font/opensans_regular"
+                        android:text="No exclustions"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_16sp"
+                        app:layout_constraintHorizontal_bias="0.281" />
+
+                    <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="16dp"
@@ -353,8 +493,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
                     android:layout_marginTop="32dp"
+                    android:layout_marginRight="10dp"
                     android:background="@drawable/rounded_solid_blue"
                     android:fontFamily="@font/opensans_semibold"
                     android:gravity="center"
@@ -364,14 +504,14 @@
                     android:textSize="@dimen/text_size_16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/mismatchedItemLocationLayout" />
+                    app:layout_constraintTop_toBottomOf="@+id/libExcludeItemsLayout" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
                     android:layout_marginTop="32dp"
+                    android:layout_marginRight="10dp"
                     android:background="@drawable/rounded_border_blue"
                     android:fontFamily="@font/opensans_semibold"
                     android:gravity="center"

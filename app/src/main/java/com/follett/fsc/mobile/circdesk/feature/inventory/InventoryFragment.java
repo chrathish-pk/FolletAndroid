@@ -15,12 +15,14 @@ import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentInventoryBinding;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.UpdateUIListener;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_COLLECTION_TYPE;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_IS_LIBRARY_SELECTED;
 
 public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, InventoryViewModel> implements ItemClickListener, View.OnClickListener, UpdateUIListener {
 
@@ -55,8 +57,7 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
         initViews();
         inventoryViewModel.getInProgressInventoryResults(AppSharedPreferences.getInstance()
                 .getString(AppSharedPreferences.KEY_SITE_SHORT_NAME), AppSharedPreferences.getInstance()
-                .getString(AppSharedPreferences.KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
-                .getInt(KEY_COLLECTION_TYPE));
+                .getString(AppSharedPreferences.KEY_CONTEXT_NAME), AppRemoteRepository.getInstance().getBoolean(KEY_IS_LIBRARY_SELECTED) ? 0 : 4);
 
     }
 
@@ -82,7 +83,7 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                 mActivity.setTitleBar(getString(R.string.home));
                 mActivity.baseBinding.backBtn.setVisibility(View.GONE);
                 mActivity.onBackPressed();
-            break;
+                break;
             case R.id.libraryBtn:
                 fragmentInventoryBinding.inventoryLocation.setVisibility(View.GONE);
                 fragmentInventoryBinding.inventoryLocationBar.setVisibility(View.GONE);
@@ -90,8 +91,7 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                 fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(mActivity.getResources().getColor(R.color.white));
                 fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(mActivity.getResources().getColor(R.color.white));
                 fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(mActivity.getResources().getColor(R.color.blueLabel));
-                AppSharedPreferences.getInstance().setInt(KEY_COLLECTION_TYPE, 0);
-
+                AppRemoteRepository.getInstance().setBoolean(KEY_IS_LIBRARY_SELECTED, true);
                 break;
             case R.id.resourceBtn:
                 fragmentInventoryBinding.inventoryLocation.setVisibility(View.VISIBLE);
@@ -100,8 +100,7 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                 fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(mActivity.getResources().getColor(R.color.blueLabel));
                 fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(mActivity.getResources().getColor(R.color.blueLabel));
                 fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(mActivity.getResources().getColor(R.color.white));
-                AppSharedPreferences.getInstance().setInt(KEY_COLLECTION_TYPE, 4);
-
+                AppRemoteRepository.getInstance().setBoolean(KEY_IS_LIBRARY_SELECTED, false);
                 break;
             case R.id.finalizeInventoryBtn:
               /*  DialogFragment fragment = new FinalizePopupFragment();
@@ -135,9 +134,9 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
 
                         }
                     }
-                    if(value instanceof InventoryDetails){
+                    if (value instanceof InventoryDetails) {
                         inventoryDetails = (InventoryDetails) value;
-                        fragmentInventoryBinding.inventoryCompletedStatus.setText("Current status: "+inventoryDetails.getCompletePercentage()+" Complete");
+                        fragmentInventoryBinding.inventoryCompletedStatus.setText("Current status: " + inventoryDetails.getCompletePercentage() + " Complete");
                     }
                 } catch (Exception e) {
                     FollettLog.e(getString(R.string.error), e.getMessage());
