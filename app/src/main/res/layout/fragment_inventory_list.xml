@@ -11,7 +11,7 @@
 
         <variable
             name="newInventoryViewModel"
-            type="com.follett.fsc.mobile.circdesk.feature.inventory.SelectInventoryViewModel" />
+            type="com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.SelectInventoryViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout

@@ -12,7 +12,7 @@
 
         <variable
             name="checkoutViewModel"
-            type="com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.CheckoutViewModel" />
+            type="com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.viewmodel.CheckoutViewModel" />
     </data>
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"

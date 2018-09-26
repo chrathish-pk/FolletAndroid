@@ -12,6 +12,7 @@ import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.Checkout;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.CustomCheckoutItem;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.Fine;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.viewmodel.PatronListViewModel;
 import com.follett.fsc.mobile.circdesk.feature.utils.BaseTestClass;
 
 import org.junit.After;

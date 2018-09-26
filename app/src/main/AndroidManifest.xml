@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".feature.loginsetup.SetupActivity"
+            android:name=".feature.loginsetup.view.SetupActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,11 +27,11 @@
 
 
         <activity
-            android:name=".feature.iteminfo.TitleInfoActivity"
+            android:name=".feature.iteminfo.view.TitleInfoActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".feature.iteminfo.AdditionalInfoActivity"
+            android:name=".feature.iteminfo.view.AdditionalInfoActivity"
             android:screenOrientation="portrait" />
 
 
