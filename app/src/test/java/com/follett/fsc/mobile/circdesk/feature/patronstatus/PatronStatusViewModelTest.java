@@ -94,7 +94,7 @@ public class PatronStatusViewModelTest extends BaseTestClass {
     
     @Test
     public void onCallFailed() {
-        mViewModel.onCallFailed(new Throwable());
+        mViewModel.onCallFailed(new Throwable(),"");
         Assert.assertFalse(mViewModel.getIsLoading()
                 .get());
     }

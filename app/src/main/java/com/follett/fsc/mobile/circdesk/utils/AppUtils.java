@@ -114,12 +114,10 @@ public class AppUtils {
     private void showProgressDialog(Context ctx, String title, String body, Drawable icon, boolean isCancellable) {
 
         try {
-            if (ctx instanceof Application) {
-                if (applicationInForeground(ctx)) {
+            if (ctx instanceof Application && applicationInForeground(ctx)) {
                     mProgressDialog = ProgressDialog.show(ctx, title, body, true);
                     mProgressDialog.setIcon(icon);
                     mProgressDialog.setCancelable(isCancellable);
-                }
             }
         } catch (Exception e) {
             FollettLog.d(AppConstants.EXCEPTION, e.getMessage());
@@ -320,7 +318,5 @@ public class AppUtils {
                 .removeValues(KEY_SITE_ID);
         AppSharedPreferences.getInstance()
                 .removeValues(KEY_SITE_NAME);
-//        AppSharedPreferences.getInstance()
-//                .removeValues(KEY_CONTEXT_NAME);
-    }
+}
 }

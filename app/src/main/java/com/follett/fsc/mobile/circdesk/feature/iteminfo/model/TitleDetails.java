@@ -4,7 +4,6 @@ package com.follett.fsc.mobile.circdesk.feature.iteminfo.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -78,7 +77,6 @@ public class TitleDetails implements Parcelable
     @SerializedName("holdErrorList")
     @Expose
     private List<Object> holdErrorList = null;
-    private final static long serialVersionUID = 3423712223050425072L;
 
     protected TitleDetails(Parcel in) {
         title = in.readString();
@@ -320,7 +318,8 @@ public class TitleDetails implements Parcelable
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(title);
-        dest.writeByte((byte) (temporary == null ? 0 : temporary ? 1 : 2));
+        if (temporary) dest.writeByte((byte) (temporary == null ? 0 : 1));
+        else dest.writeByte((byte) (temporary == null ? 0 : 2));
         dest.writeString(status);
         dest.writeString(responsibility);
         dest.writeString(contentImageLink);
@@ -361,7 +360,8 @@ public class TitleDetails implements Parcelable
             dest.writeByte((byte) 1);
             dest.writeInt(availableLocal);
         }
-        dest.writeByte((byte) (inUsersBooklist == null ? 0 : inUsersBooklist ? 1 : 2));
+        if (inUsersBooklist) dest.writeByte((byte) (inUsersBooklist == null ? 0 : 1));
+        else dest.writeByte((byte) (inUsersBooklist == null ? 0 : 2));
         dest.writeStringList(summaryList);
     }
 }
