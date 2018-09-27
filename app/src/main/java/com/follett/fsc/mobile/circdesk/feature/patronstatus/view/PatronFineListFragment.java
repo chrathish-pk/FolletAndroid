@@ -6,16 +6,6 @@
 
 package com.follett.fsc.mobile.circdesk.feature.patronstatus.view;
 
-import com.follett.fsc.mobile.circdesk.BR;
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
-import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
-import com.follett.fsc.mobile.circdesk.databinding.FragmentPatronListBinding;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.NavigationListener;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.viewmodel.PatronListViewModel;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
-import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
@@ -25,9 +15,19 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
+import com.follett.fsc.mobile.circdesk.BR;
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
+import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.databinding.FragmentPatronListBinding;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.NavigationListener;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.viewmodel.PatronListViewModel;
+import com.follett.fsc.mobile.circdesk.utils.FollettLog;
+
 import static com.follett.fsc.mobile.circdesk.utils.AppConstants.PATRON_INFO_KEY;
 
-public class PatronFineListFragment extends BaseFragment<FragmentPatronListBinding, PatronListViewModel> implements CTAButtonListener, NavigationListener {
+public class PatronFineListFragment extends BaseFragment<FragmentPatronListBinding, PatronListViewModel> implements CTAButtonListener, NavigationListener, View.OnClickListener {
     
     private static final String TAG = PatronFineListFragment.class.getSimpleName();
 
@@ -81,7 +81,7 @@ public class PatronFineListFragment extends BaseFragment<FragmentPatronListBindi
         if (getBaseActivity() == null) {
             return;
         }
-        
+        mActivity.baseBinding.backBtn.setOnClickListener(this);
         lBinding.patronListRecyclerview.setLayoutManager(new LinearLayoutManager(getBaseActivity()));
         final Bundle arguments = getArguments();
         if (arguments != null) {
@@ -118,6 +118,12 @@ public class PatronFineListFragment extends BaseFragment<FragmentPatronListBindi
     @Override
     public void onNavigation(Object model, int position) {
         //do nothing
+    }
+
+    @Override
+    public void onClick(View v) {
+        mActivity.setBackBtnVisible();
+        mActivity.onBackPressed();
     }
 }
 
