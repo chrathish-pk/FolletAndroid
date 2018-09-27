@@ -27,6 +27,7 @@ import com.follett.fsc.mobile.circdesk.databinding.ActivityBaseBinding;
 import com.follett.fsc.mobile.circdesk.databinding.NavigationHeaderBinding;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
 
+
 public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity implements View.OnClickListener {
 
     public ActivityBaseBinding baseBinding;
@@ -51,26 +52,22 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
                     baseBinding.navigationLayout.navInfoLoginView.setVisibility(View.VISIBLE);
                     baseBinding.navigationLayout.navInfoLayout.navInfoView.setVisibility(View.GONE);
                     baseBinding.navigationLayout.navToolBarIcon.setImageResource(R.drawable.baseline_account_circle);
-                    String site_text = String.format(getApplicationContext().getResources().getString(R.string.site_info),
+                    String siteText = String.format(getApplicationContext().getResources().getString(R.string.site_info),
                             AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SITE_NAME));
                     String apiVersion = String.format(getApplicationContext().getResources().getString(R.string.copyright_info),
                             BuildConfig.VERSION_NAME, AppSharedPreferences.getInstance().getString(AppSharedPreferences.FOLLETT_API_VERSION));
                     String userName = String.format(getApplicationContext().getResources().getString(R.string.user_info), AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_USERNAME));
                     baseBinding.navigationLayout.navInfoSubLayout.navbarSubContent.setText(apiVersion);
-                    baseBinding.navigationLayout.siteHeader.setText(site_text);
+                    baseBinding.navigationLayout.siteHeader.setText(siteText);
                     headerView = baseBinding.navigationLayout.navView.getHeaderView(0);
                     NavigationHeaderBinding headerBinding = DataBindingUtil.bind(headerView);
-                    headerBinding.siteInfo.setText(site_text);
+                    headerBinding.siteInfo.setText(siteText);
                     headerBinding.userInfo.setText(userName);
                     baseBinding.navigationLayout.logout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_PERMISSIONS);
                             AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SESSION_ID);
-
-
-                            //pushFragment(new LoginFragment(),R.id.loginContainer,"LoginFragment",false);
-                            //popFragment(null,true);
                             finish();
                             startActivity(new Intent(BaseActivity.this, SetupActivity.class));
                         }
@@ -94,11 +91,6 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
                 AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_PERMISSIONS);
                 AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SESSION_ID);
 
-                //popFragment(null,true);
-
-                //pushFragment(new LoginFragment(),R.id.loginContainer,"LoginFragment",false);
-
-                //popFragment(null,true);
                 finish();
                 startActivity(new Intent(BaseActivity.this, SetupActivity.class));
             }

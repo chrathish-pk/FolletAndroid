@@ -72,7 +72,6 @@ public class SetupActivity extends BaseActivity<LoginViewModel> implements Navig
     }
 
     private void navigateToHome() {
-        //mLoginBinding.tabLayout.removeAllTabs();
         pushFragment(new HomeFragment(), R.id.loginContainer, "HomeFragment", false);
     }
 

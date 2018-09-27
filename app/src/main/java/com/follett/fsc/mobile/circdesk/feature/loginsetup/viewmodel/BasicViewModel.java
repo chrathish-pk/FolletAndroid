@@ -55,8 +55,6 @@ public class BasicViewModel extends BaseViewModel<CTAButtonListener> implements 
 
     public void savePreference(String serverName, String port, String sslPort) {
         setIsLoding(true);
-//        AppSharedPreferences.getInstance()
-//                .removeAllSession();
         AppSharedPreferences.getInstance().setString(SERVER_URI_VALUE, serverName);
 
         SaveContextTask saveTask = new SaveContextTask();

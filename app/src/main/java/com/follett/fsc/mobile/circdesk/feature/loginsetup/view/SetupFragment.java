@@ -52,7 +52,6 @@ public class SetupFragment extends BaseFragment<ActivityLoginBinding, LoginViewM
             return;
         }
         mLoginBinding = getViewDataBinding();
-        //AppUtils.getInstance().clearSchoolPref();
         navigateToFragment();
     }
 

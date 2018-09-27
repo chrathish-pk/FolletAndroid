@@ -44,7 +44,7 @@ sonarqube
         {
             properties
                     {
-                        property "sonar.projectName", "FollettSprint3"
+                        property "sonar.projectName", "FollettSprint4"
                         property "sonar.projectKey", "org.sonarqube:android-simple-sq-scanner-gradle"
                         property "sonar.language", "java"
                         property "sonar.sources", "src/main"

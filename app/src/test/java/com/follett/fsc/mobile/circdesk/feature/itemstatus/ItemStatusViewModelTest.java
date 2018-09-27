@@ -82,7 +82,7 @@ public class ItemStatusViewModelTest extends BaseTestClass {
 
     @Test
     public void onCallFailed() {
-        mViewModel.onCallFailed(new Throwable());
+        mViewModel.onCallFailed(new Throwable(),"");
         Assert.assertFalse(mViewModel.getIsLoading()
                 .get());
     }

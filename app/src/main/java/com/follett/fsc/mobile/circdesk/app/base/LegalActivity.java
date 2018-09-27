@@ -6,10 +6,10 @@
 
 package com.follett.fsc.mobile.circdesk.app.base;
 
-import com.follett.fsc.mobile.circdesk.R;
-
 import android.os.Bundle;
 import android.view.View;
+import com.follett.fsc.mobile.circdesk.R;
+
 
 public class LegalActivity extends BaseActivity implements View.OnClickListener {
 
@@ -24,12 +24,10 @@ public class LegalActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.backBtn:
-                finish();
-                break;
-            default:
-                break;
+
+        if(v.getId() == R.id.backBtn)
+        {
+            finish();
         }
     }
 
