@@ -1,4 +1,4 @@
-package com.follett.fsc.mobile.circdesk.feature.inventory;
+package com.follett.fsc.mobile.circdesk.feature.inventory.view;
 
 import android.support.v7.widget.RecyclerView;
 
