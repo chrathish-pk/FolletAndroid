@@ -91,6 +91,7 @@ public class TitleInfoActivity extends BaseActivity<AdditionalInfoViewModel> imp
                     String siteText = String.format(getApplicationContext().getResources().getString(R.string.site_info),
                             AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SITE_NAME));
                     activityTitleDetailsBinding.itemAvailabilitySite.setText(siteText);
+                    activityTitleDetailsBinding.itemRatingBar.setRating(Float.parseFloat(titleDetails.getReviewInfoRecord().getReviewAverage()));
                     activityTitleDetailsBinding.setTitleDetailsViewModel(additionalInfoDetails);
                 }
             }

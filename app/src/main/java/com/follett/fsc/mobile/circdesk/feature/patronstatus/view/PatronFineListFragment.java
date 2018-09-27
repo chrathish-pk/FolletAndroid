@@ -107,17 +107,17 @@ public class PatronFineListFragment extends BaseFragment<FragmentPatronListBindi
 
     @Override
     public void onNavigation(int position) {
-
+        //do nothing
     }
 
     @Override
     public void setToolBarTitle(String titleText) {
-
+        //do nothing
     }
 
     @Override
     public void onNavigation(Object model, int position) {
-
+        //do nothing
     }
 }
 

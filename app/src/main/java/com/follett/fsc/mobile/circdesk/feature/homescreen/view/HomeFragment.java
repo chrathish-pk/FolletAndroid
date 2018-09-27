@@ -17,7 +17,6 @@ import com.follett.fsc.mobile.circdesk.feature.homescreen.viewmodel.HomeViewMode
 import com.follett.fsc.mobile.circdesk.feature.inventory.view.InventoryFragment;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.view.ItemStatusFragment;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.Permissions;
-import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.view.PatronStatusFragment;
 import com.google.gson.Gson;
 

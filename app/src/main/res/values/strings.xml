@@ -111,6 +111,7 @@
     <string name="item_status_in">Status : IN</string>
     <string name="item_status_out">Status : Out</string>
     <string name="item_callno">Call# </string>
+    <string name="itemstatus_callno">Call #: </string>
     <string name="of">\tof \t</string>
     <string name="item_quiz_no">Quiz Number: </string>
     <string name="item_points">, Points : </string>
@@ -141,15 +142,15 @@
     <string name="patron_not_found">Patron %s not found</string>
     <string name="items_overude_label">items overdue</string>
     <string name="onhold_label">items on hold</string>
-    <string name="title_hold_count">Titles On Hold (%s)</string>
-    <string name="item_checkout_count">Check Outs Holds (%s)</string>
+    <string name="title_hold_count">Hold (%s)</string>
+    <string name="item_checkout_count">Check Outs (%s)</string>
     <string name="fines_count">Fines (%s)</string>
     <string name="barcodelabel">Barcode: %s</string>
     <string name="homeroomlabel">HomeRoom: %s</string>
     <string name="gradelevellabel">Grade Level: %s</string>
     <string name="barcode_label">Barcode: %s</string>
     <string name="due_label">Due: %s</string>
-    <string name="item_checkout_label">Check Outs Holds</string>
+    <string name="item_checkout_label">Check Outs</string>
     <string name="library_title_label">Library Titles</string>
     <string name="resource_item_label">Resource Items</string>
     <string name="on_hold_label">Hold</string>

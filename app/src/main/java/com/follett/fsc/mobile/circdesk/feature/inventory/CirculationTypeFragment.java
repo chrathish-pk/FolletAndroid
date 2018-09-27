@@ -64,6 +64,6 @@ public class CirculationTypeFragment extends BaseFragment<FragmentCirculationtyp
 
     @Override
     public void onItemClick(View view, int position) {
-
+        //do nothing
     }
 }

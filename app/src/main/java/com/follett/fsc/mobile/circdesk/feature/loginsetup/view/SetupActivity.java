@@ -31,7 +31,7 @@ public class SetupActivity extends BaseActivity<LoginViewModel> implements Navig
 
     @Override
     public void onNavigation(int position) {
-
+        //do nothing
     }
 
     @Override

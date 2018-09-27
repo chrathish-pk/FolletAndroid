@@ -123,12 +123,12 @@ public class PatronItemCheckoutFragment extends BaseFragment<FragmentPatronListB
 
     @Override
     public void onNavigation(int position) {
-
+        //do nothing
     }
 
     @Override
     public void setToolBarTitle(String titleText) {
-
+        // do nothing
     }
 
     @Override

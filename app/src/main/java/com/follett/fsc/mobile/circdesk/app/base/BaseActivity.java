@@ -107,7 +107,6 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
 
                     @Override
                     public void onClick(View v) {
-                        // TODO Auto-generated method stub
                         // Initialize a new date picker dialog fragment
                         DialogFragment dFragment = new DatePickerFragment();
                         // Show the date picker dialog fragment

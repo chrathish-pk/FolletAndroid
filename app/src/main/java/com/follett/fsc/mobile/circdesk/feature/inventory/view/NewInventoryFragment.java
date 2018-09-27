@@ -67,10 +67,10 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
 
     @Override
     public void onItemClick(View view, int position) {
-        switch (view.getId()) {
-            case R.id.circulationTypesLayout:
-                mActivity.pushFragment(new CirculationTypeFragment(), R.id.loginContainer, "CirculationTypeFragment", true);
-                break;
+        int i = view.getId();
+        if (i == R.id.circulationTypesLayout) {
+            mActivity.pushFragment(new CirculationTypeFragment(), R.id.loginContainer, "CirculationTypeFragment", true);
+
         }
     }
 }

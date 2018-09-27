@@ -41,7 +41,7 @@ public class InventoryViewModel extends BaseViewModel<CTAButtonListener> impleme
         mApplication = application;
     }
 
-    public void OnItemClick(View view) {
+    public void onItemClick(View view) {
         itemClickListener.onItemClick(view, 0);
     }
 
@@ -58,7 +58,8 @@ public class InventoryViewModel extends BaseViewModel<CTAButtonListener> impleme
                         .getString(AppSharedPreferences.KEY_SITE_SHORT_NAME), AppSharedPreferences.getInstance()
                         .getString(AppSharedPreferences.KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
                         .getInt(AppSharedPreferences.KEY_PARTIALID));
-            }if (model instanceof InventoryDetails) {
+            }
+            if (model instanceof InventoryDetails) {
                 inventoryDetailsMutableLiveData.postValue((InventoryDetails) model);
                 InventoryDetails inventoryDetails = (InventoryDetails) model;
                 updateUIListener.updateUI(inventoryDetails);            }
