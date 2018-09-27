@@ -192,4 +192,14 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
 
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        FragmentManager fm = getSupportFragmentManager();
+        if(fm.getFragments().size()==2){
+            setTitleBar("Home");
+            baseBinding.backBtn.setVisibility(View.GONE);
+        }
+    }
 }
