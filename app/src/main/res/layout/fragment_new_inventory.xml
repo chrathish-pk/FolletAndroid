@@ -366,6 +366,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:onClick="@{(v)->newInventoryViewModel.onItemClicked(v)}"
                     android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/mismatchedItemLocationLayout">
@@ -451,6 +452,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:onClick="@{(v)->newInventoryViewModel.onItemClicked(v)}"
                     android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/circulationTypesLayout">

@@ -4,12 +4,18 @@
  *
  */
 
-package com.follett.fsc.mobile.circdesk.feature.inventory;
+package com.follett.fsc.mobile.circdesk.feature.inventory.view;
 
+import android.arch.lifecycle.Observer;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
+
+import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
-
 import com.follett.fsc.mobile.circdesk.databinding.FragmentCirculationtypeLayoutBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CirculationTypeList;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.CirculationTypeViewModel;
@@ -19,6 +25,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+
 
 public class CirculationTypeFragment extends BaseFragment<FragmentCirculationtypeLayoutBinding, CirculationTypeViewModel> implements ItemClickListener {
 
@@ -47,8 +54,6 @@ public class CirculationTypeFragment extends BaseFragment<FragmentCirculationtyp
         recyclerviewLayoutBinding = getViewDataBinding();
 
         recyclerviewLayoutBinding.recyclerviewList.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-//        CirculationTypeListAdapter circulationTypeListAdapter = new CirculationTypeListAdapter(getActivity(),)
 
         circulationTypeViewModel.fetchCirculationTypeList();
 

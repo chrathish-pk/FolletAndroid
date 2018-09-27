@@ -1,4 +1,4 @@
-package com.follett.fsc.mobile.circdesk.feature.inventory;
+package com.follett.fsc.mobile.circdesk.feature.inventory.view;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;

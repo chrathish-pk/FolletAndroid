@@ -1,4 +1,4 @@
-package com.follett.fsc.mobile.circdesk.feature.inventory;
+package com.follett.fsc.mobile.circdesk.feature.inventory.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
