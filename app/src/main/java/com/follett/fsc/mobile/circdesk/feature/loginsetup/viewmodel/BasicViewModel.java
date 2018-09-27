@@ -6,6 +6,14 @@
 
 package com.follett.fsc.mobile.circdesk.feature.loginsetup.viewmodel;
 
+import android.app.Application;
+import android.arch.lifecycle.MutableLiveData;
+import android.databinding.ObservableBoolean;
+import android.databinding.ObservableField;
+import android.os.AsyncTask;
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
+
 import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
@@ -17,14 +25,6 @@ import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.Version;
 import com.follett.fsc.mobile.circdesk.utils.AppConstants;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import com.follett.fsc.mobile.commons.android.URLHelper;
-
-import android.app.Application;
-import android.arch.lifecycle.MutableLiveData;
-import android.databinding.ObservableBoolean;
-import android.databinding.ObservableField;
-import android.os.AsyncTask;
-import android.support.annotation.NonNull;
-import android.text.TextUtils;
 
 import java.io.IOException;
 import java.net.URL;
@@ -168,6 +168,7 @@ public class BasicViewModel extends BaseViewModel<CTAButtonListener> implements 
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
             if (result) {
+                AppRemoteRepository.mInstance=null;
                 AppRemoteRepository.getInstance().getVersion(BasicViewModel.this);
             } else {
                 setIsLoding(false);
