@@ -6,24 +6,27 @@
 
 package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.view;
 
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
-import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
-import com.follett.fsc.mobile.circdesk.databinding.ActivityPatronListBinding;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.viewmodel.CheckoutViewModel;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.ScanPatron;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
-public class CheckoutPatronListFragment extends BaseFragment<ActivityPatronListBinding, CheckoutViewModel> implements ItemClickListener {
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.BR;
+import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
+import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.databinding.ActivityPatronListBinding;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.UpdateUIListener;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.viewmodel.CheckoutViewModel;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.ScanPatron;
+
+public class CheckoutPatronListFragment extends BaseFragment<ActivityPatronListBinding, CheckoutViewModel> implements ItemClickListener, UpdateUIListener {
     private ScanPatron scanPatron;
 
     private ActivityPatronListBinding activityPatronListBinding;
+    private CheckoutViewModel checkoutViewModel;
 
     public static CheckoutPatronListFragment getInstance(ScanPatron scanPatron){
         Bundle args = new Bundle();
@@ -40,12 +43,13 @@ public class CheckoutPatronListFragment extends BaseFragment<ActivityPatronListB
 
     @Override
     public CheckoutViewModel getViewModel() {
-        return null;
+        checkoutViewModel = new CheckoutViewModel(getBaseActivity().getApplication(),this);
+        return checkoutViewModel;
     }
 
     @Override
     public int getBindingVariable() {
-        return 0;
+        return BR.checkoutViewModel;
     }
 
 
@@ -75,5 +79,10 @@ public class CheckoutPatronListFragment extends BaseFragment<ActivityPatronListB
     public void onItemClick(View view, int position) {
         AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_SELECTED_BARCODE, scanPatron.getPatronList().get(position).getBarcode());
         mActivity.onBackPressed();
+    }
+
+    @Override
+    public void updateUI(Object value) {
+
     }
 }

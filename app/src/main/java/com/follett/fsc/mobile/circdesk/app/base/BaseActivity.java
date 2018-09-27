@@ -101,7 +101,7 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
        /* baseBinding.logo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              baseBinding = DataBindingUtil.setContentView(BaseActivity.this, R.layout.call_numbers_and_seen_on_after);
+              baseBinding = DataBindingUtil.setContentView(BaseActivity.this, R.layout.fragment_call_numbers_exclude_items);
                 EditText date1 = (EditText)findViewById(R.id.enterDate);
                 date1.setOnClickListener(new View.OnClickListener() {
 
