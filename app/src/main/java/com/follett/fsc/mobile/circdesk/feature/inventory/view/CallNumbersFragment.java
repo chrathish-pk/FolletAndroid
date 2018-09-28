@@ -7,15 +7,15 @@ import android.view.View;
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentCallNumbersExcludeItemsBinding;
-import com.follett.fsc.mobile.circdesk.feature.inventory.model.CallNumbers;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.CallNumbersViewModel;
 
 public class CallNumbersFragment extends BaseFragment<FragmentCallNumbersExcludeItemsBinding, CallNumbersViewModel> implements View.OnClickListener {
 
     private CallNumbersViewModel callNumbersViewModel;
     private FragmentCallNumbersExcludeItemsBinding fragmentCallNumbersExcludeItemsBinding;
-    private CallNumbers callNumbers;
 
     @Override
     public int getLayoutId() {
@@ -37,9 +37,6 @@ public class CallNumbersFragment extends BaseFragment<FragmentCallNumbersExclude
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-            callNumbers = getArguments().getParcelable("callNumbers");
-        }
     }
 
     @Override
@@ -59,9 +56,10 @@ public class CallNumbersFragment extends BaseFragment<FragmentCallNumbersExclude
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.backBtn) {
-            callNumbers.setCallNumberFrom(Integer.parseInt(fragmentCallNumbersExcludeItemsBinding.callFrom.getText().toString().trim()));
-            callNumbers.setCallNumberTo(Integer.parseInt(fragmentCallNumbersExcludeItemsBinding.callTo.getText().toString().trim()));
-
+            AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_CALL_NUMBER_FROM, fragmentCallNumbersExcludeItemsBinding.callFromEdittext.getText().toString());
+            AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_CALL_NUMBER_TO, fragmentCallNumbersExcludeItemsBinding.callToEdittext.getText().toString());
+            mActivity.onBackPressed();
         }
     }
+
 }

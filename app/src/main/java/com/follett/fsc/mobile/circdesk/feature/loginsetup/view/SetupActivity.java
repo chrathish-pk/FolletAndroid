@@ -1,5 +1,6 @@
 package com.follett.fsc.mobile.circdesk.feature.loginsetup.view;
 
+import android.arch.lifecycle.MutableLiveData;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -13,6 +14,8 @@ import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.DistrictList;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.viewmodel.LoginViewModel;
 
 public class SetupActivity extends BaseActivity<LoginViewModel> implements NavigationListener {
+
+    public MutableLiveData<String> selectedDateLiveData = new MutableLiveData<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
