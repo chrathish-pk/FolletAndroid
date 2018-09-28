@@ -285,4 +285,5 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
         mPatronInfo = (PatronInfo) value;
         updateUI(mPatronInfo);
     }
-}
+
+    }

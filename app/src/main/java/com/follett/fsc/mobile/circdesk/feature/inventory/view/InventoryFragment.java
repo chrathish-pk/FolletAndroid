@@ -19,16 +19,13 @@ import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentInventoryBinding;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.UpdateUIListener;
-import com.follett.fsc.mobile.circdesk.feature.inventory.InventoryDetails;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InProgressInventoryResults;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.InventoryViewModel;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-
 import android.app.Activity;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.View;
+
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_IS_LIBRARY_SELECTED;
 

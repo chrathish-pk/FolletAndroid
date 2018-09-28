@@ -1,5 +1,9 @@
 package com.follett.fsc.mobile.circdesk.feature.loginsetup.view;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
+
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
@@ -7,10 +11,6 @@ import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepositor
 import com.follett.fsc.mobile.circdesk.feature.homescreen.view.HomeFragment;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.DistrictList;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.viewmodel.LoginViewModel;
-
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.text.TextUtils;
 
 public class SetupActivity extends BaseActivity<LoginViewModel> implements NavigationListener {
 
@@ -31,7 +31,7 @@ public class SetupActivity extends BaseActivity<LoginViewModel> implements Navig
 
     @Override
     public void onNavigation(int position) {
-
+        //do nothing
     }
 
     @Override
@@ -75,4 +75,8 @@ public class SetupActivity extends BaseActivity<LoginViewModel> implements Navig
         pushFragment(new HomeFragment(), R.id.loginContainer, "HomeFragment", false);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

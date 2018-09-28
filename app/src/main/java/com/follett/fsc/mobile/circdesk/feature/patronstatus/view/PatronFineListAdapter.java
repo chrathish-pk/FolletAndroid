@@ -62,6 +62,7 @@ public class PatronFineListAdapter extends RecyclerView.Adapter<PatronFineListAd
         
         @Override
         public void onClick(View view) {
+            //Do nothing
         }
     }
 }

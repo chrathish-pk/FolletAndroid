@@ -111,12 +111,12 @@ public class PatronListFragment extends BaseFragment<FragmentPatronListBinding, 
 
     @Override
     public void onNavigation(int position) {
-
+        //do nothing
     }
 
     @Override
     public void setToolBarTitle(String titleText) {
-
+        //do nothingXX
     }
 
     @Override

@@ -6,6 +6,8 @@
 
 package com.follett.fsc.mobile.circdesk.data.remote.repository;
 
+import android.support.annotation.Nullable;
+
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.api.FollettAPIManager;
@@ -14,9 +16,9 @@ import com.follett.fsc.mobile.circdesk.data.remote.apicommon.DisposableObserverW
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckinResult;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckoutResult;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.ScanPatron;
-import com.follett.fsc.mobile.circdesk.feature.inventory.InventoryDetails;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CirculationTypeList;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InProgressInventoryResults;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.model.ItemDetails;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.DistrictList;
@@ -24,8 +26,6 @@ import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.LoginResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.SiteResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.Version;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
-
-import android.support.annotation.Nullable;
 
 import java.util.Map;
 
@@ -40,7 +40,9 @@ public class AppRemoteRepository {
     public static AppRemoteRepository mInstance;
     
     public static AppRemoteRepository getInstance() {
-        if (mInstance == null) { mInstance = new AppRemoteRepository(); }
+        if (mInstance == null) {
+            mInstance = new AppRemoteRepository();
+        }
         return mInstance;
     }
     

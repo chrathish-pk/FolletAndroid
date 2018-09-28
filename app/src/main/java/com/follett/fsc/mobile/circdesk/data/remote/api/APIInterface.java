@@ -10,7 +10,7 @@ package com.follett.fsc.mobile.circdesk.data.remote.api;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckinResult;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckoutResult;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.ScanPatron;
-import com.follett.fsc.mobile.circdesk.feature.inventory.InventoryDetails;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CirculationTypeList;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InProgressInventoryResults;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;

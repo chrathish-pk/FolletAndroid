@@ -3,9 +3,15 @@
 
     <data>
 
+        <import type="android.view.View"/>
+
         <variable
             name="itemClickListener"
             type="com.follett.fsc.mobile.circdesk.app.ItemClickListener" />
+
+        <variable
+            name="checkoutViewModel"
+            type="com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.viewmodel.CheckoutViewModel"/>
 
     </data>
 
