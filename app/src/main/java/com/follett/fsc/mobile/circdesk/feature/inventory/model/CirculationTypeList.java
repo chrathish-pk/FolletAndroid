@@ -4,6 +4,8 @@ package com.follett.fsc.mobile.circdesk.feature.inventory.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class CirculationTypeList {
 
     @SerializedName("circTypeList")
