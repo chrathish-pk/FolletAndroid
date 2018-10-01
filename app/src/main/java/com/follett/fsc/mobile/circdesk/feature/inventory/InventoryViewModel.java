@@ -70,7 +70,7 @@ public class InventoryViewModel extends BaseViewModel<CTAButtonListener> impleme
         setIsLoding(true);
         Map<String, String> map = new HashMap<>();
         map.put("Accept", "application/json");
-        map.put("Cookie", "JSESSIONID=" + "IU9FapmnTaXrV7DMcpDWwJoLepJUXwlL9A_rkf8Z"/*AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID)*/);
+        map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID));
         map.put("text/xml", "gzip");
 
         mAppRemoteRepository.getInProgressInventoryResults(map,this, site, contextName, collectionType);
@@ -80,7 +80,7 @@ public class InventoryViewModel extends BaseViewModel<CTAButtonListener> impleme
         setIsLoding(true);
         Map<String, String> map = new HashMap<>();
         map.put("Accept", "application/json");
-        map.put("Cookie", "JSESSIONID=" + "IU9FapmnTaXrV7DMcpDWwJoLepJUXwlL9A_rkf8Z"/*AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID)*/);
+        map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID));
         map.put("text/xml", "gzip");
 
         mAppRemoteRepository.getInventoryDetails(map,this, site, contextName, partialID);

@@ -52,6 +52,8 @@ public class AppSharedPreferences {
     public static final String KEY_PERMISSIONS = "permissions";
     public static final String KEY_COLLECTION_TYPE = "collectionType";
     public static final String KEY_PARTIALID = "partialID";
+    public static final String KEY_PROMPT = "prompt";
+    public static final String KEY_VALUES = "values";
 
 
     private static AppSharedPreferences mSessionInstance = null;

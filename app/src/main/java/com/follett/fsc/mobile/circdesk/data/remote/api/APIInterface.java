@@ -13,6 +13,7 @@ import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.ScanPatron;
 import com.follett.fsc.mobile.circdesk.feature.inventory.CirculationTypeList;
 import com.follett.fsc.mobile.circdesk.feature.inventory.InProgressInventoryResults;
 import com.follett.fsc.mobile.circdesk.feature.inventory.InventoryDetails;
+import com.follett.fsc.mobile.circdesk.feature.inventory.InventorySelectionCriteria;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.model.ItemDetails;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.DistrictList;
@@ -78,7 +79,12 @@ public interface APIInterface {
             ("password") String password);
 
     @GET("rest/v6/circulation/inprogressinventories")
-    Observable<InProgressInventoryResults> getInProgressInventoryResults(@HeaderMap Map<String, String> headers, @Query("site") String site, @Query("contextName") String contextName, @Query("collectionType") int collectionType);
+    Observable<InProgressInventoryResults> getInProgressInventoryResults(@HeaderMap Map<String, String> headers,
+             @Query("site") String site, @Query("contextName") String contextName, @Query("collectionType") int collectionType);
+
+    @GET("rest/v6/circulation/inventoryselectioncriteria")
+    Observable<InventorySelectionCriteria> getSelectedInventoriesList(@HeaderMap Map<String, String> headers,
+            @Query("site") String site, @Query("contextName") String contextName, @Query("partialID") int partialID );
 
     @GET("rest/v4/circulation/checkin")
     Observable<CheckinResult> getCheckinResult(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site,

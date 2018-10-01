@@ -67,9 +67,11 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
         fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setOnClickListener(this);
 
         fragmentInventoryBinding.finalizeInventoryBtn.setOnClickListener(this);
+        fragmentInventoryBinding.inventoryViewSelectionsBtn.setOnClickListener(this);
 
         fragmentInventoryBinding.patronEntryIncludeLayout.patronEntry.setHint(getString(R.string.enterBarcode));
         fragmentInventoryBinding.patronEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.GONE);
+        AppSharedPreferences.getInstance().setInt(KEY_COLLECTION_TYPE, 0);
     }
 
     @Override
@@ -106,6 +108,9 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                 fragment.show(ft,"FinalizePopupFragment");
                 //mActivity.pushFragment(fragment, R.id.loginContainer, "FinalizePopupFragment", true);
                 break;*/
+                break;
+            case R.id.inventoryViewSelectionsBtn:
+                mActivity.pushFragment(new InventoryViewSelectionFragment(), R.id.loginContainer, "InventoryViewSelectionFragment", true);
                 break;
             default:
                 break;
