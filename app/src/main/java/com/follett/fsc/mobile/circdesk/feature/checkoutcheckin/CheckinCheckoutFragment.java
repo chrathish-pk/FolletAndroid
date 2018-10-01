@@ -11,9 +11,10 @@ import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityCheckinCheckoutBinding;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin.CheckinFragment;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.CheckoutFragment;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin.view.CheckinFragment;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.view.CheckoutFragment;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.Permissions;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import com.google.gson.Gson;
 
@@ -113,6 +114,8 @@ public class CheckinCheckoutFragment extends BaseFragment<ActivityCheckinCheckou
         switch (v.getId()) {
             case R.id.backBtn:
                 mActivity.setTitleBar(getString(R.string.home));
+                AppUtils.getInstance()
+                        .hideKeyBoard(activity, actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn);
                 mActivity.baseBinding.backBtn.setVisibility(View.GONE);
                 mActivity.onBackPressed();
                 break;

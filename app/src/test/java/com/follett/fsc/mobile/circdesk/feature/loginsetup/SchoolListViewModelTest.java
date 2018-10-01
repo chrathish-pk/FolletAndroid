@@ -11,6 +11,7 @@ import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.SiteRecord;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.SiteResults;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.viewmodel.SchoolListViewModel;
 import com.follett.fsc.mobile.circdesk.feature.utils.BaseTestClass;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 
@@ -79,7 +80,7 @@ public class SchoolListViewModelTest extends BaseTestClass {
         when(mApplication.getString(R.string.no_schools, DISTRICT_NAME)).thenReturn(DISTRICT_NAME);
         
         mViewModel.onCallCompleted(generateZeroSchoolResult());
-        Assert.assertEquals(DISTRICT_NAME, mViewModel.noSchoolFoundMsg.getValue());
+        Assert.assertEquals(DISTRICT_NAME, mViewModel.getErrorMessage().getValue());
     }
     
     @Test
@@ -97,7 +98,7 @@ public class SchoolListViewModelTest extends BaseTestClass {
     
     @Test
     public void onCallFailed() {
-        mViewModel.onCallFailed(new Throwable());
+        mViewModel.onCallFailed(new Throwable(),"");
         Assert.assertFalse(mViewModel.getIsLoading()
                 .get());
     }

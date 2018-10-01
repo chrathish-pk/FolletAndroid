@@ -79,7 +79,7 @@
                     android:layout_marginTop="10dp"
                     android:checked="true"
                     android:shadowColor="@color/switchcolor"
-                    android:text="Record Library Use"
+                    android:text="@string/recordInLibrary"
                     android:fontFamily="@font/opensans_semibold"
                     android:textColor="@color/blueLabel"
                     android:textSize="@dimen/text_size_16sp"

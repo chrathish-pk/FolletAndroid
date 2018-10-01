@@ -8,6 +8,7 @@ package com.follett.fsc.mobile.circdesk.feature.loginsetup;
 
 import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.LoginResults;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.viewmodel.LoginViewModel;
 import com.follett.fsc.mobile.circdesk.feature.utils.BaseTestClass;
 
 import org.junit.After;
@@ -80,7 +81,7 @@ public class LoginViewModelTest extends BaseTestClass {
     
     @Test
     public void onCallFailed() {
-        mViewModel.onCallFailed(new Throwable());
+        mViewModel.onCallFailed(new Throwable(),"");
         Assert.assertFalse(mViewModel.getIsLoading()
                 .get());
     }

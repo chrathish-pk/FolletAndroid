@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ /*
+  ~  * Copyright (c) 2018 Follett. All rights reserved.
+  ~  */
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="callViewModel"
+            type="com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.CallNumbersViewModel" />
+
+        <variable
+            name="seenViewModel"
+            type="com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.SeenOnOrAfterViewModel" />
+
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/descriptionText"
+            android:layout_width="match_parent"
+            android:layout_height="85dp"
+            android:layout_marginStart="@dimen/layout_size_16"
+            android:layout_marginTop="@dimen/layout_size_16"
+            android:layout_marginEnd="@dimen/layout_size_16"
+            android:fontFamily="@font/opensans_regular"
+            android:letterSpacing="0.1"
+            android:text="@string/callNumbersDescription"
+            android:textColor="@color/blueLabel"
+            android:textSize="@dimen/text_size_14sp" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/enterDate"
+            style="@style/EditTextTheme"
+            android:layout_below="@id/descriptionText"
+            android:layout_marginTop="8dp"
+            android:clickable="true"
+            android:onClick="@{(v)->seenViewModel.onItemClicked(v)}"
+            android:editable="false"
+            android:focusable="false"
+            android:hint="@string/enter_date"
+            android:inputType="number"
+            android:letterSpacing="0.1"
+            android:singleLine="true"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/callNumbersLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/descriptionText"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/call_from"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/layout_size_16"
+                android:layout_marginTop="@dimen/layout_size_14"
+                android:layout_marginEnd="@dimen/layout_size_16"
+                android:fontFamily="@font/opensans_regular"
+                android:letterSpacing="0.1"
+                android:paddingBottom="@dimen/layout_size_2"
+                android:text="@string/call_from"
+                android:textColor="@color/blueLabel"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/callFromEdittext"
+                style="@style/EditTextTheme"
+                android:layout_below="@+id/call_from"
+                android:layout_marginTop="8dp"
+                android:hint="@string/call_num"
+                android:inputType="number"
+                android:letterSpacing="0.1"
+                android:singleLine="true" />
+
+            <TextView
+                android:id="@+id/call_to"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/callFromEdittext"
+                android:layout_marginStart="@dimen/layout_size_16"
+                android:layout_marginTop="@dimen/layout_size_14"
+                android:layout_marginEnd="@dimen/layout_size_16"
+                android:fontFamily="@font/opensans_regular"
+                android:letterSpacing="0.1"
+                android:paddingBottom="@dimen/layout_size_2"
+                android:text="@string/call_to"
+                android:textColor="@color/blueLabel"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/callToEdittext"
+                style="@style/EditTextTheme"
+                android:layout_below="@+id/call_to"
+                android:layout_marginTop="8dp"
+                android:hint="@string/call_num"
+                android:inputType="number"
+                android:letterSpacing="0.1"
+                android:singleLine="true" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</layout>

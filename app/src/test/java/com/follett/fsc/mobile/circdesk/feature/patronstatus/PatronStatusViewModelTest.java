@@ -6,9 +6,10 @@
 
 package com.follett.fsc.mobile.circdesk.feature.patronstatus;
 
-import com.follett.fsc.mobile.circdesk.feature.itemstatus.UpdateItemUIListener;
+import com.follett.fsc.mobile.circdesk.feature.itemstatus.view.UpdateItemUIListener;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.Fine;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.viewmodel.PatronStatusViewModel;
 import com.follett.fsc.mobile.circdesk.feature.utils.BaseTestClass;
 
 import org.junit.After;
@@ -93,7 +94,7 @@ public class PatronStatusViewModelTest extends BaseTestClass {
     
     @Test
     public void onCallFailed() {
-        mViewModel.onCallFailed(new Throwable());
+        mViewModel.onCallFailed(new Throwable(),"");
         Assert.assertFalse(mViewModel.getIsLoading()
                 .get());
     }

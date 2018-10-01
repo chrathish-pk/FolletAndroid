@@ -12,7 +12,7 @@
 
         <variable
             name="viewModel"
-            type="com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin.CheckinViewModel" />
+            type="com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin.viewmodel.CheckinViewModel" />
     </data>
 
     <RelativeLayout
@@ -51,8 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
-             />
+            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}" />
 
 
     </RelativeLayout>

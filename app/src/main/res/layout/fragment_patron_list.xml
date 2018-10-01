@@ -14,7 +14,7 @@
 
         <variable
             name="viewModel"
-            type="com.follett.fsc.mobile.circdesk.feature.patronstatus.PatronListViewModel"/>
+            type="com.follett.fsc.mobile.circdesk.feature.patronstatus.viewmodel.PatronListViewModel"/>
     </data>
 
 

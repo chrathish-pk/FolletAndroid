@@ -7,6 +7,7 @@
 package com.follett.fsc.mobile.circdesk.feature.itemstatus;
 
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.model.ItemDetails;
+import com.follett.fsc.mobile.circdesk.feature.itemstatus.viewmodel.ItemStatusViewModel;
 import com.follett.fsc.mobile.circdesk.feature.utils.BaseTestClass;
 
 import org.junit.After;
@@ -81,7 +82,7 @@ public class ItemStatusViewModelTest extends BaseTestClass {
 
     @Test
     public void onCallFailed() {
-        mViewModel.onCallFailed(new Throwable());
+        mViewModel.onCallFailed(new Throwable(),"");
         Assert.assertFalse(mViewModel.getIsLoading()
                 .get());
     }

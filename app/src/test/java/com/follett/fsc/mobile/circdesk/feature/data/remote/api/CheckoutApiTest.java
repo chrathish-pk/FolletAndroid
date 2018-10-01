@@ -1,8 +1,8 @@
 package com.follett.fsc.mobile.circdesk.feature.data.remote.api;
 
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.CheckoutInfo;
-import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.CheckoutResult;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckoutInfo;
+import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckoutResult;
 import com.follett.fsc.mobile.circdesk.feature.utils.BaseTestClass;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 
@@ -56,9 +56,9 @@ public class CheckoutApiTest extends BaseTestClass {
     public void verifyCheckoutApi() {
         mCheckoutResult = generateCheckoutResult();
 
-        when(apiInterface.getCheckoutResult(AppUtils.getHeader(mApplication), CONTEXT_NAME, SITE_NAME, "1","861","0","false")).thenReturn(Observable.just(mCheckoutResult));
+        when(apiInterface.getCheckoutResult(AppUtils.getInstance().getHeader(mApplication), CONTEXT_NAME, SITE_NAME, "1","861","0","false")).thenReturn(Observable.just(mCheckoutResult));
 
-        final Observable<CheckoutResult> patronResultsObservable = apiInterface.getCheckoutResult(AppUtils.getHeader(mApplication), CONTEXT_NAME, SITE_NAME, "1","861","0","false");
+        final Observable<CheckoutResult> patronResultsObservable = apiInterface.getCheckoutResult(AppUtils.getInstance().getHeader(mApplication), CONTEXT_NAME, SITE_NAME, "1","861","0","false");
         patronResultsObservable.subscribe(new Consumer<CheckoutResult>() {
             @Override
             public void accept(CheckoutResult checkoutResult) throws Exception {
