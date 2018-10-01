@@ -93,4 +93,9 @@ public class InventoryViewModel extends BaseViewModel<CTAButtonListener> impleme
     public void onCallFailed(Throwable throwable, String errorMessage) {
         setErrorMessage(errorMessage);
     }
+    
+    @Override
+    public void onRefreshToken(int requestCode) {
+    
+    }
 }

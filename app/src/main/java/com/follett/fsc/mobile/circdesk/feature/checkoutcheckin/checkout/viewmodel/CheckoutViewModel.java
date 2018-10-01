@@ -13,6 +13,7 @@ import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepositor
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.UpdateUIListener;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckoutResult;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.ScanPatron;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 import android.app.Application;
@@ -20,11 +21,10 @@ import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
+import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.CHECK_OUT_REQUEST_CODE;
+import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.SCAN_PATRON_REQUEST_CODE;
 
 public class CheckoutViewModel extends BaseViewModel implements NetworkInterface {
 
@@ -32,6 +32,11 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
     public final MutableLiveData<CheckoutResult> checkoutResultMutableLiveData = new MutableLiveData<>();
     public final MutableLiveData<ScanPatron> scanPatronMutableLiveData = new MutableLiveData<>();
     private Application mApplication;
+    private String mPatronBarcodeID;
+    private String mPatronID;
+    private String mBarcode;
+    private String mCollectionType;
+    private boolean mOverrideBlocks;
 
 
     public CheckoutViewModel(@NonNull Application application, UpdateUIListener updateUIListener) {
@@ -39,28 +44,26 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
         this.updateUIListener = updateUIListener;
         mApplication = application;
     }
-
     public void getScanPatron(String patronBarcodeID) {
         setIsLoding(true);
-        Map<String, String> map = new HashMap<>();
-        map.put("Accept", "application/json");
-        map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID));
-        map.put("text/xml", "gzip");
+        
+        mPatronBarcodeID = patronBarcodeID;
 
-        AppRemoteRepository.getInstance().getScanPatron(map, this,AppSharedPreferences.getInstance()
+        AppRemoteRepository.getInstance().getScanPatron(AppUtils.getInstance().getHeader(mApplication), this,AppSharedPreferences.getInstance()
                 .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
                 .getString(KEY_SITE_SHORT_NAME), patronBarcodeID);
     }
 
     public void getCheckoutResult(String patronID, String barcode, String collectionType, boolean overrideBlocks ) {
         setIsLoding(true);
-        Map<String, String> map = new HashMap<>();
-        map.put("Accept", "application/json");
-        map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID));
-        map.put("text/xml", "gzip");
-        AppRemoteRepository.getInstance().getCheckoutResult(map, this,AppSharedPreferences.getInstance()
+        mPatronID = patronID;
+        mBarcode = barcode;
+        mCollectionType = collectionType;
+        mOverrideBlocks = overrideBlocks;
+        AppRemoteRepository.getInstance().getCheckoutResult(AppUtils.getInstance().getHeader(mApplication), this,
+                AppSharedPreferences.getInstance()
                 .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
-                .getString(KEY_SITE_SHORT_NAME), patronID, barcode, collectionType,overrideBlocks);
+                .getString(KEY_SITE_SHORT_NAME), patronID, barcode, collectionType, overrideBlocks);
     }
 
     @Override
@@ -93,6 +96,17 @@ public class CheckoutViewModel extends BaseViewModel implements NetworkInterface
         FollettLog.d("Exception", throwable.getMessage());
         setErrorMessage(errorMessage);
     }
-
-
+    
+    @Override
+    public void onRefreshToken(int requestCode) {
+        if (requestCode == SCAN_PATRON_REQUEST_CODE) {
+            AppRemoteRepository.getInstance().getScanPatron(AppUtils.getInstance().getHeader(mApplication), this,AppSharedPreferences.getInstance()
+                    .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
+                    .getString(KEY_SITE_SHORT_NAME), mPatronBarcodeID);
+        } else if (requestCode == CHECK_OUT_REQUEST_CODE) {
+            AppRemoteRepository.getInstance().getCheckoutResult(AppUtils.getInstance().getHeader(mApplication), this, AppSharedPreferences.getInstance()
+                    .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
+                    .getString(KEY_SITE_SHORT_NAME), mPatronID, mBarcode, mCollectionType, mOverrideBlocks);
+        }
+    }
 }

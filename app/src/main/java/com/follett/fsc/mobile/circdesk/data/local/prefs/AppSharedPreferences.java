@@ -30,7 +30,9 @@ public class AppSharedPreferences {
 
     public static final String KEY_SITE_SHORT_NAME = "site";
     public static final String KEY_SITE_NAME = "siteName";
-    public static final String KEY_USERNAME = "username";
+    public static final String KEY_USERNAME = "displayusername";
+    public static final String KEY_SECRET_USERNAME = "username";
+    public static final String KEY_SECRET_PASS = "password";
     public static final String KEY_SESSION_ID = "sessionID";
     public static final String KEY_LIST_ID = "listID";
     public static final String KEY_SITE_ID = "siteID";

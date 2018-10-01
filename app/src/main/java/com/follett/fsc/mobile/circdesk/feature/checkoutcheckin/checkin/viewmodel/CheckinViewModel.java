@@ -13,13 +13,11 @@ import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.UpdateUIListener;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckinResult;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 import android.app.Application;
 import android.arch.lifecycle.MutableLiveData;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
@@ -29,6 +27,9 @@ public class CheckinViewModel extends BaseViewModel implements NetworkInterface 
     private Application mApplication;
     private UpdateUIListener updateUIListener;
     public MutableLiveData<CheckinResult> checkinResultMutableLiveData = new MutableLiveData<>();
+    private String mCheckinBarcode;
+    private String mCollectionType;
+    private boolean mIsLibraryUse;
 
     public CheckinViewModel(Application application, UpdateUIListener updateUIListener) {
         super(application);
@@ -37,14 +38,12 @@ public class CheckinViewModel extends BaseViewModel implements NetworkInterface 
     }
 
     public void getCheckinData(String checkinBarcode, String collectionType, boolean isLibraryUse) {
+        mCheckinBarcode = checkinBarcode;
+        mCollectionType = collectionType;
+        mIsLibraryUse = isLibraryUse;
+        
         setIsLoding(true);
-
-        Map<String, String> map = new HashMap<>();
-        map.put("Accept", "application/json");
-        map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID));
-        map.put("text/xml", "gzip");
-
-        AppRemoteRepository.getInstance().getCheckinResult(map, this,AppSharedPreferences.getInstance()
+        AppRemoteRepository.getInstance().getCheckinResult(AppUtils.getInstance().getHeader(mApplication), this,AppSharedPreferences.getInstance()
                         .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
                         .getString(KEY_SITE_SHORT_NAME),
                 checkinBarcode, collectionType, isLibraryUse);
@@ -73,5 +72,14 @@ public class CheckinViewModel extends BaseViewModel implements NetworkInterface 
         setIsLoding(false);
         FollettLog.d("Exception", throwable.getMessage());
         setErrorMessage(errorMessage);
+    }
+    
+    @Override
+    public void onRefreshToken(int requestCode) {
+        AppRemoteRepository.getInstance()
+                .getCheckinResult(AppUtils.getInstance()
+                        .getHeader(mApplication), this, AppSharedPreferences.getInstance()
+                        .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
+                        .getString(KEY_SITE_SHORT_NAME), mCheckinBarcode, mCollectionType, mIsLibraryUse);
     }
 }

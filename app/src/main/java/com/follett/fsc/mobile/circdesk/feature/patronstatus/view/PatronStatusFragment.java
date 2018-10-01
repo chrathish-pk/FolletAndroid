@@ -76,7 +76,7 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
     private void showItemCheckedoutView() {
         String permissionValue = AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_PERMISSIONS);
         Permissions permissions = new Gson().fromJson(permissionValue, Permissions.class);
-        if (Boolean.parseBoolean(permissions.getCanViewItemsOutAsset()) || Boolean.parseBoolean(permissions.getCanViewItemsOutLibrary()))
+        if (permissions != null && Boolean.parseBoolean(permissions.getCanViewItemsOutAsset()) || permissions != null && Boolean.parseBoolean(permissions.getCanViewItemsOutLibrary()))
             mBinding.itemRelativeLayout.setVisibility(View.VISIBLE);
         else
             mBinding.itemRelativeLayout.setVisibility(View.GONE);

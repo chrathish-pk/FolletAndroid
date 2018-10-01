@@ -3,6 +3,7 @@
  */
 package com.follett.fsc.mobile.circdesk.utils;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 public class FollettLog {
@@ -37,6 +38,9 @@ public class FollettLog {
      * @param message The message you would like logged.
      */
     public static void d(String tag, String message) {
+        if (TextUtils.isEmpty(message)) {
+            return;
+        }
         Log.d(tag, message);
     }
 

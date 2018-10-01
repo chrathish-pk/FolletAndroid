@@ -32,6 +32,8 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SECRET_PASS;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SECRET_USERNAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
 
 public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, LoginViewModel> implements CTAButtonListener
@@ -122,12 +124,17 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
                         .showNoInternetAlertDialog(getBaseActivity());
                 return;
             }
-
+    
+            String username = AppUtils.getInstance()
+                    .getEditTextValue(mLayoutBinding.useridEditText);
+            String password = AppUtils.getInstance()
+                    .getEditTextValue(mLayoutBinding.passwordEditText);
+    
+            AppSharedPreferences.getInstance().setString(KEY_SECRET_USERNAME, username);
+            AppSharedPreferences.getInstance().setString(KEY_SECRET_PASS, password);
             mLoginViewModel.getLoginResults(AppSharedPreferences.getInstance()
                     .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
-                    .getString(KEY_SITE_SHORT_NAME), AppUtils.getInstance()
-                    .getEditTextValue(mLayoutBinding.useridEditText), AppUtils.getInstance()
-                    .getEditTextValue(mLayoutBinding.passwordEditText));
+                    .getString(KEY_SITE_SHORT_NAME),username , password);
         }
         }
     }

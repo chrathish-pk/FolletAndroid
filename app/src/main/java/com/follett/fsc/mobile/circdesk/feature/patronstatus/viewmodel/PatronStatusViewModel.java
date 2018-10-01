@@ -33,7 +33,10 @@ public class PatronStatusViewModel extends BaseViewModel implements NetworkInter
     public final MutableLiveData<PatronInfo> mPatronInfo = new MutableLiveData<>();
     
     private Application mApplication;
+    
     private UpdateItemUIListener updateItemUIListener;
+    
+    private String mPatronId;
 
     public PatronStatusViewModel(@NonNull Application application, UpdateItemUIListener updateItemUIListener) {
         super(application);
@@ -41,13 +44,14 @@ public class PatronStatusViewModel extends BaseViewModel implements NetworkInter
         this.updateItemUIListener=updateItemUIListener;
     }
     
-    public void getPatronInfo(String typedText) {
-        if (!TextUtils.isEmpty(typedText)) {
+    public void getPatronInfo(String patronId) {
+        if (!TextUtils.isEmpty(patronId)) {
             setIsLoding(true);
+            mPatronId = patronId;
     
             AppRemoteRepository.getInstance().getPatronStatus(this, AppUtils.getInstance().getHeader(mApplication), AppSharedPreferences.getInstance()
                     .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
-                    .getString(KEY_SITE_SHORT_NAME), typedText);
+                    .getString(KEY_SITE_SHORT_NAME), patronId);
         } else {
             setErrorMessage(getApplication().getString(R.string.errorPatronEntry));
         }
@@ -74,6 +78,13 @@ public class PatronStatusViewModel extends BaseViewModel implements NetworkInter
         setIsLoding(false);
         FollettLog.d("Exception", throwable.getMessage());
         setErrorMessage(errorMessage);
+    }
+    
+    @Override
+    public void onRefreshToken(int requestCode) {
+        AppRemoteRepository.getInstance().getPatronStatus(this, AppUtils.getInstance().getHeader(mApplication), AppSharedPreferences.getInstance()
+                .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
+                .getString(KEY_SITE_SHORT_NAME), mPatronId);
     }
     
     @BindingAdapter(value = {"overDueCount"})

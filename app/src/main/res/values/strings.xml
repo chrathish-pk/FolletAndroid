@@ -25,6 +25,7 @@
     <string name="no_internet_title">No Internet Connection</string>
     <string name="no_internet_des">Please try again when you have a better connection.</string>
     <string name="double_quote">\"</string>
+    <string name="error_unable_to_complete_request">Unable to complete request. Please try again.</string>
 
     <!--Home screen-->
     <string name="home">HOME</string>

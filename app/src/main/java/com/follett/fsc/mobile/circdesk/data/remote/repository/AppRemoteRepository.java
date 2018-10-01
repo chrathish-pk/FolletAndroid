@@ -6,8 +6,6 @@
 
 package com.follett.fsc.mobile.circdesk.data.remote.repository;
 
-import android.support.annotation.Nullable;
-
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.api.FollettAPIManager;
@@ -26,18 +24,41 @@ import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.LoginResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.SiteResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.Version;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
+import com.google.gson.Gson;
+
+import android.support.annotation.Nullable;
 
 import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_PERMISSIONS;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SECRET_PASS;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SECRET_USERNAME;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SESSION_ID;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_USERNAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.SERVER_URI_VALUE;
+import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.CHECKIN_REQUEST_CODE;
+import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.CHECK_OUT_REQUEST_CODE;
+import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.CIRCULATION_TYPE_REQUEST_CODE;
+import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.INPROGRESS_INVENTORY_REQUEST_CODE;
+import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.INVENTORY_DETAILS_REQUEST_CODE;
+import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.ITEM_STATUS_REQUEST_CODE;
+import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.PATRON_STATUS_REQUEST_CODE;
+import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.SCAN_PATRON_REQUEST_CODE;
+import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.SERVICE_ISSUE;
+import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.TITLE_DETAILS_REQUEST_CODE;
 
-public class AppRemoteRepository {
+public class AppRemoteRepository<T> {
     
     private static APIInterface apiService;
+    
     public static AppRemoteRepository mInstance;
+    
+    private int mCount = 0;
     
     public static AppRemoteRepository getInstance() {
         if (mInstance == null) {
@@ -59,16 +80,17 @@ public class AppRemoteRepository {
                 .subscribeWith(new DisposableObserverWrapper<Version>() {
                     @Override
                     protected void onSuccess(Version version) {
-                        if (networkInterface != null) {
-                            networkInterface.onCallCompleted(version);
-                        }
+                        onSuccessResult(networkInterface, version);
                     }
                     
                     @Override
                     protected void onFailed(Throwable throwable, String errorMessage) {
-                        if (networkInterface != null) {
-                            networkInterface.onCallFailed(throwable, errorMessage);
-                        }
+                        onFailedResult(networkInterface, throwable, errorMessage);
+                    }
+    
+                    @Override
+                    protected void onRefreshToken() {
+                        // Do Nothing
                     }
                 });
     }
@@ -80,38 +102,40 @@ public class AppRemoteRepository {
                 .subscribeWith(new DisposableObserverWrapper<DistrictList>() {
                     @Override
                     protected void onSuccess(DistrictList districtList) {
-                        if (networkInterface != null) {
-                            networkInterface.onCallCompleted(districtList);
-                        }
+                        onSuccessResult(networkInterface, districtList);
                     }
                     
                     @Override
                     protected void onFailed(Throwable throwable, String errorMessage) {
-                        if (networkInterface != null) {
-                            networkInterface.onCallFailed(throwable, errorMessage);
-                        }
+                        onFailedResult(networkInterface, throwable, errorMessage);
+                    }
+    
+                    @Override
+                    protected void onRefreshToken() {
+                        // Do Nothing
                     }
                 });
     }
     
     
     public void getCirculationTypeList(@Nullable final NetworkInterface networkInterface, Map<String, String> headers, String site, String contextName) {
-        apiService.getCirculationTypeList(headers, site,contextName)
+        apiService.getCirculationTypeList(headers, site, contextName)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribeWith(new DisposableObserverWrapper<CirculationTypeList>() {
                     @Override
                     protected void onSuccess(CirculationTypeList circulationTypeList) {
-                        if (networkInterface != null) {
-                            networkInterface.onCallCompleted(circulationTypeList);
-                        }
+                        onSuccessResult(networkInterface, circulationTypeList);
                     }
                     
                     @Override
                     protected void onFailed(Throwable throwable, String errorMessage) {
-                        if (networkInterface != null) {
-                            networkInterface.onCallFailed(throwable, errorMessage);
-                        }
+                        onFailedResult(networkInterface, throwable, errorMessage);
+                    }
+                    
+                    @Override
+                    protected void onRefreshToken() {
+                        onRefreshSession(networkInterface, CIRCULATION_TYPE_REQUEST_CODE);
                     }
                 });
     }
@@ -123,21 +147,23 @@ public class AppRemoteRepository {
                 .subscribeWith(new DisposableObserverWrapper<SiteResults>() {
                     @Override
                     protected void onSuccess(SiteResults siteResults) {
-                        if (networkInterface != null) {
-                            networkInterface.onCallCompleted(siteResults);
-                        }
+                        onSuccessResult(networkInterface, siteResults);
                     }
                     
                     @Override
                     protected void onFailed(Throwable throwable, String errorMessage) {
-                        if (networkInterface != null) {
-                            networkInterface.onCallFailed(throwable, errorMessage);
-                        }
+                        onFailedResult(networkInterface, throwable, errorMessage);
+                    }
+    
+                    @Override
+                    protected void onRefreshToken() {
+                        // Do Nothing
                     }
                 });
     }
     
-    public void getLoginResults(@Nullable final NetworkInterface networkInterface, String contextName, String site, String userName, String password) {
+    public void getLoginResults(final boolean isSessionExpireReq, @Nullable final NetworkInterface networkInterface, String contextName, String site, String
+            userName, String password, final int reqCode) {
         
         apiService.getLoginResults(contextName, site, userName, password)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -145,16 +171,20 @@ public class AppRemoteRepository {
                 .subscribeWith(new DisposableObserverWrapper<LoginResults>() {
                     @Override
                     protected void onSuccess(LoginResults loginResults) {
-                        if (networkInterface != null) {
-                            networkInterface.onCallCompleted(loginResults);
+                        if (networkInterface == null) {
+                            return;
                         }
+                        checkLoginResult(networkInterface, loginResults, isSessionExpireReq, reqCode);
                     }
                     
                     @Override
                     protected void onFailed(Throwable throwable, String errorMessage) {
-                        if (networkInterface != null) {
-                            networkInterface.onCallFailed(throwable, errorMessage);
-                        }
+                        onFailedResult(networkInterface, throwable, errorMessage);
+                    }
+                    
+                    @Override
+                    protected void onRefreshToken() {
+                        // DO Nothing
                     }
                 });
     }
@@ -168,16 +198,17 @@ public class AppRemoteRepository {
                 .subscribeWith(new DisposableObserverWrapper<InProgressInventoryResults>() {
                     @Override
                     protected void onSuccess(InProgressInventoryResults inProgressInventoryResults) {
-                        if (networkInterface != null) {
-                            networkInterface.onCallCompleted(inProgressInventoryResults);
-                        }
+                        onSuccessResult(networkInterface, inProgressInventoryResults);
                     }
                     
                     @Override
                     protected void onFailed(Throwable throwable, String errorMessage) {
-                        if (networkInterface != null) {
-                            networkInterface.onCallFailed(throwable, errorMessage);
-                        }
+                        onFailedResult(networkInterface, throwable, errorMessage);
+                    }
+    
+                    @Override
+                    protected void onRefreshToken() {
+                        onRefreshSession(networkInterface, INPROGRESS_INVENTORY_REQUEST_CODE);
                     }
                 });
     }
@@ -190,16 +221,17 @@ public class AppRemoteRepository {
                 .subscribeWith(new DisposableObserverWrapper<InventoryDetails>() {
                     @Override
                     protected void onSuccess(InventoryDetails inventoryDetails) {
-                        if (networkInterface != null) {
-                            networkInterface.onCallCompleted(inventoryDetails);
-                        }
+                        onSuccessResult(networkInterface, inventoryDetails);
                     }
     
                     @Override
                     protected void onFailed(Throwable throwable, String errorMessage) {
-                        if (networkInterface != null) {
-                            networkInterface.onCallFailed(throwable, errorMessage);
-                        }
+                        onFailedResult(networkInterface, throwable, errorMessage);
+                    }
+    
+                    @Override
+                    protected void onRefreshToken() {
+                        onRefreshSession(networkInterface, INVENTORY_DETAILS_REQUEST_CODE);
                     }
                 });
     }
@@ -210,16 +242,17 @@ public class AppRemoteRepository {
                 .subscribeWith(new DisposableObserverWrapper<ScanPatron>() {
                     @Override
                     protected void onSuccess(ScanPatron scanPatron) {
-                        if (networkInterface != null) {
-                            networkInterface.onCallCompleted(scanPatron);
-                        }
+                        onSuccessResult(networkInterface, scanPatron);
                     }
                     
                     @Override
                     protected void onFailed(Throwable throwable, String errorMessage) {
-                        if (networkInterface != null) {
-                            networkInterface.onCallFailed(throwable, errorMessage);
-                        }
+                        onFailedResult(networkInterface, throwable, errorMessage);
+                    }
+                    
+                    @Override
+                    protected void onRefreshToken() {
+                        onRefreshSession(networkInterface, SCAN_PATRON_REQUEST_CODE);
                     }
                 });
     }
@@ -231,16 +264,17 @@ public class AppRemoteRepository {
                 .subscribeWith(new DisposableObserverWrapper<CheckoutResult>() {
                     @Override
                     protected void onSuccess(CheckoutResult checkoutResult) {
-                        if (networkInterface != null) {
-                            networkInterface.onCallCompleted(checkoutResult);
-                        }
+                        onSuccessResult(networkInterface, checkoutResult);
                     }
                     
                     @Override
                     protected void onFailed(Throwable throwable, String errorMessage) {
-                        if (networkInterface != null) {
-                            networkInterface.onCallFailed(throwable, errorMessage);
-                        }
+                      onFailedResult(networkInterface, throwable, errorMessage);
+                    }
+    
+                    @Override
+                    protected void onRefreshToken() {
+                        onRefreshSession(networkInterface, CHECK_OUT_REQUEST_CODE);
                     }
                 });
     }
@@ -252,16 +286,17 @@ public class AppRemoteRepository {
                 .subscribeWith(new DisposableObserverWrapper<CheckinResult>() {
                     @Override
                     protected void onSuccess(CheckinResult checkinResult) {
-                        if (networkInterface != null) {
-                            networkInterface.onCallCompleted(checkinResult);
-                        }
+                        onSuccessResult(networkInterface, checkinResult);
                     }
                     
                     @Override
                     protected void onFailed(Throwable throwable, String errorMessage) {
-                        if (networkInterface != null) {
-                            networkInterface.onCallFailed(throwable, errorMessage);
-                        }
+                        onFailedResult(networkInterface, throwable, errorMessage);
+                    }
+    
+                    @Override
+                    protected void onRefreshToken() {
+                        onRefreshSession(networkInterface, CHECKIN_REQUEST_CODE);
                     }
                 });
     }
@@ -271,16 +306,17 @@ public class AppRemoteRepository {
                 .subscribeWith(new DisposableObserverWrapper<TitleDetails>() {
                     @Override
                     protected void onSuccess(TitleDetails titleDetails) {
-                        if (networkInterface != null) {
-                            networkInterface.onCallCompleted(titleDetails);
-                        }
+                        onSuccessResult(networkInterface, titleDetails);
                     }
                     
                     @Override
                     protected void onFailed(Throwable throwable, String errorMessage) {
-                        if (networkInterface != null) {
-                            networkInterface.onCallFailed(throwable, errorMessage);
-                        }
+                        onFailedResult(networkInterface, throwable, errorMessage);
+                    }
+    
+                    @Override
+                    protected void onRefreshToken() {
+                        onRefreshSession(networkInterface, TITLE_DETAILS_REQUEST_CODE);
                     }
                 });
     }
@@ -292,37 +328,38 @@ public class AppRemoteRepository {
                 .subscribeWith(new DisposableObserverWrapper<ItemDetails>() {
                     @Override
                     protected void onSuccess(ItemDetails itemDetails) {
-                        if (networkInterface != null) {
-                            networkInterface.onCallCompleted(itemDetails);
-                        }
+                        onSuccessResult(networkInterface, itemDetails);
                     }
                     
                     @Override
                     protected void onFailed(Throwable throwable, String errorMessage) {
-                        if (networkInterface != null) {
-                            networkInterface.onCallFailed(throwable, errorMessage);
-                        }
+                        onFailedResult(networkInterface, throwable, errorMessage);
+                    }
+    
+                    @Override
+                    protected void onRefreshToken() {
+                        onRefreshSession(networkInterface, ITEM_STATUS_REQUEST_CODE);
                     }
                 });
     }
     
     public void getPatronStatus(@Nullable final NetworkInterface networkInterface, Map<String, String> headerMap, String contextName, String site, String
             patronBarcode) {
-        
         apiService.getPatronStatus(headerMap, contextName, site, patronBarcode)
                 .subscribeWith(new DisposableObserverWrapper<PatronInfo>() {
                     @Override
                     protected void onSuccess(PatronInfo patronInfo) {
-                        if (networkInterface != null) {
-                            networkInterface.onCallCompleted(patronInfo);
-                        }
+                        onSuccessResult(networkInterface, patronInfo);
                     }
                     
                     @Override
                     protected void onFailed(Throwable throwable, String errorMessage) {
-                        if (networkInterface != null) {
-                            networkInterface.onCallFailed(throwable, errorMessage);
-                        }
+                        onFailedResult(networkInterface, throwable, errorMessage);
+                    }
+                    
+                    @Override
+                    protected void onRefreshToken() {
+                        onRefreshSession(networkInterface, PATRON_STATUS_REQUEST_CODE);
                     }
                 });
     }
@@ -366,5 +403,46 @@ public class AppRemoteRepository {
     public void removeAllSession() {
         AppSharedPreferences.getInstance()
                 .removeAllSession();
+    }
+    
+    private void onSuccessResult(NetworkInterface networkInterface, Object model) {
+        mCount = 0;
+        if (networkInterface != null) {
+            networkInterface.onCallCompleted(model);
+        }
+    }
+    
+    private void onFailedResult(NetworkInterface networkInterface, Throwable throwable, String errorMessage) {
+        if (networkInterface != null) {
+            networkInterface.onCallFailed(throwable, errorMessage);
+        }
+    }
+    
+    private void onRefreshSession(@Nullable final NetworkInterface networkInterface, int reqCode) {
+        if (mCount == 0) {
+            mCount++;
+            getLoginResults(true, networkInterface, getString(KEY_CONTEXT_NAME), getString(KEY_SITE_SHORT_NAME), getString(KEY_SECRET_USERNAME), getString
+                    (KEY_SECRET_PASS), reqCode);
+        } else {
+            mCount = 0;
+            onFailedResult(networkInterface, new IllegalArgumentException(), SERVICE_ISSUE);
+        }
+    }
+    
+    private void checkLoginResult(NetworkInterface networkInterface, LoginResults loginResults, boolean isSessionExpireReq, int reqCode) {
+        
+        if (loginResults.getSuccess() != null && loginResults.getSuccess()
+                .equalsIgnoreCase("true")) {
+            setString(KEY_SESSION_ID, loginResults.getSessionID());
+            setString(KEY_PERMISSIONS, new Gson().toJson((loginResults.getPermissions())));
+            setString(KEY_USERNAME, loginResults.getLastName());
+            if (isSessionExpireReq) {
+                networkInterface.onRefreshToken(reqCode);
+            } else {
+                onSuccessResult(networkInterface, loginResults);
+            }
+        } else if (isSessionExpireReq) {
+            onFailedResult(networkInterface, new IllegalStateException(), SERVICE_ISSUE);
+        }
     }
 }
