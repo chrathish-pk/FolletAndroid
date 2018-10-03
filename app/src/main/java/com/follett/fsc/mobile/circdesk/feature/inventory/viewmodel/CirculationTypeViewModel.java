@@ -44,4 +44,9 @@ public class CirculationTypeViewModel extends BaseViewModel implements NetworkIn
         setIsLoding(false);
         setErrorMessage(errorMessage);
         }
+    
+    @Override
+    public void onRefreshToken(int requestCode) {
+    
+    }
 }

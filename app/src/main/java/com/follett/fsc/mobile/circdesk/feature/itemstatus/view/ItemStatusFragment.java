@@ -1,16 +1,5 @@
 package com.follett.fsc.mobile.circdesk.feature.itemstatus.view;
 
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
-import com.follett.fsc.mobile.circdesk.databinding.FragmentItemStatusBinding;
-import com.follett.fsc.mobile.circdesk.feature.iteminfo.view.TitleInfoActivity;
-import com.follett.fsc.mobile.circdesk.feature.itemstatus.model.ItemDetails;
-import com.follett.fsc.mobile.circdesk.feature.itemstatus.viewmodel.ItemStatusViewModel;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.NavigationListener;
-import com.follett.fsc.mobile.circdesk.utils.AppUtils;
-import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-
 import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
@@ -21,6 +10,17 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.databinding.FragmentItemStatusBinding;
+import com.follett.fsc.mobile.circdesk.feature.iteminfo.view.TitleInfoActivity;
+import com.follett.fsc.mobile.circdesk.feature.itemstatus.model.ItemDetails;
+import com.follett.fsc.mobile.circdesk.feature.itemstatus.viewmodel.ItemStatusViewModel;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.NavigationListener;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
+import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, ItemStatusViewModel> implements View.OnClickListener {
 
@@ -68,7 +68,6 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         fragmentItemStatusBinding = getViewDataBinding();
-        mActivity.setTitleBar(getString(R.string.item_status_title));
         initView();
 
     }
@@ -79,8 +78,6 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
             return;
         }
 
-        mActivity.setBackBtnVisible();
-        mActivity.baseBinding.backBtn.setOnClickListener(this);
         fragmentItemStatusBinding.itemStatusPatronGoBtn.setOnClickListener(this);
         fragmentItemStatusBinding.itemStatusCheckedoutInfoBtn.setOnClickListener(this);
         fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setOnClickListener(this);
@@ -223,14 +220,6 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
             fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(activity, R.color.blueLabel));
             AppSharedPreferences.getInstance().setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, false);
             disableItemStatusView();
-        }
-        else if(v.getId() == R.id.backBtn)
-        {
-            AppUtils.getInstance()
-                    .hideKeyBoard(activity, fragmentItemStatusBinding.itemStatusPatronEntry);
-            mActivity.setTitleBar(getString(R.string.home));
-            mActivity.baseBinding.backBtn.setVisibility(View.GONE);
-            mActivity.onBackPressed();
         }
     }
 

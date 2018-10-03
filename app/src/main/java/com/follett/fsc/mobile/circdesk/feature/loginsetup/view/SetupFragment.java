@@ -5,6 +5,12 @@
  */
 package com.follett.fsc.mobile.circdesk.feature.loginsetup.view;
 
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.text.TextUtils;
+
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
@@ -13,12 +19,6 @@ import com.follett.fsc.mobile.circdesk.databinding.ActivityLoginBinding;
 import com.follett.fsc.mobile.circdesk.feature.homescreen.view.HomeFragment;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.viewmodel.LoginViewModel;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
-
-import android.app.Activity;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.text.TextUtils;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SESSION_ID;
@@ -56,7 +56,6 @@ public class SetupFragment extends BaseFragment<ActivityLoginBinding, LoginViewM
     }
 
     private void loadBasicFragment() {
-        mActivity.setTitle(getString(R.string.connect_your_school_label));
         final TabLayout tabLayout = mLoginBinding.tabLayout;
         tabLayout.addTab(tabLayout.newTab()
                 .setText(getString(R.string.basic_label)));
@@ -108,18 +107,18 @@ public class SetupFragment extends BaseFragment<ActivityLoginBinding, LoginViewM
 
     private void navigateToHome() {
         mLoginBinding.tabLayout.removeAllTabs();
-        mActivity.pushFragment(new HomeFragment(), R.id.loginContainer, "HomeFragment", false);
+        mActivity.pushFragment(new HomeFragment(), R.id.loginContainer, getString(R.string.home), false,false);
     }
 
     private void navigateToLogin(boolean isAddToBackStack) {
         mActivity.setTitle(getString(R.string.get_started_label));
-        mActivity.pushFragment(new LoginFragment(), R.id.loginContainer, "LoginFragment", isAddToBackStack);
+        mActivity.pushFragment(new LoginFragment(), R.id.loginContainer, getString(R.string.get_started_label), isAddToBackStack,false);
 
     }
 
     private void navigateToSchoolList(boolean isAddToBackStack) {
         mActivity.setTitleBar(getString(R.string.select_school_label));
-        mActivity.pushFragment(new SchoolListFragment(), R.id.loginContainer, "SchoolListFragment", isAddToBackStack);
+        mActivity.pushFragment(new SchoolListFragment(), R.id.loginContainer, getString(R.string.select_school_label), isAddToBackStack,false);
     }
 
 }

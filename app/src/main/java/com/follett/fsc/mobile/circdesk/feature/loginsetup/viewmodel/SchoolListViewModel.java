@@ -86,5 +86,9 @@ public class SchoolListViewModel extends BaseViewModel<CTAButtonListener> implem
         setErrorMessage(errorMessage);
     }
     
+    @Override
+    public void onRefreshToken(int requestCode) {
+        // Do Nothing
+    }
 
 }

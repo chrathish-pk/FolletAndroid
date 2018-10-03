@@ -55,7 +55,7 @@ public class CirculationTypeViewModelTest extends BaseTestClass {
 
     private CirculationTypeList getCirculationMockResult() {
         List<CircTypeList> circTypeLists = new ArrayList<>();
-        circTypeLists.add(new CircTypeList(100, "Regular"));
+        circTypeLists.add(new CircTypeList(100, "Regular", true));
         return new CirculationTypeList(circTypeLists);
     }
 

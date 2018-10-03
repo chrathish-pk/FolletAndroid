@@ -1,5 +1,6 @@
 package com.follett.fsc.mobile.circdesk.feature.loginsetup.view;
 
+import android.arch.lifecycle.MutableLiveData;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -14,6 +15,8 @@ import com.follett.fsc.mobile.circdesk.feature.loginsetup.viewmodel.LoginViewMod
 
 public class SetupActivity extends BaseActivity<LoginViewModel> implements NavigationListener {
 
+    public MutableLiveData<String> selectedDateLiveData = new MutableLiveData<>();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,10 +24,10 @@ public class SetupActivity extends BaseActivity<LoginViewModel> implements Navig
         putContentView(R.layout.activity_setup);
         if (!TextUtils.isEmpty(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_CONTEXT_NAME)) &&
                 TextUtils.isEmpty(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID)))
-            pushFragment(new LoginFragment(), R.id.loginContainer, "SetupFragment", false);
+            pushFragment(new LoginFragment(), R.id.loginContainer, getString(R.string.get_started_label), false, false);
         else {
             AppRemoteRepository.mInstance = null;
-            pushFragment(new SetupFragment(), R.id.loginContainer, "SetupFragment", false);
+            pushFragment(new SetupFragment(), R.id.loginContainer, getString(R.string.connect_your_school_label), false, false);
         }
 
     }
@@ -55,24 +58,24 @@ public class SetupActivity extends BaseActivity<LoginViewModel> implements Navig
     private void navigateToDistrictList(DistrictList districtList, boolean isAddToBackStack) {
         DistrictListFragment mDistrictListFragment = DistrictListFragment.newInstance(districtList);
         setToolBarTitle(getString(R.string.select_district_label));
-        pushFragment(mDistrictListFragment, R.id.loginContainer, "DistrictListFragment", isAddToBackStack);
+        pushFragment(mDistrictListFragment, R.id.loginContainer, getString(R.string.select_district_label), isAddToBackStack, false);
 
     }
 
     private void navigateToLogin(boolean isAddToBackStack) {
         setToolBarTitle(getString(R.string.get_started_label));
-        pushFragment(new LoginFragment(), R.id.loginContainer, "LoginFragment", isAddToBackStack);
+        pushFragment(new LoginFragment(), R.id.loginContainer, getString(R.string.get_started_label), isAddToBackStack, false);
 
     }
 
 
     private void navigateToSchoolList(boolean isAddToBackStack) {
         setToolBarTitle(getString(R.string.select_school_label));
-        pushFragment(new SchoolListFragment(), R.id.loginContainer, "SchoolListFragment", isAddToBackStack);
+        pushFragment(new SchoolListFragment(), R.id.loginContainer, getString(R.string.select_school_label), isAddToBackStack, false);
     }
 
     private void navigateToHome() {
-        pushFragment(new HomeFragment(), R.id.loginContainer, "HomeFragment", false);
+        pushFragment(new HomeFragment(), R.id.loginContainer, getString(R.string.home), false, false);
     }
 
     @Override
