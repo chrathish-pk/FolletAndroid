@@ -14,6 +14,11 @@ import com.follett.fsc.mobile.circdesk.databinding.FragmentCallNumbersExcludeIte
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.SeenOnOrAfterViewModel;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
 
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 public class SeenOnOrAfterFragment extends BaseFragment<FragmentCallNumbersExcludeItemsBinding, SeenOnOrAfterViewModel> implements ItemClickListener {
     private FragmentCallNumbersExcludeItemsBinding fragmentCallNumbersExcludeItemsBinding;
     private SeenOnOrAfterViewModel seenOnOrAfterViewModel;
@@ -41,6 +46,12 @@ public class SeenOnOrAfterFragment extends BaseFragment<FragmentCallNumbersExclu
 
         fragmentCallNumbersExcludeItemsBinding.descriptionText.setText(getString(R.string.excludeItemsDescription));
         fragmentCallNumbersExcludeItemsBinding.enterDate.setVisibility(View.VISIBLE);
+
+
+        Date c = Calendar.getInstance().getTime();
+        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.US);
+        ((SetupActivity) getActivity()).selectedDateLiveData.postValue(df.format(c));
+
 
         ((SetupActivity) getActivity()).selectedDateLiveData.observeForever(new Observer<String>() {
             @Override
