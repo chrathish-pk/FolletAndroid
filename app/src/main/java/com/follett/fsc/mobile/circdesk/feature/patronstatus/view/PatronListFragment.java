@@ -6,16 +6,6 @@
 
 package com.follett.fsc.mobile.circdesk.feature.patronstatus.view;
 
-import com.follett.fsc.mobile.circdesk.BR;
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
-import com.follett.fsc.mobile.circdesk.databinding.FragmentPatronListBinding;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.NavigationListener;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.viewmodel.PatronListViewModel;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronList;
-import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-
 import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
@@ -24,6 +14,16 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+
+import com.follett.fsc.mobile.circdesk.BR;
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.databinding.FragmentPatronListBinding;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.NavigationListener;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronList;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.viewmodel.PatronListViewModel;
+import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +77,7 @@ public class PatronListFragment extends BaseFragment<FragmentPatronListBinding, 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         FragmentPatronListBinding binding = getViewDataBinding();
-        mActivity.baseBinding.backBtn.setOnClickListener(this);
+        //mActivity.baseBinding.backBtn.setOnClickListener(this);
         inItView(binding);
     }
 
@@ -97,7 +97,7 @@ public class PatronListFragment extends BaseFragment<FragmentPatronListBinding, 
 
     @Override
     public void onDetach() {
-        navigationListener.setToolBarTitle(getString(R.string.patron_status_label));
+        //navigationListener.setToolBarTitle(getString(R.string.patron_status_label));
         super.onDetach();
     }
 
@@ -111,12 +111,12 @@ public class PatronListFragment extends BaseFragment<FragmentPatronListBinding, 
 
     @Override
     public void onNavigation(int position) {
-
+        //do nothing
     }
 
     @Override
     public void setToolBarTitle(String titleText) {
-
+        //do nothingXX
     }
 
     @Override

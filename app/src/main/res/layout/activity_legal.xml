@@ -21,6 +21,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:autoLink="web"
+            android:fontFamily="@font/opensans_regular"
+            android:textSize="@dimen/text_size_14sp"
             android:text="@string/legal_text" />
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

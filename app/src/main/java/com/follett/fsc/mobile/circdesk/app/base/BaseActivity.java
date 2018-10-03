@@ -26,6 +26,7 @@ import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityBaseBinding;
 import com.follett.fsc.mobile.circdesk.databinding.NavigationHeaderBinding;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 
 
 public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity implements View.OnClickListener {
@@ -42,6 +43,7 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
             baseBinding.toolBarIcon.setImageResource(R.drawable.info_icon);
         }
         baseBinding.navigationLayout.navInfoSubLayout.legalBtn.setOnClickListener(this);
+        baseBinding.backBtn.setOnClickListener(this);
         baseBinding.toolBarIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,7 +109,6 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
 
                     @Override
                     public void onClick(View v) {
-                        // TODO Auto-generated method stub
                         // Initialize a new date picker dialog fragment
                         DialogFragment dFragment = new DatePickerFragment();
                         // Show the date picker dialog fragment
@@ -145,7 +146,7 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
         return false;
     }
 
-    public void pushFragment(Fragment fragment, int container, String tag, boolean shouldAdd) {
+    public void pushFragment(Fragment fragment, int container, String tag, boolean shouldAdd, boolean showBackBtn) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         if (shouldAdd)
@@ -162,16 +163,22 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
                 }
             }
         }
-        ft.add(container, fragment);
+        ft.add(container, fragment, tag);
+        setTitleBar(tag);
+        if (showBackBtn)
+            setBackBtnVisible();
         ft.commit();
     }
 
-    public void replaceFragment(Fragment fragment, int container, String tag, boolean shouldAdd) {
+    public void replaceFragment(Fragment fragment, int container, String tag, boolean shouldAdd, boolean showBackBtn) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         if (shouldAdd)
             ft.addToBackStack(tag);
-        ft.replace(container, fragment);
+        ft.replace(container, fragment, tag);
+        setTitleBar(tag);
+        if (showBackBtn)
+            setBackBtnVisible();
         ft.commit();
     }
 
@@ -188,6 +195,9 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
 
         if (v.getId() == R.id.legalBtn) {
             startActivity(new Intent(BaseActivity.this, LegalActivity.class));
+        } else if (v.getId() == R.id.backBtn) {
+            AppUtils.getInstance().hideKeyBoard(this, v);
+            onBackPressed();
         }
 
 
@@ -197,9 +207,12 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
     public void onBackPressed() {
         super.onBackPressed();
         FragmentManager fm = getSupportFragmentManager();
-        if(fm.getFragments().size()==2){
+        Fragment fragment = fm.getFragments().get(fm.getFragments().size() - 1);
+        if (fm.getFragments().size() == 1 || fragment.getTag().contains(".")) {
             setTitleBar("Home");
             baseBinding.backBtn.setVisibility(View.GONE);
+        } else {
+            setTitleBar(fragment.getTag());
         }
     }
 }

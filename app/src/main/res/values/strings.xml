@@ -25,6 +25,7 @@
     <string name="no_internet_title">No Internet Connection</string>
     <string name="no_internet_des">Please try again when you have a better connection.</string>
     <string name="double_quote">\"</string>
+    <string name="error_unable_to_complete_request">Unable to complete request. Please try again.</string>
 
     <!--Home screen-->
     <string name="home">HOME</string>
@@ -111,6 +112,7 @@
     <string name="item_status_in">Status : IN</string>
     <string name="item_status_out">Status : Out</string>
     <string name="item_callno">Call# </string>
+    <string name="itemstatus_callno">Call #: </string>
     <string name="of">\tof \t</string>
     <string name="item_quiz_no">Quiz Number: </string>
     <string name="item_points">, Points : </string>
@@ -141,15 +143,15 @@
     <string name="patron_not_found">Patron %s not found</string>
     <string name="items_overude_label">items overdue</string>
     <string name="onhold_label">items on hold</string>
-    <string name="title_hold_count">Titles On Hold (%s)</string>
-    <string name="item_checkout_count">Check Outs Holds (%s)</string>
+    <string name="title_hold_count">Hold (%s)</string>
+    <string name="item_checkout_count">Check Outs (%s)</string>
     <string name="fines_count">Fines (%s)</string>
     <string name="barcodelabel">Barcode: %s</string>
     <string name="homeroomlabel">HomeRoom: %s</string>
     <string name="gradelevellabel">Grade Level: %s</string>
     <string name="barcode_label">Barcode: %s</string>
     <string name="due_label">Due: %s</string>
-    <string name="item_checkout_label">Check Outs Holds</string>
+    <string name="item_checkout_label">Check Outs</string>
     <string name="library_title_label">Library Titles</string>
     <string name="resource_item_label">Resource Items</string>
     <string name="on_hold_label">Hold</string>
@@ -172,6 +174,9 @@
     <string name="viewSelection">VIEW SELECTIONS</string>
     <string name="selectInventory">Select Inventory</string>
     <string name="no_selected_inventories">No Selected Inventories available</string>
+    <string name="inventorySelections">Inventory Selections</string>
+    <string name="seenOnOrAfter">Seen On Or After</string>
+    <string name="newInventoryTitle">New Inventory</string>
 
     <!-- Inventory -->
     <string name="finalize_inventory">Finalize Inventory</string>

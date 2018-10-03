@@ -6,6 +6,9 @@
 package com.follett.fsc.mobile.circdesk.feature.loginsetup.viewmodel;
 
 
+import android.app.Application;
+import android.support.annotation.NonNull;
+
 import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
@@ -14,28 +17,19 @@ import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.LoginResults;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-import com.google.gson.Gson;
 
-import android.app.Application;
-import android.support.annotation.NonNull;
-
-import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_PERMISSIONS;
-import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SESSION_ID;
-import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_USERNAME;
+import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.LOGIN_REQUEST_CODE;
 
 public class LoginViewModel extends BaseViewModel<CTAButtonListener> implements NetworkInterface {
     
-    private Application mApplication;
-
     public LoginViewModel(@NonNull Application application) {
         super(application);
-        mApplication = application;
     }
 
 
     public void getLoginResults(String contextName, String site, String userName, String password) {
         setIsLoding(true);
-        AppRemoteRepository.getInstance().getLoginResults(this, contextName, site, userName, password);
+        AppRemoteRepository.getInstance().getLoginResults(false,this, contextName, site, userName, password, LOGIN_REQUEST_CODE);
     }
 
     private void cancelProgressBar() {
@@ -50,13 +44,6 @@ public class LoginViewModel extends BaseViewModel<CTAButtonListener> implements 
             LoginResults loginResults = (LoginResults) model;
             if (loginResults.getSuccess() != null && loginResults.getSuccess()
                     .equalsIgnoreCase("true")) {
-                AppSharedPreferences.getInstance()
-                        .setString(KEY_SESSION_ID, loginResults.getSessionID());
-
-                String permissionJSON = new Gson().toJson((loginResults.getPermissions()));
-                AppSharedPreferences.getInstance().setString(KEY_PERMISSIONS, permissionJSON);
-                AppSharedPreferences.getInstance().setString(KEY_USERNAME,loginResults.getLastName());
-
                 setStatus(Status.SUCCESS);
             } else if(loginResults.getInvalidUsernameOrPassword()!=null && loginResults.getInvalidUsernameOrPassword()
                     .equalsIgnoreCase("true"))
@@ -76,5 +63,10 @@ public class LoginViewModel extends BaseViewModel<CTAButtonListener> implements 
     public void onCallFailed(Throwable throwable, String errorMessage) {
         cancelProgressBar();
         setErrorMessage(errorMessage);
+    }
+    
+    @Override
+    public void onRefreshToken(int requestCode) {
+        // Do Nothing
     }
 }

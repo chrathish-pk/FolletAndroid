@@ -50,6 +50,8 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
         super.onActivityCreated(savedInstanceState);
         fragmentNewInventoryBinding = getViewDataBinding();
 
+        //mActivity.setTitleBar(getString(R.string.newInventoryTitle));
+
         if (AppRemoteRepository.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED)) {
             fragmentNewInventoryBinding.callNumberLayout.setVisibility(View.VISIBLE);
             fragmentNewInventoryBinding.circulationTypesLayout.setVisibility(View.VISIBLE);
@@ -77,13 +79,13 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
     public void onItemClick(View view, int position) {
         switch (view.getId()) {
             case R.id.callNumberLayout:
-                mActivity.pushFragment(new CallNumbersFragment(), R.id.loginContainer, "CallNumbersFragment", true);
+                mActivity.pushFragment(new CallNumbersFragment(), R.id.loginContainer, getString(R.string.callNumbers), true,true);
                 break;
             case R.id.circulationTypesLayout:
-                mActivity.pushFragment(new CirculationTypeFragment(), R.id.loginContainer, "CirculationTypeFragment", true);
+                mActivity.pushFragment(new CirculationTypeFragment(), R.id.loginContainer, getString(R.string.circulationTypeLabel), true,true);
                 break;
             case R.id.libExcludeItemsLayout:
-                mActivity.replaceFragment(new SeenOnOrAfterFragment(), R.id.loginContainer, "SeenOnOrAfterFragment", true);
+                mActivity.replaceFragment(new SeenOnOrAfterFragment(), R.id.loginContainer, getString(R.string.seenOnOrAfter), true,true);
                 break;
             case R.id.startInventoryBtn:
                 AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_INVENTORY_NAME, fragmentNewInventoryBinding.newInventoryName.getText().toString().trim());

@@ -88,5 +88,10 @@ public class InventoryViewSelectionModel extends BaseViewModel implements Networ
         dismissProgrssBar();
     }
 
+    @Override
+    public void onRefreshToken(int requestCode) {
+        fetchSelectedInventoryList();
+    }
+
 
 }

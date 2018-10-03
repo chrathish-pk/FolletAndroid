@@ -55,6 +55,7 @@ public class CirculationTypeFragment extends BaseFragment<FragmentCirculationtyp
         super.onActivityCreated(savedInstanceState);
         recyclerviewLayoutBinding = getViewDataBinding();
 
+        //mActivity.setTitleBar(getString(R.string.circulationTypeLabel));
         mActivity.baseBinding.backBtn.setOnClickListener(this);
         recyclerviewLayoutBinding.recyclerviewList.setLayoutManager(new LinearLayoutManager(getActivity()));
 

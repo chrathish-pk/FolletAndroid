@@ -86,4 +86,9 @@ public class NewInventoryViewModel extends BaseViewModel implements NetworkInter
         setIsLoding(false);
         FollettLog.d("Exception", throwable.getMessage());
     }
+
+    @Override
+    public void onRefreshToken(int requestCode) {
+        // Do Nothing
+    }
 }

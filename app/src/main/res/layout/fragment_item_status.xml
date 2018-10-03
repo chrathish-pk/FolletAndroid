@@ -181,7 +181,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:fontFamily="@font/opensans_bold"
-                    android:text="@{@string/item_callno+' '+itemDetailsViewModel.callNumber}"
+                    android:text="@{@string/itemstatus_callno+' '+itemDetailsViewModel.callNumber}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_16sp"
                     android:visibility="visible" />

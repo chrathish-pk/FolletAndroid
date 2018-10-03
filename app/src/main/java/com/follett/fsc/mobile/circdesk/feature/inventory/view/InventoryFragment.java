@@ -24,7 +24,6 @@ import com.follett.fsc.mobile.circdesk.feature.inventory.InventoryViewSelectionF
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InProgressInventoryResults;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.InventoryViewModel;
-import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_IS_LIBRARY_SELECTED;
@@ -77,9 +76,9 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
             return;
         }
 
-        mActivity.setTitleBar(getString(R.string.inventory));
-        mActivity.setBackBtnVisible();
-        mActivity.baseBinding.backBtn.setOnClickListener(this);
+        //mActivity.setTitleBar(getString(R.string.inventory));
+        //mActivity.setBackBtnVisible();
+        //mActivity.baseBinding.backBtn.setOnClickListener(this);
         fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setOnClickListener(this);
         fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setOnClickListener(this);
 
@@ -88,17 +87,17 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
 
         fragmentInventoryBinding.patronEntryIncludeLayout.patronEntry.setHint(getString(R.string.enterBarcode));
         fragmentInventoryBinding.patronEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.GONE);
-        AppSharedPreferences.getInstance().setInt(KEY_IS_LIBRARY_SELECTED, 0);
+       // AppSharedPreferences.getInstance().setInt(KEY_IS_LIBRARY_SELECTED, 0);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.backBtn:
-                AppUtils.getInstance()
+                /*AppUtils.getInstance()
                         .hideKeyBoard(mActivity, fragmentInventoryBinding.inventoryCompletedStatus);
                 mActivity.setTitleBar(getString(R.string.home));
-                mActivity.baseBinding.backBtn.setVisibility(View.GONE);
+                mActivity.baseBinding.backBtn.setVisibility(View.GONE);*/
                 mActivity.onBackPressed();
                 break;
             case R.id.libraryBtn:
@@ -127,7 +126,7 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                 break;*/
                 break;
             case R.id.inventoryViewSelectionsBtn:
-                mActivity.pushFragment(new InventoryViewSelectionFragment(), R.id.loginContainer, "InventoryViewSelectionFragment", true);
+                mActivity.pushFragment(new InventoryViewSelectionFragment(), R.id.loginContainer, getString(R.string.inventorySelections), true,true);
                 break;
             default:
                 break;
@@ -169,9 +168,9 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
     @Override
     public void onItemClick(View view, int position) {
         if (view.getId() == R.id.inventorySelection) {
-            mActivity.pushFragment(new SelectInventoryFragment(), R.id.loginContainer, "SelectInventoryFragment", true);
+            mActivity.pushFragment(new SelectInventoryFragment(), R.id.loginContainer, getString(R.string.selectInventory), true,true);
         } else if (view.getId() == R.id.inventoryLocation) {
-            mActivity.pushFragment(new InventoryLocationFragment(), R.id.loginContainer, "InventoryLocationFragment", true);
+            mActivity.pushFragment(new InventoryLocationFragment(), R.id.loginContainer, getString(R.string.inventoryLocation), true,true);
         }
     }
 }

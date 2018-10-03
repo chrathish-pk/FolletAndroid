@@ -69,7 +69,7 @@ public class CheckoutPatronListFragment extends BaseFragment<ActivityPatronListB
             scanPatron = getArguments().getParcelable("scanPatron");
         }
 
-        mActivity.setTitleBar(getString(R.string.selectPatron));
+        //mActivity.setTitleBar(getString(R.string.selectPatron));
 
         PatronListAdapter patronListAdapter = new PatronListAdapter(activity, scanPatron, this);
         activityPatronListBinding.patronListView.setAdapter(patronListAdapter);

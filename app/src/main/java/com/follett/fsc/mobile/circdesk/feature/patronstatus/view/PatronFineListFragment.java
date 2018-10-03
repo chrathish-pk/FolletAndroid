@@ -81,7 +81,7 @@ public class PatronFineListFragment extends BaseFragment<FragmentPatronListBindi
         if (getBaseActivity() == null) {
             return;
         }
-        mActivity.baseBinding.backBtn.setOnClickListener(this);
+       // mActivity.baseBinding.backBtn.setOnClickListener(this);
         lBinding.patronListRecyclerview.setLayoutManager(new LinearLayoutManager(getBaseActivity()));
         final Bundle arguments = getArguments();
         if (arguments != null) {
@@ -93,7 +93,7 @@ public class PatronFineListFragment extends BaseFragment<FragmentPatronListBindi
     
     @Override
     public void onDetach() {
-        navigationListener.setToolBarTitle(getString(R.string.patron_status_label));
+        //navigationListener.setToolBarTitle(getString(R.string.patron_status_label));
         super.onDetach();
     }
     
@@ -107,17 +107,17 @@ public class PatronFineListFragment extends BaseFragment<FragmentPatronListBindi
 
     @Override
     public void onNavigation(int position) {
-
+        //do nothing
     }
 
     @Override
     public void setToolBarTitle(String titleText) {
-
+        //do nothing
     }
 
     @Override
     public void onNavigation(Object model, int position) {
-
+        //do nothing
     }
 
     @Override

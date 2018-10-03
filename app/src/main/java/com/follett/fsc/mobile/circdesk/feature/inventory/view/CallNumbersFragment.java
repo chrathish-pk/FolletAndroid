@@ -44,7 +44,7 @@ public class CallNumbersFragment extends BaseFragment<FragmentCallNumbersExclude
         super.onActivityCreated(savedInstanceState);
         fragmentCallNumbersExcludeItemsBinding = getViewDataBinding();
 
-        mActivity.setTitleBar(getString(R.string.callNumbers));
+       // mActivity.setTitleBar(getString(R.string.callNumbers));
         mActivity.baseBinding.backBtn.setOnClickListener(this);
 
         fragmentCallNumbersExcludeItemsBinding.callNumbersLayout.setVisibility(View.VISIBLE);

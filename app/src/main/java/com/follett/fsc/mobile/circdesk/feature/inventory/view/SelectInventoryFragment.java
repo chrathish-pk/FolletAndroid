@@ -6,14 +6,6 @@
 
 package com.follett.fsc.mobile.circdesk.feature.inventory.view;
 
-import com.follett.fsc.mobile.circdesk.BR;
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
-import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
-import com.follett.fsc.mobile.circdesk.databinding.FragmentInventoryListBinding;
-import com.follett.fsc.mobile.circdesk.feature.inventory.model.Inventory;
-import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.SelectInventoryViewModel;
-
 import android.app.Activity;
 import android.app.Application;
 import android.arch.lifecycle.Observer;
@@ -21,6 +13,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+
+import com.follett.fsc.mobile.circdesk.BR;
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
+import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.databinding.FragmentInventoryListBinding;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.Inventory;
+import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.SelectInventoryViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +43,7 @@ public class SelectInventoryFragment extends BaseFragment<FragmentInventoryListB
         if (application == null) {
             return null;
         }
-        selectInventoryViewModel = new SelectInventoryViewModel(application,this);
+        selectInventoryViewModel = new SelectInventoryViewModel(application, this);
         return selectInventoryViewModel;
     }
 
@@ -59,10 +59,11 @@ public class SelectInventoryFragment extends BaseFragment<FragmentInventoryListB
         if (activity == null) {
             return;
         }
-        
+
         fragmentInventoryListBinding = getViewDataBinding();
 
-        mActivity.setTitleBar(getString(R.string.selectInventory));
+        //mActivity.setTitleBar(getString(R.string.selectInventory));
+        //mActivity.baseBinding.backBtn.setOnClickListener(this);
 
         fragmentInventoryListBinding.inventoryRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
 
@@ -97,7 +98,11 @@ public class SelectInventoryFragment extends BaseFragment<FragmentInventoryListB
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.newInventoryBtn) {
-            mActivity.pushFragment(new NewInventoryFragment(), R.id.loginContainer, "NewInventoryFragment", true);
+            mActivity.pushFragment(new NewInventoryFragment(), R.id.loginContainer, getString(R.string.newInventoryTitle), true,true);
+        } else if (v.getId() == R.id.backBtn) {
+//            mActivity.setTitleBar(getString(R.string.inventory));
+            //mActivity.setBackBtnVisible();
+            mActivity.onBackPressed();
         }
     }
 }

@@ -6,6 +6,15 @@
 
 package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin;
 
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
+import android.view.View;
+
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
@@ -17,15 +26,6 @@ import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.Permissions;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import com.google.gson.Gson;
-
-import android.app.Activity;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
-import android.view.View;
 
 public class CheckinCheckoutFragment extends BaseFragment<ActivityCheckinCheckoutBinding, CheckinCheckoutViewModel> implements View.OnClickListener, ViewPager.OnPageChangeListener {
 
@@ -58,9 +58,9 @@ public class CheckinCheckoutFragment extends BaseFragment<ActivityCheckinCheckou
         super.onActivityCreated(savedInstanceState);
         actvityCheckinCheckoutBinding = getViewDataBinding();
 
-        mActivity.setTitleBar(getString(R.string.checkinChecoutTitle));
-        mActivity.setBackBtnVisible();
-        mActivity.baseBinding.backBtn.setOnClickListener(this);
+        //mActivity.setTitleBar(getString(R.string.checkinChecoutTitle));
+        //mActivity.setBackBtnVisible();
+        //mActivity.baseBinding.backBtn.setOnClickListener(this);
 
         setupViewPager(actvityCheckinCheckoutBinding.viewPager);
         actvityCheckinCheckoutBinding.tabLayout.setupWithViewPager(actvityCheckinCheckoutBinding.viewPager);

@@ -6,16 +6,16 @@
 
 package com.follett.fsc.mobile.circdesk.feature.inventory.view;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.View;
+
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentInventoryListBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.SelectInventoryViewModel;
-
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.View;
 
 public class InventoryLocationFragment extends BaseFragment<FragmentInventoryListBinding, SelectInventoryViewModel> implements ItemClickListener {
 
@@ -46,7 +46,7 @@ public class InventoryLocationFragment extends BaseFragment<FragmentInventoryLis
         super.onActivityCreated(savedInstanceState);
         fragmentInventoryListBinding = getViewDataBinding();
 
-        mActivity.setTitleBar(getString(R.string.inventoryLocation));
+        //mActivity.setTitleBar(getString(R.string.inventoryLocation));
         fragmentInventoryListBinding.newInventoryBtn.setText(getString(R.string.scanLocation));
 
     }

@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.databinding.BindingAdapter;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.ContextThemeWrapper;
 import android.view.View;
@@ -164,12 +165,7 @@ public class AppUtils {
 
     public boolean isEditTextNotEmpty(EditText editText) {
 
-        if (TextUtils.isEmpty(editText.getText()
-                .toString()
-                .trim())) {
-            return false;
-        }
-        return true;
+        return !(TextUtils.isEmpty(editText.getText().toString().trim()));
 
     }
 
@@ -285,15 +281,15 @@ public class AppUtils {
             }
             if (context != null) {
                 TextView messageView = alertDialog.findViewById(android.R.id.message);
-                messageView.setTextColor(context.getResources().getColor(R.color.editTextBgColor));
+                messageView.setTextColor(ContextCompat.getColor(context,R.color.editTextBgColor));
 
                 Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
                 Button negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
                 Button neutralButton = alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL);
 
-                positiveButton.setTextColor(context.getResources().getColor(R.color.blueLabel));
-                negativeButton.setTextColor(context.getResources().getColor(R.color.blueLabel));
-                neutralButton.setTextColor(context.getResources().getColor(R.color.blueLabel));
+                positiveButton.setTextColor(ContextCompat.getColor(context,R.color.blueLabel));
+                negativeButton.setTextColor(ContextCompat.getColor(context,R.color.blueLabel));
+                neutralButton.setTextColor(ContextCompat.getColor(context,R.color.blueLabel));
             }
 
         } catch (Exception e) {
