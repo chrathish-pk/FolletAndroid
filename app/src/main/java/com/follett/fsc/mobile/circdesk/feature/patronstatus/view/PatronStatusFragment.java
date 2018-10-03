@@ -6,16 +6,6 @@
 
 package com.follett.fsc.mobile.circdesk.feature.patronstatus.view;
 
-import android.app.Activity;
-import android.arch.lifecycle.Observer;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
-
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
@@ -26,11 +16,22 @@ import com.follett.fsc.mobile.circdesk.feature.itemstatus.view.UpdateItemUIListe
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.Permissions;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.NavigationListener;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.CustomCheckoutItem;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.Note;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronList;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.viewmodel.PatronStatusViewModel;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.google.gson.Gson;
+
+import android.app.Activity;
+import android.arch.lifecycle.Observer;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +43,6 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
     private FragmentPatronStatusBinding mBinding;
 
     private PatronInfo mPatronInfo;
-
-    private PatronListFragment mPatronListFragment;
 
     @Override
     public int getLayoutId() {
@@ -134,6 +133,8 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
                     .hideKeyBoard(mActivity, mBinding.patronEntryIncludeLayout.patronEntry);
             mActivity.baseBinding.backBtn.setVisibility(View.GONE);
             mActivity.onBackPressed();
+        } else if (v == mBinding.notes) {
+            onNavigation(mPatronInfo, 6);       // Patron notes
         }
     }
 
@@ -208,6 +209,7 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
         mBinding.closeBtn.setOnClickListener(this);
         mBinding.holdRelativeLayout.setOnClickListener(this);
         mBinding.fineRelativeLayout.setOnClickListener(this);
+        mBinding.notes.setOnClickListener(this);
     }
 
     @Override
@@ -236,9 +238,20 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
             navigateToFineList((PatronInfo) model, true, getString(R.string.fine_label));
         } else if (position == 5) {
             navigateToTitleDetail((CustomCheckoutItem) model);
+        } else if (position == 6 && model != null) {
+            final List<Note> notes = ((PatronInfo) model).getNotes();
+            if (!notes.isEmpty()) {
+                navigateToPatronNotes(notes);
+            }
         }
     }
-
+    
+    private void navigateToPatronNotes(List<Note> notes) {
+        ArrayList<Note> noteArrayList = new ArrayList<>();
+        noteArrayList.addAll(notes);
+        mActivity.pushFragment(PatronNotesFragment.newInstance(noteArrayList), R.id.loginContainer, getString(R.string.notes), true, true);
+    }
+    
     private void navigateToTitleDetail(CustomCheckoutItem checkoutItem) {
         Activity activity = getBaseActivity();
         if (activity != null && checkoutItem != null) {
@@ -254,7 +267,7 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
     }
 
     private void navigateToPatronList(ArrayList<PatronList> patronList, boolean isAddToBackStack) {
-        mPatronListFragment = PatronListFragment.newInstance(patronList);
+        PatronListFragment mPatronListFragment = PatronListFragment.newInstance(patronList);
         // setToolBarTitle(getString(R.string.selectPatron));
         mActivity.replaceFragment(mPatronListFragment, R.id.loginContainer, getString(R.string.patron_status_label), true, true);
     }
@@ -280,4 +293,4 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
         updateUI(mPatronInfo);
     }
 
-}
+    }
