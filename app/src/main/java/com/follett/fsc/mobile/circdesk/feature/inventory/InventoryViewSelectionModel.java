@@ -84,7 +84,7 @@ public class InventoryViewSelectionModel extends BaseViewModel implements Networ
     }
 
     @Override
-    public void onCallFailed(Throwable throwable) {
+    public void onCallFailed(Throwable throwable, String error) {
         dismissProgrssBar();
     }
 

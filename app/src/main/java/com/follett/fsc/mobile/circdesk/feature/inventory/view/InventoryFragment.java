@@ -19,6 +19,7 @@ import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentInventoryBinding;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.UpdateUIListener;
+import com.follett.fsc.mobile.circdesk.feature.inventory.InventoryViewSelectionFragment;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InProgressInventoryResults;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.InventoryViewModel;
@@ -83,7 +84,7 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
 
         fragmentInventoryBinding.patronEntryIncludeLayout.patronEntry.setHint(getString(R.string.enterBarcode));
         fragmentInventoryBinding.patronEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.GONE);
-        AppSharedPreferences.getInstance().setInt(KEY_COLLECTION_TYPE, 0);
+        AppSharedPreferences.getInstance().setInt(KEY_IS_LIBRARY_SELECTED, 0);
     }
 
     @Override
