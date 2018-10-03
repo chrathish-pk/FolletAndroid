@@ -29,6 +29,7 @@ import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 
 
+
 public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity implements View.OnClickListener {
 
     public ActivityBaseBinding baseBinding;

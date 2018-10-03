@@ -6,8 +6,6 @@
 
 package com.follett.fsc.mobile.circdesk.data.remote.repository;
 
-import android.support.annotation.Nullable;
-
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.api.FollettAPIManager;
@@ -30,6 +28,9 @@ import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.SiteResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.Version;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 import com.google.gson.Gson;
+import com.google.gson.Gson;
+
+import android.support.annotation.Nullable;
 
 import java.util.Map;
 
@@ -56,12 +57,22 @@ import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiCo
 import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.SCAN_PATRON_REQUEST_CODE;
 import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.SERVICE_ISSUE;
 import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.TITLE_DETAILS_REQUEST_CODE;
+import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.CHECKIN_REQUEST_CODE;
+import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.CHECK_OUT_REQUEST_CODE;
+import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.CIRCULATION_TYPE_REQUEST_CODE;
+import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.INPROGRESS_INVENTORY_REQUEST_CODE;
+import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.INVENTORY_DETAILS_REQUEST_CODE;
+import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.ITEM_STATUS_REQUEST_CODE;
+import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.PATRON_STATUS_REQUEST_CODE;
+import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.SCAN_PATRON_REQUEST_CODE;
+import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.SERVICE_ISSUE;
+import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.TITLE_DETAILS_REQUEST_CODE;
 
+public class AppRemoteRepository<T> {
+    
 public class AppRemoteRepository<T> {
 
     private static APIInterface apiService;
-
-    public static AppRemoteRepository mInstance;
 
     private int mCount = 0;
 

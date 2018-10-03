@@ -26,6 +26,9 @@ import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.InventoryViewModel;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
+import android.app.Activity;
+
+
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_IS_LIBRARY_SELECTED;
 
 public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, InventoryViewModel> implements ItemClickListener, View.OnClickListener, UpdateUIListener {

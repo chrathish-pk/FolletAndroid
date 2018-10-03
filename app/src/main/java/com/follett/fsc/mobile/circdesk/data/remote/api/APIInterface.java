@@ -17,6 +17,7 @@ import com.follett.fsc.mobile.circdesk.feature.inventory.model.InProgressInvento
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
 import com.follett.fsc.mobile.circdesk.feature.inventory.InventorySelectionCriteria;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.model.ItemDetails;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.DistrictList;
