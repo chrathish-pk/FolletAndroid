@@ -31,6 +31,8 @@ import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.Version;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 import com.google.gson.Gson;
 
+import android.support.annotation.Nullable;
+
 import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -60,6 +62,9 @@ import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiCo
 public class AppRemoteRepository<T> {
 
     private static APIInterface apiService;
+    public static AppRemoteRepository mInstance;
+
+
     public static AppRemoteRepository mInstance;
 
     private int mCount = 0;
