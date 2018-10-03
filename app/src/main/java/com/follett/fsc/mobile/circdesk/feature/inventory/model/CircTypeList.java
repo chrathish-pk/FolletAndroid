@@ -13,6 +13,9 @@ public class CircTypeList {
     @Expose
     private String circTypeDescription;
 
+    private boolean isSelected;
+
+
     public Integer getCircTypeID() {
         return circTypeID;
     }
@@ -29,10 +32,18 @@ public class CircTypeList {
         this.circTypeDescription = circTypeDescription;
     }
 
+    public boolean isSelected() {
+        return isSelected;
+    }
 
-    public CircTypeList(Integer circTypeID, String circTypeDescription) {
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    public CircTypeList(Integer circTypeID, String circTypeDescription, boolean isSelected) {
         this.circTypeID = circTypeID;
         this.circTypeDescription = circTypeDescription;
+        this.isSelected = isSelected;
     }
 
 }

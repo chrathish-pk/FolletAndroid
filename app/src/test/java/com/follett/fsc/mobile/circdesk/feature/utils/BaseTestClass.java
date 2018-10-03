@@ -16,6 +16,8 @@ import org.junit.Before;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Map;
+
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.SERVER_URI_VALUE;
 import static org.mockito.Mockito.when;
 
@@ -41,9 +43,12 @@ public class BaseTestClass {
     public static final String SITE_NAME_UAT = "lincoln";
 
     public static final String SESSION_ID = "F1GEEiXvg_BZk7GTTu6q2mgMcCMxLrvbd40mHjXI";
-    
-    
-    
+
+    public static final Integer COLLECTION_TYPE = 0;
+
+    public static final Integer PARTIAL_ID = 100;
+
+
     @Before
     public void baseSetUp() {
         MockitoAnnotations.initMocks(this);

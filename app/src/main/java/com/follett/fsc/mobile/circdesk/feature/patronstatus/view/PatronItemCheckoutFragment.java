@@ -6,19 +6,6 @@
 
 package com.follett.fsc.mobile.circdesk.feature.patronstatus.view;
 
-import com.follett.fsc.mobile.circdesk.BR;
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
-import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
-import com.follett.fsc.mobile.circdesk.databinding.FragmentPatronListBinding;
-import com.follett.fsc.mobile.circdesk.feature.iteminfo.view.TitleInfoActivity;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.NavigationListener;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.viewmodel.PatronListViewModel;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.CustomCheckoutItem;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
-import com.follett.fsc.mobile.circdesk.utils.AppUtils;
-import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-
 import android.app.Activity;
 import android.app.Application;
 import android.arch.lifecycle.Observer;
@@ -29,6 +16,19 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+
+import com.follett.fsc.mobile.circdesk.BR;
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
+import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.databinding.FragmentPatronListBinding;
+import com.follett.fsc.mobile.circdesk.feature.iteminfo.view.TitleInfoActivity;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.NavigationListener;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.CustomCheckoutItem;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.viewmodel.PatronListViewModel;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
+import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 import java.util.List;
 
@@ -105,12 +105,6 @@ public class PatronItemCheckoutFragment extends BaseFragment<FragmentPatronListB
                 lBinding.patronListRecyclerview.setAdapter(adapter);
             }
         });
-    }
-
-    @Override
-    public void onDetach() {
-        mNavigationListener.setToolBarTitle(getString(R.string.patron_status_label));
-        super.onDetach();
     }
 
     @Override

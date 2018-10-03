@@ -6,6 +6,10 @@
 
 package com.follett.fsc.mobile.circdesk.feature.homescreen.view;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.View;
+
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
@@ -20,10 +24,6 @@ import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.Permissions;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.view.PatronStatusFragment;
 import com.google.gson.Gson;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.View;
-
 public class HomeFragment extends BaseFragment<ActivityHomeBinding, HomeViewModel> implements ItemClickListener {
     private HomeViewModel homeViewModel;
     private ActivityHomeBinding activityHomeBinding;
@@ -35,7 +35,7 @@ public class HomeFragment extends BaseFragment<ActivityHomeBinding, HomeViewMode
 
     @Override
     public HomeViewModel getViewModel() {
-    
+
         if (getBaseApplication() == null) {
             return null;
         }
@@ -90,16 +90,16 @@ public class HomeFragment extends BaseFragment<ActivityHomeBinding, HomeViewMode
     public void onItemClick(View view, int position) {
         switch (view.getId()) {
             case R.id.menuCheckinCheckoutLayout:
-                mActivity.pushFragment(new CheckinCheckoutFragment(), R.id.loginContainer, "CheckinCheckoutFragment", true);
+                mActivity.pushFragment(new CheckinCheckoutFragment(), R.id.loginContainer, getString(R.string.checkinChecoutTitle), true,true);
                 break;
             case R.id.menuPatronStatusLayout:
-                mActivity.pushFragment(new PatronStatusFragment(), R.id.loginContainer, "PatronStatusFragment", true);
+                mActivity.pushFragment(new PatronStatusFragment(), R.id.loginContainer, getString(R.string.patron_status_label), true,true);
                 break;
             case R.id.menuItemStatusLayout:
-                mActivity.pushFragment(new ItemStatusFragment(), R.id.loginContainer, "ItemStatusFragment", true);
+                mActivity.pushFragment(new ItemStatusFragment(), R.id.loginContainer, getString(R.string.item_status_title), true,true);
                 break;
             case R.id.menuInventoryLayout:
-                mActivity.pushFragment(new InventoryFragment(), R.id.loginContainer, "InventoryFragment", true);
+                mActivity.pushFragment(new InventoryFragment(), R.id.loginContainer, getString(R.string.inventory), true,true);
                 break;
             default:
                 break;

@@ -54,11 +54,19 @@ public class AppSharedPreferences {
     public static final String KEY_PERMISSIONS = "permissions";
     public static final String KEY_COLLECTION_TYPE = "collectionType";
     public static final String KEY_PARTIALID = "partialID";
+    public static final String KEY_PROMPT = "prompt";
+    public static final String KEY_VALUES = "values";
 
+    public static final String KEY_INVENTORY_NAME = "inventoryName";
+    public static final String KEY_CALL_NUMBER_FROM = "callNumberFrom";
+    public static final String KEY_CALL_NUMBER_TO = "callNumberTo";
+    public static final String KEY_CIRCULATION_TYPE_LIST = "circulationTypeList";
+    public static final String KEY_SEEN_DATE = "seenDate";
+    public static final String KEY_SEEN_FORMAT_DATE = "seenFormatDate";
 
     private static AppSharedPreferences mSessionInstance = null;
-    private  SharedPreferences prefs;
-    private  SharedPreferences.Editor editor;
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor editor;
 
     public static AppSharedPreferences getInstance() {
         if (mSessionInstance == null) {

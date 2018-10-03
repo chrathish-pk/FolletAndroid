@@ -20,6 +20,10 @@ public class InProgressInventoryResults implements Parcelable {
     @Expose
     private List<InventoryList> inventoryList = null;
 
+    public InProgressInventoryResults(List<InventoryList> inventoryList) {
+        this.inventoryList = inventoryList;
+    }
+
     protected InProgressInventoryResults(Parcel in) {
         inventoryList = in.createTypedArrayList(InventoryList.CREATOR);
     }

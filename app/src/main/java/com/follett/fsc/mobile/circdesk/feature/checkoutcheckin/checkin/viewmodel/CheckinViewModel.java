@@ -6,6 +6,9 @@
 
 package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin.viewmodel;
 
+import android.app.Application;
+import android.arch.lifecycle.MutableLiveData;
+
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
@@ -41,7 +44,7 @@ public class CheckinViewModel extends BaseViewModel implements NetworkInterface 
         mCheckinBarcode = checkinBarcode;
         mCollectionType = collectionType;
         mIsLibraryUse = isLibraryUse;
-        
+
         setIsLoding(true);
         AppRemoteRepository.getInstance().getCheckinResult(AppUtils.getInstance().getHeader(mApplication), this,AppSharedPreferences.getInstance()
                         .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
@@ -73,7 +76,7 @@ public class CheckinViewModel extends BaseViewModel implements NetworkInterface 
         FollettLog.d("Exception", throwable.getMessage());
         setErrorMessage(errorMessage);
     }
-    
+
     @Override
     public void onRefreshToken(int requestCode) {
         AppRemoteRepository.getInstance()

@@ -5,6 +5,8 @@
  */
 package com.follett.fsc.mobile.circdesk.data.remote.apicommon;
 
+import android.text.TextUtils;
+
 import org.json.JSONObject;
 
 import android.text.TextUtils;
