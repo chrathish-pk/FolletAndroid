@@ -6,6 +6,9 @@
 package com.follett.fsc.mobile.circdesk.feature.loginsetup.viewmodel;
 
 
+import android.app.Application;
+import android.support.annotation.NonNull;
+
 import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
@@ -15,13 +18,14 @@ import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepositor
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.LoginResults;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
+import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.LOGIN_REQUEST_CODE;
 import android.app.Application;
 import android.support.annotation.NonNull;
 
 import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.LOGIN_REQUEST_CODE;
 
 public class LoginViewModel extends BaseViewModel<CTAButtonListener> implements NetworkInterface {
-    
+
     public LoginViewModel(@NonNull Application application) {
         super(application);
     }
@@ -64,7 +68,7 @@ public class LoginViewModel extends BaseViewModel<CTAButtonListener> implements 
         cancelProgressBar();
         setErrorMessage(errorMessage);
     }
-    
+
     @Override
     public void onRefreshToken(int requestCode) {
         // Do Nothing

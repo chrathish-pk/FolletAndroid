@@ -5,17 +5,33 @@ import android.os.Parcelable;
 
 public class CallNumbers implements Parcelable {
 
-    private int callNumberFrom;
-    private int callNumberTo;
+    private String  callNumberFrom;
+    private String callNumberTo;
 
-    public CallNumbers(int callNumberFrom, int callNumberTo) {
+    public CallNumbers(String callNumberFrom, String callNumberTo) {
         this.callNumberFrom = callNumberFrom;
         this.callNumberTo = callNumberTo;
     }
 
+    public String getCallNumberFrom() {
+        return callNumberFrom;
+    }
+
+    public void setCallNumberFrom(String callNumberFrom) {
+        this.callNumberFrom = callNumberFrom;
+    }
+
+    public String getCallNumberTo() {
+        return callNumberTo;
+    }
+
+    public void setCallNumberTo(String callNumberTo) {
+        this.callNumberTo = callNumberTo;
+    }
+
     protected CallNumbers(Parcel in) {
-        callNumberFrom = in.readInt();
-        callNumberTo = in.readInt();
+        callNumberFrom = in.readString();
+        callNumberTo = in.readString();
     }
 
     public static final Creator<CallNumbers> CREATOR = new Creator<CallNumbers>() {
@@ -30,22 +46,6 @@ public class CallNumbers implements Parcelable {
         }
     };
 
-    public int getCallNumberFrom() {
-        return callNumberFrom;
-    }
-
-    public void setCallNumberFrom(int callNumberFrom) {
-        this.callNumberFrom = callNumberFrom;
-    }
-
-    public int getCallNumberTo() {
-        return callNumberTo;
-    }
-
-    public void setCallNumberTo(int callNumberTo) {
-        this.callNumberTo = callNumberTo;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -53,7 +53,7 @@ public class CallNumbers implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(callNumberFrom);
-        dest.writeInt(callNumberTo);
+        dest.writeString(callNumberFrom);
+        dest.writeString(callNumberTo);
     }
 }

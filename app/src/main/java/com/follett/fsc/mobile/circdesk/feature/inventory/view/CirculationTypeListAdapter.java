@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.follett.fsc.mobile.circdesk.R;
@@ -12,7 +13,7 @@ import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.databinding.RowCommonChecklistBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CirculationTypeList;
 
-public class CirculationTypeListAdapter extends RecyclerView.Adapter<CirculationTypeListViewHolder> {
+public class CirculationTypeListAdapter extends RecyclerView.Adapter<CirculationTypeListViewHolder> implements View.OnClickListener {
 
     private Context context;
     private CirculationTypeList circulationTypeList;
@@ -35,10 +36,19 @@ public class CirculationTypeListAdapter extends RecyclerView.Adapter<Circulation
     public void onBindViewHolder(@NonNull CirculationTypeListViewHolder holder, int position) {
 
         holder.rowCommonChecklistBinding.setCircTypeList(circulationTypeList.getCircTypeList().get(position));
+
+
+        holder.rowCommonChecklistBinding.itemChecklistLayout.setTag(position);
+        holder.rowCommonChecklistBinding.itemChecklistLayout.setOnClickListener(this);
     }
 
     @Override
     public int getItemCount() {
         return circulationTypeList != null ? circulationTypeList.getCircTypeList().size() : 0;
+    }
+
+    @Override
+    public void onClick(View v) {
+        itemClickListener.onItemClick(v, (Integer) v.getTag());
     }
 }

@@ -173,6 +173,10 @@
     <string name="inventoryTitle">Inventory</string>
     <string name="viewSelection">VIEW SELECTIONS</string>
     <string name="selectInventory">Select Inventory</string>
+    <string name="no_selected_inventories">No Selected Inventories available</string>
+    <string name="inventorySelections">Inventory Selections</string>
+    <string name="seenOnOrAfter">Seen On Or After</string>
+    <string name="newInventoryTitle">New Inventory</string>
 
     <!-- Inventory -->
     <string name="finalize_inventory">Finalize Inventory</string>
@@ -242,5 +246,6 @@ FOLLETT DISCLAIMS ALL OTHER WARRANTIES, EITHER EXPRESS OR IMPLIED, INCLUDING BUT
 8.  GOVERNING LAW\n
 This agreement shall be interpreted and construed according to, and governed by, the laws of the State of Illinois, United States of America.\n
 </string>
+    <string name="no_inventories_available">No inventories available</string>
 
 </resources>

@@ -24,6 +24,11 @@ public class InventoryList implements Parcelable {
     @Expose
     private String dateStarted;
 
+    public InventoryList(String dateStarted, String name, Integer partialID ) {
+        this.dateStarted = dateStarted;
+        this.name = name;
+        this.partialID = partialID;
+    }
 
     protected InventoryList(Parcel in) {
         dateStarted = in.readString();
