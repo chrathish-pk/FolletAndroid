@@ -6,16 +6,6 @@
 
 package com.follett.fsc.mobile.circdesk.feature.patronstatus.view;
 
-import android.app.Activity;
-import android.arch.lifecycle.Observer;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
-
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
@@ -25,13 +15,23 @@ import com.follett.fsc.mobile.circdesk.feature.iteminfo.view.TitleInfoActivity;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.view.UpdateItemUIListener;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.Permissions;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.NavigationListener;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.Note;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.viewmodel.PatronStatusViewModel;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.CustomCheckoutItem;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.Note;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronList;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.viewmodel.PatronStatusViewModel;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.google.gson.Gson;
+
+import android.app.Activity;
+import android.arch.lifecycle.Observer;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -249,8 +249,7 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
     private void navigateToPatronNotes(List<Note> notes) {
         ArrayList<Note> noteArrayList = new ArrayList<>();
         noteArrayList.addAll(notes);
-        setToolBarTitle(getString(R.string.notes));
-        mActivity.pushFragment(PatronNotesFragment.newInstance(noteArrayList), R.id.loginContainer, "PatronNotesFragment", true);
+        mActivity.pushFragment(PatronNotesFragment.newInstance(noteArrayList), R.id.loginContainer, getString(R.string.notes), true, true);
     }
     
     private void navigateToTitleDetail(CustomCheckoutItem checkoutItem) {
