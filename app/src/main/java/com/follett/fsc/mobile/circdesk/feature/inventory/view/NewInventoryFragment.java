@@ -18,7 +18,7 @@ import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentNewInventoryBinding;
-//import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventoryResult;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventoryResult;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.NewInventoryViewModel;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
@@ -64,18 +64,18 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
             fragmentNewInventoryBinding.mismatchedItemLocationLayout.setVisibility(View.VISIBLE);
         }
 
-       /* newInventoryViewModel.createInventoryResultMutableLiveData.observeForever(new Observer<CreateInventoryResult>() {
+        newInventoryViewModel.createInventoryResultMutableLiveData.observeForever(new Observer<CreateInventoryResult>() {
             @Override
             public void onChanged(@Nullable CreateInventoryResult createInventoryResult) {
                 FollettLog.e("result for create inventory result", createInventoryResult.toString());
             }
-        });*/
+        });
 
     }
 
     @Override
     public void onItemClick(View view, int position) {
-        /*switch (view.getId()) {
+        switch (view.getId()) {
             case R.id.callNumberLayout:
                 mActivity.pushFragment(new CallNumbersFragment(), R.id.loginContainer, "CallNumbersFragment", true);
                 break;
@@ -89,6 +89,6 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
                 AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_INVENTORY_NAME, fragmentNewInventoryBinding.newInventoryName.getText().toString().trim());
                 newInventoryViewModel.getCreatedInventory();
                 break;
-        }*/
+        }
     }
 }

@@ -16,9 +16,9 @@ import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
-/*import com.follett.fsc.mobile.circdesk.feature.inventory.model.CircTypeRecord;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.CircTypeRecord;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventory;
-import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventoryResult;*/
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventoryResult;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -33,7 +33,7 @@ import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferen
 public class NewInventoryViewModel extends BaseViewModel implements NetworkInterface {
 
     private ItemClickListener itemClickListener;
-//    public MutableLiveData<CreateInventoryResult> createInventoryResultMutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<CreateInventoryResult> createInventoryResultMutableLiveData = new MutableLiveData<>();
 
     public NewInventoryViewModel(@NonNull Application application, ItemClickListener itemClickListener) {
         super(application);
@@ -52,12 +52,12 @@ public class NewInventoryViewModel extends BaseViewModel implements NetworkInter
         map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID));
         map.put("text/xml", "gzip");
 
-        /*AppRemoteRepository.getInstance().createInventory(map, this, AppSharedPreferences.getInstance()
+        AppRemoteRepository.getInstance().createInventory(map, this, AppSharedPreferences.getInstance()
                 .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
-                .getString(KEY_SITE_SHORT_NAME), constructJson());*/
+                .getString(KEY_SITE_SHORT_NAME), constructJson());
     }
 
-   /* private CreateInventory constructJson() {
+    private CreateInventory constructJson() {
 
         String circTypes = AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_CIRCULATION_TYPE_LIST);
         List<CircTypeRecord> circTypeRecords = new Gson().fromJson(circTypes, new TypeToken<List<CircTypeRecord>>() {
@@ -73,12 +73,12 @@ public class NewInventoryViewModel extends BaseViewModel implements NetworkInter
                 false, false, false, false, 0);
 
         return createInventory;
-    }*/
+    }
 
     @Override
     public void onCallCompleted(Object model) {
         setIsLoding(false);
-//        createInventoryResultMutableLiveData.postValue((CreateInventoryResult)model);
+        createInventoryResultMutableLiveData.postValue((CreateInventoryResult)model);
     }
 
     @Override

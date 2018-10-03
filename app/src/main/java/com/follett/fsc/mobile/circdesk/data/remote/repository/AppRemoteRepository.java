@@ -17,8 +17,8 @@ import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckinResu
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckoutResult;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.ScanPatron;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CirculationTypeList;
-/*import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventory;
-import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventoryResult;*/
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventory;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventoryResult;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InProgressInventoryResults;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
 import com.follett.fsc.mobile.circdesk.feature.inventory.InventorySelectionCriteria;
@@ -352,7 +352,7 @@ public class AppRemoteRepository {
     }
 
 
-   /* public void createInventory(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName,String site,CreateInventory createInventory) {
+    public void createInventory(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName,String site,CreateInventory createInventory) {
 
         apiService.createInventory(headers, contextName, site, createInventory)
                 .subscribeWith(new DisposableObserverWrapper<CreateInventoryResult>() {
@@ -370,7 +370,7 @@ public class AppRemoteRepository {
                         }
                     }
                 });
-    }*/
+    }
 
     public void setString(String key, String value) {
         AppSharedPreferences.getInstance()
