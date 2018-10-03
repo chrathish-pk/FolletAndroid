@@ -87,7 +87,6 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
 
         fragmentInventoryBinding.patronEntryIncludeLayout.patronEntry.setHint(getString(R.string.enterBarcode));
         fragmentInventoryBinding.patronEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.GONE);
-       // AppSharedPreferences.getInstance().setInt(KEY_IS_LIBRARY_SELECTED, 0);
     }
 
     @Override

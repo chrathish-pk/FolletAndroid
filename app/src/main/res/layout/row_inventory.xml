@@ -24,12 +24,14 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@id/itemInventoryRadioBtn"
             android:padding="10dp"
+            android:layout_centerVertical="true"
             android:text="@{inventory.inventoryName}" />
 
         <RadioButton
             android:id="@+id/itemInventoryRadioBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:checked="@{inventory.selected}"
             android:padding="10dp" />

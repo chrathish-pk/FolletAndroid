@@ -11,6 +11,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.view.View;
 
+import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
@@ -19,10 +20,12 @@ import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepositor
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CircTypeRecord;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventory;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventoryResult;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.NewInventoryData;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,14 +37,38 @@ public class NewInventoryViewModel extends BaseViewModel implements NetworkInter
 
     private ItemClickListener itemClickListener;
     public MutableLiveData<CreateInventoryResult> createInventoryResultMutableLiveData = new MutableLiveData<>();
+    private Application application;
 
     public NewInventoryViewModel(@NonNull Application application, ItemClickListener itemClickListener) {
         super(application);
+        this.application = application;
         this.itemClickListener = itemClickListener;
     }
 
     public void onItemClicked(View view) {
         itemClickListener.onItemClick(view, 0);
+    }
+
+    public List<NewInventoryData> getNewInventoryDataForLibrary() {
+        List<NewInventoryData> newInventoryDataList = new ArrayList<>();
+        newInventoryDataList.add(new NewInventoryData(application.getString(R.string.callNumbersLabel), "All"));
+        newInventoryDataList.add(new NewInventoryData(application.getString(R.string.circulationTypeLabel), "All Ciruculation Types"));
+        newInventoryDataList.add(new NewInventoryData(application.getString(R.string.excludeItems), "No exclustions"));
+
+        return newInventoryDataList;
+    }
+
+    public List<NewInventoryData> getNewInventoryDataForResource() {
+        List<NewInventoryData> newInventoryDataList = new ArrayList<>();
+        newInventoryDataList.add(new NewInventoryData(application.getString(R.string.limitedToLabel), "Unlimited"));
+        newInventoryDataList.add(new NewInventoryData(application.getString(R.string.resourceTypesLabel), "All Resource Types"));
+        newInventoryDataList.add(new NewInventoryData(application.getString(R.string.purchasePriceLabel), "All Resource Types"));
+        newInventoryDataList.add(new NewInventoryData(application.getString(R.string.includeItemsLabel), "With all tracking attributes"));
+        newInventoryDataList.add(new NewInventoryData(application.getString(R.string.checkoutHandlingLabel), "Checked Out, In Circulation"));
+        newInventoryDataList.add(new NewInventoryData(application.getString(R.string.checkoutHandlingLabel), "No exclusions"));
+        newInventoryDataList.add(new NewInventoryData(application.getString(R.string.mismatchedItemLocationLabel), "Do Nothing"));
+
+        return newInventoryDataList;
     }
 
     public void getCreatedInventory() {
@@ -78,7 +105,7 @@ public class NewInventoryViewModel extends BaseViewModel implements NetworkInter
     @Override
     public void onCallCompleted(Object model) {
         setIsLoding(false);
-        createInventoryResultMutableLiveData.postValue((CreateInventoryResult)model);
+        createInventoryResultMutableLiveData.postValue((CreateInventoryResult) model);
     }
 
     @Override
@@ -91,4 +118,5 @@ public class NewInventoryViewModel extends BaseViewModel implements NetworkInter
     public void onRefreshToken(int requestCode) {
         // Do Nothing
     }
+
 }
