@@ -6,6 +6,8 @@
 
 package com.follett.fsc.mobile.circdesk.data.remote.repository;
 
+import android.support.annotation.Nullable;
+
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.api.FollettAPIManager;
@@ -28,8 +30,6 @@ import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.SiteResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.Version;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 import com.google.gson.Gson;
-
-import android.support.annotation.Nullable;
 
 import java.util.Map;
 
@@ -60,9 +60,7 @@ import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiCo
 public class AppRemoteRepository<T> {
 
     private static APIInterface apiService;
-    
     public static AppRemoteRepository mInstance;
-    
     private int mCount = 0;
 
     public static AppRemoteRepository getInstance() {
@@ -370,7 +368,7 @@ public class AppRemoteRepository<T> {
     }
 
 
-    public void getSelectedInventoriesList(Map<String, String> headers, @Nullable final NetworkInterface networkInterface,  String site, String contextName, int partialID) {
+    public void getSelectedInventoriesList(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String site, String contextName, int partialID) {
         apiService.getSelectedInventoriesList(headers, site, contextName, partialID)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())

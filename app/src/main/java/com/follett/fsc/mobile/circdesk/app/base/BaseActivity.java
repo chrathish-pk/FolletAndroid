@@ -3,14 +3,6 @@
  */
 package com.follett.fsc.mobile.circdesk.app.base;
 
-import com.follett.fsc.mobile.circdesk.BuildConfig;
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
-import com.follett.fsc.mobile.circdesk.databinding.ActivityBaseBinding;
-import com.follett.fsc.mobile.circdesk.databinding.NavigationHeaderBinding;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
-import com.follett.fsc.mobile.circdesk.utils.AppUtils;
-
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -27,6 +19,14 @@ import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
+
+import com.follett.fsc.mobile.circdesk.BuildConfig;
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.databinding.ActivityBaseBinding;
+import com.follett.fsc.mobile.circdesk.databinding.NavigationHeaderBinding;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 
 
 
@@ -210,7 +210,7 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.getFragments().get(fm.getFragments().size() - 1);
         if (fm.getFragments().size() == 1 || fragment.getTag().contains(".")) {
-            setTitleBar("Home");
+            setTitleBar(getString(R.string.home));
             baseBinding.backBtn.setVisibility(View.GONE);
         } else {
             setTitleBar(fragment.getTag());
