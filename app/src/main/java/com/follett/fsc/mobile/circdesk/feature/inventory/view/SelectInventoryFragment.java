@@ -62,9 +62,6 @@ public class SelectInventoryFragment extends BaseFragment<FragmentInventoryListB
 
         fragmentInventoryListBinding = getViewDataBinding();
 
-        //mActivity.setTitleBar(getString(R.string.selectInventory));
-        //mActivity.baseBinding.backBtn.setOnClickListener(this);
-
         fragmentInventoryListBinding.inventoryRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
 
         fragmentInventoryListBinding.newInventoryBtn.setOnClickListener(this);
@@ -99,10 +96,6 @@ public class SelectInventoryFragment extends BaseFragment<FragmentInventoryListB
     public void onClick(View v) {
         if (v.getId() == R.id.newInventoryBtn) {
             mActivity.pushFragment(new NewInventoryFragment(), R.id.loginContainer, getString(R.string.newInventoryTitle), true,true);
-        } else if (v.getId() == R.id.backBtn) {
-//            mActivity.setTitleBar(getString(R.string.inventory));
-            //mActivity.setBackBtnVisible();
-            mActivity.onBackPressed();
         }
     }
 }

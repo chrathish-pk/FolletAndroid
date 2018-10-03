@@ -50,8 +50,6 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
         super.onActivityCreated(savedInstanceState);
         fragmentNewInventoryBinding = getViewDataBinding();
 
-        //mActivity.setTitleBar(getString(R.string.newInventoryTitle));
-
         if (AppRemoteRepository.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED)) {
             fragmentNewInventoryBinding.callNumberLayout.setVisibility(View.VISIBLE);
             fragmentNewInventoryBinding.circulationTypesLayout.setVisibility(View.VISIBLE);

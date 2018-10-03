@@ -23,7 +23,6 @@ import com.follett.fsc.mobile.circdesk.databinding.ActivityCheckinCheckoutBindin
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkin.view.CheckinFragment;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.view.CheckoutFragment;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.Permissions;
-import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import com.google.gson.Gson;
 
@@ -57,10 +56,6 @@ public class CheckinCheckoutFragment extends BaseFragment<ActivityCheckinCheckou
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         actvityCheckinCheckoutBinding = getViewDataBinding();
-
-        //mActivity.setTitleBar(getString(R.string.checkinChecoutTitle));
-        //mActivity.setBackBtnVisible();
-        //mActivity.baseBinding.backBtn.setOnClickListener(this);
 
         setupViewPager(actvityCheckinCheckoutBinding.viewPager);
         actvityCheckinCheckoutBinding.tabLayout.setupWithViewPager(actvityCheckinCheckoutBinding.viewPager);
@@ -112,13 +107,6 @@ public class CheckinCheckoutFragment extends BaseFragment<ActivityCheckinCheckou
             return;
         }
         switch (v.getId()) {
-            case R.id.backBtn:
-                mActivity.setTitleBar(getString(R.string.home));
-                AppUtils.getInstance()
-                        .hideKeyBoard(activity, actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn);
-                mActivity.baseBinding.backBtn.setVisibility(View.GONE);
-                mActivity.onBackPressed();
-                break;
             case R.id.libraryBtn:
                 actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(activity, R.color.blueLabel));
                 actvityCheckinCheckoutBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(activity, R.color.white));

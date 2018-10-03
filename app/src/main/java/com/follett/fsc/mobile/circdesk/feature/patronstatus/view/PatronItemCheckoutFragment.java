@@ -108,12 +108,6 @@ public class PatronItemCheckoutFragment extends BaseFragment<FragmentPatronListB
     }
 
     @Override
-    public void onDetach() {
-        //mNavigationListener.setToolBarTitle(getString(R.string.patron_status_label));
-        super.onDetach();
-    }
-
-    @Override
     public void ctaButtonOnClick(View view) {
         Activity activity = getBaseActivity();
         if (activity != null) {

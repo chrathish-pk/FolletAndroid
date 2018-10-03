@@ -46,7 +46,6 @@ public class InventoryLocationFragment extends BaseFragment<FragmentInventoryLis
         super.onActivityCreated(savedInstanceState);
         fragmentInventoryListBinding = getViewDataBinding();
 
-        //mActivity.setTitleBar(getString(R.string.inventoryLocation));
         fragmentInventoryListBinding.newInventoryBtn.setText(getString(R.string.scanLocation));
 
     }

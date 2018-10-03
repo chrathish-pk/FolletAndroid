@@ -6,6 +6,16 @@
 
 package com.follett.fsc.mobile.circdesk.feature.loginsetup.view;
 
+import android.app.Activity;
+import android.app.Application;
+import android.arch.lifecycle.Observer;
+import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
+
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
@@ -17,32 +27,22 @@ import com.follett.fsc.mobile.circdesk.feature.loginsetup.viewmodel.SchoolListVi
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
-import android.app.Activity;
-import android.app.Application;
-import android.arch.lifecycle.Observer;
-import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
+public class SchoolListFragment extends BaseFragment<FragmentSchoolListBinding, SchoolListViewModel> implements CTAButtonListener {
 
-public class SchoolListFragment extends BaseFragment<FragmentSchoolListBinding, SchoolListViewModel> implements CTAButtonListener, View.OnClickListener {
-    
     private static final String TAG = LoginFragment.class.getSimpleName();
-    
+
     private SchoolListViewModel mViewModel;
-    
+
     private NavigationListener mNavigationListener;
-    
-    
+
+
     public static SchoolListFragment newInstance() {
         Bundle args = new Bundle();
         SchoolListFragment fragment = new SchoolListFragment();
         fragment.setArguments(args);
         return fragment;
     }
-    
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -52,12 +52,12 @@ public class SchoolListFragment extends BaseFragment<FragmentSchoolListBinding, 
             FollettLog.e(TAG, "ClassCastException");
         }
     }
-    
+
     @Override
     public int getLayoutId() {
         return R.layout.fragment_school_list;
     }
-    
+
     @Override
     public SchoolListViewModel getViewModel() {
         Application application = getBaseApplication();
@@ -67,29 +67,28 @@ public class SchoolListFragment extends BaseFragment<FragmentSchoolListBinding, 
         mViewModel = new SchoolListViewModel(application);
         return mViewModel;
     }
-    
+
     @Override
     public int getBindingVariable() {
         return BR.viewModel;
     }
-    
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         FragmentSchoolListBinding binding = getViewDataBinding();
 
-        mActivity.baseBinding.backBtn.setOnClickListener(this);
         inItView(binding);
     }
-    
+
     public void inItView(final FragmentSchoolListBinding lBinding) {
-        
+
         if (getBaseActivity() == null) {
             return;
         }
         lBinding.setCtaListener(this);
         lBinding.schoolRecyclerview.setLayoutManager(new LinearLayoutManager(getBaseActivity()));
-        
+
         mViewModel.siteResult.observe(this, new Observer<SiteResults>() {
             @Override
             public void onChanged(@Nullable SiteResults siteResults) {
@@ -105,19 +104,13 @@ public class SchoolListFragment extends BaseFragment<FragmentSchoolListBinding, 
                     }
                 });
     }
-    
+
     private void handleStatus(Status status) {
         if (Status.SUCCESS.equals(status)) {
             mNavigationListener.onNavigation(null, 2);
         }
     }
-    
-    @Override
-    public void onDetach() {
-        mNavigationListener.setToolBarTitle(getString(R.string.connect_your_school_label));
-        super.onDetach();
-    }
-    
+
     @Override
     public void ctaButtonOnClick(View view) {
         AppUtils.getInstance().clearSchoolPref();
@@ -125,12 +118,6 @@ public class SchoolListFragment extends BaseFragment<FragmentSchoolListBinding, 
         if (activity != null) {
             activity.onBackPressed();
         }
-    }
-
-    @Override
-    public void onClick(View v) {
-        AppUtils.getInstance().clearSchoolPref();
-        mActivity.onBackPressed();
     }
 
 }

@@ -68,7 +68,6 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         fragmentItemStatusBinding = getViewDataBinding();
-        //mActivity.setTitleBar(getString(R.string.item_status_title));
         initView();
 
     }
@@ -79,8 +78,6 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
             return;
         }
 
-        //mActivity.setBackBtnVisible();
-        //mActivity.baseBinding.backBtn.setOnClickListener(this);
         fragmentItemStatusBinding.itemStatusPatronGoBtn.setOnClickListener(this);
         fragmentItemStatusBinding.itemStatusCheckedoutInfoBtn.setOnClickListener(this);
         fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setOnClickListener(this);
@@ -223,14 +220,6 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
             fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(activity, R.color.blueLabel));
             AppSharedPreferences.getInstance().setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, false);
             disableItemStatusView();
-        }
-        else if(v.getId() == R.id.backBtn)
-        {
-            AppUtils.getInstance()
-                    .hideKeyBoard(activity, fragmentItemStatusBinding.itemStatusPatronEntry);
-            mActivity.setTitleBar(getString(R.string.home));
-            mActivity.baseBinding.backBtn.setVisibility(View.GONE);
-            mActivity.onBackPressed();
         }
     }
 

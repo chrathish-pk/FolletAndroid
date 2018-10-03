@@ -39,7 +39,6 @@ public class SeenOnOrAfterFragment extends BaseFragment<FragmentCallNumbersExclu
         super.onActivityCreated(savedInstanceState);
         fragmentCallNumbersExcludeItemsBinding = getViewDataBinding();
 
-        //mActivity.setTitleBar(getString(R.string.seenOnOrAfter));
         fragmentCallNumbersExcludeItemsBinding.descriptionText.setText(getString(R.string.excludeItemsDescription));
         fragmentCallNumbersExcludeItemsBinding.enterDate.setVisibility(View.VISIBLE);
 

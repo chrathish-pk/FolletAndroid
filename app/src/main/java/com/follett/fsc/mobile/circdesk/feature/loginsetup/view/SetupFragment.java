@@ -56,7 +56,6 @@ public class SetupFragment extends BaseFragment<ActivityLoginBinding, LoginViewM
     }
 
     private void loadBasicFragment() {
-        //mActivity.setTitle(getString(R.string.connect_your_school_label));
         final TabLayout tabLayout = mLoginBinding.tabLayout;
         tabLayout.addTab(tabLayout.newTab()
                 .setText(getString(R.string.basic_label)));

@@ -81,7 +81,6 @@ public class PatronFineListFragment extends BaseFragment<FragmentPatronListBindi
         if (getBaseActivity() == null) {
             return;
         }
-       // mActivity.baseBinding.backBtn.setOnClickListener(this);
         lBinding.patronListRecyclerview.setLayoutManager(new LinearLayoutManager(getBaseActivity()));
         final Bundle arguments = getArguments();
         if (arguments != null) {
@@ -89,12 +88,6 @@ public class PatronFineListFragment extends BaseFragment<FragmentPatronListBindi
             PatronFineListAdapter adapter = new PatronFineListAdapter(getBaseActivity(), patronInfo.getFines(),this);
             lBinding.patronListRecyclerview.setAdapter(adapter);
         }
-    }
-    
-    @Override
-    public void onDetach() {
-        //navigationListener.setToolBarTitle(getString(R.string.patron_status_label));
-        super.onDetach();
     }
     
     @Override

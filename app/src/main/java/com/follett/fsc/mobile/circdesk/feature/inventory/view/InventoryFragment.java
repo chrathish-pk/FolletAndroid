@@ -76,9 +76,6 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
             return;
         }
 
-        //mActivity.setTitleBar(getString(R.string.inventory));
-        //mActivity.setBackBtnVisible();
-        //mActivity.baseBinding.backBtn.setOnClickListener(this);
         fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setOnClickListener(this);
         fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setOnClickListener(this);
 
@@ -93,13 +90,6 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.backBtn:
-                /*AppUtils.getInstance()
-                        .hideKeyBoard(mActivity, fragmentInventoryBinding.inventoryCompletedStatus);
-                mActivity.setTitleBar(getString(R.string.home));
-                mActivity.baseBinding.backBtn.setVisibility(View.GONE);*/
-                mActivity.onBackPressed();
-                break;
             case R.id.libraryBtn:
                 fragmentInventoryBinding.inventoryLocation.setVisibility(View.GONE);
                 fragmentInventoryBinding.inventoryLocationBar.setVisibility(View.GONE);
