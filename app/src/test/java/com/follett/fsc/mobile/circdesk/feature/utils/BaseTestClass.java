@@ -46,6 +46,8 @@ public class BaseTestClass {
 
     public static final Integer COLLECTION_TYPE = 0;
 
+    public static final Integer PARTIAL_ID = 100;
+
 
     @Before
     public void baseSetUp() {

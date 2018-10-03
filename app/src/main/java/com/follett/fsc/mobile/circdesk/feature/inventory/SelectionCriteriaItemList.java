@@ -17,6 +17,11 @@ public class SelectionCriteriaItemList implements Parcelable {
     @Expose
     private String prompt;
 
+    public SelectionCriteriaItemList(List<String> values, String prompt) {
+        this.values = values;
+        this.prompt = prompt;
+    }
+
     protected SelectionCriteriaItemList(Parcel in) {
         values = in.createStringArrayList();
         prompt = in.readString();

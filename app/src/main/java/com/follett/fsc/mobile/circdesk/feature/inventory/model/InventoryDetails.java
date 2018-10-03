@@ -18,6 +18,12 @@ public class InventoryDetails implements Parcelable {
     @Expose
     private Integer partialID;
 
+    public InventoryDetails(String name, String completePercentage, int partialID) {
+        this.name = name;
+        this.completePercentage = completePercentage;
+        this.partialID = partialID;
+    }
+
     protected InventoryDetails(Parcel in) {
         name = in.readString();
         completePercentage = in.readString();
