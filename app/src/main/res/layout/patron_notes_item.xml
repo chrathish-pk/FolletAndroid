@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /*
+  ~  * Copyright (c) 2018 Follett. All rights reserved.
+  ~  */
+  -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <data>
+
+        <variable
+            name="notes"
+            type="com.follett.fsc.mobile.circdesk.feature.patronstatus.model.Note"/>
+    </data>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/opensans_regular"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/layout_size_30"
+        android:text="@{notes.text}"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size_18sp"/>
+
+</layout>
