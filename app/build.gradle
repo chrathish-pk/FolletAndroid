@@ -28,7 +28,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-        debug{
+        debug {
             debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -61,33 +61,33 @@ jacoco {
 }
 
 // run ./gradlew clean createDebugCoverageReport jacocoTestReport
-   task jacocoTestReport(type: JacocoReport, dependsOn: "testDebugUnitTest") {
+task jacocoTestReport(type: JacocoReport, dependsOn: "testDebugUnitTest") {
     group = "Reporting"
     description = "Generate Jacoco coverage reports"
     reports {
         xml.enabled = true
         html.enabled = true
     }
-    def fileFilter = ['**/R.class','**/R$*.class','**/BuildConfig.*','**/Manifest*.*',
+    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*',
                       'android/**/*.*',
                       '**/Lambda$*.class', //Retrolambda
                       '**/Lambda.class',
-'**/*Lambda.class',
+                      '**/*Lambda.class',
                       '**/*Lambda*.class',
-'**/*Lambda*.*',
+                      '**/*Lambda*.*',
                       '**/*Builder.*',
-'**/*_MembersInjector.class', //Dagger2 generated code
+                      '**/*_MembersInjector.class', //Dagger2 generated code
                       '**/*_MembersInjector*.*', //Dagger2 generated code
-'**/*_*Factory*.*', //Dagger2 generated code
+                      '**/*_*Factory*.*', //Dagger2 generated code
                       '**/*Component*.*', //Dagger2 generated code
-'**/*Module*.*' //Dagger2 generated code
+                      '**/*Module*.*' //Dagger2 generated code
     ]
     def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
     def mainSrc = "${project.projectDir}/src/main/java"
     sourceDirectories = files([mainSrc])
     classDirectories = files([debugTree])
     executionData = fileTree(dir: project.projectDir, includes:
-            ['**/*.exec' , '**/*.ec'])
+            ['**/*.exec', '**/*.ec'])
 }
 
 sonarqube
@@ -95,7 +95,7 @@ sonarqube
             properties
                     {
                         def libraries = project.android.sdkDirectory.getPath() + "\\platforms\\android-24\\android.jar," +
-                        "${project.buildDir}\\intermediates\\classes-jar\\debug\\classes.jar"
+                                "${project.buildDir}\\intermediates\\classes-jar\\debug\\classes.jar"
 
                         property "sonar.projectName", "FollettSprint4"
                         property "sonar.projectKey", "org.sonarqube:android-simple-sq-scanner-gradle"
@@ -160,4 +160,3 @@ dependencies {
     testImplementation "android.arch.core:core-testing:${android_arch_core}"
 
 }
-

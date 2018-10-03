@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="subLocationList"
+            type="com.follett.fsc.mobile.circdesk.feature.inventory.model.SubLocationList" />
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/locationItemChecklistLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/locationitemChecklistName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/itemInventoryRadioBtn"
+            android:padding="10dp"
+
+            />
+
+        <CheckBox
+            android:id="@+id/locationitemCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="10dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/locationitemCheckbox"
+            android:layout_marginTop="10dp"
+            android:background="@color/editTextBorderColor" />
+
+    </RelativeLayout>
+
+</layout>

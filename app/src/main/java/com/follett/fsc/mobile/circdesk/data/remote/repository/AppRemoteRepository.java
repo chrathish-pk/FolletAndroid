@@ -19,6 +19,7 @@ import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.ScanPatron;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CirculationTypeList;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InProgressInventoryResults;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.SubLocation;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.model.ItemDetails;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.DistrictList;
@@ -115,7 +116,29 @@ public class AppRemoteRepository {
                     }
                 });
     }
-    
+
+    public void getSubLocationList(@Nullable final NetworkInterface networkInterface, Map<String, String> headers, String site, String contextName){
+        apiService.getSubLocationList(headers,site,contextName)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribeWith(new DisposableObserverWrapper<SubLocation>() {
+                    @Override
+                    protected void onSuccess(SubLocation subLocation) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallCompleted(subLocation);
+                        }
+                    }
+
+                    @Override
+                    protected void onFailed(Throwable throwable, String errorMessage) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallFailed(throwable, errorMessage);
+                        }
+                    }
+                });
+
+    }
+
     public void getSchoolList(@Nullable final NetworkInterface networkInterface, String contextName) {
         apiService.getSchoolList(contextName)
                 .observeOn(AndroidSchedulers.mainThread())

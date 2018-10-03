@@ -13,6 +13,7 @@ import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.ScanPatron;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CirculationTypeList;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InProgressInventoryResults;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.SubLocation;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.model.ItemDetails;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.DistrictList;
@@ -46,6 +47,11 @@ public interface APIInterface {
     @GET("/rest/v6/circulation/circtypelist")
     @JsonAndXmlConverters.Xml
     Observable<CirculationTypeList> getCirculationTypeList(@HeaderMap Map<String, String> headers, @Query("site") String site, @Query("contextName") String contextName);
+
+    @GET("/rest/v6/circulation/sublocationlist")
+    @JsonAndXmlConverters.Xml
+    Observable<SubLocation> getSubLocationList(@HeaderMap Map<String, String> headers, @Query("site") String site, @Query("contextName") String contextName);
+
 
     @Headers({"Accept: application/json", "text/xml: gzip"})
     @GET("/rest/v4/district/sites")
