@@ -106,7 +106,7 @@ public class AppSharedPreferences {
         editor.commit();
     }
 
-    public Boolean getBoolean(String key) {
+    public boolean getBoolean(String key) {
         return prefs.getBoolean(key, false);
     }
 
