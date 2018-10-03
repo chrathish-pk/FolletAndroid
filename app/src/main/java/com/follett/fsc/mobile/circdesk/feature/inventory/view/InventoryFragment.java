@@ -6,6 +6,7 @@
 
 package com.follett.fsc.mobile.circdesk.feature.inventory.view;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -20,13 +21,11 @@ import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepositor
 import com.follett.fsc.mobile.circdesk.databinding.FragmentInventoryBinding;
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.UpdateUIListener;
 import com.follett.fsc.mobile.circdesk.feature.inventory.InventoryViewSelectionFragment;
-import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InProgressInventoryResults;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.InventoryViewModel;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-
-import android.app.Activity;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_IS_LIBRARY_SELECTED;
 
@@ -61,10 +60,15 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
         super.onActivityCreated(savedInstanceState);
         fragmentInventoryBinding = getViewDataBinding();
         initViews();
-        inventoryViewModel.getInProgressInventoryResults(AppSharedPreferences.getInstance()
-                .getString(AppSharedPreferences.KEY_SITE_SHORT_NAME), AppSharedPreferences.getInstance()
-                .getString(AppSharedPreferences.KEY_CONTEXT_NAME), AppRemoteRepository.getInstance().getBoolean(KEY_IS_LIBRARY_SELECTED) ? 0 : 4);
+        try {
 
+            int collectionType = (AppRemoteRepository.getInstance().getBoolean(KEY_IS_LIBRARY_SELECTED)) ? 0 : 4;
+            inventoryViewModel.getInProgressInventoryResults(AppSharedPreferences.getInstance()
+                    .getString(AppSharedPreferences.KEY_SITE_SHORT_NAME), AppSharedPreferences.getInstance()
+                    .getString(AppSharedPreferences.KEY_CONTEXT_NAME), collectionType);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void initViews() {
@@ -100,19 +104,19 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
             case R.id.libraryBtn:
                 fragmentInventoryBinding.inventoryLocation.setVisibility(View.GONE);
                 fragmentInventoryBinding.inventoryLocationBar.setVisibility(View.GONE);
-                fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(mActivity,R.color.blueLabel));
-                fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(mActivity,R.color.white));
-                fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(mActivity,R.color.white));
-                fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(mActivity,R.color.blueLabel));
+                fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(mActivity, R.color.blueLabel));
+                fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(mActivity, R.color.white));
+                fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(mActivity, R.color.white));
+                fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(mActivity, R.color.blueLabel));
                 AppRemoteRepository.getInstance().setBoolean(KEY_IS_LIBRARY_SELECTED, true);
                 break;
             case R.id.resourceBtn:
                 fragmentInventoryBinding.inventoryLocation.setVisibility(View.VISIBLE);
                 fragmentInventoryBinding.inventoryLocationBar.setVisibility(View.VISIBLE);
-                fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(mActivity,R.color.white));
-                fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(mActivity,R.color.blueLabel));
-                fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(mActivity,R.color.blueLabel));
-                fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(mActivity,R.color.white));
+                fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(mActivity, R.color.white));
+                fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(mActivity, R.color.blueLabel));
+                fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(mActivity, R.color.blueLabel));
+                fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(mActivity, R.color.white));
                 AppRemoteRepository.getInstance().setBoolean(KEY_IS_LIBRARY_SELECTED, false);
                 break;
             case R.id.finalizeInventoryBtn:
@@ -164,12 +168,9 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
 
     @Override
     public void onItemClick(View view, int position) {
-        if(view.getId() == R.id.inventorySelection)
-        {
+        if (view.getId() == R.id.inventorySelection) {
             mActivity.pushFragment(new SelectInventoryFragment(), R.id.loginContainer, "SelectInventoryFragment", true);
-        }
-        else if(view.getId() == R.id.inventoryLocation)
-        {
+        } else if (view.getId() == R.id.inventoryLocation) {
             mActivity.pushFragment(new InventoryLocationFragment(), R.id.loginContainer, "InventoryLocationFragment", true);
         }
     }

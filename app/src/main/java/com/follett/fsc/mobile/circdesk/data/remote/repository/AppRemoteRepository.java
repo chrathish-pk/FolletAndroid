@@ -397,7 +397,7 @@ public class AppRemoteRepository {
                 .setBoolean(key, value);
     }
 
-    public Boolean getBoolean(String key) {
+    public boolean getBoolean(String key) {
         return AppSharedPreferences.getInstance()
                 .getBoolean(key);
     }
