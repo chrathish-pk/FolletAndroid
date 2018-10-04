@@ -39,7 +39,7 @@ public class InventoryViewSelectionFragment extends BaseFragment<InventoryViewSe
         if (getBaseApplication() == null) {
             return null;
         }
-        inventoryViewSelectionModel = new InventoryViewSelectionModel(getBaseApplication(), this, this);
+        inventoryViewSelectionModel = new InventoryViewSelectionModel(getBaseApplication(), this);
         return inventoryViewSelectionModel;
     }
 
