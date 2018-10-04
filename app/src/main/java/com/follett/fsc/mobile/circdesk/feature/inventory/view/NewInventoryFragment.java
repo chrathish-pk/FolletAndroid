@@ -26,6 +26,7 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
     private NewInventoryViewModel newInventoryViewModel;
     private FragmentNewInventoryBinding fragmentNewInventoryBinding;
     private NewInventoryListAdapter newInventoryListAdapter;
+    private boolean isLibrarySelected;
 
     @Override
     public int getLayoutId() {
@@ -59,7 +60,8 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
         });
 
         fragmentNewInventoryBinding.inventoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        if (AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED))
+        isLibrarySelected = AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED);
+        if (isLibrarySelected)
             newInventoryListAdapter = new NewInventoryListAdapter(getActivity(), newInventoryViewModel.getNewInventoryDataForLibrary(), this);
         else
             newInventoryListAdapter = new NewInventoryListAdapter(getActivity(), newInventoryViewModel.getNewInventoryDataForResource(), this);
@@ -72,13 +74,19 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
     public void onItemClick(View view, int position) {
         switch (position) {
             case 0:
-                mActivity.pushFragment(new CallNumbersFragment(), R.id.loginContainer, getString(R.string.callNumbers), true, true);
+                if (isLibrarySelected) {
+                    mActivity.pushFragment(new CallNumbersFragment(), R.id.loginContainer, getString(R.string.callNumbers), true, true);
+                }
                 break;
             case 1:
-                mActivity.pushFragment(new CirculationTypeFragment(), R.id.loginContainer, getString(R.string.circulationTypeLabel), true, true);
+                if (isLibrarySelected) {
+                    mActivity.pushFragment(new CirculationTypeFragment(), R.id.loginContainer, getString(R.string.circulationTypeLabel), true, true);
+                }
                 break;
             case 2:
-                mActivity.replaceFragment(new SeenOnOrAfterFragment(), R.id.loginContainer, getString(R.string.seenOnOrAfter), true, true);
+                if (isLibrarySelected) {
+                    mActivity.replaceFragment(new SeenOnOrAfterFragment(), R.id.loginContainer, getString(R.string.seenOnOrAfter), true, true);
+                }
                 break;
             /*case R.id.startInventoryBtn:
                 AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_INVENTORY_NAME, fragmentNewInventoryBinding.newInventoryName.getText().toString().trim());
