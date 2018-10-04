@@ -17,6 +17,7 @@ import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentNewInventoryBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventoryResult;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.NewInventoryViewModel;
@@ -26,6 +27,7 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
     private NewInventoryViewModel newInventoryViewModel;
     private FragmentNewInventoryBinding fragmentNewInventoryBinding;
     private NewInventoryListAdapter newInventoryListAdapter;
+    private boolean isLibrarySelected;
 
     @Override
     public int getLayoutId() {
@@ -59,7 +61,8 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
         });
 
         fragmentNewInventoryBinding.inventoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        if (AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED))
+        isLibrarySelected = AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED);
+        if (isLibrarySelected)
             newInventoryListAdapter = new NewInventoryListAdapter(getActivity(), newInventoryViewModel.getNewInventoryDataForLibrary(), this);
         else
             newInventoryListAdapter = new NewInventoryListAdapter(getActivity(), newInventoryViewModel.getNewInventoryDataForResource(), this);
@@ -72,18 +75,37 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
     public void onItemClick(View view, int position) {
         switch (position) {
             case 0:
-                mActivity.pushFragment(new CallNumbersFragment(), R.id.loginContainer, getString(R.string.callNumbers), true, true);
+                if (isLibrarySelected) {
+                    mActivity.pushFragment(new CallNumbersFragment(), R.id.loginContainer, getString(R.string.callNumbers), true, true);
+                }
                 break;
             case 1:
-                mActivity.pushFragment(new CirculationTypeFragment(), R.id.loginContainer, getString(R.string.circulationTypeLabel), true, true);
+                if (isLibrarySelected) {
+                    mActivity.pushFragment(new CirculationTypeFragment(), R.id.loginContainer, getString(R.string.circulationTypeLabel), true, true);
+                }
                 break;
             case 2:
-                mActivity.replaceFragment(new SeenOnOrAfterFragment(), R.id.loginContainer, getString(R.string.seenOnOrAfter), true, true);
+                if (isLibrarySelected) {
+                    mActivity.replaceFragment(new SubLocationFragment(), R.id.loginContainer, getString(R.string.subLocationLabel), true, true);
+                } else {
+                    mActivity.replaceFragment(new PurchasePriceFragment(), R.id.loginContainer, getString(R.string.purchasePrice), true, true);
+                }
                 break;
-            /*case R.id.startInventoryBtn:
+            case 3:
+                if (isLibrarySelected) {
+                    mActivity.replaceFragment(new SeenOnOrAfterFragment(), R.id.loginContainer, getString(R.string.seenOnOrAfter), true, true);
+                } else {
+                    mActivity.pushFragment(new IncludeItemAttributesFragment(), R.id.loginContainer, getString(R.string.includeItemAttributes), true, true);
+                }
+                break;
+            case 4:
+                mActivity.pushFragment(new InventoryCheckoutHandlingFragment(), R.id.loginContainer, getString(R.string.checkoutHandling), true, true);
+                break;
+
+            case 100:
                 AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_INVENTORY_NAME, fragmentNewInventoryBinding.newInventoryName.getText().toString().trim());
                 newInventoryViewModel.getCreatedInventory();
-                break;*/
+                break;
         }
     }
 }

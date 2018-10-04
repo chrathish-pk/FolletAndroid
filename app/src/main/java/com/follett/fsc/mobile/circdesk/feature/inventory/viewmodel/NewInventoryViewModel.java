@@ -53,6 +53,7 @@ public class NewInventoryViewModel extends BaseViewModel implements NetworkInter
         List<NewInventoryData> newInventoryDataList = new ArrayList<>();
         newInventoryDataList.add(new NewInventoryData(application.getString(R.string.callNumbersLabel), "All"));
         newInventoryDataList.add(new NewInventoryData(application.getString(R.string.circulationTypeLabel), "All Ciruculation Types"));
+        newInventoryDataList.add(new NewInventoryData(application.getString(R.string.subLocationLabel), "Sub Location"));
         newInventoryDataList.add(new NewInventoryData(application.getString(R.string.excludeItems), "No exclustions"));
 
         return newInventoryDataList;
