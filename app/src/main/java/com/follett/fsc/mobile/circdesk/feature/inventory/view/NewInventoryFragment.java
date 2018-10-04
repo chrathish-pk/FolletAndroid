@@ -86,9 +86,22 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
                 break;
             case 2:
                 if (isLibrarySelected) {
-                    mActivity.replaceFragment(new SeenOnOrAfterFragment(), R.id.loginContainer, getString(R.string.seenOnOrAfter), true, true);
+                    mActivity.replaceFragment(new SubLocationFragment(), R.id.loginContainer, getString(R.string.subLocationLabel), true, true);
+                } else {
+                    mActivity.replaceFragment(new PurchasePriceFragment(), R.id.loginContainer, getString(R.string.purchasePrice), true, true);
                 }
                 break;
+            case 3:
+                if (isLibrarySelected) {
+                    mActivity.replaceFragment(new SeenOnOrAfterFragment(), R.id.loginContainer, getString(R.string.seenOnOrAfter), true, true);
+                } else {
+                    mActivity.pushFragment(new IncludeItemAttributesFragment(), R.id.loginContainer, getString(R.string.includeItemAttributes), true, true);
+                }
+                break;
+            case 4:
+                mActivity.pushFragment(new InventoryCheckoutHandlingFragment(), R.id.loginContainer, getString(R.string.checkoutHandling), true, true);
+                break;
+
             case 100:
                 AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_INVENTORY_NAME, fragmentNewInventoryBinding.newInventoryName.getText().toString().trim());
                 newInventoryViewModel.getCreatedInventory();

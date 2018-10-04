@@ -108,15 +108,15 @@
         </android.support.constraint.ConstraintLayout>
 
 
-        <include
-            android:id="@+id/libraryResourceIncludeLayout"
-            layout="@layout/library_resource"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+        <!--<include-->
+            <!--android:id="@+id/libraryResourceIncludeLayout"-->
+            <!--layout="@layout/library_resource"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="10dp"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent" />-->
 
         <android.support.v4.widget.ContentLoadingProgressBar
             style="?android:attr/progressBarStyle"

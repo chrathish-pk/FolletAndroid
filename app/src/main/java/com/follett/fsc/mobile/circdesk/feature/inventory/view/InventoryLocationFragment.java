@@ -6,47 +6,57 @@
 
 package com.follett.fsc.mobile.circdesk.feature.inventory.view;
 
+import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
-import com.follett.fsc.mobile.circdesk.databinding.FragmentInventoryListBinding;
+import com.follett.fsc.mobile.circdesk.databinding.FragmentInventoryLocationBinding;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.Location;
+import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.InventoryLocationViewModel;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.SelectInventoryViewModel;
 
-public class InventoryLocationFragment extends BaseFragment<FragmentInventoryListBinding, SelectInventoryViewModel> implements ItemClickListener {
+public class InventoryLocationFragment extends BaseFragment<FragmentInventoryLocationBinding, InventoryLocationViewModel> implements ItemClickListener {
 
-    private FragmentInventoryListBinding fragmentInventoryListBinding;
-    private SelectInventoryViewModel selectInventoryViewModel;
+    private FragmentInventoryLocationBinding fragmentInventoryLocationBinding;
+    private InventoryLocationViewModel inventoryLocationViewModel;
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_inventory_list;
+        return R.layout.fragment_inventory_location;
     }
 
     @Override
-    public SelectInventoryViewModel getViewModel() {
-        if (getBaseApplication() == null) {
-            return null;
-        }
-        selectInventoryViewModel = new SelectInventoryViewModel(getBaseApplication(), this);
-        return selectInventoryViewModel;
+    public InventoryLocationViewModel getViewModel() {
+
+        inventoryLocationViewModel = new InventoryLocationViewModel(getBaseActivity().getApplication());
+        return inventoryLocationViewModel;
     }
 
     @Override
     public int getBindingVariable() {
-        return BR.newInventoryViewModel;
+        return BR.viewModel;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        fragmentInventoryListBinding = getViewDataBinding();
+        fragmentInventoryLocationBinding = getViewDataBinding();
+        fragmentInventoryLocationBinding.recyclerViewLocationList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        inventoryLocationViewModel.fetchLocationList();
+        fragmentInventoryLocationBinding.scanLocationBtn.setText(getString(R.string.scanLocation));
+        inventoryLocationViewModel.locationListMutableLiveData.observeForever(new Observer<Location>() {
+            @Override
+            public void onChanged(@Nullable Location location) {
 
-        fragmentInventoryListBinding.newInventoryBtn.setText(getString(R.string.scanLocation));
+                InventoryLocationAdapter inventoryLocationAdapter = new InventoryLocationAdapter(getActivity(), location, InventoryLocationFragment.this);
+                fragmentInventoryLocationBinding.recyclerViewLocationList.setAdapter(inventoryLocationAdapter);
+            }
+        });
 
     }
 

@@ -9,6 +9,7 @@ buildscript {
 }
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: 'jacoco'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -27,9 +28,19 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            testCoverageEnabled true
+            multiDexKeepProguard file('proguard-multidex-rules.pro')
+
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            testCoverageEnabled true
+
         }
     }
     dataBinding {
@@ -37,21 +48,73 @@ android {
     }
     testOptions {
         unitTests.returnDefaultValues = true
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
     }
+}
+
+jacoco {
+    toolVersion "0.7.6.201602180812"
+}
+
+// run ./gradlew clean createDebugCoverageReport jacocoTestReport
+task jacocoTestReport(type: JacocoReport, dependsOn: "testDebugUnitTest") {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports"
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*',
+                      'android/**/*.*',
+                      '**/Lambda$*.class', //Retrolambda
+                      '**/Lambda.class',
+                      '**/*Lambda.class',
+                      '**/*Lambda*.class',
+                      '**/*Lambda*.*',
+                      '**/*Builder.*',
+                      '**/*_MembersInjector.class', //Dagger2 generated code
+                      '**/*_MembersInjector*.*', //Dagger2 generated code
+                      '**/*_*Factory*.*', //Dagger2 generated code
+                      '**/*Component*.*', //Dagger2 generated code
+                      '**/*Module*.*' //Dagger2 generated code
+    ]
+    def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
+    def mainSrc = "${project.projectDir}/src/main/java"
+    sourceDirectories = files([mainSrc])
+    classDirectories = files([debugTree])
+    executionData = fileTree(dir: project.projectDir, includes:
+            ['**/*.exec', '**/*.ec'])
 }
 
 sonarqube
         {
             properties
                     {
+                        def libraries = project.android.sdkDirectory.getPath() + "\\platforms\\android-24\\android.jar," +
+                                "${project.buildDir}\\intermediates\\classes-jar\\debug\\classes.jar"
+
                         property "sonar.projectName", "FollettSprint4"
                         property "sonar.projectKey", "org.sonarqube:android-simple-sq-scanner-gradle"
-                        property "sonar.language", "java"
+                        property "sonar.language    ", "java"
                         property "sonar.sources", "src/main"
                         property "sonar.binaries", "build"
                         property "sonar.sourceEncoding", "UTF-8"
                         property "sonar.login", "admin"
                         property "sonar.password", "admin"
+                        property "sonar.binaries", "/intermediates/classes/debug"
+                        property "sonar.java.libraries", libraries
+                        property "sonar.libraries", libraries
+                        property "sonar.java.binaries", "${project.buildDir}/intermediates/classes/debug"
+                        property "sonar.exclusions", "build/**,**/*.png,*.iml, **/*generated*,src/androidTest/java "
+                        property "sonar.import_unknown_files", true
+                        property "sonar.android.lint.report", "./build/outputs/lint-results.xml"
+                        property "sonar.tests", "./src/test/"
+                        property "sonar.jacoco.reportPath", fileTree(dir: project.projectDir, includes: ['**/*.exec'])
+                        property "sonar.java.test.libraries", libraries
                     }
         }
 
@@ -88,6 +151,8 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
 
     testImplementation 'junit:junit:4.12'
+    testImplementation "com.android.support.test:runner:0.5"
+
     testImplementation "org.mockito:mockito-core:${mockito_lib}"
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
         transitive = true;

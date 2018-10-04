@@ -204,9 +204,20 @@
     <string name="scanLocation">SCAN LOCATION</string>
     <string name="inventoryLocation">Inventory Location</string>
     <string name="circulationTypeLabel">Circulation Types</string>
+    <string name="subLocationLabel">Sub Location</string>
+    <string name="purchasePrice">Purchase Price</string>
+    <string name="includeItemAttributes">Include Items with Attributes</string>
+    <string name="checkoutHandling">Checkout Handling</string>
     <string name="callNumbersLabel">Call Numbers:</string>
     <string name="excludeItemsDescription">All copies meeting the above criteria will be set to "unaccounted for" excepted for copies that have been seen on of after</string>
     <string name="started">" Started "</string>
+    <string name="enterAmount">Enter Amount</string>
+    <string name="checkInItemsInCirculation">Check In Items In-Circulation</string>
+    <string name="makeTheseItemsUnaccountedFor">Make these items unaccounted for</string>
+    <string name="barcoded">Barcoded</string>
+    <string name="unBarcoded">Unbarcoded</string>
+    <string name="consummable">Consummable</string>
+
 
 
     <string name="legalTitle">Legal</string>
@@ -247,5 +258,8 @@ FOLLETT DISCLAIMS ALL OTHER WARRANTIES, EITHER EXPRESS OR IMPLIED, INCLUDING BUT
 This agreement shall be interpreted and construed according to, and governed by, the laws of the State of Illinois, United States of America.\n
 </string>
     <string name="no_inventories_available">No inventories available</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
