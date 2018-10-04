@@ -34,14 +34,13 @@ public class SubLocationListAdapter extends RecyclerView.Adapter<SubLocationList
 
     @Override
     public void onBindViewHolder(@NonNull SubLocationListViewHolder holder, int position) {
-        FollettLog.i("TAG","Location Name"+subLocationList.getSubLocationList().get(position).getSublocationName());
-        //holder.rowLocationListBinding.setSubLocationList(subLocationList.getSubLocationList().get(position));
-        holder.rowLocationListBinding.locationitemChecklistName.setText(subLocationList.getSubLocationList().get(position).getSublocationName());
+        holder.rowLocationListBinding.setSubLocationList(subLocationList.getSublocationList().get(position));
+        //holder.rowLocationListBinding.locationitemChecklistName.setText(subLocationList.getSubLocationList().get(position).getSublocationName());
 
     }
 
     @Override
     public int getItemCount() {
-        return subLocationList.getSubLocationList() != null ? subLocationList.getSubLocationList().size() : 0;
+        return subLocationList != null ? subLocationList.getSublocationList().size() : 0;
     }
 }

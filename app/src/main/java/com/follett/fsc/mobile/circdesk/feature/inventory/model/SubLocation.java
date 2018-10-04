@@ -4,16 +4,16 @@ package com.follett.fsc.mobile.circdesk.feature.inventory.model;
 import java.util.List;
 import android.os.Parcel;
 import android.os.Parcelable;
-
+import android.os.Parcelable.Creator;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class SubLocation implements Parcelable
 {
 
-    @SerializedName("subLocationList")
+    @SerializedName("sublocationList")
     @Expose
-    private List<SubLocationList> subLocationList = null;
+    private List<SublocationList> sublocationList = null;
     public final static Creator<SubLocation> CREATOR = new Creator<SubLocation>() {
 
 
@@ -32,22 +32,22 @@ public class SubLocation implements Parcelable
     ;
 
     protected SubLocation(Parcel in) {
-        in.readList(this.subLocationList, (SubLocationList.class.getClassLoader()));
+        in.readList(this.sublocationList, (SublocationList.class.getClassLoader()));
     }
 
     public SubLocation() {
     }
 
-    public List<SubLocationList> getSubLocationList() {
-        return subLocationList;
+    public List<SublocationList> getSublocationList() {
+        return sublocationList;
     }
 
-    public void setSubLocationList(List<SubLocationList> subLocationList) {
-        this.subLocationList = subLocationList;
+    public void setSublocationList(List<SublocationList> sublocationList) {
+        this.sublocationList = sublocationList;
     }
 
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeList(subLocationList);
+        dest.writeList(sublocationList);
     }
 
     public int describeContents() {

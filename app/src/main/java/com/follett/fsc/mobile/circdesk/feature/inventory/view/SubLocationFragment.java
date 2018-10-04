@@ -1,7 +1,6 @@
 package com.follett.fsc.mobile.circdesk.feature.inventory.view;
 
 import android.arch.lifecycle.Observer;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,7 +13,6 @@ import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentSubLocationBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.SubLocation;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.SubLocationViewModel;
-import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 
 public class SubLocationFragment extends BaseFragment<FragmentSubLocationBinding,SubLocationViewModel> implements ItemClickListener {
