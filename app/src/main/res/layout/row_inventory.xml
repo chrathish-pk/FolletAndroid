@@ -9,7 +9,7 @@
 
         <variable
             name="inventory"
-            type="com.follett.fsc.mobile.circdesk.feature.inventory.model.Inventory" />
+            type="com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryList" />
 
     </data>
 
@@ -22,17 +22,17 @@
             android:id="@+id/itemInventoryName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/itemInventoryRadioBtn"
             android:padding="10dp"
-            android:layout_centerVertical="true"
-            android:text="@{inventory.inventoryName}" />
+            android:text="@{inventory.name.empty ? inventory.dateStarted : inventory.name + ' ' + @string/started + ' ' + inventory.dateStarted}" />
 
         <RadioButton
             android:id="@+id/itemInventoryRadioBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:checked="@{inventory.selected}"
             android:padding="10dp" />
 

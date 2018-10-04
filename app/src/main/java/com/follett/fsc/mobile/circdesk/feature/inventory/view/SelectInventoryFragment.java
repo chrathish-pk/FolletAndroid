@@ -8,7 +8,6 @@ package com.follett.fsc.mobile.circdesk.feature.inventory.view;
 
 import android.app.Activity;
 import android.app.Application;
-import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,19 +17,18 @@ import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentInventoryListBinding;
-import com.follett.fsc.mobile.circdesk.feature.inventory.model.Inventory;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.InProgressInventoryResults;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.SelectInventoryViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
 
 public class SelectInventoryFragment extends BaseFragment<FragmentInventoryListBinding, SelectInventoryViewModel> implements ItemClickListener, View.OnClickListener {
 
     private FragmentInventoryListBinding fragmentInventoryListBinding;
     private SelectInventoryViewModel selectInventoryViewModel;
-    private List<Inventory> inventoryListData = new ArrayList<>();
     private SelectInventoryListAdapter selectInventoryListAdapter;
+    private InProgressInventoryResults inProgressInventoryResults;
 
     @Override
     public int getLayoutId() {
@@ -53,6 +51,15 @@ public class SelectInventoryFragment extends BaseFragment<FragmentInventoryListB
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getArguments() != null)
+            inProgressInventoryResults = getArguments().getParcelable("InProgressInventoryResult");
+
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         final Activity activity = getBaseActivity();
@@ -62,40 +69,34 @@ public class SelectInventoryFragment extends BaseFragment<FragmentInventoryListB
 
         fragmentInventoryListBinding = getViewDataBinding();
 
-        fragmentInventoryListBinding.inventoryRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
 
         fragmentInventoryListBinding.newInventoryBtn.setOnClickListener(this);
-
-        inventoryListData.clear();
-        inventoryListData.add(new Inventory("000-999 Started 02/02/2018", false));
-        inventoryListData.add(new Inventory("1000-0199 Started 02/03/2018", false));
-        inventoryListData.add(new Inventory("2000-2099 Started 02/05/2018", false));
-
-        selectInventoryListAdapter = new SelectInventoryListAdapter(activity, inventoryListData, SelectInventoryFragment.this);
+        fragmentInventoryListBinding.inventoryRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        selectInventoryListAdapter = new SelectInventoryListAdapter(activity, inProgressInventoryResults.getInventoryList(), SelectInventoryFragment.this);
         fragmentInventoryListBinding.inventoryRecyclerView.setAdapter(selectInventoryListAdapter);
-
-
-        selectInventoryViewModel.inventoryList.observe(this, new Observer<List<Inventory>>() {
-            @Override
-            public void onChanged(@Nullable List<Inventory> inventoryList) {
-                inventoryListData = inventoryList;
-
-                selectInventoryListAdapter = new SelectInventoryListAdapter(activity, inventoryListData, SelectInventoryFragment.this);
-                fragmentInventoryListBinding.inventoryRecyclerView.setAdapter(selectInventoryListAdapter);
-
-            }
-        });
     }
 
     @Override
     public void onItemClick(View view, int position) {
-        inventoryListData.get(position).setSelected(true);
+        for (int i = 0; i < inProgressInventoryResults.getInventoryList().size(); i++) {
+            if (i == position)
+                inProgressInventoryResults.getInventoryList().get(i).setSelected(true);
+            else
+                inProgressInventoryResults.getInventoryList().get(i).setSelected(false);
+
+        }
+        AppSharedPreferences.getInstance().setInt(AppSharedPreferences.KEY_SELECTED_INVENTORY_PARTIAL_ID, inProgressInventoryResults.getInventoryList().get(position).getPartialID());
+        if (inProgressInventoryResults.getInventoryList().get(position).getName().isEmpty())
+            ((SetupActivity) getActivity()).selectedInventoryNameLiveData.postValue(inProgressInventoryResults.getInventoryList().get(position).getDateStarted());
+        else
+            ((SetupActivity) getActivity()).selectedInventoryNameLiveData.postValue(inProgressInventoryResults.getInventoryList().get(position).getName() + getString(R.string.started) + inProgressInventoryResults.getInventoryList().get(position).getDateStarted());
+        selectInventoryListAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.newInventoryBtn) {
-            mActivity.pushFragment(new NewInventoryFragment(), R.id.loginContainer, getString(R.string.newInventoryTitle), true,true);
+            mActivity.pushFragment(new NewInventoryFragment(), R.id.loginContainer, getString(R.string.newInventoryTitle), true, true);
         }
     }
 }

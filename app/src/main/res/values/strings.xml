@@ -210,6 +210,7 @@
     <string name="checkoutHandling">Checkout Handling</string>
     <string name="callNumbersLabel">Call Numbers:</string>
     <string name="excludeItemsDescription">All copies meeting the above criteria will be set to "unaccounted for" excepted for copies that have been seen on of after</string>
+    <string name="started">" Started "</string>
     <string name="enterAmount">Enter Amount</string>
     <string name="checkInItemsInCirculation">Check In Items In-Circulation</string>
     <string name="makeTheseItemsUnaccountedFor">Make these items unaccounted for</string>
