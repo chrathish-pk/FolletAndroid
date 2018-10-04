@@ -17,6 +17,7 @@ import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentNewInventoryBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventoryResult;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.NewInventoryViewModel;
@@ -88,10 +89,10 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
                     mActivity.replaceFragment(new SeenOnOrAfterFragment(), R.id.loginContainer, getString(R.string.seenOnOrAfter), true, true);
                 }
                 break;
-            /*case R.id.startInventoryBtn:
+            case 100:
                 AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_INVENTORY_NAME, fragmentNewInventoryBinding.newInventoryName.getText().toString().trim());
                 newInventoryViewModel.getCreatedInventory();
-                break;*/
+                break;
         }
     }
 }

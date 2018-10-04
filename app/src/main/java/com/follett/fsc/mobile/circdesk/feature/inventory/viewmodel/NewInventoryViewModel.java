@@ -21,14 +21,13 @@ import com.follett.fsc.mobile.circdesk.feature.inventory.model.CircTypeRecord;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventory;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventoryResult;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.NewInventoryData;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
@@ -46,7 +45,7 @@ public class NewInventoryViewModel extends BaseViewModel implements NetworkInter
     }
 
     public void onItemClicked(View view) {
-        itemClickListener.onItemClick(view, 0);
+        itemClickListener.onItemClick(view, 100);
     }
 
     public List<NewInventoryData> getNewInventoryDataForLibrary() {
@@ -65,7 +64,7 @@ public class NewInventoryViewModel extends BaseViewModel implements NetworkInter
         newInventoryDataList.add(new NewInventoryData(application.getString(R.string.purchasePriceLabel), "All Resource Types"));
         newInventoryDataList.add(new NewInventoryData(application.getString(R.string.includeItemsLabel), "With all tracking attributes"));
         newInventoryDataList.add(new NewInventoryData(application.getString(R.string.checkoutHandlingLabel), "Checked Out, In Circulation"));
-        newInventoryDataList.add(new NewInventoryData(application.getString(R.string.checkoutHandlingLabel), "No exclusions"));
+        newInventoryDataList.add(new NewInventoryData(application.getString(R.string.excludeItems), "No exclusions"));
         newInventoryDataList.add(new NewInventoryData(application.getString(R.string.mismatchedItemLocationLabel), "Do Nothing"));
 
         return newInventoryDataList;
@@ -73,13 +72,7 @@ public class NewInventoryViewModel extends BaseViewModel implements NetworkInter
 
     public void getCreatedInventory() {
         setIsLoding(true);
-
-        Map<String, String> map = new HashMap<>();
-        map.put("Accept", "application/json");
-        map.put("Cookie", "JSESSIONID=" + AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID));
-        map.put("text/xml", "gzip");
-
-        AppRemoteRepository.getInstance().createInventory(map, this, AppSharedPreferences.getInstance()
+        AppRemoteRepository.getInstance().createInventory(AppUtils.getInstance().getHeader(application), this, AppSharedPreferences.getInstance()
                 .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
                 .getString(KEY_SITE_SHORT_NAME), constructJson());
     }
@@ -95,9 +88,7 @@ public class NewInventoryViewModel extends BaseViewModel implements NetworkInter
                 AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SEEN_FORMAT_DATE),
                 AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_CALL_NUMBER_FROM),
                 AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_CALL_NUMBER_TO), null,
-                circTypeRecords, 0, null, false, null,
-                0, null, 0, 0, false,
-                false, false, false, false, 0);
+                circTypeRecords);
 
         return createInventory;
     }
@@ -116,7 +107,7 @@ public class NewInventoryViewModel extends BaseViewModel implements NetworkInter
 
     @Override
     public void onRefreshToken(int requestCode) {
-        // Do Nothing
+        getCreatedInventory();
     }
 
 }

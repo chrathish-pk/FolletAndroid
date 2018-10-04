@@ -6,11 +6,6 @@
 
 package com.follett.fsc.mobile.circdesk.feature.inventory.view;
 
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
-import com.follett.fsc.mobile.circdesk.databinding.RowInventoryBinding;
-import com.follett.fsc.mobile.circdesk.feature.inventory.model.Inventory;
-
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
@@ -19,16 +14,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
+import com.follett.fsc.mobile.circdesk.databinding.RowInventoryBinding;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryList;
+
 import java.util.List;
 
 public class SelectInventoryListAdapter extends RecyclerView.Adapter<SelectInventoryListViewHolder> implements View.OnClickListener {
 
     private Context context;
-    private List<Inventory> inventoryList = new ArrayList<>();
+    private List<InventoryList> inventoryList;
     private ItemClickListener itemClickListener;
 
-    public SelectInventoryListAdapter(Context context, List<Inventory> inventoryList, ItemClickListener itemClickListener) {
+    public SelectInventoryListAdapter(Context context, List<InventoryList> inventoryList, ItemClickListener itemClickListener) {
         this.context = context;
         this.inventoryList = inventoryList;
         this.itemClickListener = itemClickListener;
@@ -46,7 +45,11 @@ public class SelectInventoryListAdapter extends RecyclerView.Adapter<SelectInven
         holder.rowInventoryBinding.setInventory(inventoryList.get(position));
 
         holder.rowInventoryBinding.itemInventoryLayout.setTag(position);
+        holder.rowInventoryBinding.itemInventoryName.setTag(position);
+        holder.rowInventoryBinding.itemInventoryRadioBtn.setTag(position);
         holder.rowInventoryBinding.itemInventoryLayout.setOnClickListener(this);
+        holder.rowInventoryBinding.itemInventoryName.setOnClickListener(this);
+        holder.rowInventoryBinding.itemInventoryRadioBtn.setOnClickListener(this);
     }
 
     @Override
@@ -56,8 +59,6 @@ public class SelectInventoryListAdapter extends RecyclerView.Adapter<SelectInven
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.itemInventoryLayout) {
-            itemClickListener.onItemClick(v, (Integer) v.getTag());
-        }
+        itemClickListener.onItemClick(v, (Integer) v.getTag());
     }
 }

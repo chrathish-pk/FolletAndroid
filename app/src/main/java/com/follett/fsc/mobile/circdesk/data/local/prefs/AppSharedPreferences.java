@@ -53,11 +53,11 @@ public class AppSharedPreferences {
     public static final String KEY_IS_LIBRARY_SELECTED = "isLibrarySelected";
     public static final String KEY_PERMISSIONS = "permissions";
     public static final String KEY_COLLECTION_TYPE = "collectionType";
-    public static final String KEY_PARTIALID = "partialID";
     public static final String KEY_PROMPT = "prompt";
     public static final String KEY_VALUES = "values";
 
     public static final String KEY_INVENTORY_NAME = "inventoryName";
+    public static final String KEY_SELECTED_INVENTORY_PARTIAL_ID = "selectedInventoryPartialID";
     public static final String KEY_CALL_NUMBER_FROM = "callNumberFrom";
     public static final String KEY_CALL_NUMBER_TO = "callNumberTo";
     public static final String KEY_CIRCULATION_TYPE_LIST = "circulationTypeList";

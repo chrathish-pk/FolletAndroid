@@ -66,7 +66,7 @@ public class InventoryViewModelTest extends BaseTestClass implements ItemClickLi
     @Test
     public void getInProgressInventoriesResult() {
         createMockSharedPref();
-        inventoryViewModel.getInProgressInventoryResults(SITE_NAME_UAT, CONTEXT_NAME_UAT, COLLECTION_TYPE);
+        inventoryViewModel.getInProgressInventoryResults();
         inventoryViewModel.inventoryListMutableLiveData.observeForever(new Observer<InProgressInventoryResults>() {
             @Override
             public void onChanged(@Nullable InProgressInventoryResults inProgressInventoryResults) {

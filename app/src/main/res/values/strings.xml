@@ -206,8 +206,7 @@
     <string name="circulationTypeLabel">Circulation Types</string>
     <string name="callNumbersLabel">Call Numbers:</string>
     <string name="excludeItemsDescription">All copies meeting the above criteria will be set to "unaccounted for" excepted for copies that have been seen on of after</string>
-
-
+    <string name="started">" Started "</string>
 
 
     <string name="legalTitle">Legal</string>

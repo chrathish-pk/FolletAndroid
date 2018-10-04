@@ -7,6 +7,7 @@
 package com.follett.fsc.mobile.circdesk.feature.inventory.view;
 
 import android.app.Activity;
+import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -24,10 +25,8 @@ import com.follett.fsc.mobile.circdesk.feature.inventory.InventoryViewSelectionF
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InProgressInventoryResults;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.InventoryViewModel;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-
-import android.app.Activity;
-
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_IS_LIBRARY_SELECTED;
 
@@ -62,15 +61,7 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
         super.onActivityCreated(savedInstanceState);
         fragmentInventoryBinding = getViewDataBinding();
         initViews();
-        try {
-
-            int collectionType = (AppRemoteRepository.getInstance().getBoolean(KEY_IS_LIBRARY_SELECTED)) ? 0 : 4;
-            inventoryViewModel.getInProgressInventoryResults(AppSharedPreferences.getInstance()
-                    .getString(AppSharedPreferences.KEY_SITE_SHORT_NAME), AppSharedPreferences.getInstance()
-                    .getString(AppSharedPreferences.KEY_CONTEXT_NAME), collectionType);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        inventoryViewModel.getInProgressInventoryResults();
     }
 
     private void initViews() {
@@ -87,6 +78,14 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
 
         fragmentInventoryBinding.patronEntryIncludeLayout.patronEntry.setHint(getString(R.string.enterBarcode));
         fragmentInventoryBinding.patronEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.GONE);
+
+        ((SetupActivity) getActivity()).selectedInventoryNameLiveData.observe(getActivity(), new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String selectedInventory) {
+                fragmentInventoryBinding.inventorySelection.setText(selectedInventory);
+                inventoryViewModel.getInventoryDetails();
+            }
+        });
     }
 
     @Override
@@ -100,6 +99,7 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                 fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(mActivity, R.color.white));
                 fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(mActivity, R.color.blueLabel));
                 AppRemoteRepository.getInstance().setBoolean(KEY_IS_LIBRARY_SELECTED, true);
+                inventoryViewModel.getInProgressInventoryResults();
                 break;
             case R.id.resourceBtn:
                 fragmentInventoryBinding.inventoryLocation.setVisibility(View.VISIBLE);
@@ -109,6 +109,7 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                 fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(mActivity, R.color.blueLabel));
                 fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(mActivity, R.color.white));
                 AppRemoteRepository.getInstance().setBoolean(KEY_IS_LIBRARY_SELECTED, false);
+                inventoryViewModel.getInProgressInventoryResults();
                 break;
             case R.id.finalizeInventoryBtn:
               /*  DialogFragment fragment = new FinalizePopupFragment();
@@ -118,7 +119,7 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                 break;*/
                 break;
             case R.id.inventoryViewSelectionsBtn:
-                mActivity.pushFragment(new InventoryViewSelectionFragment(), R.id.loginContainer, getString(R.string.inventorySelections), true,true);
+                mActivity.pushFragment(new InventoryViewSelectionFragment(), R.id.loginContainer, getString(R.string.inventorySelections), true, true);
                 break;
             default:
                 break;
@@ -138,8 +139,12 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
 
                         if (!inProgressInventoryResults.getInventoryList().isEmpty()) {
                             fragmentInventoryBinding.inventorySelection.setVisibility(View.VISIBLE);
-                            fragmentInventoryBinding.inventorySelection.setText(inProgressInventoryResults.getInventoryList().get(0).getName()
-                                    + " - " + inProgressInventoryResults.getInventoryList().get(0).getDateStarted());
+                            inProgressInventoryResults.getInventoryList().get(0).setSelected(true);
+                            AppSharedPreferences.getInstance().setInt(AppSharedPreferences.KEY_SELECTED_INVENTORY_PARTIAL_ID, inProgressInventoryResults.getInventoryList().get(0).getPartialID());
+                            if (inProgressInventoryResults.getInventoryList().get(0).getName().isEmpty())
+                                fragmentInventoryBinding.inventorySelection.setText(inProgressInventoryResults.getInventoryList().get(0).getDateStarted());
+                            else
+                                fragmentInventoryBinding.inventorySelection.setText(inProgressInventoryResults.getInventoryList().get(0).getName() + getString(R.string.started) + inProgressInventoryResults.getInventoryList().get(0).getDateStarted());
                         } else {
                             fragmentInventoryBinding.inventorySelection.setVisibility(View.GONE);
 
@@ -160,9 +165,13 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
     @Override
     public void onItemClick(View view, int position) {
         if (view.getId() == R.id.inventorySelection) {
-            mActivity.pushFragment(new SelectInventoryFragment(), R.id.loginContainer, getString(R.string.selectInventory), true,true);
+            Bundle bundle = new Bundle();
+            SelectInventoryFragment selectInventoryFragment = new SelectInventoryFragment();
+            bundle.putParcelable("InProgressInventoryResult", inProgressInventoryResults);
+            selectInventoryFragment.setArguments(bundle);
+            mActivity.pushFragment(selectInventoryFragment, R.id.loginContainer, getString(R.string.selectInventory), true, true);
         } else if (view.getId() == R.id.inventoryLocation) {
-            mActivity.pushFragment(new InventoryLocationFragment(), R.id.loginContainer, getString(R.string.inventoryLocation), true,true);
+            mActivity.pushFragment(new InventoryLocationFragment(), R.id.loginContainer, getString(R.string.inventoryLocation), true, true);
         }
     }
 }

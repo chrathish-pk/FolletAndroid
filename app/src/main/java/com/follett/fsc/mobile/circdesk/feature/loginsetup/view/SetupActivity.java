@@ -16,6 +16,7 @@ import com.follett.fsc.mobile.circdesk.feature.loginsetup.viewmodel.LoginViewMod
 public class SetupActivity extends BaseActivity<LoginViewModel> implements NavigationListener {
 
     public MutableLiveData<String> selectedDateLiveData = new MutableLiveData<>();
+    public MutableLiveData<String> selectedInventoryNameLiveData = new MutableLiveData<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
