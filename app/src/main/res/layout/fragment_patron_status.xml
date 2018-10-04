@@ -77,50 +77,72 @@
                         android:layout_centerVertical="true"
                         app:imageUrl="@{patronInfo.pictureName}" />
 
-                    <LinearLayout
-                        android:id="@+id/patronLayout"
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/patronImg"
-                        android:orientation="vertical">
+                        android:layout_toRightOf="@+id/patronImg">
+
+                        <LinearLayout
+                            android:id="@+id/patronLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="@dimen/layout_size_5"
+                            android:layout_toLeftOf="@+id/closeBtn"
+                            android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/patronName"
+                                android:id="@+id/patronName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_regular"
+                                android:text="@{patronInfo.lastName + ',' + patronInfo.firstName}"
+                                android:textColor="@color/blueLabel"
+                                android:textSize="@dimen/text_size_16sp"
+                                />
+
+                            <TextView
+                                android:id="@+id/patronType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_regular"
+                                android:textSize="@dimen/text_size_18sp" />
+
+                            <TextView
+                                android:id="@+id/patronBarcodeID"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_regular"
+                                android:text="@{patronInfo.barcode}"
+                                android:textSize="@dimen/text_size_18sp" />
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/closeBtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/opensans_regular"
-                            android:text="@{patronInfo.lastName + ',' + patronInfo.firstName}"
-                            android:textColor="@color/blueLabel"
-                            android:textSize="@dimen/text_size_16sp"
-                             />
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="10dp"
+                            android:src="@drawable/close" />
 
-                        <TextView
-                            android:id="@+id/patronType"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/opensans_regular"
-                            android:textSize="@dimen/text_size_18sp" />
+                        <ImageView
+                            android:id="@+id/notes"
+                            android:layout_width="20dp"
+                            android:layout_height="26dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_below="@+id/closeBtn"
+                            android:layout_marginBottom="@dimen/layout_size_15"
+                            android:layout_marginRight="@dimen/layout_size_5"
+                            android:layout_marginTop="@dimen/layout_size_20"
+                            android:src="@drawable/note_icon"
+                            android:visibility="@{patronInfo.notes != null &amp;&amp; patronInfo.notes.size() != 0 ? View.VISIBLE : View.GONE}"
+                            />
 
-                        <TextView
-                            android:id="@+id/patronBarcodeID"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/opensans_regular"
-                            android:text="@{patronInfo.barcode}"
-                            android:textSize="@dimen/text_size_18sp" />
+                    </RelativeLayout>
 
-                    </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/closeBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
-                        android:src="@drawable/close" />
 
                 </RelativeLayout>
 

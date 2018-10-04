@@ -63,9 +63,11 @@ public class DatePickerFragment extends DialogFragment implements View.OnClickLi
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.ok) {
-            AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_SEEN_DATE, formattedDate);
-            AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_SEEN_FORMAT_DATE, AppUtils.getInstance().getFormatDate(formattedDate));
-            ((SetupActivity)getActivity()).selectedDateLiveData.postValue(formattedDate);
+            if (formattedDate != null) {
+                AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_SEEN_DATE, formattedDate);
+                AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_SEEN_FORMAT_DATE, AppUtils.getInstance().getFormatDate(formattedDate));
+                ((SetupActivity) getActivity()).selectedDateLiveData.postValue(formattedDate);
+            }
             dismiss();
         } else if (v.getId() == R.id.cancel) {
             dismiss();

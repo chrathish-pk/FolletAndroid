@@ -62,7 +62,6 @@ public class AppRemoteRepository<T> {
 
     private static APIInterface apiService;
     public static AppRemoteRepository mInstance;
-
     private int mCount = 0;
 
     public static AppRemoteRepository getInstance() {

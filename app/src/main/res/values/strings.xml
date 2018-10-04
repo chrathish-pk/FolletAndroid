@@ -157,6 +157,7 @@
     <string name="on_hold_label">Hold</string>
     <string name="fine_label">Fines</string>
     <string name="overdue_label">Overdue</string>
+    <string name="notes">Please Note</string>
 
     <!-- Info Screen-->
     <string name="info">Follett Destiny Version %1$s</string>

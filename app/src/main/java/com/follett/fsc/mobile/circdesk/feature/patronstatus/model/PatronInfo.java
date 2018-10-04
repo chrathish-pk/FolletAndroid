@@ -19,7 +19,7 @@ public class PatronInfo implements Parcelable {
     
     @SerializedName("assetCheckOuts") @Expose private List<AssetCheckOut> assetCheckOuts = null;
     @SerializedName("patronList") @Expose private List<PatronList> patronList = null;
-    @SerializedName("notes") @Expose private List<Object> notes = null;
+    @SerializedName("notes") @Expose private List<Note> notes = null;
     @SerializedName("success") @Expose private Boolean success;
     @SerializedName("textbookCheckOuts") @Expose private List<Object> textbookCheckOuts = null;
     @SerializedName("pictureName") @Expose private Object pictureName;
@@ -31,7 +31,7 @@ public class PatronInfo implements Parcelable {
     @SerializedName("firstName") @Expose private String firstName;
     @SerializedName("checkouts") @Expose private List<Checkout> checkouts = null;
     
-    public PatronInfo(List<AssetCheckOut> assetCheckOuts, List<PatronList> patronList, List<Object> notes, Boolean success, List<Object> textbookCheckOuts,
+    public PatronInfo(List<AssetCheckOut> assetCheckOuts, List<PatronList> patronList, List<Note> notes, Boolean success, List<Object> textbookCheckOuts,
             Object pictureName, String barcode, List<Hold> holds, String fineTotalString, List<Fine> fines, String lastName, String firstName, List<Checkout>
             checkouts) {
         this.assetCheckOuts = assetCheckOuts;
@@ -89,11 +89,11 @@ public class PatronInfo implements Parcelable {
         this.patronList = patronList;
     }
     
-    public List<Object> getNotes() {
+    public List<Note> getNotes() {
         return notes;
     }
     
-    public void setNotes(List<Object> notes) {
+    public void setNotes(List<Note> notes) {
         this.notes = notes;
     }
     
@@ -186,6 +186,7 @@ public class PatronInfo implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
     
         parcel.writeTypedList(assetCheckOuts);
+        parcel.writeTypedList(patronList);
         if (success) parcel.writeByte((byte) (success == null ? 0 : 1));
         else parcel.writeByte((byte) (success == null ? 0 : 2));
         parcel.writeString(barcode);

@@ -210,7 +210,7 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.getFragments().get(fm.getFragments().size() - 1);
         if (fm.getFragments().size() == 1 || fragment.getTag().contains(".")) {
-            setTitleBar("Home");
+            setTitleBar(getString(R.string.home));
             baseBinding.backBtn.setVisibility(View.GONE);
         } else {
             setTitleBar(fragment.getTag());
