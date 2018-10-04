@@ -6,6 +6,12 @@
 
 package com.follett.fsc.mobile.circdesk.feature.iteminfo.view;
 
+import android.arch.lifecycle.Observer;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.View;
+
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
@@ -13,12 +19,6 @@ import com.follett.fsc.mobile.circdesk.databinding.ActivityTitleDetailsBinding;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.viewmodel.AdditionalInfoViewModel;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
-
-import android.arch.lifecycle.Observer;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.View;
 
 public class TitleInfoActivity extends BaseActivity<AdditionalInfoViewModel> implements View.OnClickListener, AdditionalInfoListener {
 
@@ -91,6 +91,7 @@ public class TitleInfoActivity extends BaseActivity<AdditionalInfoViewModel> imp
                     String siteText = String.format(getApplicationContext().getResources().getString(R.string.site_info),
                             AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SITE_NAME));
                     activityTitleDetailsBinding.itemAvailabilitySite.setText(siteText);
+                    activityTitleDetailsBinding.itemRatingBar.setRating(Float.parseFloat(titleDetails.getReviewInfoRecord().getReviewAverage()));
                     activityTitleDetailsBinding.setTitleDetailsViewModel(additionalInfoDetails);
                 }
             }

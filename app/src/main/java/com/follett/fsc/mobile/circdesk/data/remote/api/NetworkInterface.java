@@ -11,4 +11,6 @@ public interface NetworkInterface<T> {
     void onCallCompleted(T model);
 
     void onCallFailed(Throwable throwable, String errorMessage);
+    
+    void onRefreshToken(int requestCode);
 }

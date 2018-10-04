@@ -52,8 +52,6 @@ public class InventoryViewSelectionFragment extends BaseFragment<InventoryViewSe
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         inventoryViewSelectionBinding = getViewDataBinding();
-
-        mActivity.baseBinding.backBtn.setOnClickListener(this);
     }
 
 

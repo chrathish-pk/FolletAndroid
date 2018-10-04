@@ -6,17 +6,6 @@
 
 package com.follett.fsc.mobile.circdesk.feature.loginsetup.view;
 
-import com.follett.fsc.mobile.circdesk.BR;
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
-import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
-import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
-import com.follett.fsc.mobile.circdesk.databinding.FragmentLoginLayoutBinding;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.viewmodel.LoginViewModel;
-import com.follett.fsc.mobile.circdesk.utils.AppUtils;
-import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-
 import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
@@ -31,7 +20,20 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
+import com.follett.fsc.mobile.circdesk.BR;
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
+import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.data.remote.apicommon.Status;
+import com.follett.fsc.mobile.circdesk.databinding.FragmentLoginLayoutBinding;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.viewmodel.LoginViewModel;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
+import com.follett.fsc.mobile.circdesk.utils.FollettLog;
+
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SECRET_PASS;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SECRET_USERNAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
 
 public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, LoginViewModel> implements CTAButtonListener
@@ -122,12 +124,17 @@ public class LoginFragment extends BaseFragment<FragmentLoginLayoutBinding, Logi
                         .showNoInternetAlertDialog(getBaseActivity());
                 return;
             }
-
+    
+            String username = AppUtils.getInstance()
+                    .getEditTextValue(mLayoutBinding.useridEditText);
+            String password = AppUtils.getInstance()
+                    .getEditTextValue(mLayoutBinding.passwordEditText);
+    
+            AppSharedPreferences.getInstance().setString(KEY_SECRET_USERNAME, username);
+            AppSharedPreferences.getInstance().setString(KEY_SECRET_PASS, password);
             mLoginViewModel.getLoginResults(AppSharedPreferences.getInstance()
                     .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
-                    .getString(KEY_SITE_SHORT_NAME), AppUtils.getInstance()
-                    .getEditTextValue(mLayoutBinding.useridEditText), AppUtils.getInstance()
-                    .getEditTextValue(mLayoutBinding.passwordEditText));
+                    .getString(KEY_SITE_SHORT_NAME),username , password);
         }
         }
     }

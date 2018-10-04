@@ -13,12 +13,13 @@ import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentPatronStatusBinding;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.view.TitleInfoActivity;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.view.UpdateItemUIListener;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.NavigationListener;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.Permissions;
-import com.follett.fsc.mobile.circdesk.feature.patronstatus.viewmodel.PatronStatusViewModel;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.NavigationListener;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.CustomCheckoutItem;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.Note;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronList;
+import com.follett.fsc.mobile.circdesk.feature.patronstatus.viewmodel.PatronStatusViewModel;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.google.gson.Gson;
 
@@ -43,8 +44,6 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
 
     private PatronInfo mPatronInfo;
 
-    private PatronListFragment mPatronListFragment;
-
     @Override
     public int getLayoutId() {
         return R.layout.fragment_patron_status;
@@ -65,10 +64,6 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mBinding = getViewDataBinding();
-        mActivity.setTitleBar(getString(R.string.patron_status_label));
-        mActivity.setBackBtnVisible();
-        mActivity.baseBinding.backBtn.setOnClickListener(this);
-
         showItemCheckedoutView();
         inItView();
     }
@@ -76,7 +71,7 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
     private void showItemCheckedoutView() {
         String permissionValue = AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_PERMISSIONS);
         Permissions permissions = new Gson().fromJson(permissionValue, Permissions.class);
-        if (Boolean.parseBoolean(permissions.getCanViewItemsOutAsset()) || Boolean.parseBoolean(permissions.getCanViewItemsOutLibrary()))
+        if (permissions != null && Boolean.parseBoolean(permissions.getCanViewItemsOutAsset()) || permissions != null && Boolean.parseBoolean(permissions.getCanViewItemsOutLibrary()))
             mBinding.itemRelativeLayout.setVisibility(View.VISIBLE);
         else
             mBinding.itemRelativeLayout.setVisibility(View.GONE);
@@ -138,6 +133,8 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
                     .hideKeyBoard(mActivity, mBinding.patronEntryIncludeLayout.patronEntry);
             mActivity.baseBinding.backBtn.setVisibility(View.GONE);
             mActivity.onBackPressed();
+        } else if (v == mBinding.notes) {
+            onNavigation(mPatronInfo, 6);       // Patron notes
         }
     }
 
@@ -185,14 +182,12 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
         } else {
             mBinding.titleHoldTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.right_arrow, 0);
         }
-        if(patronInfo.getCheckouts().isEmpty())
-        {
+        if (patronInfo.getCheckouts().isEmpty()) {
             mBinding.itemTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         } else {
             mBinding.itemTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.right_arrow, 0);
         }
-        if(patronInfo.getFines().isEmpty())
-        {
+        if (patronInfo.getFines().isEmpty()) {
             mBinding.fineTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         } else {
             mBinding.fineTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.right_arrow, 0);
@@ -214,6 +209,7 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
         mBinding.closeBtn.setOnClickListener(this);
         mBinding.holdRelativeLayout.setOnClickListener(this);
         mBinding.fineRelativeLayout.setOnClickListener(this);
+        mBinding.notes.setOnClickListener(this);
     }
 
     @Override
@@ -242,9 +238,20 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
             navigateToFineList((PatronInfo) model, true, getString(R.string.fine_label));
         } else if (position == 5) {
             navigateToTitleDetail((CustomCheckoutItem) model);
+        } else if (position == 6 && model != null) {
+            final List<Note> notes = ((PatronInfo) model).getNotes();
+            if (!notes.isEmpty()) {
+                navigateToPatronNotes(notes);
+            }
         }
     }
-
+    
+    private void navigateToPatronNotes(List<Note> notes) {
+        ArrayList<Note> noteArrayList = new ArrayList<>();
+        noteArrayList.addAll(notes);
+        mActivity.pushFragment(PatronNotesFragment.newInstance(noteArrayList), R.id.loginContainer, getString(R.string.notes), true, true);
+    }
+    
     private void navigateToTitleDetail(CustomCheckoutItem checkoutItem) {
         Activity activity = getBaseActivity();
         if (activity != null && checkoutItem != null) {
@@ -260,23 +267,23 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
     }
 
     private void navigateToPatronList(ArrayList<PatronList> patronList, boolean isAddToBackStack) {
-        mPatronListFragment = PatronListFragment.newInstance(patronList);
-        setToolBarTitle(getString(R.string.selectPatron));
-        mActivity.replaceFragment(mPatronListFragment, R.id.loginContainer, "PatronListFrgment", true);
+        PatronListFragment mPatronListFragment = PatronListFragment.newInstance(patronList);
+        // setToolBarTitle(getString(R.string.selectPatron));
+        mActivity.replaceFragment(mPatronListFragment, R.id.loginContainer, getString(R.string.patron_status_label), true, true);
     }
 
     private void navigateToPatronCheckout(PatronInfo patronInfo, boolean isAddToBackStack, String title) {
         PatronItemCheckoutFragment patronItemCheckoutFragment = PatronItemCheckoutFragment.newInstance(patronInfo, title);
-        mActivity.setBackBtnVisible();
-        setToolBarTitle(title);
-        mActivity.pushFragment(patronItemCheckoutFragment, R.id.loginContainer, "PatronItemCheckoutFragment", true);
+        //mActivity.setBackBtnVisible();
+        //setToolBarTitle(title);
+        mActivity.pushFragment(patronItemCheckoutFragment, R.id.loginContainer, getString(R.string.item_checkout_label), true, true);
     }
 
     private void navigateToFineList(PatronInfo patronInfo, boolean isAddToBackStack, String title) {
         PatronFineListFragment patronFineListFragment = PatronFineListFragment.newInstance(patronInfo);
-        mActivity.setBackBtnVisible();
-        setToolBarTitle(title);
-        mActivity.pushFragment(patronFineListFragment, R.id.loginContainer, "PatronFineListFragment", true);
+        //mActivity.setBackBtnVisible();
+        //setToolBarTitle(title);
+        mActivity.pushFragment(patronFineListFragment, R.id.loginContainer, getString(R.string.fine_label), true, true);
     }
 
 
@@ -285,4 +292,5 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
         mPatronInfo = (PatronInfo) value;
         updateUI(mPatronInfo);
     }
-}
+
+    }

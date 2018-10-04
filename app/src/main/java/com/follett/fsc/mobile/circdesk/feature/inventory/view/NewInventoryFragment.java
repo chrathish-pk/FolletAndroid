@@ -9,6 +9,7 @@ package com.follett.fsc.mobile.circdesk.feature.inventory.view;
 import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.follett.fsc.mobile.circdesk.BR;
@@ -16,7 +17,6 @@ import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
-import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentNewInventoryBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventoryResult;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.NewInventoryViewModel;
@@ -25,6 +25,7 @@ import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBinding, NewInventoryViewModel> implements ItemClickListener {
     private NewInventoryViewModel newInventoryViewModel;
     private FragmentNewInventoryBinding fragmentNewInventoryBinding;
+    private NewInventoryListAdapter newInventoryListAdapter;
 
     @Override
     public int getLayoutId() {
@@ -50,20 +51,6 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
         super.onActivityCreated(savedInstanceState);
         fragmentNewInventoryBinding = getViewDataBinding();
 
-        if (AppRemoteRepository.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED)) {
-            fragmentNewInventoryBinding.callNumberLayout.setVisibility(View.VISIBLE);
-            fragmentNewInventoryBinding.circulationTypesLayout.setVisibility(View.VISIBLE);
-            fragmentNewInventoryBinding.libExcludeItemsLayout.setVisibility(View.VISIBLE);
-        } else {
-            fragmentNewInventoryBinding.limitedToLayout.setVisibility(View.VISIBLE);
-            fragmentNewInventoryBinding.resourceTypeLayout.setVisibility(View.VISIBLE);
-            fragmentNewInventoryBinding.purchasePriceLayout.setVisibility(View.VISIBLE);
-            fragmentNewInventoryBinding.includeItemsLayout.setVisibility(View.VISIBLE);
-            fragmentNewInventoryBinding.checkoutHandlingLayout.setVisibility(View.VISIBLE);
-            fragmentNewInventoryBinding.excludeItemsLayout.setVisibility(View.VISIBLE);
-            fragmentNewInventoryBinding.mismatchedItemLocationLayout.setVisibility(View.VISIBLE);
-        }
-
         newInventoryViewModel.createInventoryResultMutableLiveData.observeForever(new Observer<CreateInventoryResult>() {
             @Override
             public void onChanged(@Nullable CreateInventoryResult createInventoryResult) {
@@ -71,24 +58,32 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
             }
         });
 
+        fragmentNewInventoryBinding.inventoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        if (AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED))
+            newInventoryListAdapter = new NewInventoryListAdapter(getActivity(), newInventoryViewModel.getNewInventoryDataForLibrary(), this);
+        else
+            newInventoryListAdapter = new NewInventoryListAdapter(getActivity(), newInventoryViewModel.getNewInventoryDataForResource(), this);
+
+        fragmentNewInventoryBinding.inventoryRecyclerView.setAdapter(newInventoryListAdapter);
+
     }
 
     @Override
     public void onItemClick(View view, int position) {
-        switch (view.getId()) {
-            case R.id.callNumberLayout:
-                mActivity.pushFragment(new CallNumbersFragment(), R.id.loginContainer, "CallNumbersFragment", true);
+        switch (position) {
+            case 0:
+                mActivity.pushFragment(new CallNumbersFragment(), R.id.loginContainer, getString(R.string.callNumbers), true, true);
                 break;
-            case R.id.circulationTypesLayout:
-                mActivity.pushFragment(new CirculationTypeFragment(), R.id.loginContainer, "CirculationTypeFragment", true);
+            case 1:
+                mActivity.pushFragment(new CirculationTypeFragment(), R.id.loginContainer, getString(R.string.circulationTypeLabel), true, true);
                 break;
-            case R.id.libExcludeItemsLayout:
-                mActivity.replaceFragment(new SeenOnOrAfterFragment(), R.id.loginContainer, "SeenOnOrAfterFragment", true);
+            case 2:
+                mActivity.replaceFragment(new SeenOnOrAfterFragment(), R.id.loginContainer, getString(R.string.seenOnOrAfter), true, true);
                 break;
-            case R.id.startInventoryBtn:
+            /*case R.id.startInventoryBtn:
                 AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_INVENTORY_NAME, fragmentNewInventoryBinding.newInventoryName.getText().toString().trim());
                 newInventoryViewModel.getCreatedInventory();
-                break;
+                break;*/
         }
     }
 }

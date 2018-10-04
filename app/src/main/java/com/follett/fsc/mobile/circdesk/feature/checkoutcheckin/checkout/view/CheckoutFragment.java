@@ -6,6 +6,13 @@
 
 package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.view;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.view.View;
+
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.AlertDialogListener;
@@ -19,13 +26,6 @@ import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.ScanPatron;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.view.TitleInfoActivity;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.text.TextUtils;
-import android.view.View;
 
 public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, CheckoutViewModel> implements View.OnClickListener, UpdateUIListener, AlertDialogListener {
 
@@ -256,7 +256,7 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
 
     private void navigateToPatronListScreen(ScanPatron scanPatron) {
         CheckoutPatronListFragment checkoutPatronListFragment = CheckoutPatronListFragment.getInstance(scanPatron);
-        mActivity.replaceFragment(checkoutPatronListFragment, R.id.loginContainer, getString(R.string.CheckoutPatronListFragment), true);
+        mActivity.replaceFragment(checkoutPatronListFragment, R.id.loginContainer, getString(R.string.CheckoutPatronListFragment), true,true);
     }
 
     @Override
