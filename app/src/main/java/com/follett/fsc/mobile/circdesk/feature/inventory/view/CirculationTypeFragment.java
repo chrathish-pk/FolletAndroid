@@ -87,5 +87,6 @@ public class CirculationTypeFragment extends BaseFragment<FragmentCirculationtyp
     public void onClick(View v) {
         String circulationTypesJSONString = new Gson().toJson(circTypeRecordList);
         AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_CIRCULATION_TYPE_LIST, circulationTypesJSONString);
+        mActivity.onBackPressed();
     }
 }
