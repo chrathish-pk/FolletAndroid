@@ -16,6 +16,7 @@ import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventoryRe
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InProgressInventoryResults;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
 import com.follett.fsc.mobile.circdesk.feature.inventory.InventorySelectionCriteria;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.Location;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.SubLocation;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.model.ItemDetails;
@@ -57,6 +58,10 @@ public interface APIInterface {
     @JsonAndXmlConverters.Xml
     Observable<SubLocation> getSubLocationList(@HeaderMap Map<String, String> headers, @Query("site") String site, @Query("contextName") String contextName);
 
+    @Headers({"Accept: application/json", "text/xml: gzip"})
+    @GET("/rest/v6/circulation/locationlist")
+    @JsonAndXmlConverters.Xml
+    Observable<Location> getLocationList(@HeaderMap Map<String, String> headers, @Query("site") String site, @Query("contextName") String contextName);
 
     @Headers({"Accept: application/json", "text/xml: gzip"})
     @GET("/rest/v4/district/sites")

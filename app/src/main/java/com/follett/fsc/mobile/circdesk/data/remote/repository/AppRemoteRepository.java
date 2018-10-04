@@ -22,6 +22,7 @@ import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventory;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventoryResult;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InProgressInventoryResults;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.Location;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.SubLocation;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.model.ItemDetails;
@@ -420,6 +421,29 @@ public class AppRemoteRepository<T> {
                 });
 
     }
+
+    public void getLocationList(@Nullable final NetworkInterface networkInterface, Map<String, String> headers, String site, String contextName){
+        apiService.getLocationList(headers,site,contextName)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribeWith(new DisposableObserverWrapper<Location>() {
+                    @Override
+                    protected void onSuccess(Location location) {
+                        onSuccessResult(networkInterface,location);
+                    }
+
+                    @Override
+                    protected void onFailed(Throwable throwable, String errorMessage) {
+                        onFailedResult(networkInterface, throwable, errorMessage);
+                    }
+
+                    @Override
+                    protected void onRefreshToken() {
+
+                    }
+                });
+    }
+
 
 
     public void createInventory(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, CreateInventory createInventory) {

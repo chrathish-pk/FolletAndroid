@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="LocationList"
+            type="com.follett.fsc.mobile.circdesk.feature.inventory.model.LocationList" />
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/inventoryLocationListLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/inventoryLocationListName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:text="@{LocationList.name}"
+            android:fontFamily="@font/opensans_regular"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            />
+
+        <CheckBox
+            android:id="@+id/inventoryLocationListCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="10dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/inventoryLocationListCheckbox"
+            android:layout_marginTop="10dp"
+            android:background="@color/editTextBorderColor" />
+
+    </RelativeLayout>
+
+</layout>
