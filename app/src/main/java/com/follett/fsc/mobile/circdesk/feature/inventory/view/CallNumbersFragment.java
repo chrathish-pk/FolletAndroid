@@ -57,6 +57,7 @@ public class CallNumbersFragment extends BaseFragment<FragmentCallNumbersExclude
         if (v.getId() == R.id.backBtn) {
             AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_CALL_NUMBER_FROM, fragmentCallNumbersExcludeItemsBinding.callFromEdittext.getText().toString());
             AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_CALL_NUMBER_TO, fragmentCallNumbersExcludeItemsBinding.callToEdittext.getText().toString());
+//            ((SetupActivity) getActivity()).selectedData.postValue(true);
             mActivity.onBackPressed();
         }
     }
