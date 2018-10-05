@@ -6,12 +6,6 @@
 
 package com.follett.fsc.mobile.circdesk.feature.inventory.view;
 
-import android.app.Activity;
-import android.arch.lifecycle.Observer;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.View;
-
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
@@ -23,10 +17,18 @@ import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.UpdateUIListener;
 import com.follett.fsc.mobile.circdesk.feature.inventory.InventoryViewSelectionFragment;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InProgressInventoryResults;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryScan;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.InventoryViewModel;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
+
+import android.app.Activity;
+import android.arch.lifecycle.Observer;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.view.View;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_IS_LIBRARY_SELECTED;
 
@@ -57,17 +59,23 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         fragmentInventoryBinding = getViewDataBinding();
         initViews();
-        inventoryViewModel.getInProgressInventoryResults();
     }
 
     private void initViews() {
         final Activity activity = getBaseActivity();
         if (activity == null) {
             return;
+        }
+    
+        if (AppRemoteRepository.getInstance()
+                .getBoolean(KEY_IS_LIBRARY_SELECTED)) {
+            isInventoryLibrary(true);
+        } else {
+            isInventoryLibrary(false);
         }
 
         fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setOnClickListener(this);
@@ -88,25 +96,30 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                 inventoryViewModel.getInventoryDetails();
             }
         });
+        fragmentInventoryBinding.patronEntryIncludeLayout.patronGoBtn.setOnClickListener(this);
+        inventoryViewModel.inventoryScanMutableLiveData.observe(this, new Observer<InventoryScan>() {
+            @Override
+            public void onChanged(@Nullable InventoryScan inventoryScan) {
+                fragmentInventoryBinding.setScan(inventoryScan);
+            }
+        });
+        inventoryViewModel.barCodeNotFound.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                AppUtils.getInstance()
+                        .showAlertDialog(activity, getString(R.string.not_found_label), String.valueOf(s));
+            }
+        });
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.libraryBtn:
-                fragmentInventoryBinding.inventoryLocation.setVisibility(View.GONE);
-                fragmentInventoryBinding.inventoryLocationBar.setVisibility(View.GONE);
-                AppRemoteRepository.getInstance().setBoolean(KEY_IS_LIBRARY_SELECTED, true);
-                AppUtils.getInstance().updateLibResBg(mActivity,fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn, fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn);
-                inventoryViewModel.getInProgressInventoryResults();
+                isInventoryLibrary(true);
                 break;
             case R.id.resourceBtn:
-                fragmentInventoryBinding.inventoryLocation.setVisibility(View.VISIBLE);
-                fragmentInventoryBinding.inventoryLocationBar.setVisibility(View.VISIBLE);
-                AppRemoteRepository.getInstance().setBoolean(KEY_IS_LIBRARY_SELECTED, false);
-                AppUtils.getInstance().updateLibResBg(mActivity,fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn, fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn);
-
-                inventoryViewModel.getInProgressInventoryResults();
+                isInventoryLibrary(false);
                 break;
             case R.id.finalizeInventoryBtn:
               /*  DialogFragment fragment = new FinalizePopupFragment();
@@ -118,12 +131,38 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
             case R.id.inventoryViewSelectionsBtn:
                 mActivity.pushFragment(new InventoryViewSelectionFragment(), R.id.loginContainer, getString(R.string.inventorySelections), true, true);
                 break;
+            case R.id.patronGoBtn:
+                inventoryViewModel.inventoryScan(AppUtils.getInstance().getEditTextValue(fragmentInventoryBinding.patronEntryIncludeLayout.patronEntry));
+                break;
             default:
                 break;
         }
     }
-
-
+    
+    private void isInventoryLibrary(boolean isInventoryLibrary) {
+        
+        if (isInventoryLibrary) {
+            fragmentInventoryBinding.inventoryLocation.setVisibility(View.GONE);
+            fragmentInventoryBinding.inventoryLocationBar.setVisibility(View.GONE);
+        } else {
+            fragmentInventoryBinding.inventoryLocation.setVisibility(View.VISIBLE);
+            fragmentInventoryBinding.inventoryLocationBar.setVisibility(View.VISIBLE);
+        }
+        
+        fragmentInventoryBinding.patronEntryIncludeLayout.patronEntry.setText("");
+        fragmentInventoryBinding.inventoryScan.setVisibility(View.GONE);
+        AppRemoteRepository.getInstance()
+                .setBoolean(KEY_IS_LIBRARY_SELECTED, isInventoryLibrary);
+        AppUtils.getInstance()
+                .updateLibResBg(mActivity, fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn, fragmentInventoryBinding
+                        .libraryResourceIncludeLayout.resourceBtn);
+        inventoryViewModel.getInProgressInventoryResults();
+        
+        if (!isInventoryLibrary) {
+            inventoryViewModel.getLocationList();
+        }
+    }
+    
     @Override
     public void updateUI(final Object value) {
 

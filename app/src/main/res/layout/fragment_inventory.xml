@@ -9,7 +9,11 @@
 
     <data>
 
-        <import type="android.view.View" />
+        <import type="android.view.View"/>
+
+        <variable
+            name="scan"
+            type="com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryScan"/>
 
         <variable
             name="inventoryViewModel"
@@ -73,9 +77,9 @@
                     android:text="Tablets-Started 02/02/2018"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_16sp"
-                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@+id/inventoryBar" />
 
                 <View
@@ -96,7 +100,70 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/inventoryLocationBar" />
+                    app:layout_constraintTop_toBottomOf="@+id/inventoryLocationBar"/>
+
+                <RelativeLayout
+                    android:id="@+id/inventory_scan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="40dp"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="20dp"
+                    android:visibility="@{safeUnbox(scan != null &amp;&amp; scan.success) ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintTop_toBottomOf="@+id/patronEntryIncludeLayout">
+
+                    <ImageView
+                        android:id="@+id/tickicon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginTop="@dimen/layout_size_7"
+                        android:src="@drawable/tick_icon"/>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/layout_size_7"
+                        android:layout_toRightOf="@+id/tickicon">
+
+
+                        <TextView
+                            android:id="@+id/lastItemTextView"
+                            style="@style/Inventory_Scan_TextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/last_item_label"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/title"
+                            style="@style/Inventory_Scan_TextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/lastItemTextView"
+                            android:text="@{scan.info.title}"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/barcode"
+                            style="@style/Inventory_Scan_TextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/title"
+                            android:text="@{`Copy: ` + scan.info.barcode}"/>
+
+
+                        <TextView
+                            android:id="@+id/callNumber"
+                            style="@style/Inventory_Scan_TextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/barcode"
+                            android:text="FIC DAB"/>
+                    </RelativeLayout>
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/inventoryCompletedStatus"
@@ -109,7 +176,7 @@
                     android:textColor="@color/blueLabel"
                     android:textSize="@dimen/text_size_16sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/patronEntryIncludeLayout" />
+                    app:layout_constraintTop_toBottomOf="@+id/inventory_scan"/>
 
                 <ImageView
                     android:id="@+id/inventoryRefreshBtn"
@@ -121,7 +188,7 @@
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/patronEntryIncludeLayout" />
+                    app:layout_constraintTop_toBottomOf="@+id/inventory_scan"/>
 
                 <TextView
                     android:id="@+id/inventoryViewSelectionsBtn"
@@ -137,7 +204,7 @@
                     android:textSize="@dimen/text_size_14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/inventoryCompletedStatus" />
+                    app:layout_constraintTop_toBottomOf="@+id/inventoryCompletedStatus"/>
 
                 <TextView
                     android:id="@+id/finalizeInventoryBtn"
@@ -154,7 +221,7 @@
                     android:textSize="@dimen/text_size_14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/inventoryViewSelectionsBtn" />
+                    app:layout_constraintTop_toBottomOf="@+id/inventoryViewSelectionsBtn"/>
 
             </android.support.constraint.ConstraintLayout>
 

@@ -81,4 +81,9 @@
         </item>
     </style>
 
+    <style name="Inventory_Scan_TextStyle">
+        <item name="android:fontFamily">@font/opensans_regular</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">@dimen/text_size_16sp</item>
+    </style>
 </resources>

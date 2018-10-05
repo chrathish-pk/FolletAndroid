@@ -89,7 +89,7 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
                     @Override
                     public void onChanged(@Nullable Object o) {
                         AppUtils.getInstance()
-                                .showAlertDialog(activity, String.valueOf(o));
+                                .showAlertDialog(activity, null, String.valueOf(o));
                     }
                 });
     }
