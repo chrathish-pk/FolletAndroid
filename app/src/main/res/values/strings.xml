@@ -183,6 +183,10 @@
     <string name="inventorySelections">Inventory Selections</string>
     <string name="seenOnOrAfter">Seen On Or After</string>
     <string name="newInventoryTitle">New Inventory</string>
+    <string name="inventory_error">You must enter a barcode.</string>
+    <string name="last_item_label">Last Item Scanned:</string>
+    <string name="not_found_label">Not Found</string>
+
 
     <!-- Inventory -->
     <string name="finalize_inventory">Finalize Inventory</string>
@@ -206,7 +210,6 @@
     <string name="excludeItems">Exclude Items Seen On or After</string>
     <string name="mismatchedItemLocationLabel">Mismatched Item Location</string>
     <string name="startInventory">Start Inventory</string>
-    <string name="scanLocation">SCAN LOCATION</string>
     <string name="inventoryLocation">Inventory Location</string>
     <string name="circulationTypeLabel">Circulation Types</string>
     <string name="subLocationLabel">Sub Location</string>

@@ -51,7 +51,9 @@ public class AppSharedPreferences {
     public static final String KEY_PATRON_ID = "patronID";
     public static final String FOLLETT_API_VERSION = "apiversion";
     public static final String KEY_IS_LIBRARY_SELECTED = "isLibrarySelected";
+    public static final String KEY_IS_COPY_ID = "copyId";
     public static final String KEY_PERMISSIONS = "permissions";
+    public static final String SCANNING_LOCATION_ID = "scanningLocationID";
     public static final String KEY_COLLECTION_TYPE = "collectionType";
     public static final String KEY_PROMPT = "prompt";
     public static final String KEY_VALUES = "values";
@@ -99,7 +101,7 @@ public class AppSharedPreferences {
     }
 
     public int getInt(String key) {
-        int defaultIntValue = -1;
+        int defaultIntValue = 0;
         return prefs.getInt(key, defaultIntValue);
     }
 

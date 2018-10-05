@@ -6,8 +6,6 @@
 
 package com.follett.fsc.mobile.circdesk.data.remote.repository;
 
-import android.support.annotation.Nullable;
-
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.api.FollettAPIManager;
@@ -22,6 +20,7 @@ import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventory;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventoryResult;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InProgressInventoryResults;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryScan;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.Location;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.SubLocation;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
@@ -32,6 +31,8 @@ import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.SiteResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.Version;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 import com.google.gson.Gson;
+
+import android.support.annotation.Nullable;
 
 import java.util.Map;
 
@@ -53,6 +54,7 @@ import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiCo
 import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.GET_SELECTED_INVENTORY_REQUEST_CODE;
 import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.INPROGRESS_INVENTORY_REQUEST_CODE;
 import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.INVENTORY_DETAILS_REQUEST_CODE;
+import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.INVENTORY_SCAN_REQUEST_CODE;
 import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.ITEM_STATUS_REQUEST_CODE;
 import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.PATRON_STATUS_REQUEST_CODE;
 import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.SCAN_PATRON_REQUEST_CODE;
@@ -467,6 +469,29 @@ public class AppRemoteRepository<T> {
                     @Override
                     protected void onRefreshToken() {
                         onRefreshSession(networkInterface, CREATE_INVENTORY_REQUEST_CODE);
+                    }
+                });
+    }
+    
+    public void getInventoryScan(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, int
+            collectionType, int partialID, String barcode, int scanningLocationID, int copyId, boolean checkShelfOrder) {
+        
+        apiService.getInventoryScan(headers, contextName, site, collectionType, partialID, barcode, scanningLocationID, copyId, checkShelfOrder)
+                .subscribeWith(new DisposableObserverWrapper<InventoryScan>() {
+                    @Override
+                    protected void onSuccess(InventoryScan inventoryScan) {
+                        onSuccessResult(networkInterface, inventoryScan);
+                    }
+                    
+                    @Override
+                    protected void onFailed(Throwable throwable, String errorMessage) {
+                        onFailedResult(networkInterface, throwable, errorMessage);
+                        
+                    }
+                    
+                    @Override
+                    protected void onRefreshToken() {
+                        onRefreshSession(networkInterface, INVENTORY_SCAN_REQUEST_CODE);
                     }
                 });
     }
