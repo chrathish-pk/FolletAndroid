@@ -17,6 +17,7 @@ public class SetupActivity extends BaseActivity<LoginViewModel> implements Navig
 
     public MutableLiveData<String> selectedDateLiveData = new MutableLiveData<>();
     public MutableLiveData<String> selectedInventoryNameLiveData = new MutableLiveData<>();
+    public MutableLiveData<Boolean> selectedData = new MutableLiveData<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

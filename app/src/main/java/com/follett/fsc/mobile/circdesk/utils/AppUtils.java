@@ -43,6 +43,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_IS_LIBRARY_SELECTED;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_ID;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_NAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
@@ -281,15 +282,15 @@ public class AppUtils {
             }
             if (context != null) {
                 TextView messageView = alertDialog.findViewById(android.R.id.message);
-                messageView.setTextColor(ContextCompat.getColor(context,R.color.editTextBgColor));
+                messageView.setTextColor(ContextCompat.getColor(context, R.color.editTextBgColor));
 
                 Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
                 Button negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
                 Button neutralButton = alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL);
 
-                positiveButton.setTextColor(ContextCompat.getColor(context,R.color.blueLabel));
-                negativeButton.setTextColor(ContextCompat.getColor(context,R.color.blueLabel));
-                neutralButton.setTextColor(ContextCompat.getColor(context,R.color.blueLabel));
+                positiveButton.setTextColor(ContextCompat.getColor(context, R.color.blueLabel));
+                negativeButton.setTextColor(ContextCompat.getColor(context, R.color.blueLabel));
+                neutralButton.setTextColor(ContextCompat.getColor(context, R.color.blueLabel));
             }
 
         } catch (Exception e) {
@@ -333,4 +334,19 @@ public class AppUtils {
 
         return null;
     }
+
+    public void updateLibResBg(Context context, TextView lib, TextView res) {
+        if (AppSharedPreferences.getInstance().getBoolean(KEY_IS_LIBRARY_SELECTED)) {
+            lib.setBackgroundColor(ContextCompat.getColor(context, R.color.blueLabel));
+            lib.setTextColor(ContextCompat.getColor(context, R.color.white));
+            res.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
+            res.setTextColor(ContextCompat.getColor(context, R.color.blueLabel));
+        } else {
+            res.setBackgroundColor(ContextCompat.getColor(context, R.color.blueLabel));
+            res.setTextColor(ContextCompat.getColor(context, R.color.white));
+            lib.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
+            lib.setTextColor(ContextCompat.getColor(context, R.color.blueLabel));
+        }
+    }
+
 }

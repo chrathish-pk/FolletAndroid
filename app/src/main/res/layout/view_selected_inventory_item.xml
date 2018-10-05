@@ -1,54 +1,50 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ /*
   ~  * Copyright (c) 2018 Follett. All rights reserved.
   ~  */
   -->
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-
     <data>
 
         <variable
             name="selectedInventorieslData"
-            type="com.follett.fsc.mobile.circdesk.feature.inventory.SelectionCriteriaItemList"/>
+            type="com.follett.fsc.mobile.circdesk.feature.inventory.SelectionCriteriaItemList" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:clickable="true">
+        android:clickable="true"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/prompt"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/layout_size_60"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/opensans_semibold"
             android:gravity="center_vertical"
-            android:padding="@dimen/layout_size_16"
+            android:padding="10dp"
             android:text="@{selectedInventorieslData.prompt}"
             android:textColor="@color/blueLabel"
-            android:textSize="@dimen/text_size_16sp"/>
+            android:textSize="@dimen/text_size_16sp" />
 
         <TextView
             android:id="@+id/values"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/layout_size_60"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/opensans_regular"
             android:gravity="center_vertical"
-            android:padding="@dimen/layout_size_16"
+            android:padding="10dp"
             android:text="@{selectedInventorieslData.values[0]}"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_size_16sp"/>
+            android:textSize="@dimen/text_size_16sp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="5dp"
-            android:background="#D3D3D3	"/>
+            android:background="#D3D3D3	" />
     </LinearLayout>
 
 </layout>

@@ -96,6 +96,14 @@ public class SelectInventoryFragment extends BaseFragment<FragmentInventoryListB
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.newInventoryBtn) {
+
+            AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_CALL_NUMBER_FROM);
+            AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_CALL_NUMBER_TO);
+            AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_CIRCULATION_TYPE_LIST);
+            AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SEEN_FORMAT_DATE);
+            AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SEEN_DATE);
+            AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_INVENTORY_NAME);
+
             mActivity.pushFragment(new NewInventoryFragment(), R.id.loginContainer, getString(R.string.newInventoryTitle), true, true);
         }
     }

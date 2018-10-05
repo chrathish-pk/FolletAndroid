@@ -10,7 +10,6 @@ import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 import com.follett.fsc.mobile.circdesk.BR;
@@ -26,6 +25,7 @@ import com.follett.fsc.mobile.circdesk.feature.inventory.model.InProgressInvento
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.InventoryViewModel;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_IS_LIBRARY_SELECTED;
@@ -79,6 +79,8 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
         fragmentInventoryBinding.patronEntryIncludeLayout.patronEntry.setHint(getString(R.string.enterBarcode));
         fragmentInventoryBinding.patronEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.GONE);
 
+        AppUtils.getInstance().updateLibResBg(mActivity,fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn, fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn);
+
         ((SetupActivity) getActivity()).selectedInventoryNameLiveData.observe(getActivity(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String selectedInventory) {
@@ -94,21 +96,16 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
             case R.id.libraryBtn:
                 fragmentInventoryBinding.inventoryLocation.setVisibility(View.GONE);
                 fragmentInventoryBinding.inventoryLocationBar.setVisibility(View.GONE);
-                fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(mActivity, R.color.blueLabel));
-                fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(mActivity, R.color.white));
-                fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(mActivity, R.color.white));
-                fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(mActivity, R.color.blueLabel));
                 AppRemoteRepository.getInstance().setBoolean(KEY_IS_LIBRARY_SELECTED, true);
+                AppUtils.getInstance().updateLibResBg(mActivity,fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn, fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn);
                 inventoryViewModel.getInProgressInventoryResults();
                 break;
             case R.id.resourceBtn:
                 fragmentInventoryBinding.inventoryLocation.setVisibility(View.VISIBLE);
                 fragmentInventoryBinding.inventoryLocationBar.setVisibility(View.VISIBLE);
-                fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(mActivity, R.color.white));
-                fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(mActivity, R.color.blueLabel));
-                fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(mActivity, R.color.blueLabel));
-                fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(mActivity, R.color.white));
                 AppRemoteRepository.getInstance().setBoolean(KEY_IS_LIBRARY_SELECTED, false);
+                AppUtils.getInstance().updateLibResBg(mActivity,fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn, fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn);
+
                 inventoryViewModel.getInProgressInventoryResults();
                 break;
             case R.id.finalizeInventoryBtn:
