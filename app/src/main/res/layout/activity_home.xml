@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 ~ /*
  ~  * Copyright (c) 2018 Follett. All rights reserved.
  ~  */
@@ -18,8 +17,8 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:stretchColumns="1"
-        android:clickable="true">
+        android:clickable="true"
+        android:stretchColumns="1">
 
 
         <TableRow

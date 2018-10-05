@@ -31,7 +31,9 @@ import java.util.List;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CALL_NUMBER_FROM;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CALL_NUMBER_TO;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CIRCULATION_TYPE_LIST;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SELECTED_SUB_LOCATION;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
 
 public class NewInventoryViewModel extends BaseViewModel implements NetworkInterface {
@@ -47,9 +49,9 @@ public class NewInventoryViewModel extends BaseViewModel implements NetworkInter
     }
 
     public void onItemClicked(View view) {
-        if(view.getId()==R.id.startInventoryBtn) {
+        if (view.getId() == R.id.startInventoryBtn) {
             itemClickListener.onItemClick(view, 100);
-        }else if(view.getId()==R.id.newInventoryCancelBtn){
+        } else if (view.getId() == R.id.newInventoryCancelBtn) {
             itemClickListener.onItemClick(view, 101);
         }
     }
@@ -61,13 +63,22 @@ public class NewInventoryViewModel extends BaseViewModel implements NetworkInter
         else
             newInventoryDataList.add(new NewInventoryData(application.getString(R.string.callNumbersLabel), AppRemoteRepository.getInstance().getString(KEY_CALL_NUMBER_FROM) + " - " + AppRemoteRepository.getInstance().getString(KEY_CALL_NUMBER_TO)));
 
-        newInventoryDataList.add(new NewInventoryData(application.getString(R.string.circulationTypeLabel), "All Ciruculation Types"));
-        newInventoryDataList.add(new NewInventoryData(application.getString(R.string.subLocationLabel), "Sub Location"));
+        if (AppRemoteRepository.getInstance().getString(KEY_CIRCULATION_TYPE_LIST).isEmpty())
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.circulationTypeLabel), "All Ciruculation Types"));
+        else
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.circulationTypeLabel), AppRemoteRepository.getInstance().getString(KEY_CIRCULATION_TYPE_LIST)));
 
-        if (AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SEEN_FORMAT_DATE).isEmpty())
+
+        if (AppRemoteRepository.getInstance().getString(KEY_SELECTED_SUB_LOCATION).isEmpty())
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.subLocationLabel), "Sub Location"));
+        else
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.subLocationLabel), AppRemoteRepository.getInstance().getString(KEY_SELECTED_SUB_LOCATION)));
+
+
+        if (AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SEEN_DATE).isEmpty())
             newInventoryDataList.add(new NewInventoryData(application.getString(R.string.excludeItems), "No exclustions"));
         else
-            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.excludeItems), AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SEEN_FORMAT_DATE)));
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.excludeItems), AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SEEN_DATE)));
         return newInventoryDataList;
     }
 

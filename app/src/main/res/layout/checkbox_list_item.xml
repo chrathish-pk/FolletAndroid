@@ -1,26 +1,26 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ /*
   ~  * Copyright (c) 2018 Follett. All rights reserved.
   ~  */
   -->
 
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="@dimen/layout_size_15">
+    android:layout_margin="@dimen/layout_size_15"
+    android:clickable="true">
 
     <TextView
         android:id="@+id/itemsList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/opensans_regular"
-        android:textSize="@dimen/text_size_16sp"
-        android:textColor="@color/blueLabel"
         android:letterSpacing="0.1"
         android:text="items text"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:textColor="@color/blueLabel"
+        android:textSize="@dimen/text_size_16sp"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <CheckBox
         android:id="@+id/checkbox"

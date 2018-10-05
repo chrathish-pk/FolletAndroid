@@ -1,35 +1,34 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ /*
   ~  * Copyright (c) 2018 Follett. All rights reserved.
   ~  */
   -->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
 
         <variable
             name="checkoutItem"
-            type="com.follett.fsc.mobile.circdesk.feature.patronstatus.model.CustomCheckoutItem"/>
+            type="com.follett.fsc.mobile.circdesk.feature.patronstatus.model.CustomCheckoutItem" />
 
     </data>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/itemCheckoutContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:clickable="true">
 
         <TextView
             android:id="@+id/libraryTitleTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:fontFamily="@font/opensans_semibold"
             android:text="@{checkoutItem.checkoutTitle}"
             android:textColor="@color/colorPrimary"
@@ -37,35 +36,35 @@
             android:visibility="@{checkoutItem.checkoutTitle == null ? View.GONE : View.VISIBLE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/bookNameTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            app:arrowIcon="@{@drawable/right_arrow}"
-            app:checkoutModel="@{checkoutItem}"
+            android:layout_marginEnd="16dp"
+            android:drawablePadding="74dp"
             android:fontFamily="@font/opensans_semibold"
             android:gravity="center_vertical"
             android:text="@{checkoutItem.bookName}"
-            android:drawablePadding="74dp"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_16sp"
+            app:arrowIcon="@{@drawable/right_arrow}"
+            app:checkoutModel="@{checkoutItem}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/libraryTitleTextView"/>
+            app:layout_constraintTop_toBottomOf="@+id/libraryTitleTextView" />
 
 
         <TextView
             android:id="@+id/barCodeTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="114dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
+            android:layout_marginEnd="114dp"
             android:fontFamily="@font/opensans_semibold"
 
             android:gravity="center_vertical"
@@ -75,14 +74,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bookNameTextView"/>
+            app:layout_constraintTop_toBottomOf="@+id/bookNameTextView" />
 
         <TextView
             android:id="@+id/dueTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="114dp"
             android:layout_marginStart="16dp"
+            android:layout_marginEnd="114dp"
             android:fontFamily="@font/opensans_semibold"
             android:gravity="center_vertical"
             android:text="@{@string/due_label(checkoutItem.dueDate)}"
@@ -91,7 +90,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/barCodeTextView"/>
+            app:layout_constraintTop_toBottomOf="@+id/barCodeTextView" />
 
         <View
             android:layout_width="match_parent"
@@ -101,7 +100,7 @@
             android:background="@color/editTextBorderColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dueTextView"/>
+            app:layout_constraintTop_toBottomOf="@+id/dueTextView" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>

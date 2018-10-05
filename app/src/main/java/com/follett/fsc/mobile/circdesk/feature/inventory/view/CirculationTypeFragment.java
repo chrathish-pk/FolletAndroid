@@ -17,22 +17,18 @@ import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
-import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentCirculationtypeLayoutBinding;
-import com.follett.fsc.mobile.circdesk.feature.inventory.model.CircTypeRecord;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.CircTypeList;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CirculationTypeList;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.CirculationTypeViewModel;
-import com.google.gson.Gson;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
 
 
 public class CirculationTypeFragment extends BaseFragment<FragmentCirculationtypeLayoutBinding, CirculationTypeViewModel> implements ItemClickListener, View.OnClickListener {
 
     private FragmentCirculationtypeLayoutBinding recyclerviewLayoutBinding;
     private CirculationTypeViewModel circulationTypeViewModel;
-    private List<CircTypeRecord> circTypeRecordList = new ArrayList<>();
+    private CirculationTypeList circulationTypeListData;
 
     @Override
     public int getLayoutId() {
@@ -63,6 +59,7 @@ public class CirculationTypeFragment extends BaseFragment<FragmentCirculationtyp
         circulationTypeViewModel.circulationTypeListMutableLiveData.observeForever(new Observer<CirculationTypeList>() {
             @Override
             public void onChanged(@Nullable CirculationTypeList circulationTypeList) {
+                circulationTypeListData = circulationTypeList;
                 CirculationTypeListAdapter circulationTypeListAdapter = new CirculationTypeListAdapter(getActivity(), circulationTypeList, CirculationTypeFragment.this);
                 recyclerviewLayoutBinding.recyclerviewList.setAdapter(circulationTypeListAdapter);
             }
@@ -72,15 +69,34 @@ public class CirculationTypeFragment extends BaseFragment<FragmentCirculationtyp
 
     @Override
     public void onItemClick(View view, int position) {
-        circulationTypeViewModel.circulationTypeListMutableLiveData.getValue().getCircTypeList().get(position).setSelected(true);
-        circTypeRecordList.add(new CircTypeRecord(circulationTypeViewModel.circulationTypeListMutableLiveData.getValue().getCircTypeList().get(position).getCircTypeID()));
+        //circulationTypeViewModel.circulationTypeListMutableLiveData.getValue().getCircTypeList().get(position).setSelected(true);
+        //circTypeRecordList.add(new CircTypeRecord(circulationTypeViewModel.circulationTypeListMutableLiveData.getValue().getCircTypeList().get(position).getCircTypeID()));
     }
 
 
     @Override
     public void onClick(View v) {
-        String circulationTypesJSONString = new Gson().toJson(circTypeRecordList);
-        AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_CIRCULATION_TYPE_LIST, circulationTypesJSONString);
-        mActivity.onBackPressed();
+        if (v.getId() == R.id.backBtn) {
+            String selectedCirculationTypes = null;
+            for (CircTypeList circTypeList : circulationTypeListData.getCircTypeList()) {
+                if (circTypeList.isSelected()) {
+                    if (selectedCirculationTypes == null) {
+                        selectedCirculationTypes = circTypeList.getCircTypeDescription();
+                    } else {
+                        selectedCirculationTypes = selectedCirculationTypes + "," + circTypeList.getCircTypeDescription();
+                    }
+                }
+            }
+            AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_CIRCULATION_TYPE_LIST, selectedCirculationTypes);
+            if (getActivity() != null) {
+                ((SetupActivity) getActivity()).selectedData.postValue(true);
+            }
+            mActivity.onBackPressed();
+        }
+
+
+        //String circulationTypesJSONString = new Gson().toJson(circTypeRecordList);
+        //AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_CIRCULATION_TYPE_LIST, circulationTypesJSONString);
+        //mActivity.onBackPressed();
     }
 }

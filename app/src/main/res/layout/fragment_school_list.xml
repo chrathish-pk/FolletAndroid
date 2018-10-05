@@ -1,25 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ /*
   ~  * Copyright (c) 2018 Follett. All rights reserved.
   ~  */
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
 
         <variable
             name="ctaListener"
-            type="com.follett.fsc.mobile.circdesk.app.CTAButtonListener"/>
+            type="com.follett.fsc.mobile.circdesk.app.CTAButtonListener" />
 
         <variable
             name="viewModel"
-            type="com.follett.fsc.mobile.circdesk.feature.loginsetup.viewmodel.SchoolListViewModel"/>
+            type="com.follett.fsc.mobile.circdesk.feature.loginsetup.viewmodel.SchoolListViewModel" />
 
     </data>
 
@@ -52,7 +51,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible"/>
+            tools:visibility="visible" />
 
         <android.support.v4.widget.ContentLoadingProgressBar
             android:id="@+id/schoollist_progressbar"
@@ -64,7 +63,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:id="@+id/bottom_layout"
@@ -84,10 +83,10 @@
                 android:layout_marginVertical="@dimen/layout_size_18"
                 android:background="@drawable/rounded_corners_button"
                 android:gravity="center"
-                android:text="@string/dont_see_your_school"
                 android:onClick="@{(v)->ctaListener.ctaButtonOnClick(v)}"
+                android:text="@string/dont_see_your_school"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_14sp"/>
+                android:textSize="@dimen/text_size_14sp" />
         </LinearLayout>
 
 

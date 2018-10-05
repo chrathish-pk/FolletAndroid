@@ -4,289 +4,293 @@
   ~  */
   -->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
 
 
         <variable
             name="titleDetailsViewModel"
-            type="com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails"/>
+            type="com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails" />
 
 
     </data>
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
 
-        <LinearLayout
-            android:id="@+id/TitleLayout"
+        <android.support.constraint.ConstraintLayout
             android:layout_width="fill_parent"
-            android:layout_height="74dp"
-            android:layout_marginStart="21dp"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="fill_parent"
+            android:clickable="true">
 
-            <TextView
-                android:id="@+id/itemTitleName"
+            <LinearLayout
+                android:id="@+id/TitleLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="74dp"
+                android:layout_marginStart="21dp"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/itemTitleName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="26dp"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:text="@{titleDetailsViewModel.title}"
+                    android:textColor="@color/dark_slate_blue"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/itemAuthor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="@{titleDetailsViewModel.responsibility}"
+                    android:textColor="@color/dark_slate_blue"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="26dp"
-                android:text="@{titleDetailsViewModel.title}"
-                android:fontFamily="@font/opensans_semibold"
-                android:textColor="@color/dark_slate_blue"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"/>
-
-            <TextView
-                android:id="@+id/itemAuthor"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{titleDetailsViewModel.responsibility}"
-                android:fontFamily="@font/opensans_regular"
-                android:textColor="@color/dark_slate_blue"
-                android:textSize="18sp"/>
-        </LinearLayout>
+                android:layout_marginTop="90dp"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="90dp"
-            android:orientation="vertical"
-            app:layout_constraintTop_toTopOf="parent">
+                <LinearLayout
+                    android:id="@+id/firstRow"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginRight="22dp"
+                    android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/firstRow"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="22dp"
-                android:layout_marginRight="22dp"
-                android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/itemTitleByText"
+                        android:layout_width="110dp"
+                        android:layout_height="26dp"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:text="@string/item_titleby"
+                        android:textColor="@color/dark_slate_blue"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent" />
 
-                <TextView
-                    android:id="@+id/itemTitleByText"
-                    android:layout_width="110dp"
-                    android:layout_height="26dp"
-                    android:fontFamily="@font/opensans_semibold"
-                    android:text="@string/item_titleby"
-                    android:textColor="@color/dark_slate_blue"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    <TextView
+                        android:id="@+id/itemTitleBy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:text="@{!titleDetailsViewModel.additionalInfoRecord.titlesBy.isEmpty ? titleDetailsViewModel.additionalInfoRecord.titlesBy : @string/nullCheck}"
+                        android:textColor="@color/dark_slate_blue"
+                        android:textSize="16sp" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/itemTitleBy"
+                <LinearLayout
+                    android:id="@+id/secondRow"
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="22dp">
+
+                    <TextView
+                        android:id="@+id/itemPublishedText"
+                        android:layout_width="110dp"
+                        android:layout_height="26dp"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:text="@string/item_published"
+                        android:textColor="@color/dark_slate_blue"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/itemPublished"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:text="@{!titleDetailsViewModel.additionalInfoRecord.publisher.isEmpty ? titleDetailsViewModel.additionalInfoRecord.publisher : @string/nullCheck}"
+                        android:textColor="@color/dark_slate_blue"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/thirdRow"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{!titleDetailsViewModel.additionalInfoRecord.titlesBy.isEmpty ? titleDetailsViewModel.additionalInfoRecord.titlesBy : @string/nullCheck}"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:fontFamily="@font/opensans_regular"
-                    android:textColor="@color/dark_slate_blue"
-                    android:textSize="16sp"/>
-            </LinearLayout>
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="22dp">
 
-            <LinearLayout
-                android:id="@+id/secondRow"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="22dp"
-                android:layout_marginRight="22dp"
-                android:layout_marginTop="20dp">
+                    <TextView
+                        android:id="@+id/itemEditedText"
+                        android:layout_width="110dp"
+                        android:layout_height="26dp"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:text="@string/item_edition"
+                        android:textColor="@color/dark_slate_blue"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent" />
 
-                <TextView
-                    android:id="@+id/itemPublishedText"
-                    android:layout_width="110dp"
-                    android:layout_height="26dp"
-                    android:fontFamily="@font/opensans_semibold"
-                    android:text="@string/item_published"
-                    android:textColor="@color/dark_slate_blue"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    <TextView
+                        android:id="@+id/itemEdited"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/opensans_regular"
+                        android:maxLines="2"
+                        android:singleLine="false"
+                        android:text="@{titleDetailsViewModel.additionalInfoRecord.edition != null ? titleDetailsViewModel.additionalInfoRecord.edition : @string/nullCheck}"
+                        android:textColor="@color/dark_slate_blue"
+                        android:textSize="16sp" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/itemPublished"
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:id="@+id/fourthRow"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{!titleDetailsViewModel.additionalInfoRecord.publisher.isEmpty ? titleDetailsViewModel.additionalInfoRecord.publisher : @string/nullCheck}"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:fontFamily="@font/opensans_regular"
-                    android:textColor="@color/dark_slate_blue"
-                    android:textSize="16sp"/>
-            </LinearLayout>
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="22dp">
 
-            <LinearLayout
-                android:id="@+id/thirdRow"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="22dp"
-                android:layout_marginRight="22dp"
-                android:layout_marginTop="20dp">
+                    <TextView
+                        android:id="@+id/itemFormatText"
+                        android:layout_width="110dp"
+                        android:layout_height="26dp"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:text="@string/item_format"
+                        android:textColor="@color/dark_slate_blue"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent" />
 
-                <TextView
-                    android:id="@+id/itemEditedText"
-                    android:layout_width="110dp"
-                    android:layout_height="26dp"
-                    android:fontFamily="@font/opensans_semibold"
-                    android:text="@string/item_edition"
-                    android:textColor="@color/dark_slate_blue"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    <TextView
+                        android:id="@+id/itemFormat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/opensans_regular"
+                        android:maxLines="2"
+                        android:singleLine="false"
+                        android:text="@{!titleDetailsViewModel.additionalInfoRecord.format.isEmpty? titleDetailsViewModel.additionalInfoRecord.format : @string/nullCheck}"
+                        android:textColor="@color/dark_slate_blue"
+                        android:textSize="16sp" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/itemEdited"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/fifthRow"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{titleDetailsViewModel.additionalInfoRecord.edition != null ? titleDetailsViewModel.additionalInfoRecord.edition : @string/nullCheck}"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/opensans_regular"
-                    android:maxLines="2"
-                    android:singleLine="false"
-                    android:textColor="@color/dark_slate_blue"
-                    android:textSize="16sp"/>
-            </LinearLayout>
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="22dp">
 
-            <LinearLayout
-                android:id="@+id/fourthRow"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="22dp"
-                android:layout_marginRight="22dp"
-                android:layout_marginTop="20dp">
+                    <TextView
+                        android:id="@+id/itemISBNText"
+                        android:layout_width="110dp"
+                        android:layout_height="26dp"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:text="@string/item_isbn"
+                        android:textColor="@color/dark_slate_blue"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent" />
 
-                <TextView
-                    android:id="@+id/itemFormatText"
-                    android:layout_width="110dp"
-                    android:layout_height="26dp"
-                    android:fontFamily="@font/opensans_semibold"
-                    android:text="@string/item_format"
-                    android:textColor="@color/dark_slate_blue"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    <TextView
+                        android:id="@+id/itemISBN"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/opensans_regular"
+                        android:maxLines="2"
+                        android:singleLine="false"
+                        android:text="@{titleDetailsViewModel.additionalInfoRecord.isbnList.size() !=0 ? titleDetailsViewModel.additionalInfoRecord.isbnList.get(0) : @string/nullCheck}"
+                        android:textColor="@color/dark_slate_blue"
+                        android:textSize="16sp" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/itemFormat"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/sixthRow"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{!titleDetailsViewModel.additionalInfoRecord.format.isEmpty? titleDetailsViewModel.additionalInfoRecord.format : @string/nullCheck}"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/opensans_regular"
-                    android:maxLines="2"
-                    android:singleLine="false"
-                    android:textColor="@color/dark_slate_blue"
-                    android:textSize="16sp"/>
-            </LinearLayout>
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="22dp">
 
-            <LinearLayout
-                android:id="@+id/fifthRow"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="22dp"
-                android:layout_marginRight="22dp"
-                android:layout_marginTop="20dp">
+                    <TextView
+                        android:id="@+id/itemTargetText"
+                        android:layout_width="110dp"
+                        android:layout_height="50dp"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:lines="2"
+                        android:text="@string/item_target"
+                        android:textColor="@color/dark_slate_blue"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent" />
 
-                <TextView
-                    android:id="@+id/itemISBNText"
-                    android:layout_width="110dp"
-                    android:layout_height="26dp"
-                    android:fontFamily="@font/opensans_semibold"
-                    android:text="@string/item_isbn"
-                    android:textColor="@color/dark_slate_blue"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    <TextView
+                        android:id="@+id/itemTarget"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/opensans_regular"
+                        android:maxLines="2"
+                        android:singleLine="false"
+                        android:text="@{titleDetailsViewModel.additionalInfoRecord.targetAudienceList.size() !=0 ? titleDetailsViewModel.additionalInfoRecord.targetAudienceList.get(0) : @string/nullCheck}"
+                        android:textColor="@color/dark_slate_blue"
+                        android:textSize="16sp" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/itemISBN"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/seventhRow"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{titleDetailsViewModel.additionalInfoRecord.isbnList.size() !=0 ? titleDetailsViewModel.additionalInfoRecord.isbnList.get(0) : @string/nullCheck}"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/opensans_regular"
-                    android:maxLines="2"
-                    android:singleLine="false"
-                    android:textColor="@color/dark_slate_blue"
-                    android:textSize="16sp"/>
-            </LinearLayout>
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="22dp">
 
-            <LinearLayout
-                android:id="@+id/sixthRow"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="22dp"
-                android:layout_marginRight="22dp"
-                android:layout_marginTop="20dp">
+                    <TextView
+                        android:id="@+id/itemAcceleratedText"
+                        android:layout_width="110dp"
+                        android:layout_height="26dp"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:text="@string/item_accelerated"
+                        android:textColor="@color/dark_slate_blue"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent" />
 
-                <TextView
-                    android:id="@+id/itemTargetText"
-                    android:layout_width="110dp"
-                    android:layout_height="50dp"
-                    android:fontFamily="@font/opensans_semibold"
-                    android:text="@string/item_target"
-                    android:lines="2"
-                    android:textColor="@color/dark_slate_blue"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    <TextView
+                        android:id="@+id/itemAccelerated"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:text="@{titleDetailsViewModel.quizInfoRecord.quizList.size() !=0 ? @string/item_quiz_no+titleDetailsViewModel.quizInfoRecord.quizList.get(0).quizNumber+@string/item_points+titleDetailsViewModel.quizInfoRecord.quizList.get(0).points : @string/item_quiz_no+@string/nullCheck+@string/item_points+@string/nullCheck}"
+                        android:textColor="@color/dark_slate_blue"
+                        android:textSize="16sp" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/itemTarget"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{titleDetailsViewModel.additionalInfoRecord.targetAudienceList.size() !=0 ? titleDetailsViewModel.additionalInfoRecord.targetAudienceList.get(0) : @string/nullCheck}"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/opensans_regular"
-                    android:maxLines="2"
-                    android:singleLine="false"
-                    android:textColor="@color/dark_slate_blue"
-                    android:textSize="16sp"/>
-            </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/seventhRow"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="22dp"
-                android:layout_marginRight="22dp"
-                android:layout_marginTop="20dp">
-
-                <TextView
-                    android:id="@+id/itemAcceleratedText"
-                    android:layout_width="110dp"
-                    android:layout_height="26dp"
-                    android:fontFamily="@font/opensans_semibold"
-                    android:text="@string/item_accelerated"
-                    android:textColor="@color/dark_slate_blue"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="parent"/>
-                <TextView
-                    android:id="@+id/itemAccelerated"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{titleDetailsViewModel.quizInfoRecord.quizList.size() !=0 ? @string/item_quiz_no+titleDetailsViewModel.quizInfoRecord.quizList.get(0).quizNumber+@string/item_points+titleDetailsViewModel.quizInfoRecord.quizList.get(0).points : @string/item_quiz_no+@string/nullCheck+@string/item_points+@string/nullCheck}"
-                    android:layout_marginLeft="10dp"
-                    android:fontFamily="@font/opensans_regular"
-                    android:textColor="@color/dark_slate_blue"
-                    android:textSize="16sp"/>
             </LinearLayout>
 
 
-        </LinearLayout>
-
-
-    </android.support.constraint.ConstraintLayout>
+        </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>
 </layout>

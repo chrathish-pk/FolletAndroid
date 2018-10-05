@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 ~ /*
  ~  * Copyright (c) 2018 Follett. All rights reserved.
  ~  */
@@ -8,7 +7,7 @@
 
     <data>
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
 
         <variable
             name="itemClickListener"
@@ -16,14 +15,15 @@
 
         <variable
             name="checkoutViewModel"
-            type="com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.viewmodel.CheckoutViewModel"/>
+            type="com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.viewmodel.CheckoutViewModel" />
 
     </data>
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clickable="true">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/patronListView"

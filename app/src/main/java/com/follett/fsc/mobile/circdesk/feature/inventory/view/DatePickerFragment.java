@@ -39,6 +39,8 @@ public class DatePickerFragment extends DialogFragment implements View.OnClickLi
         int month = calendar.getMonth();
         int day = calendar.getDayOfMonth();
 
+        calendar.setMaxDate(System.currentTimeMillis());
+
         (rootView.findViewById(R.id.ok)).setOnClickListener(this);
         (rootView.findViewById(R.id.cancel)).setOnClickListener(this);
         ((DatePicker) rootView.findViewById(R.id.calendar)).init(year, month, day, this);
@@ -66,8 +68,16 @@ public class DatePickerFragment extends DialogFragment implements View.OnClickLi
             if (formattedDate != null) {
                 AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_SEEN_DATE, formattedDate);
                 AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_SEEN_FORMAT_DATE, AppUtils.getInstance().getFormatDate(formattedDate));
+            } else {
+                Date c = Calendar.getInstance().getTime();
+                DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.US);
+                formattedDate = df.format(c);
+                AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_SEEN_DATE, formattedDate);
+                AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_SEEN_FORMAT_DATE, AppUtils.getInstance().getFormatDate(formattedDate));
+            }
+            if (getActivity() != null) {
                 ((SetupActivity) getActivity()).selectedDateLiveData.postValue(formattedDate);
-                //((SetupActivity)getActivity()).selectedData.postValue(true);
+                ((SetupActivity) getActivity()).selectedData.postValue(true);
             }
             dismiss();
         } else if (v.getId() == R.id.cancel) {

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 ~ /*
  ~  * Copyright (c) 2018 Follett. All rights reserved.
  ~  */
@@ -7,35 +6,39 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <variable name="userDetails" type="com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences"/>
+
+        <variable
+            name="userDetails"
+            type="com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences" />
     </data>
 
     <RelativeLayout
         android:id="@+id/navigation_header_container"
         android:layout_width="match_parent"
         android:layout_height="138dp"
-        android:background="@color/blueLabel">
+        android:background="@color/blueLabel"
+        android:clickable="true">
 
         <TextView
             android:id="@+id/site_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_15sp"
-            android:fontFamily="@font/opensans_regular"
+            android:layout_above="@+id/user_info"
             android:layout_marginStart="@dimen/layout_size_9"
-            android:layout_above="@+id/user_info"/>
+            android:fontFamily="@font/opensans_regular"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_15sp" />
 
         <TextView
             android:id="@+id/user_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_15sp"
-            android:fontFamily="@font/opensans_regular"
             android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/layout_size_9"
             android:layout_marginBottom="@dimen/layout_size_14"
-            android:layout_marginStart="@dimen/layout_size_9"/>
+            android:fontFamily="@font/opensans_regular"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_15sp" />
     </RelativeLayout>
 
 </layout>

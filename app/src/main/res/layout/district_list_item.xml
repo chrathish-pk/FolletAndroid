@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ /*
   ~  * Copyright (c) 2018 Follett. All rights reserved.
   ~  */
@@ -11,15 +10,15 @@
 
         <variable
             name="districtData"
-            type="com.follett.fsc.mobile.circdesk.feature.loginsetup.model.District"/>
+            type="com.follett.fsc.mobile.circdesk.feature.loginsetup.model.District" />
     </data>
 
     <LinearLayout
         android:id="@+id/district_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:clickable="true">
+        android:clickable="true"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/districtName"
@@ -31,13 +30,13 @@
             android:padding="@dimen/layout_size_16"
             android:text="@{districtData.districtName}"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_size_14sp"/>
+            android:textSize="@dimen/text_size_14sp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="5dp"
-            android:background="#D3D3D3	"/>
+            android:background="#D3D3D3	" />
     </LinearLayout>
 
 </layout>

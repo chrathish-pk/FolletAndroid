@@ -8,8 +8,6 @@ package com.follett.fsc.mobile.circdesk.data.remote.api;
 
 import android.util.Log;
 
-import com.follett.fsc.mobile.circdesk.utils.FollettLog;
-
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -78,7 +76,7 @@ public class FollettAPIManager {
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request().newBuilder()
                         .build();
-                FollettLog.d("Response>>>>>>>>>>>>>>>>>>>>>>>", chain.proceed(request).body().string());
+                //FollettLog.d("Response>>>>>>>>>>>>>>>>>>>>>>>", chain.proceed(request).body().string());
                 return chain.proceed(request);
             }
         });

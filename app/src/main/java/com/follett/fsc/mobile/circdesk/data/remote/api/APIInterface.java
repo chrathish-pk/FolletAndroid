@@ -116,7 +116,7 @@ public interface APIInterface {
 
     @POST("rest/v6/circulation/createinventory")
     Observable<CreateInventoryResult> createInventory(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site, @Body CreateInventory createInventory);
-    
+
     @GET("rest/v6/circulation/inventoryscan")
     Observable<InventoryScan> getInventoryScan(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site,
             @Query("collectionType") int collectionType, @Query("partialID") int partialID, @Query("barcode") String barcode, @Query("scanningLocationID")

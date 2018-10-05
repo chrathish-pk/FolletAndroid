@@ -47,19 +47,20 @@ public class SeenOnOrAfterFragment extends BaseFragment<FragmentCallNumbersExclu
         fragmentCallNumbersExcludeItemsBinding.descriptionText.setText(getString(R.string.excludeItemsDescription));
         fragmentCallNumbersExcludeItemsBinding.enterDate.setVisibility(View.VISIBLE);
 
+        if (getActivity() != null) {
+            Date c = Calendar.getInstance().getTime();
+            DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.US);
 
-        Date c = Calendar.getInstance().getTime();
-        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.US);
-        ((SetupActivity) getActivity()).selectedDateLiveData.postValue(df.format(c));
+            ((SetupActivity) getActivity()).selectedDateLiveData.postValue(df.format(c));
 
+            ((SetupActivity) getActivity()).selectedDateLiveData.observeForever(new Observer<String>() {
+                @Override
+                public void onChanged(@Nullable String date) {
+                    fragmentCallNumbersExcludeItemsBinding.enterDate.setText(date);
 
-        ((SetupActivity) getActivity()).selectedDateLiveData.observeForever(new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String date) {
-                fragmentCallNumbersExcludeItemsBinding.enterDate.setText(date);
-
-            }
-        });
+                }
+            });
+        }
 
     }
 

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 ~ /*
  ~  * Copyright (c) 2018 Follett. All rights reserved.
  ~  */
@@ -19,55 +18,57 @@
             name="checkoutViewModel"
             type="com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.viewmodel.CheckoutViewModel" />
     </data>
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="true">
 
-        <include
-            android:id="@+id/patronDetailIncludeLayout"
-            layout="@layout/patron_detail"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            bind:scanPatron="@{scanPatron}" />
+            android:layout_height="match_parent"
+            android:clickable="true">
 
-        <include
-            android:id="@+id/patronEntryIncludeLayout"
-            layout="@layout/patron_entry"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/patronDetailIncludeLayout" />
+            <include
+                android:id="@+id/patronDetailIncludeLayout"
+                layout="@layout/patron_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                bind:scanPatron="@{scanPatron}" />
 
-        <TextView
-            android:id="@+id/checkoutPatronErrorMsg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/patronEntryIncludeLayout"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="10dp"
-            android:fontFamily="@font/opensans_regular"
-            android:padding="10dp"
-            android:visibility="gone" />
+            <include
+                android:id="@+id/patronEntryIncludeLayout"
+                layout="@layout/patron_entry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/patronDetailIncludeLayout" />
 
-        <include
-            android:id="@+id/checkoutDetailIncludeLayout"
-            layout="@layout/checkout_detail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/checkoutPatronErrorMsg" />
+            <TextView
+                android:id="@+id/checkoutPatronErrorMsg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/patronEntryIncludeLayout"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/opensans_regular"
+                android:padding="10dp"
+                android:visibility="gone" />
 
-        <android.support.v4.widget.ContentLoadingProgressBar
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:visibility="@{checkoutViewModel.isLoading ? View.VISIBLE : View.GONE}" />
+            <include
+                android:id="@+id/checkoutDetailIncludeLayout"
+                layout="@layout/checkout_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/checkoutPatronErrorMsg" />
 
-    </RelativeLayout>
+            <android.support.v4.widget.ContentLoadingProgressBar
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="@{checkoutViewModel.isLoading ? View.VISIBLE : View.GONE}" />
+
+        </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 
 </layout>
