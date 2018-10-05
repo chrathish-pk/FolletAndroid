@@ -1,25 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ /*
   ~  * Copyright (c) 2018 Follett. All rights reserved.
   ~  */
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
 
         <variable
             name="basicListener"
-            type="com.follett.fsc.mobile.circdesk.app.CTAButtonListener"/>
+            type="com.follett.fsc.mobile.circdesk.app.CTAButtonListener" />
 
         <variable
             name="viewModel"
-            type="com.follett.fsc.mobile.circdesk.feature.loginsetup.viewmodel.BasicViewModel"/>
+            type="com.follett.fsc.mobile.circdesk.feature.loginsetup.viewmodel.BasicViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -31,28 +29,28 @@
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/libraryEditText"
             style="@style/EditTextTheme"
             android:layout_marginTop="50dp"
+            android:hint="@string/library_label"
             android:inputType="text"
             android:singleLine="true"
-            android:hint="@string/library_label"
             android:text="@{viewModel.storedSchoolUri}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <android.support.v7.widget.AppCompatEditText
@@ -66,7 +64,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/libraryEditText"/>
+            app:layout_constraintTop_toBottomOf="@+id/libraryEditText" />
 
 
         <android.support.v7.widget.AppCompatEditText
@@ -80,18 +78,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/portEditText"/>
+            app:layout_constraintTop_toBottomOf="@+id/portEditText" />
 
         <Button
             android:id="@+id/connectTextview"
             style="@style/ActionButtonTheme"
-            android:layout_marginBottom="24dp"
             android:layout_marginTop="@dimen/layout_size_16"
+            android:layout_marginBottom="24dp"
             android:onClick="@{(v)->basicListener.ctaButtonOnClick(v)}"
             android:text="@string/connect_label"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sslportEditText"/>
+            app:layout_constraintTop_toBottomOf="@+id/sslportEditText" />
 
     </android.support.constraint.ConstraintLayout>
 

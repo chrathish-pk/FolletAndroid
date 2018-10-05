@@ -1,38 +1,41 @@
 package com.follett.fsc.mobile.circdesk.feature.inventory.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class CreateInventoryResult {
 
-    private boolean success;
-    private String message;
-    private int partialID;
+    @SerializedName("message")
+    @Expose
+    private Object message;
+    @SerializedName("success")
+    @Expose
+    private Boolean success;
+    @SerializedName("partialID")
+    @Expose
+    private Integer partialID;
 
-    public CreateInventoryResult(boolean success, String message, int partialID) {
-        this.success = success;
-        this.message = message;
-        this.partialID = partialID;
-    }
-
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
-    public String getMessage() {
+    public Object getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
+    public void setMessage(Object message) {
         this.message = message;
     }
 
-    public int getPartialID() {
+    public Boolean getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(Boolean success) {
+        this.success = success;
+    }
+
+    public Integer getPartialID() {
         return partialID;
     }
 
-    public void setPartialID(int partialID) {
+    public void setPartialID(Integer partialID) {
         this.partialID = partialID;
     }
 }

@@ -4,22 +4,23 @@
   ~  */
   -->
 
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!--<data>-->
 
-        <!--<import type="android.view.View" />-->
+    <!--<import type="android.view.View" />-->
 
-        <!--<variable-->
-            <!--name="viewModel"-->
-            <!--type="com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.SubLocationViewModel" />-->
+    <!--<variable-->
+    <!--name="viewModel"-->
+    <!--type="com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.SubLocationViewModel" />-->
     <!--</data>-->
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clickable="true">
 
         <RadioGroup
             android:layout_width="fill_parent"
@@ -31,15 +32,15 @@
                 android:id="@+id/radioButton"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:layout_weight="1"
                 android:layout_marginLeft="@dimen/layout_size_15"
                 android:layout_marginRight="@dimen/layout_size_15"
+                android:layout_weight="1"
                 android:button="@null"
                 android:drawableRight="@drawable/customradiobtn"
-                android:text="Greater than or Equal to "
                 android:fontFamily="@font/opensans_regular"
+                android:text="Greater than or Equal to "
                 android:textColor="@color/black"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <RadioButton
                 android:id="@+id/radioButton2"
@@ -50,10 +51,10 @@
                 android:layout_weight="1"
                 android:button="@null"
                 android:drawableRight="@drawable/customradiobtn"
-                android:text="Less than"
                 android:fontFamily="@font/opensans_regular"
+                android:text="Less than"
                 android:textColor="@color/black"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
         </RadioGroup>
 
@@ -62,10 +63,10 @@
             style="@style/EditTextTheme"
             android:layout_width="match_parent"
             android:layout_height="57dp"
-            android:layout_marginBottom="75dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="140dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="75dp"
             android:fontFamily="@font/opensans_regular"
             android:hint="@string/enterAmount"
             android:padding="15dp"

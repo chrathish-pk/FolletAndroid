@@ -79,15 +79,17 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
         fragmentInventoryBinding.patronEntryIncludeLayout.patronEntry.setHint(getString(R.string.enterBarcode));
         fragmentInventoryBinding.patronEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.GONE);
 
-        AppUtils.getInstance().updateLibResBg(mActivity,fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn, fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn);
+        AppUtils.getInstance().updateLibResBg(mActivity, fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn, fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn);
 
-        ((SetupActivity) getActivity()).selectedInventoryNameLiveData.observe(getActivity(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String selectedInventory) {
-                fragmentInventoryBinding.inventorySelection.setText(selectedInventory);
-                inventoryViewModel.getInventoryDetails();
-            }
-        });
+        if (getActivity() != null) {
+            ((SetupActivity) getActivity()).selectedInventoryNameLiveData.observe(getActivity(), new Observer<String>() {
+                @Override
+                public void onChanged(@Nullable String selectedInventory) {
+                    fragmentInventoryBinding.inventorySelection.setText(selectedInventory);
+                    inventoryViewModel.getInventoryDetails();
+                }
+            });
+        }
     }
 
     @Override
@@ -97,15 +99,14 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                 fragmentInventoryBinding.inventoryLocation.setVisibility(View.GONE);
                 fragmentInventoryBinding.inventoryLocationBar.setVisibility(View.GONE);
                 AppRemoteRepository.getInstance().setBoolean(KEY_IS_LIBRARY_SELECTED, true);
-                AppUtils.getInstance().updateLibResBg(mActivity,fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn, fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn);
+                AppUtils.getInstance().updateLibResBg(mActivity, fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn, fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn);
                 inventoryViewModel.getInProgressInventoryResults();
                 break;
             case R.id.resourceBtn:
                 fragmentInventoryBinding.inventoryLocation.setVisibility(View.VISIBLE);
                 fragmentInventoryBinding.inventoryLocationBar.setVisibility(View.VISIBLE);
                 AppRemoteRepository.getInstance().setBoolean(KEY_IS_LIBRARY_SELECTED, false);
-                AppUtils.getInstance().updateLibResBg(mActivity,fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn, fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn);
-
+                AppUtils.getInstance().updateLibResBg(mActivity, fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn, fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn);
                 inventoryViewModel.getInProgressInventoryResults();
                 break;
             case R.id.finalizeInventoryBtn:
@@ -126,14 +127,12 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
 
     @Override
     public void updateUI(final Object value) {
-
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 try {
                     if (value instanceof InProgressInventoryResults) {
                         inProgressInventoryResults = (InProgressInventoryResults) value;
-
                         if (!inProgressInventoryResults.getInventoryList().isEmpty()) {
                             fragmentInventoryBinding.inventorySelection.setVisibility(View.VISIBLE);
                             inProgressInventoryResults.getInventoryList().get(0).setSelected(true);
@@ -144,7 +143,6 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                                 fragmentInventoryBinding.inventorySelection.setText(inProgressInventoryResults.getInventoryList().get(0).getName() + getString(R.string.started) + inProgressInventoryResults.getInventoryList().get(0).getDateStarted());
                         } else {
                             fragmentInventoryBinding.inventorySelection.setVisibility(View.GONE);
-
                         }
                     }
                     if (value instanceof InventoryDetails) {

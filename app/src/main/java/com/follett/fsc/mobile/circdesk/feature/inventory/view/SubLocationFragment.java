@@ -10,15 +10,19 @@ import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentSubLocationBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.SubLocation;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.SublocationList;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.SubLocationViewModel;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
 
 
-public class SubLocationFragment extends BaseFragment<FragmentSubLocationBinding,SubLocationViewModel> implements ItemClickListener {
+public class SubLocationFragment extends BaseFragment<FragmentSubLocationBinding, SubLocationViewModel> implements ItemClickListener, View.OnClickListener {
 
     private FragmentSubLocationBinding fragmentSubLocationBinding;
     private SubLocationViewModel subLocationViewModel;
+    private SubLocation subLocationData;
 
     public SubLocationFragment() {
         // Required empty public constructor
@@ -28,12 +32,16 @@ public class SubLocationFragment extends BaseFragment<FragmentSubLocationBinding
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         fragmentSubLocationBinding = getViewDataBinding();
+
         fragmentSubLocationBinding.recyclerviewSublocationlist.setLayoutManager(new LinearLayoutManager(getActivity()));
         subLocationViewModel.fetchSubLocationList();
+
+        mActivity.baseBinding.backBtn.setOnClickListener(this);
+
         subLocationViewModel.subLocationListMutableLiveData.observeForever(new Observer<SubLocation>() {
             @Override
             public void onChanged(@Nullable SubLocation subLocation) {
-
+                subLocationData = subLocation;
                 SubLocationListAdapter subLocationListAdapter = new SubLocationListAdapter(getActivity(), subLocation, SubLocationFragment.this);
                 fragmentSubLocationBinding.recyclerviewSublocationlist.setAdapter(subLocationListAdapter);
             }
@@ -59,6 +67,27 @@ public class SubLocationFragment extends BaseFragment<FragmentSubLocationBinding
     @Override
     public void onItemClick(View view, int position) {
 
-        //do nothing
     }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.backBtn) {
+            String selectedSubLocation = null;
+            for (SublocationList subLocationList : subLocationData.getSublocationList()) {
+                if (subLocationList.isSelected()) {
+                    if (selectedSubLocation == null) {
+                        selectedSubLocation = subLocationList.getSublocationName();
+                    } else {
+                        selectedSubLocation = selectedSubLocation + "," + subLocationList.getSublocationName();
+                    }
+                }
+            }
+            AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_SELECTED_SUB_LOCATION, selectedSubLocation);
+            if (getActivity() != null) {
+                ((SetupActivity) getActivity()).selectedData.postValue(true);
+            }
+            mActivity.onBackPressed();
+        }
+    }
+
 }

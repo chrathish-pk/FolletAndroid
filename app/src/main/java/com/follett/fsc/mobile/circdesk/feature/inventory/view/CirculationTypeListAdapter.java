@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
@@ -39,7 +40,11 @@ public class CirculationTypeListAdapter extends RecyclerView.Adapter<Circulation
 
 
         holder.rowCommonChecklistBinding.itemChecklistLayout.setTag(position);
+        holder.rowCommonChecklistBinding.itemCheckbox.setTag(position);
+        holder.rowCommonChecklistBinding.itemChecklistName.setTag(position);
         holder.rowCommonChecklistBinding.itemChecklistLayout.setOnClickListener(this);
+        holder.rowCommonChecklistBinding.itemCheckbox.setOnClickListener(this);
+        holder.rowCommonChecklistBinding.itemChecklistName.setOnClickListener(this);
     }
 
     @Override
@@ -49,6 +54,7 @@ public class CirculationTypeListAdapter extends RecyclerView.Adapter<Circulation
 
     @Override
     public void onClick(View v) {
-        itemClickListener.onItemClick(v, (Integer) v.getTag());
+        circulationTypeList.getCircTypeList().get((Integer) v.getTag()).setSelected(((CheckBox) v).isChecked());
+        notifyDataSetChanged();
     }
 }

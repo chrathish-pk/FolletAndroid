@@ -11,6 +11,7 @@ import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentCallNumbersExcludeItemsBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.CallNumbersViewModel;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
 
 public class CallNumbersFragment extends BaseFragment<FragmentCallNumbersExcludeItemsBinding, CallNumbersViewModel> implements View.OnClickListener {
 
@@ -57,7 +58,8 @@ public class CallNumbersFragment extends BaseFragment<FragmentCallNumbersExclude
         if (v.getId() == R.id.backBtn) {
             AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_CALL_NUMBER_FROM, fragmentCallNumbersExcludeItemsBinding.callFromEdittext.getText().toString());
             AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_CALL_NUMBER_TO, fragmentCallNumbersExcludeItemsBinding.callToEdittext.getText().toString());
-//            ((SetupActivity) getActivity()).selectedData.postValue(true);
+            if (getActivity() != null)
+                ((SetupActivity) getActivity()).selectedData.postValue(true);
             mActivity.onBackPressed();
         }
     }

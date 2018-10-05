@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 ~ /*
  ~  * Copyright (c) 2018 Follett. All rights reserved.
  ~  */
@@ -9,53 +8,55 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:clickable="true"
         android:orientation="vertical">
-     <View
-         android:layout_width="fill_parent"
-         android:layout_height="1dp"
-         android:background="@color/bottom_bar">
 
-     </View>
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/bottom_bar">
 
-    <LinearLayout
-        android:id="@+id/libraryResourceLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/layout_size_13"
-        android:background="@drawable/rounded_border_blue"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="1dp"
-        android:layout_margin="10dp"
-        android:weightSum="2">
+        </View>
 
-        <TextView
-            android:id="@+id/libraryBtn"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/blueLabel"
-            android:fontFamily="@font/opensans_regular"
+        <LinearLayout
+            android:id="@+id/libraryResourceLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginTop="@dimen/layout_size_13"
+            android:background="@drawable/rounded_border_blue"
             android:gravity="center"
-            android:padding="10dp"
-            android:text="@string/library"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_14sp" />
+            android:orientation="horizontal"
+            android:padding="1dp"
+            android:weightSum="2">
 
-        <TextView
-            android:id="@+id/resourceBtn"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/white"
-            android:fontFamily="@font/opensans_regular"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="@string/resource"
-            android:textColor="@color/blueLabel"
-            android:textSize="@dimen/text_size_14sp" />
+            <TextView
+                android:id="@+id/libraryBtn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/blueLabel"
+                android:fontFamily="@font/opensans_regular"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/library"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_14sp" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/resourceBtn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:fontFamily="@font/opensans_regular"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/resource"
+                android:textColor="@color/blueLabel"
+                android:textSize="@dimen/text_size_14sp" />
+
+        </LinearLayout>
     </LinearLayout>
 
 </layout>

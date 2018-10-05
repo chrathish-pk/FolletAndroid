@@ -9,7 +9,7 @@
 
     <data>
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
 
         <variable
             name="viewModel"
@@ -47,7 +47,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-       </android.support.v7.widget.RecyclerView>
+        </android.support.v7.widget.RecyclerView>
 
         <android.support.v4.widget.ContentLoadingProgressBar
             android:id="@+id/progressBar"

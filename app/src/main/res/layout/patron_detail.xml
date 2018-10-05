@@ -20,6 +20,7 @@
         android:id="@+id/patronDetailLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable="true"
         android:orientation="vertical"
         android:visibility="gone">
 
@@ -27,8 +28,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp">
 
             <RelativeLayout
                 android:id="@+id/patronInfoLayout"
@@ -58,7 +59,7 @@
                         android:fontFamily="@font/opensans_regular"
                         android:text="@{scanPatron.lastFirstMiddleName}"
                         android:textColor="@color/blueLabel"
-                        android:textSize="@dimen/text_size_16sp"/>
+                        android:textSize="@dimen/text_size_16sp" />
 
                     <TextView
                         android:id="@+id/checkoutPatronType"
@@ -83,8 +84,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
                     android:src="@drawable/close" />
 
             </RelativeLayout>
@@ -105,10 +106,10 @@
                 android:id="@+id/overdue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_below="@+id/patronInfoLayout"
-                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
                 android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
                 android:fontFamily="@font/opensans_regular"
                 android:text="@{scanPatron.librarySelected ? @string/overdueLabel +scanPatron.libraryOverdues : @string/overdueLabel +scanPatron.assetOverdues}"
                 android:textColor="@color/blueLabel"

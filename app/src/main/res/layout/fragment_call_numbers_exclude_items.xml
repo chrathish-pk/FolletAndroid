@@ -23,7 +23,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clickable="true">
 
         <TextView
             android:id="@+id/descriptionText"
@@ -44,12 +45,12 @@
             android:layout_below="@id/descriptionText"
             android:layout_marginTop="8dp"
             android:clickable="true"
-            android:onClick="@{(v)->seenViewModel.onItemClicked(v)}"
             android:editable="false"
             android:focusable="false"
             android:hint="@string/enter_date"
             android:inputType="number"
             android:letterSpacing="0.1"
+            android:onClick="@{(v)->seenViewModel.onItemClicked(v)}"
             android:singleLine="true"
             android:visibility="gone" />
 

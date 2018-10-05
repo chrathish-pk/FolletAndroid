@@ -5,15 +5,16 @@ import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
-import com.follett.fsc.mobile.circdesk.databinding.RowLocationListBinding;
+import android.widget.CheckBox;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
+import com.follett.fsc.mobile.circdesk.databinding.RowLocationListBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.SubLocation;
-import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
-public class SubLocationListAdapter extends RecyclerView.Adapter<SubLocationListViewHolder> {
+public class SubLocationListAdapter extends RecyclerView.Adapter<SubLocationListViewHolder> implements View.OnClickListener {
 
     private Context context;
     private SubLocation subLocationList;
@@ -35,12 +36,24 @@ public class SubLocationListAdapter extends RecyclerView.Adapter<SubLocationList
     @Override
     public void onBindViewHolder(@NonNull SubLocationListViewHolder holder, int position) {
         holder.rowLocationListBinding.setSubLocationList(subLocationList.getSublocationList().get(position));
-        //holder.rowLocationListBinding.locationitemChecklistName.setText(subLocationList.getSubLocationList().get(position).getSublocationName());
+
+        holder.rowLocationListBinding.locationitemCheckbox.setTag(position);
+        holder.rowLocationListBinding.locationItemChecklistLayout.setTag(position);
+        holder.rowLocationListBinding.locationitemChecklistName.setTag(position);
+        holder.rowLocationListBinding.locationitemCheckbox.setOnClickListener(this);
+        holder.rowLocationListBinding.locationItemChecklistLayout.setOnClickListener(this);
+        holder.rowLocationListBinding.locationitemChecklistName.setOnClickListener(this);
 
     }
 
     @Override
     public int getItemCount() {
         return subLocationList != null ? subLocationList.getSublocationList().size() : 0;
+    }
+
+    @Override
+    public void onClick(View v) {
+        subLocationList.getSublocationList().get((Integer) v.getTag()).setSelected(((CheckBox)v).isChecked());
+        notifyDataSetChanged();
     }
 }

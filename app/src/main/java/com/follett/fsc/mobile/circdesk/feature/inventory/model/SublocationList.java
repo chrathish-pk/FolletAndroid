@@ -3,7 +3,7 @@ package com.follett.fsc.mobile.circdesk.feature.inventory.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.Parcelable.Creator;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -16,30 +16,36 @@ public class SublocationList implements Parcelable
     @SerializedName("sublocationID")
     @Expose
     private Integer sublocationID;
-    public final static Creator<SublocationList> CREATOR = new Creator<SublocationList>() {
 
+    private boolean isSelected;
 
-        @SuppressWarnings({
-            "unchecked"
-        })
+    public SublocationList(String sublocationName, Integer sublocationID, boolean isSelected) {
+        this.sublocationName = sublocationName;
+        this.sublocationID = sublocationID;
+        this.isSelected = isSelected;
+    }
+
+    protected SublocationList(Parcel in) {
+        sublocationName = in.readString();
+        if (in.readByte() == 0) {
+            sublocationID = null;
+        } else {
+            sublocationID = in.readInt();
+        }
+        isSelected = in.readByte() != 0;
+    }
+
+    public static final Creator<SublocationList> CREATOR = new Creator<SublocationList>() {
+        @Override
         public SublocationList createFromParcel(Parcel in) {
             return new SublocationList(in);
         }
 
+        @Override
         public SublocationList[] newArray(int size) {
-            return (new SublocationList[size]);
+            return new SublocationList[size];
         }
-
-    }
-    ;
-
-    protected SublocationList(Parcel in) {
-        this.sublocationName = ((String) in.readValue((String.class.getClassLoader())));
-        this.sublocationID = ((Integer) in.readValue((Integer.class.getClassLoader())));
-    }
-
-    public SublocationList() {
-    }
+    };
 
     public String getSublocationName() {
         return sublocationName;
@@ -57,13 +63,28 @@ public class SublocationList implements Parcelable
         this.sublocationID = sublocationID;
     }
 
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(sublocationName);
-        dest.writeValue(sublocationID);
+    public boolean isSelected() {
+        return isSelected;
     }
 
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    @Override
     public int describeContents() {
-        return  0;
+        return 0;
     }
 
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(sublocationName);
+        if (sublocationID == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(sublocationID);
+        }
+        dest.writeByte((byte) (isSelected ? 1 : 0));
+    }
 }

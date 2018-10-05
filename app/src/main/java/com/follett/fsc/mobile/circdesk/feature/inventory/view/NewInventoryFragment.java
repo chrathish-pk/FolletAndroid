@@ -22,8 +22,8 @@ import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepositor
 import com.follett.fsc.mobile.circdesk.databinding.FragmentNewInventoryBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventoryResult;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.NewInventoryViewModel;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
-import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBinding, NewInventoryViewModel> implements ItemClickListener, AlertDialogListener {
     private NewInventoryViewModel newInventoryViewModel;
@@ -55,37 +55,39 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
         super.onActivityCreated(savedInstanceState);
         fragmentNewInventoryBinding = getViewDataBinding();
 
-        newInventoryViewModel.createInventoryResultMutableLiveData.observeForever(new Observer<CreateInventoryResult>() {
-            @Override
-            public void onChanged(@Nullable CreateInventoryResult createInventoryResult) {
-                if (!createInventoryResult.isSuccess()) {
-                    AppUtils.getInstance().showAlertDialog(getActivity(), "", createInventoryResult.getMessage(), getString(R.string.ok), "", NewInventoryFragment.this, 0);
-                }
-                FollettLog.e("result for create inventory result", createInventoryResult.toString());
-            }
-        });
-
         isLibrarySelected = AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED);
         if (isLibrarySelected)
             newInventoryListAdapter = new NewInventoryListAdapter(getActivity(), newInventoryViewModel.getNewInventoryDataForLibrary(), this);
         else
             newInventoryListAdapter = new NewInventoryListAdapter(getActivity(), newInventoryViewModel.getNewInventoryDataForResource(), this);
 
-        /*((SetupActivity) getActivity()).selectedData.observe(getActivity(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(@Nullable Boolean aBoolean) {
-                isLibrarySelected = AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED);
-                if (isLibrarySelected)
-                    newInventoryListAdapter = new NewInventoryListAdapter(getActivity(), newInventoryViewModel.getNewInventoryDataForLibrary(), NewInventoryFragment.this);
-                else
-                    newInventoryListAdapter = new NewInventoryListAdapter(getActivity(), newInventoryViewModel.getNewInventoryDataForResource(), NewInventoryFragment.this);
-            }
-        });*/
-
         fragmentNewInventoryBinding.inventoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-
         fragmentNewInventoryBinding.inventoryRecyclerView.setAdapter(newInventoryListAdapter);
+
+        if (getActivity() != null) {
+            ((SetupActivity) getActivity()).selectedData.observe(getActivity(), new Observer<Boolean>() {
+                @Override
+                public void onChanged(@Nullable Boolean aBoolean) {
+                    isLibrarySelected = AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED);
+                    if (isLibrarySelected)
+                        newInventoryListAdapter = new NewInventoryListAdapter(getActivity(), newInventoryViewModel.getNewInventoryDataForLibrary(), NewInventoryFragment.this);
+                    else
+                        newInventoryListAdapter = new NewInventoryListAdapter(getActivity(), newInventoryViewModel.getNewInventoryDataForResource(), NewInventoryFragment.this);
+
+                    fragmentNewInventoryBinding.inventoryRecyclerView.setAdapter(newInventoryListAdapter);
+                }
+
+            });
+        }
+
+        newInventoryViewModel.createInventoryResultMutableLiveData.observeForever(new Observer<CreateInventoryResult>() {
+            @Override
+            public void onChanged(@Nullable CreateInventoryResult createInventoryResult) {
+                if (createInventoryResult != null && !createInventoryResult.getSuccess()) {
+                    AppUtils.getInstance().showAlertDialog(getActivity(), "", createInventoryResult.getMessage().toString(), getString(R.string.ok), "", NewInventoryFragment.this, 0);
+                }
+            }
+        });
 
     }
 

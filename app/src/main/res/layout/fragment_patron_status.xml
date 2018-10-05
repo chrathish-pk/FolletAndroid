@@ -35,10 +35,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
                 android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -92,15 +92,14 @@
                             android:layout_toLeftOf="@+id/closeBtn"
                             android:orientation="vertical">
 
-                        <TextView
+                            <TextView
                                 android:id="@+id/patronName"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/opensans_regular"
                                 android:text="@{patronInfo.lastName + ',' + patronInfo.firstName}"
                                 android:textColor="@color/blueLabel"
-                                android:textSize="@dimen/text_size_16sp"
-                                />
+                                android:textSize="@dimen/text_size_16sp" />
 
                             <TextView
                                 android:id="@+id/patronType"
@@ -131,17 +130,15 @@
                             android:id="@+id/notes"
                             android:layout_width="20dp"
                             android:layout_height="26dp"
-                            android:layout_alignParentRight="true"
                             android:layout_below="@+id/closeBtn"
-                            android:layout_marginBottom="@dimen/layout_size_15"
-                            android:layout_marginRight="@dimen/layout_size_5"
+                            android:layout_alignParentRight="true"
                             android:layout_marginTop="@dimen/layout_size_20"
+                            android:layout_marginRight="@dimen/layout_size_5"
+                            android:layout_marginBottom="@dimen/layout_size_15"
                             android:src="@drawable/note_icon"
-                            android:visibility="@{patronInfo.notes != null &amp;&amp; patronInfo.notes.size() != 0 ? View.VISIBLE : View.GONE}"
-                            />
+                            android:visibility="@{patronInfo.notes != null &amp;&amp; patronInfo.notes.size() != 0 ? View.VISIBLE : View.GONE}" />
 
                     </RelativeLayout>
-
 
 
                 </RelativeLayout>
@@ -168,9 +165,9 @@
                         android:drawableRight="@drawable/right_arrow"
                         android:fontFamily="@font/opensans_regular"
                         android:gravity="center_vertical"
-                        android:paddingBottom="@dimen/layout_size_9"
                         android:paddingHorizontal="@dimen/layout_size_16"
                         android:paddingTop="@dimen/layout_size_14"
+                        android:paddingBottom="@dimen/layout_size_9"
                         android:text="@{@string/item_checkout_count(String.valueOf(patronInfo.assetCheckOuts.size() + patronInfo.checkouts.size()))}"
                         android:textSize="@dimen/text_size_16sp" />
 
@@ -226,9 +223,9 @@
                         android:drawableRight="@drawable/right_arrow"
                         android:fontFamily="@font/opensans_regular"
                         android:gravity="center_vertical"
-                        android:paddingBottom="@dimen/layout_size_9"
                         android:paddingHorizontal="@dimen/layout_size_16"
                         android:paddingTop="@dimen/layout_size_14"
+                        android:paddingBottom="@dimen/layout_size_9"
                         android:text="@{@string/fines_count(patronInfo.fines.size())}"
                         android:textSize="@dimen/text_size_16sp" />
 
@@ -283,9 +280,9 @@
                         android:drawableRight="@drawable/right_arrow"
                         android:fontFamily="@font/opensans_regular"
                         android:gravity="center_vertical"
-                        android:paddingBottom="@dimen/layout_size_9"
                         android:paddingHorizontal="@dimen/layout_size_16"
                         android:paddingTop="@dimen/layout_size_14"
+                        android:paddingBottom="@dimen/layout_size_9"
                         android:text="@{@string/title_hold_count(String.valueOf(patronInfo.holds.size()))}"
                         android:textSize="@dimen/text_size_16sp" />
 
@@ -337,9 +334,9 @@
                 android:layout_below="@+id/patronEntryIncludeLayout"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="10dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:fontFamily="@font/opensans_regular"
                 android:gravity="center"
                 android:padding="10dp"

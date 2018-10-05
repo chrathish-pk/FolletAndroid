@@ -72,8 +72,11 @@ public class SelectInventoryFragment extends BaseFragment<FragmentInventoryListB
 
         fragmentInventoryListBinding.newInventoryBtn.setOnClickListener(this);
         fragmentInventoryListBinding.inventoryRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
-        selectInventoryListAdapter = new SelectInventoryListAdapter(activity, inProgressInventoryResults.getInventoryList(), SelectInventoryFragment.this);
-        fragmentInventoryListBinding.inventoryRecyclerView.setAdapter(selectInventoryListAdapter);
+
+        if (inProgressInventoryResults != null) {
+            selectInventoryListAdapter = new SelectInventoryListAdapter(activity, inProgressInventoryResults.getInventoryList(), SelectInventoryFragment.this);
+            fragmentInventoryListBinding.inventoryRecyclerView.setAdapter(selectInventoryListAdapter);
+        }
     }
 
     @Override
