@@ -16,6 +16,7 @@ import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventory;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventoryResult;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InProgressInventoryResults;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryScan;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.Location;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.SubLocation;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
@@ -116,4 +117,8 @@ public interface APIInterface {
     @POST("rest/v6/circulation/createinventory")
     Observable<CreateInventoryResult> createInventory(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site, @Body CreateInventory createInventory);
 
+    @GET("rest/v6/circulation/inventoryscan")
+    Observable<InventoryScan> getInventoryScan(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site,
+            @Query("collectionType") int collectionType, @Query("partialID") int partialID, @Query("barcode") String barcode, @Query("scanningLocationID")
+            int scanningLocationID, @Query("lastCopyID") int lastCopyID, @Query("checkShelfOrder") boolean checkShelfOrder);
 }

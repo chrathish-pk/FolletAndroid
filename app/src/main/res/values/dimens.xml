@@ -16,7 +16,9 @@
 
     <dimen name="layout_size_2">2dp</dimen>
     <dimen name="layout_size_5">5dp</dimen>
+    <dimen name="layout_size_7">7dp</dimen>
     <dimen name="layout_size_6">6dp</dimen>
+    <dimen name="layout_size_8">8dp</dimen>
     <dimen name="layout_size_9">9dp</dimen>
     <dimen name="layout_size_10">10dp</dimen>
     <dimen name="layout_size_11">11dp</dimen>

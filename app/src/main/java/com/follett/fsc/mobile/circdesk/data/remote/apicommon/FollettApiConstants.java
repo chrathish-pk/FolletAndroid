@@ -31,7 +31,8 @@ public class FollettApiConstants {
     public static final int CREATE_INVENTORY_REQUEST_CODE = CIRCULATION_TYPE_REQUEST_CODE + 1;
 
     public static final int GET_SELECTED_INVENTORY_REQUEST_CODE = CREATE_INVENTORY_REQUEST_CODE + 1;
-
+    
+    public static final int INVENTORY_SCAN_REQUEST_CODE = GET_SELECTED_INVENTORY_REQUEST_CODE + 1;
     
     
     public static final String SERVICE_ISSUE = "Service issue. Please try again later.";

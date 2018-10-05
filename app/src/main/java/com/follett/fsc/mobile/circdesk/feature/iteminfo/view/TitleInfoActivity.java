@@ -6,12 +6,6 @@
 
 package com.follett.fsc.mobile.circdesk.feature.iteminfo.view;
 
-import android.arch.lifecycle.Observer;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.View;
-
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
@@ -19,6 +13,12 @@ import com.follett.fsc.mobile.circdesk.databinding.ActivityTitleDetailsBinding;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.viewmodel.AdditionalInfoViewModel;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
+
+import android.arch.lifecycle.Observer;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.View;
 
 public class TitleInfoActivity extends BaseActivity<AdditionalInfoViewModel> implements View.OnClickListener, AdditionalInfoListener {
 
@@ -53,7 +53,7 @@ public class TitleInfoActivity extends BaseActivity<AdditionalInfoViewModel> imp
                     @Override
                     public void onChanged(@Nullable Object o) {
                         AppUtils.getInstance()
-                                .showAlertDialog(TitleInfoActivity.this, String.valueOf(o));
+                                .showAlertDialog(TitleInfoActivity.this, null, String.valueOf(o));
                     }
                 });
     }

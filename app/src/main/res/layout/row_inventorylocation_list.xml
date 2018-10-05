@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 ~ /*
  ~  * Copyright (c) 2018 Follett. All rights reserved.
  ~  */
@@ -9,7 +10,7 @@
 
         <variable
             name="LocationList"
-            type="com.follett.fsc.mobile.circdesk.feature.inventory.model.LocationList" />
+            type="com.follett.fsc.mobile.circdesk.feature.inventory.model.LocationList"/>
 
     </data>
 
@@ -17,7 +18,8 @@
         android:id="@+id/inventoryLocationListLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true">
+        android:clickable="true"
+        android:paddingTop="@dimen/layout_size_13">
 
         <TextView
             android:id="@+id/inventoryLocationListName"
@@ -25,25 +27,29 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:fontFamily="@font/opensans_regular"
-            android:padding="10dp"
+            android:paddingLeft="@dimen/layout_size_16"
             android:text="@{LocationList.name}"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
-        <CheckBox
-            android:id="@+id/inventoryLocationListCheckbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <RadioButton
+            android:id="@+id/radioButton"
+            android:layout_width="@dimen/layout_size_24"
+            android:layout_height="@dimen/layout_size_24"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:padding="10dp" />
+            android:layout_marginLeft="@dimen/layout_size_16"
+            android:layout_marginRight="@dimen/layout_size_16"
+            android:button="@null"
+            android:drawableRight="@drawable/customradiobtn"
+            android:textSize="16sp"/>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/inventoryLocationListCheckbox"
-            android:layout_marginTop="10dp"
-            android:background="@color/editTextBorderColor" />
+            android:layout_below="@+id/radioButton"
+            android:layout_marginTop="@dimen/layout_size_17"
+            android:background="@color/editTextBorderColor"/>
 
     </RelativeLayout>
 
