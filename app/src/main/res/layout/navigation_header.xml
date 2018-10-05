@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<!--
+~ /*
+ ~  * Copyright (c) 2018 Follett. All rights reserved.
+ ~  */
+ -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
         <variable name="userDetails" type="com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences"/>
