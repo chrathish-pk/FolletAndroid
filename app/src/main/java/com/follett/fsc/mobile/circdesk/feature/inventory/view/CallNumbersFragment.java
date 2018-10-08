@@ -1,9 +1,5 @@
 package com.follett.fsc.mobile.circdesk.feature.inventory.view;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.View;
-
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
@@ -12,6 +8,10 @@ import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepositor
 import com.follett.fsc.mobile.circdesk.databinding.FragmentCallNumbersExcludeItemsBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.CallNumbersViewModel;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
+
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.View;
 
 public class CallNumbersFragment extends BaseFragment<FragmentCallNumbersExcludeItemsBinding, CallNumbersViewModel> implements View.OnClickListener {
 

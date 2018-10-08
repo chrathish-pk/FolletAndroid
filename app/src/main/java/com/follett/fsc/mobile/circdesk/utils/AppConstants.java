@@ -20,10 +20,13 @@ public class AppConstants {
     public static final String PATRON_TITLE_KEY = "patrontitle";
     
     public static final String DISTRICT_LIST_KEY = "districtlist";
-    
 
     public static final String EXCEPTION = "Exception";
-
-
+    
+    public static final String SCANNER_UNAVAILABLE = "Scanner unavailable";
+    
+    public static final String SCANNER_PROPERTY_FAILED = "Failed to apply properties in Scanner";
+    
+    public static final String BARCODE_READER_NOT_AVAILABLE = "Barcodereader not available";
 
 }

@@ -7,7 +7,7 @@
 package com.follett.fsc.mobile.circdesk.feature.patronstatus.viewmodel;
 
 import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
+import com.follett.fsc.mobile.circdesk.app.base.ScannerViewModel;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
@@ -28,7 +28,7 @@ import android.widget.TextView;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
 
-public class PatronStatusViewModel extends BaseViewModel implements NetworkInterface {
+public class PatronStatusViewModel extends ScannerViewModel implements NetworkInterface {
     
     public final MutableLiveData<PatronInfo> mPatronInfo = new MutableLiveData<>();
     
