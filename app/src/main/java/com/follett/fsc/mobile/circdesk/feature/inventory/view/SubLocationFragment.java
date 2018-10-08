@@ -11,11 +11,16 @@ import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentSubLocationBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.SubLocation;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.SublocationList;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.SubLocationViewModel;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class SubLocationFragment extends BaseFragment<FragmentSubLocationBinding, SubLocationViewModel> implements ItemClickListener, View.OnClickListener {
@@ -73,6 +78,7 @@ public class SubLocationFragment extends BaseFragment<FragmentSubLocationBinding
     public void onClick(View v) {
         if (v.getId() == R.id.backBtn) {
             String selectedSubLocation = null;
+            List<SublocationList> sublocationLists = new ArrayList<>();
             for (SublocationList subLocationList : subLocationData.getSublocationList()) {
                 if (subLocationList.isSelected()) {
                     if (selectedSubLocation == null) {
@@ -81,8 +87,13 @@ public class SubLocationFragment extends BaseFragment<FragmentSubLocationBinding
                         selectedSubLocation = selectedSubLocation + "," + subLocationList.getSublocationName();
                     }
                 }
+                sublocationLists.add(subLocationList);
             }
             AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_SELECTED_SUB_LOCATION, selectedSubLocation);
+
+            String subLocationJSONString = new Gson().toJson(sublocationLists);
+            AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_SELECTED_SUB_LOCATION_JSON, subLocationJSONString);
+
             if (getActivity() != null) {
                 ((SetupActivity) getActivity()).selectedData.postValue(true);
             }

@@ -61,9 +61,11 @@ public class AppSharedPreferences {
     public static final String KEY_INVENTORY_NAME = "inventoryName";
     public static final String KEY_SELECTED_INVENTORY_PARTIAL_ID = "selectedInventoryPartialID";
     public static final String KEY_SELECTED_SUB_LOCATION = "selectedSubLocation";
+    public static final String KEY_SELECTED_SUB_LOCATION_JSON = "selectedSubLocationJson";
     public static final String KEY_CALL_NUMBER_FROM = "callNumberFrom";
     public static final String KEY_CALL_NUMBER_TO = "callNumberTo";
     public static final String KEY_CIRCULATION_TYPE_LIST = "circulationTypeList";
+    public static final String KEY_CIRCULATION_TYPE_LIST_JSON = "circulationTypeListJson";
     public static final String KEY_SEEN_DATE = "seenDate";
     public static final String KEY_SEEN_FORMAT_DATE = "seenFormatDate";
 

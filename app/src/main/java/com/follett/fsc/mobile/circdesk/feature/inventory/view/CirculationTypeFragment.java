@@ -17,11 +17,16 @@ import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentCirculationtypeLayoutBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CircTypeList;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CirculationTypeList;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.CirculationTypeViewModel;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class CirculationTypeFragment extends BaseFragment<FragmentCirculationtypeLayoutBinding, CirculationTypeViewModel> implements ItemClickListener, View.OnClickListener {
@@ -69,8 +74,7 @@ public class CirculationTypeFragment extends BaseFragment<FragmentCirculationtyp
 
     @Override
     public void onItemClick(View view, int position) {
-        //circulationTypeViewModel.circulationTypeListMutableLiveData.getValue().getCircTypeList().get(position).setSelected(true);
-        //circTypeRecordList.add(new CircTypeRecord(circulationTypeViewModel.circulationTypeListMutableLiveData.getValue().getCircTypeList().get(position).getCircTypeID()));
+        //do something
     }
 
 
@@ -78,6 +82,7 @@ public class CirculationTypeFragment extends BaseFragment<FragmentCirculationtyp
     public void onClick(View v) {
         if (v.getId() == R.id.backBtn) {
             String selectedCirculationTypes = null;
+            List<CircTypeList> circTypeLists = new ArrayList<>();
             for (CircTypeList circTypeList : circulationTypeListData.getCircTypeList()) {
                 if (circTypeList.isSelected()) {
                     if (selectedCirculationTypes == null) {
@@ -85,18 +90,19 @@ public class CirculationTypeFragment extends BaseFragment<FragmentCirculationtyp
                     } else {
                         selectedCirculationTypes = selectedCirculationTypes + "," + circTypeList.getCircTypeDescription();
                     }
+                    circTypeLists.add(circTypeList);
                 }
             }
             AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_CIRCULATION_TYPE_LIST, selectedCirculationTypes);
+
+            String circulationTypesJSONString = new Gson().toJson(circTypeLists);
+            AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_CIRCULATION_TYPE_LIST_JSON, circulationTypesJSONString);
+
             if (getActivity() != null) {
                 ((SetupActivity) getActivity()).selectedData.postValue(true);
             }
             mActivity.onBackPressed();
         }
 
-
-        //String circulationTypesJSONString = new Gson().toJson(circTypeRecordList);
-        //AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_CIRCULATION_TYPE_LIST, circulationTypesJSONString);
-        //mActivity.onBackPressed();
     }
 }

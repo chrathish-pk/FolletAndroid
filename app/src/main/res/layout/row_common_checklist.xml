@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/itemInventoryRadioBtn"
+            android:layout_toLeftOf="@id/itemCheckbox"
             android:fontFamily="@font/opensans_regular"
             android:padding="10dp"
             android:text="@{circTypeList.circTypeDescription}" />
