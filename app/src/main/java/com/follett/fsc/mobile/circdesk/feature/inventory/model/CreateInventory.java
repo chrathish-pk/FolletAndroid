@@ -9,11 +9,11 @@ public class CreateInventory  {
     private String accountedForSince;
     private String callNumberFrom;
     private String callNumberTo;
-    private List<SubLocation> sublocationList;
-    private List<CircTypeRecord> circTypeList;
+    private List<SubLocationID> sublocationList;
+    private List<CirculationID> circTypeList;
 
 
-    public CreateInventory(int collectionType, String inventoryName, String accountedForSince, String callNumberFrom, String callNumberTo, List<SubLocation> sublocationList, List<CircTypeRecord> circTypeList) {
+    public CreateInventory(int collectionType, String inventoryName, String accountedForSince, String callNumberFrom, String callNumberTo, List<SubLocationID> sublocationList, List<CirculationID> circTypeList) {
         this.collectionType = collectionType;
         this.inventoryName = inventoryName;
         this.accountedForSince = accountedForSince;
@@ -63,19 +63,19 @@ public class CreateInventory  {
         this.callNumberTo = callNumberTo;
     }
 
-    public List<SubLocation> getSublocationList() {
+    public List<SubLocationID> getSublocationList() {
         return sublocationList;
     }
 
-    public void setSublocationList(List<SubLocation> sublocationList) {
+    public void setSublocationList(List<SubLocationID> sublocationList) {
         this.sublocationList = sublocationList;
     }
 
-    public List<CircTypeRecord> getCircTypeList() {
+    public List<CirculationID> getCircTypeList() {
         return circTypeList;
     }
 
-    public void setCircTypeList(List<CircTypeRecord> circTypeList) {
+    public void setCircTypeList(List<CirculationID> circTypeList) {
         this.circTypeList = circTypeList;
     }
 }

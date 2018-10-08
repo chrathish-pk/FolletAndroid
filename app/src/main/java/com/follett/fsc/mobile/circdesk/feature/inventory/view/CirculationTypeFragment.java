@@ -20,6 +20,7 @@ import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentCirculationtypeLayoutBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CircTypeList;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.CirculationID;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CirculationTypeList;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.CirculationTypeViewModel;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
@@ -82,7 +83,7 @@ public class CirculationTypeFragment extends BaseFragment<FragmentCirculationtyp
     public void onClick(View v) {
         if (v.getId() == R.id.backBtn) {
             String selectedCirculationTypes = null;
-            List<CircTypeList> circTypeLists = new ArrayList<>();
+            List<CirculationID> circulationIDList = new ArrayList<>();
             for (CircTypeList circTypeList : circulationTypeListData.getCircTypeList()) {
                 if (circTypeList.isSelected()) {
                     if (selectedCirculationTypes == null) {
@@ -90,12 +91,12 @@ public class CirculationTypeFragment extends BaseFragment<FragmentCirculationtyp
                     } else {
                         selectedCirculationTypes = selectedCirculationTypes + "," + circTypeList.getCircTypeDescription();
                     }
-                    circTypeLists.add(circTypeList);
+                    circulationIDList.add(new CirculationID(circTypeList.getCircTypeID()));
                 }
             }
             AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_CIRCULATION_TYPE_LIST, selectedCirculationTypes);
 
-            String circulationTypesJSONString = new Gson().toJson(circTypeLists);
+            String circulationTypesJSONString = new Gson().toJson(circulationIDList);
             AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_CIRCULATION_TYPE_LIST_JSON, circulationTypesJSONString);
 
             if (getActivity() != null) {

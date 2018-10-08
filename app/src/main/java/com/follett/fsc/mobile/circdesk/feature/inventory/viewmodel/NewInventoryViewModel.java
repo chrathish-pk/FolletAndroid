@@ -17,11 +17,11 @@ import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
-import com.follett.fsc.mobile.circdesk.feature.inventory.model.CircTypeRecord;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.CirculationID;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventory;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventoryResult;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.NewInventoryData;
-import com.follett.fsc.mobile.circdesk.feature.inventory.model.SubLocation;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.SubLocationID;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import com.google.gson.Gson;
@@ -106,17 +106,17 @@ public class NewInventoryViewModel extends BaseViewModel implements NetworkInter
     private CreateInventory constructJson() {
 
         String circTypes = AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_CIRCULATION_TYPE_LIST_JSON);
-        List<CircTypeRecord> circTypeRecords = new Gson().fromJson(circTypes, new TypeToken<List<CircTypeRecord>>() {}.getType());
+        List<CirculationID> circulationIDList = new Gson().fromJson(circTypes, new TypeToken<List<CirculationID>>() {}.getType());
 
         String subLocation = AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SELECTED_SUB_LOCATION_JSON);
-        List<SubLocation> subLocationList = new Gson().fromJson(subLocation, new TypeToken<List<SubLocation>>() {}.getType());
+        List<SubLocationID> subLocationList = new Gson().fromJson(subLocation, new TypeToken<List<SubLocationID>>() {}.getType());
 
         CreateInventory createInventory = new CreateInventory(AppRemoteRepository.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED) ? 0 : 4,
                 AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_INVENTORY_NAME),
                 AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SEEN_FORMAT_DATE),
                 AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_CALL_NUMBER_FROM),
                 AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_CALL_NUMBER_TO), subLocationList,
-                circTypeRecords);
+                circulationIDList);
 
         return createInventory;
     }
