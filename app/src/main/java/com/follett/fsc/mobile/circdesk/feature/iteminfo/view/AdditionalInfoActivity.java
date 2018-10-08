@@ -8,6 +8,7 @@ package com.follett.fsc.mobile.circdesk.feature.iteminfo.view;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
+import com.follett.fsc.mobile.circdesk.app.base.ScannerViewModel;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityMoreDetailsBinding;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.viewmodel.AdditionalInfoViewModel;
@@ -15,7 +16,7 @@ import com.follett.fsc.mobile.circdesk.feature.iteminfo.viewmodel.AdditionalInfo
 import android.os.Bundle;
 import android.view.View;
 
-public class AdditionalInfoActivity extends BaseActivity<AdditionalInfoViewModel> implements View.OnClickListener {
+public class AdditionalInfoActivity extends BaseActivity<ScannerViewModel> implements View.OnClickListener {
 
     ActivityMoreDetailsBinding activityMoreDetailsBinding;
     private TitleDetails titleDetails;
