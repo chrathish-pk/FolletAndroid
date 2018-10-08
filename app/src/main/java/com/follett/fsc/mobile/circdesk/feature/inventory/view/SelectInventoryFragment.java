@@ -73,7 +73,7 @@ public class SelectInventoryFragment extends BaseFragment<FragmentInventoryListB
         fragmentInventoryListBinding.newInventoryBtn.setOnClickListener(this);
         fragmentInventoryListBinding.inventoryRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
 
-        if (inProgressInventoryResults != null) {
+        if (inProgressInventoryResults != null && inProgressInventoryResults.getInventoryList() != null) {
             selectInventoryListAdapter = new SelectInventoryListAdapter(activity, inProgressInventoryResults.getInventoryList(), SelectInventoryFragment.this);
             fragmentInventoryListBinding.inventoryRecyclerView.setAdapter(selectInventoryListAdapter);
         }
@@ -103,6 +103,9 @@ public class SelectInventoryFragment extends BaseFragment<FragmentInventoryListB
             AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_CALL_NUMBER_FROM);
             AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_CALL_NUMBER_TO);
             AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_CIRCULATION_TYPE_LIST);
+            AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_CIRCULATION_TYPE_LIST_JSON);
+            AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SELECTED_SUB_LOCATION);
+            AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SELECTED_SUB_LOCATION_JSON);
             AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SEEN_FORMAT_DATE);
             AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SEEN_DATE);
             AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_INVENTORY_NAME);

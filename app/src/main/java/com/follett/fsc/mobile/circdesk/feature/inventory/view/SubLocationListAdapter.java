@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
@@ -44,6 +43,8 @@ public class SubLocationListAdapter extends RecyclerView.Adapter<SubLocationList
         holder.rowLocationListBinding.locationItemChecklistLayout.setOnClickListener(this);
         holder.rowLocationListBinding.locationitemChecklistName.setOnClickListener(this);
 
+        subLocationList.getSublocationList().get(position).setSelected(holder.rowLocationListBinding.locationitemCheckbox.isChecked());
+
     }
 
     @Override
@@ -53,7 +54,6 @@ public class SubLocationListAdapter extends RecyclerView.Adapter<SubLocationList
 
     @Override
     public void onClick(View v) {
-        subLocationList.getSublocationList().get((Integer) v.getTag()).setSelected(((CheckBox)v).isChecked());
         notifyDataSetChanged();
     }
 }

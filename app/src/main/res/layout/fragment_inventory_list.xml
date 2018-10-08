@@ -14,10 +14,11 @@
             type="com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.SelectInventoryViewModel" />
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="true">
+        android:clickable="true"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/newInventoryBtn"
@@ -31,22 +32,16 @@
             android:text="@string/newInventory"
             android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="@dimen/text_size_14sp" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/inventoryRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/newInventoryBtn">
+            android:layout_marginTop="20dp">
 
         </android.support.v7.widget.RecyclerView>
 
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 
 </layout>

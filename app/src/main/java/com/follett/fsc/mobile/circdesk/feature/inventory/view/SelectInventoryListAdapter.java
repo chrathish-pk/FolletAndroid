@@ -59,6 +59,7 @@ public class SelectInventoryListAdapter extends RecyclerView.Adapter<SelectInven
 
     @Override
     public void onClick(View v) {
+
         itemClickListener.onItemClick(v, (Integer) v.getTag());
     }
 }
