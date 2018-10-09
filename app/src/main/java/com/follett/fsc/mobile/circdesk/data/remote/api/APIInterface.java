@@ -12,7 +12,8 @@ import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckoutRes
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.ScanPatron;
 import com.follett.fsc.mobile.circdesk.feature.inventory.InventorySelectionCriteria;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CirculationTypeList;
-import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventory;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventoryLibRequest;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventoryResRequest;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventoryResult;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InProgressInventoryResults;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
@@ -115,7 +116,10 @@ public interface APIInterface {
                                                      @Query("partialID") int partialID);
 
     @POST("rest/v6/circulation/createinventory")
-    Observable<CreateInventoryResult> createInventory(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site, @Body CreateInventory createInventory);
+    Observable<CreateInventoryResult> createLibInventory(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site, @Body CreateInventoryLibRequest createInventoryLibRequest);
+
+    @POST("rest/v6/circulation/createinventory")
+    Observable<CreateInventoryResult> createResInventory(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site, @Body CreateInventoryResRequest createInventoryResRequest);
 
     @GET("rest/v6/circulation/inventoryscan")
     Observable<InventoryScan> getInventoryScan(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site,

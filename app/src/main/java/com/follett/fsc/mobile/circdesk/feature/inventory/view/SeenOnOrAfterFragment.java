@@ -10,6 +10,7 @@ import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentCallNumbersExcludeItemsBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.SeenOnOrAfterViewModel;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
@@ -44,8 +45,15 @@ public class SeenOnOrAfterFragment extends BaseFragment<FragmentCallNumbersExclu
         super.onActivityCreated(savedInstanceState);
         fragmentCallNumbersExcludeItemsBinding = getViewDataBinding();
 
-        fragmentCallNumbersExcludeItemsBinding.descriptionText.setText(getString(R.string.excludeItemsDescription));
         fragmentCallNumbersExcludeItemsBinding.enterDate.setVisibility(View.VISIBLE);
+
+        if (AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED)) {
+            fragmentCallNumbersExcludeItemsBinding.descriptionText.setText(getString(R.string.excludeItemsLibDescription));
+
+        } else {
+            fragmentCallNumbersExcludeItemsBinding.descriptionText.setText(getString(R.string.excludeItemsResDescription));
+
+        }
 
         if (getActivity() != null) {
             Date c = Calendar.getInstance().getTime();

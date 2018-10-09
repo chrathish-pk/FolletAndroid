@@ -2,7 +2,7 @@ package com.follett.fsc.mobile.circdesk.feature.inventory.model;
 
 import java.util.List;
 
-public class CreateInventory  {
+public class CreateInventoryLibRequest {
 
     private  int collectionType;
     private String inventoryName;
@@ -13,7 +13,7 @@ public class CreateInventory  {
     private List<CirculationID> circTypeList;
 
 
-    public CreateInventory(int collectionType, String inventoryName, String accountedForSince, String callNumberFrom, String callNumberTo, List<SubLocationID> sublocationList, List<CirculationID> circTypeList) {
+    public CreateInventoryLibRequest(int collectionType, String inventoryName, String accountedForSince, String callNumberFrom, String callNumberTo, List<SubLocationID> sublocationList, List<CirculationID> circTypeList) {
         this.collectionType = collectionType;
         this.inventoryName = inventoryName;
         this.accountedForSince = accountedForSince;

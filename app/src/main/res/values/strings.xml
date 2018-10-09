@@ -222,7 +222,8 @@
     <string name="includeItemAttributes">Include Items with Attributes</string>
     <string name="checkoutHandling">Checkout Handling</string>
     <string name="callNumbersLabel">Call Numbers:</string>
-    <string name="excludeItemsDescription">All copies meeting the above criteria will be set to "unaccounted for" excepted for copies that have been seen on of after</string>
+    <string name="excludeItemsLibDescription">All copies meeting the above criteria will be set to "unaccounted for" excepted for copies that have been seen on of after</string>
+    <string name="excludeItemsResDescription">All items meeting the above criteria will be set to "unaccounted for" excepted for items that have been seen on or after</string>
     <string name="started">" Started "</string>
     <string name="enterAmount">Enter Amount</string>
     <string name="checkInItemsInCirculation">Check In Items In-Circulation</string>
