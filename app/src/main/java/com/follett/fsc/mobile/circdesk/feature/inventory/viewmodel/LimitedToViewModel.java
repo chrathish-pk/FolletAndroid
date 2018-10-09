@@ -3,6 +3,7 @@ package com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel;
 import android.app.Application;
 import android.support.annotation.NonNull;
 
+import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
@@ -55,10 +56,10 @@ public class LimitedToViewModel extends BaseViewModel implements NetworkInterfac
     public List<LimitedToParentData> getLimitedToParentData() {
         List<LimitedToParentData> limitedToParentDataList = new ArrayList<>();
 
-        limitedToParentDataList.add(new LimitedToParentData("Limited To", null, false));
-        limitedToParentDataList.add(new LimitedToParentData("Home Location", subLocation, false));
-        limitedToParentDataList.add(new LimitedToParentData("Custodian", null, false));
-        limitedToParentDataList.add(new LimitedToParentData("Department", null, false));
+        limitedToParentDataList.add(new LimitedToParentData(application.getString(R.string.limitedTo), null, false));
+        limitedToParentDataList.add(new LimitedToParentData(application.getString(R.string.homeLocation), subLocation, false));
+        limitedToParentDataList.add(new LimitedToParentData(application.getString(R.string.custodian), null, false));
+        limitedToParentDataList.add(new LimitedToParentData(application.getString(R.string.department), null, false));
 
         return limitedToParentDataList;
     }
