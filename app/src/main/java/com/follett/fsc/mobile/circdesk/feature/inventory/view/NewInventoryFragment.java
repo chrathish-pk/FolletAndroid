@@ -97,6 +97,8 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
             case 0:
                 if (isLibrarySelected) {
                     mActivity.pushFragment(new CallNumbersFragment(), R.id.loginContainer, getString(R.string.callNumbers), true, true);
+                } else {
+                    mActivity.pushFragment(new LimitedToFragment(), R.id.loginContainer, getString(R.string.inventoryLimitedTo), true, true);
                 }
                 break;
             case 1:
@@ -121,7 +123,9 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
             case 4:
                 mActivity.pushFragment(new InventoryCheckoutHandlingFragment(), R.id.loginContainer, getString(R.string.checkoutHandling), true, true);
                 break;
-
+            case 5:
+                mActivity.pushFragment(new SeenOnOrAfterFragment(), R.id.loginContainer, getString(R.string.seenOnOrAfter), true, true);
+                break;
             case 100:
                 AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_INVENTORY_NAME, fragmentNewInventoryBinding.newInventoryName.getText().toString().trim());
                 newInventoryViewModel.getCreatedInventory();

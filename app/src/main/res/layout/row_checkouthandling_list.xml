@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:checked="@{checkoutHandlingList.checkoutHandlingName.equalsIgnoreCase(@string/checkInItemsInCirculation) ? true : false}"
+            android:checked="@{checkoutHandlingList.selected}"
             android:padding="10dp" />
 
         <View

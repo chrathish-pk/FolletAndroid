@@ -200,8 +200,13 @@
     <string name="call_from">Call Numbers from:</string>
     <string name="call_num">Call Number</string>
     <string name="callNumbers">Call Numbers</string>
+    <string name="inventoryLimitedTo">Inventory Limited To</string>
     <string name="call_to">To:</string>
     <string name="enter_date">Enter Date</string>
+    <string name="limitedTo">Limited To</string>
+    <string name="homeLocation">Home Location</string>
+    <string name="custodian">Custodian</string>
+    <string name="department">Department</string>
 
     <string name="newInventory">NEW INVENTORY</string>
     <string name="newInventoryName">New Inventory Name</string>

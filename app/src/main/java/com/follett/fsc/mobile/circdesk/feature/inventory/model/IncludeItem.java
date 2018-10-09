@@ -2,13 +2,13 @@ package com.follett.fsc.mobile.circdesk.feature.inventory.model;
 
 public class IncludeItem {
 
+    private String includeItemName;
 
-    public IncludeItem() {
-    }
+    private boolean isSelected;
 
     public IncludeItem(String includeItemName) {
         this.includeItemName = includeItemName;
-      }
+    }
 
     public String getIncludeItemName() {
         return includeItemName;
@@ -18,5 +18,11 @@ public class IncludeItem {
         this.includeItemName = includeItemName;
     }
 
-    private String includeItemName;
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 }
