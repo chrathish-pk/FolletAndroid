@@ -48,8 +48,6 @@ public class LimitedToFragment extends BaseFragment<FragmentLimitedToBinding, Li
         limitedToViewModel.fetchSubLocationList();
 
         fragmentLimitedToBinding.limitedToParentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-
     }
 
     @Override
@@ -62,7 +60,7 @@ public class LimitedToFragment extends BaseFragment<FragmentLimitedToBinding, Li
                     limitedToParentDataList.get(i).setSelected(false);
             }
 
-            limitedToAdapter.notifyItemChanged(position);
+            limitedToAdapter.notifyDataSetChanged();
         }
     }
 

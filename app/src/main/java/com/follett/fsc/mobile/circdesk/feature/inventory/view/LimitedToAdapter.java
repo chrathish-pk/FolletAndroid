@@ -44,6 +44,7 @@ public class LimitedToAdapter extends RecyclerView.Adapter<LimitedToAdapter.Limi
     public void onBindViewHolder(@NonNull final LimitedToViewHolder holder, int position) {
         holder.rowLimitedToBinding.setLimitedToParentData(limitedToParentDataList.get(position));
 
+        holder.rowLimitedToBinding.itemLimitedToRadioBtn.setChecked(limitedToParentDataList.get(position).isSelected());
         selectedPosition = position;
 
         holder.rowLimitedToBinding.itemLimitedToLayout.setTag(position);
@@ -54,6 +55,7 @@ public class LimitedToAdapter extends RecyclerView.Adapter<LimitedToAdapter.Limi
             noOfChild = holder.rowLimitedToBinding.getLimitedToParentData().getSubLocation().getSublocationList().size();
 
         if (noOfChild > 0) {
+            holder.rowLimitedToBinding.itemLimitedToChildLayout.removeAllViews();
             for (int indexView = 0; indexView < noOfChild; indexView++) {
                 TextView textView = new TextView(context);
                 textView.setId(indexView);
@@ -64,7 +66,6 @@ public class LimitedToAdapter extends RecyclerView.Adapter<LimitedToAdapter.Limi
                 //textView.setOnClickListener(this);
 
                 textView.setText(limitedToParentDataList.get(position).getSubLocation().getSublocationList().get(indexView).getSublocationName());
-
                 holder.rowLimitedToBinding.itemLimitedToChildLayout.addView(textView, layoutParams);
             }
         } else
@@ -106,7 +107,7 @@ public class LimitedToAdapter extends RecyclerView.Adapter<LimitedToAdapter.Limi
             super(rowLimitedToBinding.getRoot());
             this.rowLimitedToBinding = rowLimitedToBinding;
 
-            int childCount = 0;
+            /*int childCount = 0;
             if (selectedPosition == 1) {
                 childCount = limitedToParentDataList.get(selectedPosition).getSubLocation().getSublocationList().size();
             }
@@ -121,7 +122,7 @@ public class LimitedToAdapter extends RecyclerView.Adapter<LimitedToAdapter.Limi
                     rowLimitedToBinding.itemLimitedToChildLayout.addView(textView, layoutParams);
                 }
             } else
-                rowLimitedToBinding.itemLimitedToChildLayout.removeAllViews();
+                rowLimitedToBinding.itemLimitedToChildLayout.removeAllViews();*/
 
 
         }
