@@ -5,6 +5,7 @@
  -->
 <resources>
     <string name="app_name">Follett Destiny</string>
+    <string name="dev_brand_name">Honeywell</string>
 
     <!--Fragment name-->
     <string name="CheckoutPatronListFragment">CheckoutPatronListFragment</string>

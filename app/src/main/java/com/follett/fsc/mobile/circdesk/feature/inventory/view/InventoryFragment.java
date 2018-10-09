@@ -8,6 +8,7 @@ package com.follett.fsc.mobile.circdesk.feature.inventory.view;
 
 import android.app.Activity;
 import android.arch.lifecycle.Observer;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -90,8 +91,13 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
         } else {
             isInventoryLibrary(false);
         }
-        mBarcodeReader.addBarcodeListener(this);
-        fragmentInventoryBinding.patronEntryIncludeLayout.scanButton.setOnClickListener(this);
+        String brandName = Build.BRAND;
+        if(brandName.equalsIgnoreCase(getString(R.string.dev_brand_name)))
+        {
+            mBarcodeReader.addBarcodeListener(this);
+            fragmentInventoryBinding.patronEntryIncludeLayout.scanButton.setOnClickListener(this);
+
+        }
         fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setOnClickListener(this);
         fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setOnClickListener(this);
 

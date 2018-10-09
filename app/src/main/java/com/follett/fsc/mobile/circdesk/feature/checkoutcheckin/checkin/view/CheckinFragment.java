@@ -23,6 +23,7 @@ import com.honeywell.aidc.BarcodeReader;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -75,8 +76,13 @@ public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, Checki
         fragmentCheckinBinding.checkinEntryIncludeLayout.patronGoBtn.setOnClickListener(this);
         fragmentCheckinBinding.checkinDetailIncludeLayout.checkedoutInfoBtn.setOnClickListener(this);
         fragmentCheckinBinding.checkinEntryIncludeLayout.checkinLibRecordSwitch.setOnCheckedChangeListener(this);
-        mBarcodeReader.addBarcodeListener(this);
-        fragmentCheckinBinding.checkinEntryIncludeLayout.scanButton.setOnClickListener(this);
+        String brandName = Build.BRAND;
+        if(brandName.equalsIgnoreCase(getString(R.string.dev_brand_name)))
+        {
+            mBarcodeReader.addBarcodeListener(this);
+            fragmentCheckinBinding.checkinEntryIncludeLayout.scanButton.setOnClickListener(this);
+
+        }
 
     }
 

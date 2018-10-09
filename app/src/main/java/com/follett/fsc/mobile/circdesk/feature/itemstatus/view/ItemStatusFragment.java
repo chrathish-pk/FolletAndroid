@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -93,9 +94,15 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
         if (activity == null) {
             return;
         }
-        mBarcodeReader.addBarcodeListener(this);
+        String brandName = Build.BRAND;
+        if(brandName.equalsIgnoreCase(getString(R.string.dev_brand_name)))
+        {
+            mBarcodeReader.addBarcodeListener(this);
+            fragmentItemStatusBinding.itemScanBtn.setOnClickListener(this);
+
+        }
+
         fragmentItemStatusBinding.itemStatusPatronGoBtn.setOnClickListener(this);
-        fragmentItemStatusBinding.itemScanBtn.setOnClickListener(this);
         fragmentItemStatusBinding.itemStatusCheckedoutInfoBtn.setOnClickListener(this);
         fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setOnClickListener(this);
         fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setOnClickListener(this);

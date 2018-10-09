@@ -8,6 +8,7 @@ package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.view;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -67,9 +68,14 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
             return;
         }
         fragmentCheckoutBinding = getViewDataBinding();
-        mBarcodeReader.addBarcodeListener(this);
+        String brandName = Build.BRAND;
+        if(brandName.equalsIgnoreCase(getString(R.string.dev_brand_name)))
+        {
+            mBarcodeReader.addBarcodeListener(this);
+            fragmentCheckoutBinding.patronEntryIncludeLayout.scanButton.setOnClickListener(this);
+
+        }
         fragmentCheckoutBinding.patronEntryIncludeLayout.patronGoBtn.setOnClickListener(this);
-        fragmentCheckoutBinding.patronEntryIncludeLayout.scanButton.setOnClickListener(this);
         fragmentCheckoutBinding.patronDetailIncludeLayout.checkoutCloseBtn.setOnClickListener(this);
         fragmentCheckoutBinding.checkoutDetailIncludeLayout.checkedoutInfoBtn.setOnClickListener(this);
 
