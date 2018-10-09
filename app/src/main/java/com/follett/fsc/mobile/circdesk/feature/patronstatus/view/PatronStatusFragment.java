@@ -218,9 +218,7 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
     }
 
     private void setListener() {
-        String brandName = Build.BRAND;
-        if(brandName.equalsIgnoreCase(getString(R.string.dev_brand_name)))
-        {
+        if (AppUtils.brandName(mActivity)) {
             mBarcodeReader.addBarcodeListener(this);
             mBinding.patronEntryIncludeLayout.scanButton.setOnClickListener(this);
 

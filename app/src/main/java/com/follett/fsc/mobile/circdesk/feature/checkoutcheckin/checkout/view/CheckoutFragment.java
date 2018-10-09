@@ -68,9 +68,7 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
             return;
         }
         fragmentCheckoutBinding = getViewDataBinding();
-        String brandName = Build.BRAND;
-        if(brandName.equalsIgnoreCase(getString(R.string.dev_brand_name)))
-        {
+        if (AppUtils.brandName(mActivity)) {
             mBarcodeReader.addBarcodeListener(this);
             fragmentCheckoutBinding.patronEntryIncludeLayout.scanButton.setOnClickListener(this);
 
