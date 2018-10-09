@@ -18,7 +18,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class AdditionalInfoActivity extends BaseActivity<AdditionalInfoViewModel> implements View.OnClickListener {
+public class AdditionalInfoActivity extends BaseActivity<ScannerViewModel> implements View.OnClickListener {
 
     ActivityMoreDetailsBinding activityMoreDetailsBinding;
     private TitleDetails titleDetails;
