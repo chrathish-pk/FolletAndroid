@@ -113,7 +113,10 @@ public class NewInventoryViewModel extends BaseViewModel implements NetworkInter
         else
             newInventoryDataList.add(new NewInventoryData(application.getString(R.string.excludeItems), AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SEEN_DATE)));
 
-        newInventoryDataList.add(new NewInventoryData(application.getString(R.string.mismatchedItemLocationLabel), "Do Nothing"));
+        if (AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_MISMATCHED_ITEM).isEmpty())
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.mismatchedItemLocationLabel), "Do Nothing"));
+        else
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.mismatchedItemLocationLabel), AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_MISMATCHED_ITEM)));
 
         return newInventoryDataList;
     }

@@ -27,4 +27,14 @@ public class MismatchedItemLocation {
     }
 
     private int mismatchedItemLocationStatus;
+
+    private boolean isSelected;
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 }

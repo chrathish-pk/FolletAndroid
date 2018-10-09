@@ -7,16 +7,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
-import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
-import com.follett.fsc.mobile.circdesk.databinding.RowInventorylocationListBinding;
 import com.follett.fsc.mobile.circdesk.databinding.RowMismatcheditemlocListBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.MismatchedItemLocation;
 
 import java.util.ArrayList;
-
-import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.SCANNING_LOCATION_ID;
 
 public class MismatchedItemLocationsAdapter extends RecyclerView.Adapter<MismatchedItemLocationsAdapter.MismatchedItemLocViewHolder>  {
 
@@ -42,9 +39,8 @@ public class MismatchedItemLocationsAdapter extends RecyclerView.Adapter<Mismatc
 
     @Override
     public void onBindViewHolder(@NonNull MismatchedItemLocationsAdapter.MismatchedItemLocViewHolder holder, int position) {
-
-//        holder.rowMismatcheditemlocListBinding.se
         holder.rowMismatcheditemlocListBinding.setMismatchLocationList(mismatchedItemLocationsList.get(position));
+
         holder.rowMismatcheditemlocListBinding.mismatchedItemLocCheckbox.setChecked(lastSelectedPosition == position);
         holder.rowMismatcheditemlocListBinding.mismatchedItemLocCheckbox.setTag(position);
     }
