@@ -111,6 +111,7 @@ public class SelectInventoryFragment extends BaseFragment<FragmentInventoryListB
             AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_INVENTORY_NAME);
             AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SELECTED_INCLUDE_ITEMS);
             AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SELECTED_CHECKOUT_HANDLING);
+            AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SELECTED_MISMATCHED_ITEM);
 
             mActivity.pushFragment(new NewInventoryFragment(), R.id.loginContainer, getString(R.string.newInventoryTitle), true, true);
         }

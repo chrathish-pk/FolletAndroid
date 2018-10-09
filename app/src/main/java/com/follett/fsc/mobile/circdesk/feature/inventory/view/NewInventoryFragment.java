@@ -126,6 +126,9 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
             case 5:
                 mActivity.pushFragment(new SeenOnOrAfterFragment(), R.id.loginContainer, getString(R.string.seenOnOrAfter), true, true);
                 break;
+            case 6:
+                mActivity.pushFragment(new MismatchedItemLocationsFragment(), R.id.loginContainer, getString(R.string.mismatchedItemLocationLabel), true, true);
+                break;
             case 100:
                 AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_INVENTORY_NAME, fragmentNewInventoryBinding.newInventoryName.getText().toString().trim());
                 newInventoryViewModel.getCreatedInventory();
