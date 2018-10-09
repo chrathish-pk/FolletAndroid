@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ /*
+  ~  * Copyright (c) 2018 Follett. All rights reserved.
+  ~  */
+  -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="limitedToParentData"
+            type="com.follett.fsc.mobile.circdesk.feature.inventory.model.LimitedToParentData" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:id="@+id/itemLimitedToLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true">
+
+            <TextView
+                android:id="@+id/itemLimitedToName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/itemLimitedToRadioBtn"
+                android:fontFamily="@font/opensans_regular"
+                android:padding="10dp"
+                android:text="@{limitedToParentData.limitedToParentName}" />
+
+            <RadioButton
+                android:id="@+id/itemLimitedToRadioBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:checked="@{limitedToParentData.selected}"
+                android:padding="10dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/itemLimitedToRadioBtn"
+                android:layout_marginTop="10dp"
+                android:background="@color/editTextBorderColor" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/itemLimitedToChildLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</layout>

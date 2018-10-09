@@ -97,6 +97,8 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
             case 0:
                 if (isLibrarySelected) {
                     mActivity.pushFragment(new CallNumbersFragment(), R.id.loginContainer, getString(R.string.callNumbers), true, true);
+                } else {
+                    mActivity.pushFragment(new LimitedToFragment(), R.id.loginContainer, getString(R.string.inventoryLimitedTo), true, true);
                 }
                 break;
             case 1:
