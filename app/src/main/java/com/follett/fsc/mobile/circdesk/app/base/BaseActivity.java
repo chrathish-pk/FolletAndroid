@@ -235,6 +235,6 @@ public class BaseActivity<V extends ScannerViewModel> extends AppCompatActivity 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mViewModel.onDestoryScanner(mBarcodeReader, mManager);
+//        mViewModel.onDestoryScanner(mBarcodeReader, mManager);
     }
 }

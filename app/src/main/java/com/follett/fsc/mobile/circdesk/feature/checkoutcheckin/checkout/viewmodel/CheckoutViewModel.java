@@ -7,6 +7,7 @@
 package com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.checkout.viewmodel;
 
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
+import com.follett.fsc.mobile.circdesk.app.base.ScannerViewModel;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
@@ -26,7 +27,7 @@ import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferen
 import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.CHECK_OUT_REQUEST_CODE;
 import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.SCAN_PATRON_REQUEST_CODE;
 
-public class CheckoutViewModel extends BaseViewModel implements NetworkInterface {
+public class CheckoutViewModel extends ScannerViewModel implements NetworkInterface {
 
     private UpdateUIListener updateUIListener;
     public final MutableLiveData<CheckoutResult> checkoutResultMutableLiveData = new MutableLiveData<>();

@@ -17,20 +17,26 @@ import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckinResu
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.view.TitleInfoActivity;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
+import com.honeywell.aidc.BarcodeFailureEvent;
+import com.honeywell.aidc.BarcodeReadEvent;
+import com.honeywell.aidc.BarcodeReader;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.CompoundButton;
 
-public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, CheckinViewModel> implements UpdateUIListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, CheckinViewModel> implements UpdateUIListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener, BarcodeReader.BarcodeListener {
 
     private CheckinViewModel checkinViewModel;
     private FragmentCheckinBinding fragmentCheckinBinding;
     private CheckinResult checkinResult;
     private boolean isLibraryUse;
+    private BarcodeReader mBarcodeReader;
+
 
     @Override
     public int getLayoutId() {
@@ -70,6 +76,20 @@ public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, Checki
         fragmentCheckinBinding.checkinEntryIncludeLayout.patronGoBtn.setOnClickListener(this);
         fragmentCheckinBinding.checkinDetailIncludeLayout.checkedoutInfoBtn.setOnClickListener(this);
         fragmentCheckinBinding.checkinEntryIncludeLayout.checkinLibRecordSwitch.setOnCheckedChangeListener(this);
+        String brandName = Build.BRAND;
+        if(brandName.equalsIgnoreCase(getString(R.string.dev_brand_name)))
+        {
+            mBarcodeReader.addBarcodeListener(this);
+            fragmentCheckinBinding.checkinEntryIncludeLayout.scanButton.setOnClickListener(this);
+
+        }
+
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mBarcodeReader = mActivity.getBarcodeReader();
     }
 
     @Override
@@ -131,20 +151,10 @@ public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, Checki
 
         switch (v.getId()) {
             case R.id.patronGoBtn:
-                AppUtils.getInstance()
-                        .hideKeyBoard(activity, fragmentCheckinBinding.checkinEntryIncludeLayout.patronEntry);
-                if (AppUtils.getInstance().isEditTextNotEmpty(fragmentCheckinBinding.checkinEntryIncludeLayout.patronEntry)) {
-                    if (!isNetworkConnected()) {
-                        AppUtils.getInstance()
-                                .showNoInternetAlertDialog(activity);
-                        return;
-                    }
-                    int collectionType = AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED) ? 0 : 4;
-                    checkinViewModel.getCheckinData(fragmentCheckinBinding.checkinEntryIncludeLayout.patronEntry.getText().toString().trim(), String.valueOf(collectionType), isLibraryUse);
-                } else {
-                    AppUtils.getInstance()
-                            .showShortToastMessages(activity, getString(R.string.errorPatronEntry));
-                }
+                  getCheckInItem();
+                break;
+            case R.id.scanButton:
+                checkinViewModel.triggerSoftwareScanner(mBarcodeReader);
                 break;
             case R.id.checkedoutInfoBtn:
                 if (!isNetworkConnected()) {
@@ -161,8 +171,67 @@ public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, Checki
         }
     }
 
+    private void getCheckInItem() {
+
+        AppUtils.getInstance()
+                .hideKeyBoard(mActivity, fragmentCheckinBinding.checkinEntryIncludeLayout.patronEntry);
+        if (AppUtils.getInstance().isEditTextNotEmpty(fragmentCheckinBinding.checkinEntryIncludeLayout.patronEntry)) {
+            if (!isNetworkConnected()) {
+                AppUtils.getInstance()
+                        .showNoInternetAlertDialog(mActivity);
+                return;
+            }
+            int collectionType = AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED) ? 0 : 4;
+            checkinViewModel.getCheckinData(fragmentCheckinBinding.checkinEntryIncludeLayout.patronEntry.getText().toString().trim(), String.valueOf(collectionType), isLibraryUse);
+        } else {
+            AppUtils.getInstance()
+                    .showShortToastMessages(mActivity, getString(R.string.errorPatronEntry));
+        }
+    }
+
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         isLibraryUse = isChecked;
+    }
+
+    @Override
+    public void onBarcodeEvent(final BarcodeReadEvent event) {
+        checkinViewModel.onBarcodeFailureEvent(mBarcodeReader);
+        getBaseActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (event != null) {
+                    //fragmentCheckinBinding.p.setVisibility(View.GONE);
+                    String barcode = event.getBarcodeData();
+                    fragmentCheckinBinding.checkinEntryIncludeLayout.patronEntry.setText(barcode);
+                    getCheckInItem();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onFailureEvent(BarcodeFailureEvent barcodeFailureEvent) {
+        checkinViewModel.onBarcodeFailureEvent(mBarcodeReader);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        checkinViewModel.onResumeScanner(mBarcodeReader);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        checkinViewModel.onPauseScanner(mBarcodeReader);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mBarcodeReader != null) {
+            mBarcodeReader.removeBarcodeListener(this);
+        }
     }
 }

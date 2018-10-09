@@ -30,5 +30,5 @@ public class IncludeItemAttributesViewModel extends BaseViewModel {
         includeItemListMutableLiveData.postValue(includeList);
 
 
-    }
+}
 }

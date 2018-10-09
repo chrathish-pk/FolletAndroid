@@ -75,7 +75,7 @@
                 android:layout_marginTop="2dp"
                 android:fontFamily="@font/opensans_semibold"
                 android:gravity="left"
-                android:text="@{checkoutResult.info.dueDate}"
+                android:text="@{@string/due_label(checkoutResult.info.dueDate)}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_16sp" />
 

@@ -1,5 +1,11 @@
 package com.follett.fsc.mobile.circdesk.feature.loginsetup.view;
 
+import android.arch.lifecycle.MutableLiveData;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.view.View;
+
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
 import com.follett.fsc.mobile.circdesk.app.base.ScannerViewModel;

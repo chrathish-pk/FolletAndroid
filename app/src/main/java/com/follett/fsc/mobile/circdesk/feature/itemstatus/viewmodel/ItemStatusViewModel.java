@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
+import com.follett.fsc.mobile.circdesk.app.base.ScannerViewModel;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
@@ -14,7 +15,7 @@ import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
 
-public class ItemStatusViewModel extends BaseViewModel implements NetworkInterface {
+public class ItemStatusViewModel extends ScannerViewModel implements NetworkInterface {
 
     public final MutableLiveData<ItemDetails> itemDetailsInfo = new MutableLiveData<>();
     
