@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:checked="@{includeItemList.includeItemName.equalsIgnoreCase(@string/barcoded) ? true : false}"
+            android:checked="@{includeItemList.selected}"
             android:padding="10dp" />
 
         <View

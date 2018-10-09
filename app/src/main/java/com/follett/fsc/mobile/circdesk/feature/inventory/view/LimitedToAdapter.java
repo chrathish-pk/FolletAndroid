@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
@@ -44,7 +43,7 @@ public class LimitedToAdapter extends RecyclerView.Adapter<LimitedToAdapter.Limi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final LimitedToViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final LimitedToViewHolder holder, final int position) {
         holder.rowLimitedToBinding.setLimitedToParentData(limitedToParentDataList.get(position));
 
         holder.rowLimitedToBinding.itemLimitedToRadioBtn.setChecked(limitedToParentDataList.get(position).isSelected());
@@ -65,11 +64,11 @@ public class LimitedToAdapter extends RecyclerView.Adapter<LimitedToAdapter.Limi
                 checkBox.setText(limitedToParentDataList.get(position).getSubLocation().getSublocationList().get(indexView).getSublocationName());
                 checkBox.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
+                final int finalIndexView = indexView;
                 checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        String msg = "You have " + (isChecked ? "checked" : "unchecked") + buttonView.getText();
-                        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                        limitedToParentDataList.get(position).getSubLocation().getSublocationList().get(finalIndexView).setSelected(isChecked);
                     }
                 });
 
@@ -109,29 +108,11 @@ public class LimitedToAdapter extends RecyclerView.Adapter<LimitedToAdapter.Limi
 
     class LimitedToViewHolder extends RecyclerView.ViewHolder {
 
-        public RowLimitedToBinding rowLimitedToBinding;
+        RowLimitedToBinding rowLimitedToBinding;
 
         public LimitedToViewHolder(RowLimitedToBinding rowLimitedToBinding) {
             super(rowLimitedToBinding.getRoot());
             this.rowLimitedToBinding = rowLimitedToBinding;
-
-            /*int childCount = 0;
-            if (selectedPosition == 1) {
-                childCount = limitedToParentDataList.get(selectedPosition).getSubLocation().getSublocationList().size();
-            }
-            if (childCount > 0) {
-                for (int indexView = 0; indexView < childCount; indexView++) {
-                    TextView textView = new TextView(context);
-                    textView.setId(indexView);
-                    textView.setPadding(20, 20, 20, 20);
-                    textView.setBackground(ContextCompat.getDrawable(context, R.drawable.background_sub_module_text));
-                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    //textView.setOnClickListener(this);
-                    rowLimitedToBinding.itemLimitedToChildLayout.addView(textView, layoutParams);
-                }
-            } else
-                rowLimitedToBinding.itemLimitedToChildLayout.removeAllViews();*/
-
 
         }
 

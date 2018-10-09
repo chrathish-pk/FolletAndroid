@@ -85,12 +85,34 @@ public class NewInventoryViewModel extends BaseViewModel implements NetworkInter
 
     public List<NewInventoryData> getNewInventoryDataForResource() {
         List<NewInventoryData> newInventoryDataList = new ArrayList<>();
-        newInventoryDataList.add(new NewInventoryData(application.getString(R.string.limitedToLabel), "Unlimited"));
+
+        if (AppRemoteRepository.getInstance().getString(KEY_SELECTED_SUB_LOCATION).isEmpty())
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.limitedToLabel), "Unlimited"));
+        else
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.limitedToLabel), AppRemoteRepository.getInstance().getString(KEY_SELECTED_SUB_LOCATION)));
+
+
         newInventoryDataList.add(new NewInventoryData(application.getString(R.string.resourceTypesLabel), "All Resource Types"));
         newInventoryDataList.add(new NewInventoryData(application.getString(R.string.purchasePriceLabel), "All Resource Types"));
-        newInventoryDataList.add(new NewInventoryData(application.getString(R.string.includeItemsLabel), "With all tracking attributes"));
-        newInventoryDataList.add(new NewInventoryData(application.getString(R.string.checkoutHandlingLabel), "Checked Out, In Circulation"));
-        newInventoryDataList.add(new NewInventoryData(application.getString(R.string.excludeItems), "No exclusions"));
+
+        if (AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_INCLUDE_ITEMS).isEmpty())
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.includeItemsLabel), "With all tracking attributes"));
+        else
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.includeItemsLabel), AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_INCLUDE_ITEMS)));
+
+
+        if (AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_CHECKOUT_HANDLING).isEmpty())
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.checkoutHandlingLabel), "Checked Out, In Circulation"));
+        else
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.checkoutHandlingLabel), AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_CHECKOUT_HANDLING)));
+
+
+
+        if (AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SEEN_DATE).isEmpty())
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.excludeItems), "No exclustions"));
+        else
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.excludeItems), AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SEEN_DATE)));
+
         newInventoryDataList.add(new NewInventoryData(application.getString(R.string.mismatchedItemLocationLabel), "Do Nothing"));
 
         return newInventoryDataList;
