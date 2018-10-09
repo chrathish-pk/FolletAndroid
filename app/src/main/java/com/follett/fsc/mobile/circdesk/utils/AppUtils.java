@@ -11,6 +11,7 @@ import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.AlertDialogListener;
 import com.follett.fsc.mobile.circdesk.app.CustomAlert;
 import com.follett.fsc.mobile.circdesk.app.GlideApp;
+import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 
@@ -23,6 +24,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.databinding.BindingAdapter;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.ContextThemeWrapper;
@@ -105,6 +107,7 @@ public class AppUtils {
     public void showProgressDialog(Context ctx, String title, String body, boolean isCancellable) {
         showProgressDialog(ctx, title, body, null, isCancellable);
     }
+
 
     /**
      * Shows a progress dialog with a spinning animation in it. This method must preferably called
@@ -349,4 +352,13 @@ public class AppUtils {
         }
     }
 
+    public static boolean brandName(BaseActivity mActivity) {
+
+        String brandName = Build.BRAND;
+        if (brandName.equalsIgnoreCase(mActivity.getString(R.string.dev_brand_name))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

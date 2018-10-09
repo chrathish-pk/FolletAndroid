@@ -233,6 +233,12 @@
     <string name="barcoded">Barcoded</string>
     <string name="unBarcoded">Unbarcoded</string>
     <string name="consummable">Consummable</string>
+    <string name="doNothing">Do nothing</string>
+    <string name="alertButDoNothing">Alert but do nothing</string>
+    <string name="promptForChange">Prompt for change</string>
+    <string name="automaticallyChangeHomeLocation">Automatically change home location</string>
+    String[] array = {"Do nothing", "Alert but do nothing", "Prompt for change","Automatically change home location"};
+
 
 
     <string name="legalTitle">Legal</string>

@@ -76,9 +76,7 @@ public class CheckinFragment extends BaseFragment<FragmentCheckinBinding, Checki
         fragmentCheckinBinding.checkinEntryIncludeLayout.patronGoBtn.setOnClickListener(this);
         fragmentCheckinBinding.checkinDetailIncludeLayout.checkedoutInfoBtn.setOnClickListener(this);
         fragmentCheckinBinding.checkinEntryIncludeLayout.checkinLibRecordSwitch.setOnCheckedChangeListener(this);
-        String brandName = Build.BRAND;
-        if(brandName.equalsIgnoreCase(getString(R.string.dev_brand_name)))
-        {
+        if (AppUtils.brandName(mActivity)) {
             mBarcodeReader.addBarcodeListener(this);
             fragmentCheckinBinding.checkinEntryIncludeLayout.scanButton.setOnClickListener(this);
 

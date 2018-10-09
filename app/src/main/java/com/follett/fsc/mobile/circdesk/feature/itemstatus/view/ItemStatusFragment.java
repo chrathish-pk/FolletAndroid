@@ -30,14 +30,13 @@ import com.honeywell.aidc.BarcodeReader;
 
 import static com.follett.fsc.mobile.circdesk.utils.AppConstants.BARCODE_READER_NOT_AVAILABLE;
 
-public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, ItemStatusViewModel> implements View.OnClickListener,BarcodeReader.BarcodeListener {
+public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, ItemStatusViewModel> implements View.OnClickListener, BarcodeReader.BarcodeListener {
 
     private static final String TAG = ScannerViewModel.class.getSimpleName();
     private ItemDetails itemDetailsinfo;
     private FragmentItemStatusBinding fragmentItemStatusBinding;
     private ItemStatusViewModel itemStatusViewModel;
     private BarcodeReader mBarcodeReader;
-
 
 
     public ItemStatusFragment() {
@@ -94,12 +93,10 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
         if (activity == null) {
             return;
         }
-        String brandName = Build.BRAND;
-        if(brandName.equalsIgnoreCase(getString(R.string.dev_brand_name)))
-        {
+
+        if (AppUtils.brandName(mActivity)) {
             mBarcodeReader.addBarcodeListener(this);
             fragmentItemStatusBinding.itemScanBtn.setOnClickListener(this);
-
         }
 
         fragmentItemStatusBinding.itemStatusPatronGoBtn.setOnClickListener(this);
@@ -152,11 +149,9 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
                         fragmentItemStatusBinding.itemStatusCheckoutDetailsLayout.setVisibility(View.GONE);
                         String itemErrorMsg = getString(R.string.double_quote) + AppUtils.getInstance()
                                 .getEditTextValue(fragmentItemStatusBinding.itemStatusPatronEntry) + getString(R.string.double_quote);
-                        if(AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED)) {
+                        if (AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED)) {
                             fragmentItemStatusBinding.itemErrorMsg.setText(getString(R.string.item_not_found, itemErrorMsg));
-                        }
-                        else
-                        {
+                        } else {
                             fragmentItemStatusBinding.itemErrorMsg.setText(getString(R.string.copyitem_not_found, itemErrorMsg));
 
                         }
@@ -171,16 +166,12 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
     private void titleInfoBtnShow(ItemDetails itemDetails) {
         fragmentItemStatusBinding.setItemDetailsViewModel(itemDetailsinfo);
         if (AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED)) {
-            if(!itemDetails.getCurrentCheckout().isEmpty()) {
+            if (!itemDetails.getCurrentCheckout().isEmpty()) {
                 fragmentItemStatusBinding.itemStatusCheckedoutInfoBtn.setVisibility(View.VISIBLE);
-            }
-            else
-            {
+            } else {
                 fragmentItemStatusBinding.itemStatusCheckedoutInfoBtn.setVisibility(View.GONE);
             }
-        }
-        else
-        {
+        } else {
             fragmentItemStatusBinding.itemStatusCheckedoutInfoBtn.setVisibility(View.GONE);
 
         }
@@ -199,10 +190,9 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
         if (v.getId() == R.id.itemStatusPatronGoBtn) {
             getScanItem();
 
-        }
-        else if (v == fragmentItemStatusBinding.itemScanBtn) {
+        } else if (v == fragmentItemStatusBinding.itemScanBtn) {
             itemStatusViewModel.triggerSoftwareScanner(mBarcodeReader);
-        }else if (v.getId() == R.id.itemStatusCheckedoutInfoBtn) {
+        } else if (v.getId() == R.id.itemStatusCheckedoutInfoBtn) {
             if (!isNetworkConnected()) {
                 AppUtils.getInstance()
                         .showNoInternetAlertDialog(mActivity);
@@ -269,7 +259,8 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
                 if (event != null) {
                     String barcode = event.getBarcodeData();
                     fragmentItemStatusBinding.itemStatusPatronEntry.setText(barcode);
-                    getScanItem();           }
+                    getScanItem();
+                }
             }
         });
     }

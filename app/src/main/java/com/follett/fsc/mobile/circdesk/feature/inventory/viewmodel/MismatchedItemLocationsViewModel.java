@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
+import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.IncludeItem;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.MismatchedItemLocation;
@@ -23,11 +24,11 @@ public class MismatchedItemLocationsViewModel extends BaseViewModel {
 
     public void setMismatchedItemLocationsData() {
 
-        String[] array = {"Do nothing", "Alert but do nothing", "Prompt for change","Automatically change home location"};
-        Integer[] statusNo = {0,1,2,3};
+        String[] array = {mApplication.getString(R.string.doNothing),mApplication.getString(R.string.alertButDoNothing), mApplication.getString(R.string.promptForChange),mApplication.getString(R.string.automaticallyChangeHomeLocation)};
+        Integer[] statusValue = {0,1,2,3};
         ArrayList<MismatchedItemLocation> mismatchedItemLocations = new ArrayList();
         for (int i = 0; i < array.length; i++) {
-            mismatchedItemLocations.add(new MismatchedItemLocation(array[i],statusNo[i]));
+            mismatchedItemLocations.add(new MismatchedItemLocation(array[i],statusValue[i]));
         }
         mismatchedItemLocListMutableLiveData.postValue(mismatchedItemLocations);
 
