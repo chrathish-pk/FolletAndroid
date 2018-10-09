@@ -177,7 +177,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:fontFamily="@font/opensans_bold"
-                    android:text="@{itemDetailsViewModel.status}"
+                    android:text="@{itemDetailsViewModel.status.equalsIgnoreCase(@string/availableTxt) ? @string/statusName(itemDetailsViewModel.status) : itemDetailsViewModel.status}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_16sp" />
 

@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
@@ -13,7 +14,7 @@ import com.follett.fsc.mobile.circdesk.feature.homescreen.view.HomeFragment;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.DistrictList;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.viewmodel.LoginViewModel;
 
-public class SetupActivity extends BaseActivity<LoginViewModel> implements NavigationListener {
+public class SetupActivity extends BaseActivity<LoginViewModel> implements NavigationListener, View.OnClickListener {
 
     public MutableLiveData<String> selectedDateLiveData = new MutableLiveData<>();
     public MutableLiveData<String> selectedInventoryNameLiveData = new MutableLiveData<>();

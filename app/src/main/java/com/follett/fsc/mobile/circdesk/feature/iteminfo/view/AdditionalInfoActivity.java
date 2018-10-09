@@ -8,10 +8,13 @@ package com.follett.fsc.mobile.circdesk.feature.iteminfo.view;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
+import com.follett.fsc.mobile.circdesk.app.base.LegalActivity;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityMoreDetailsBinding;
+import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.AdditionalInfoRecord;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.viewmodel.AdditionalInfoViewModel;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -45,6 +48,10 @@ public class AdditionalInfoActivity extends BaseActivity<AdditionalInfoViewModel
     public void onClick(View v) {
         if (v.getId() == R.id.backBtn) {
             finish();
+        }
+        else if(v.getId() == R.id.legalBtn)
+        {
+          startActivity(new Intent(AdditionalInfoActivity.this, LegalActivity.class));
         }
 
     }

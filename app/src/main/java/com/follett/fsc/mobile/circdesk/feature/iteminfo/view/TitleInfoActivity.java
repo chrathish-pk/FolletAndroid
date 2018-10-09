@@ -8,6 +8,7 @@ package com.follett.fsc.mobile.circdesk.feature.iteminfo.view;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
+import com.follett.fsc.mobile.circdesk.app.base.LegalActivity;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityTitleDetailsBinding;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
@@ -68,6 +69,9 @@ public class TitleInfoActivity extends BaseActivity<AdditionalInfoViewModel> imp
                 moreDetailsIntent.putExtra("titleMoreDetails",additionalInfoDetails);
                 startActivity(moreDetailsIntent);
 
+                break;
+            case R.id.legalBtn:
+                startActivity(new Intent(TitleInfoActivity.this, LegalActivity.class));
                 break;
             default:
                 break;
