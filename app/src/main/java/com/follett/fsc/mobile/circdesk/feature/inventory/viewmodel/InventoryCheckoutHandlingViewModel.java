@@ -6,13 +6,13 @@ import android.support.annotation.NonNull;
 
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CheckoutHandling;
-import com.follett.fsc.mobile.circdesk.feature.inventory.model.IncludeItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class InventoryCheckoutHandlingViewModel extends BaseViewModel {
 
-    public MutableLiveData<ArrayList<CheckoutHandling>> checkoutHnadlingListMutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<List<CheckoutHandling>> checkoutHnadlingListMutableLiveData = new MutableLiveData<>();
     private Application mApplication;
 
     public InventoryCheckoutHandlingViewModel(@NonNull Application application) {

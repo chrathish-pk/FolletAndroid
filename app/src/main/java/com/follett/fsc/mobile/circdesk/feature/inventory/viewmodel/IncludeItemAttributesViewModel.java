@@ -6,13 +6,13 @@ import android.support.annotation.NonNull;
 
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.IncludeItem;
-import com.follett.fsc.mobile.circdesk.feature.inventory.model.SubLocation;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class IncludeItemAttributesViewModel extends BaseViewModel {
 
-    public MutableLiveData<ArrayList<IncludeItem>> includeItemListMutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<List<IncludeItem>> includeItemListMutableLiveData = new MutableLiveData<>();
     private Application mApplication;
 
     public IncludeItemAttributesViewModel(@NonNull Application application) {
