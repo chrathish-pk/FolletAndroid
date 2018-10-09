@@ -1,7 +1,6 @@
 package com.follett.fsc.mobile.circdesk.feature.inventory.view;
 
 
-
 import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,17 +11,21 @@ import android.widget.Toast;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentMismatchedItemLocationsBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.MismatchedItemLocation;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.MismatchedItemLocationsViewModel;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class MismatchedItemLocationsFragment extends BaseFragment<FragmentMismatchedItemLocationsBinding,MismatchedItemLocationsViewModel> implements ItemClickListener{
+public class MismatchedItemLocationsFragment extends BaseFragment<FragmentMismatchedItemLocationsBinding, MismatchedItemLocationsViewModel> implements ItemClickListener, View.OnClickListener {
 
     private FragmentMismatchedItemLocationsBinding fragmentMismatchedItemLocationsBinding;
     private MismatchedItemLocationsViewModel mismatchedItemLocationsViewModel;
-    ArrayList<MismatchedItemLocation> mismatchedItemLocations;
+    private List<MismatchedItemLocation> mismatchedItemLocationList;
+    private String selectedMismatchedItem;
 
     public MismatchedItemLocationsFragment() {
         // Required empty public constructor
@@ -50,23 +53,35 @@ public class MismatchedItemLocationsFragment extends BaseFragment<FragmentMismat
         fragmentMismatchedItemLocationsBinding = getViewDataBinding();
         fragmentMismatchedItemLocationsBinding.recyclerviewMismatcheditemlocation.setLayoutManager(new LinearLayoutManager(getActivity()));
         mismatchedItemLocationsViewModel.setMismatchedItemLocationsData();
+
         mismatchedItemLocationsViewModel.mismatchedItemLocListMutableLiveData.observeForever(new Observer<ArrayList<MismatchedItemLocation>>() {
             @Override
             public void onChanged(@Nullable ArrayList<MismatchedItemLocation> mismatchedItemLocations) {
-                mismatchedItemLocations = mismatchedItemLocations;
+                mismatchedItemLocationList = mismatchedItemLocations;
                 MismatchedItemLocationsAdapter mismatchedItemLocationsAdapter = new MismatchedItemLocationsAdapter(getActivity(), mismatchedItemLocations, MismatchedItemLocationsFragment.this);
                 fragmentMismatchedItemLocationsBinding.recyclerviewMismatcheditemlocation.setAdapter(mismatchedItemLocationsAdapter);
 
             }
         });
+
+        mActivity.baseBinding.backBtn.setOnClickListener(this);
     }
+
     @Override
     public void onItemClick(View view, int position) {
-        //do nothing
+        selectedMismatchedItem = mismatchedItemLocationList.get(position).getMismatchedItemLocationName();
 
-        //Toast.makeText(getContext(),"Status"+mismatchedItemLocations.get(position).getMismatchedItemLocationStatus(),Toast.LENGTH_LONG).show();
-        Toast.makeText(getContext(),"Status"+mismatchedItemLocationsViewModel.mismatchedItemLocListMutableLiveData.getValue().get(position).getMismatchedItemLocationStatus(),Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "Status" + mismatchedItemLocationsViewModel.mismatchedItemLocListMutableLiveData.getValue().get(position).getMismatchedItemLocationStatus(), Toast.LENGTH_LONG).show();
+    }
 
-
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.backBtn) {
+            AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_SELECTED_MISMATCHED_ITEM, selectedMismatchedItem);
+            if (getActivity() != null) {
+                ((SetupActivity) getActivity()).selectedData.postValue(true);
+            }
+            mActivity.onBackPressed();
+        }
     }
 }

@@ -6,6 +6,8 @@
 
 package com.follett.fsc.mobile.circdesk.data.remote.repository;
 
+import android.support.annotation.Nullable;
+
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.APIInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.api.FollettAPIManager;
@@ -16,7 +18,8 @@ import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.CheckoutRes
 import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.ScanPatron;
 import com.follett.fsc.mobile.circdesk.feature.inventory.InventorySelectionCriteria;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CirculationTypeList;
-import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventory;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventoryLibRequest;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventoryResRequest;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CreateInventoryResult;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InProgressInventoryResults;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
@@ -31,8 +34,6 @@ import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.SiteResults;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.model.Version;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronInfo;
 import com.google.gson.Gson;
-
-import android.support.annotation.Nullable;
 
 import java.util.Map;
 
@@ -448,9 +449,9 @@ public class AppRemoteRepository<T> {
 
 
 
-    public void createInventory(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, CreateInventory createInventory) {
+    public void createLibInventory(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, CreateInventoryLibRequest createInventoryLibRequest) {
 
-        apiService.createInventory(headers, contextName, site, createInventory)
+        apiService.createLibInventory(headers, contextName, site, createInventoryLibRequest)
                 .subscribeWith(new DisposableObserverWrapper<CreateInventoryResult>() {
                     @Override
                     protected void onSuccess(CreateInventoryResult createInventoryResult) {
@@ -472,7 +473,32 @@ public class AppRemoteRepository<T> {
                     }
                 });
     }
-    
+
+    public void createResInventory(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, CreateInventoryResRequest createInventoryResRequest) {
+
+        apiService.createResInventory(headers, contextName, site, createInventoryResRequest)
+                .subscribeWith(new DisposableObserverWrapper<CreateInventoryResult>() {
+                    @Override
+                    protected void onSuccess(CreateInventoryResult createInventoryResult) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallCompleted(createInventoryResult);
+                        }
+                    }
+
+                    @Override
+                    protected void onFailed(Throwable throwable, String errorMessage) {
+                        if (networkInterface != null) {
+                            networkInterface.onCallFailed(throwable, errorMessage);
+                        }
+                    }
+
+                    @Override
+                    protected void onRefreshToken() {
+                        onRefreshSession(networkInterface, CREATE_INVENTORY_REQUEST_CODE);
+                    }
+                });
+    }
+
     public void getInventoryScan(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, int
             collectionType, int partialID, String barcode, int scanningLocationID, int copyId, boolean checkShelfOrder) {
         
