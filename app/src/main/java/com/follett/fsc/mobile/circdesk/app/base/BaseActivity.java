@@ -3,12 +3,20 @@
  */
 package com.follett.fsc.mobile.circdesk.app.base;
 
-import android.content.Context;
+import com.follett.fsc.mobile.circdesk.BuildConfig;
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.databinding.ActivityBaseBinding;
+import com.follett.fsc.mobile.circdesk.databinding.NavigationHeaderBinding;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
+import com.honeywell.aidc.AidcManager;
+import com.honeywell.aidc.BarcodeReader;
+
+import android.app.Application;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -20,23 +28,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.follett.fsc.mobile.circdesk.BuildConfig;
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
-import com.follett.fsc.mobile.circdesk.databinding.ActivityBaseBinding;
-import com.follett.fsc.mobile.circdesk.databinding.NavigationHeaderBinding;
-import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
-import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 
-
-
-public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity implements View.OnClickListener {
+public class BaseActivity<V extends ScannerViewModel> extends AppCompatActivity implements View.OnClickListener {
 
     public ActivityBaseBinding baseBinding;
+    
+    private static BarcodeReader mBarcodeReader;
+    
+    private AidcManager mManager;
+    
+    private ScannerViewModel mViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Application application = getApplication();
+        if (application == null) {
+            return;
+        }
+        inItializeScanner();
+        mViewModel = new ScannerViewModel(application);
         baseBinding = DataBindingUtil.setContentView(this, R.layout.activity_base);
         if (!TextUtils.isEmpty(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SESSION_ID))) {
             baseBinding.toolBarIcon.setImageResource(R.drawable.baseline_account_circle);
@@ -120,8 +131,8 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
         });*/
 
         setSupportActionBar(baseBinding.toolbar);
+        mBarcodeReader = mViewModel.setPropertyForBarcodeReader(mBarcodeReader);
     }
-
     protected <T extends ViewDataBinding> T putContentView(@LayoutRes int resId) {
         return DataBindingUtil.inflate(getLayoutInflater(), resId, baseBinding.baseContainer, true);
     }
@@ -137,14 +148,16 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
     public void setBackBtnVisible() {
         baseBinding.backBtn.setVisibility(View.VISIBLE);
     }
-
-    protected boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (cm != null) {
-            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-            return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-        }
-        return false;
+    
+    private void inItializeScanner() {
+        AidcManager.create(this, new AidcManager.CreatedCallback() {
+            
+            @Override
+            public void onCreated(AidcManager aidcManager) {
+                mManager = aidcManager;
+                mBarcodeReader = mManager.createBarcodeReader();
+            }
+        });
     }
 
     public void pushFragment(Fragment fragment, int container, String tag, boolean shouldAdd, boolean showBackBtn) {
@@ -200,8 +213,6 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
             AppUtils.getInstance().hideKeyBoard(this, v);
             onBackPressed();
         }
-
-
     }
 
     @Override
@@ -215,5 +226,15 @@ public class BaseActivity<V extends BaseViewModel> extends AppCompatActivity imp
         } else {
             setTitleBar(fragment.getTag());
         }
+    }
+    
+    public BarcodeReader getBarcodeReader() {
+        return mBarcodeReader;
+    }
+    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mViewModel.onDestoryScanner(mBarcodeReader, mManager);
     }
 }

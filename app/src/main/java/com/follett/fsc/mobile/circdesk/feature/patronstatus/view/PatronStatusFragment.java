@@ -22,6 +22,9 @@ import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronList;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.viewmodel.PatronStatusViewModel;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.google.gson.Gson;
+import com.honeywell.aidc.BarcodeFailureEvent;
+import com.honeywell.aidc.BarcodeReadEvent;
+import com.honeywell.aidc.BarcodeReader;
 
 import android.app.Activity;
 import android.arch.lifecycle.Observer;
@@ -36,14 +39,23 @@ import android.view.inputmethod.EditorInfo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBinding, PatronStatusViewModel> implements NavigationListener, View.OnClickListener, UpdateItemUIListener {
+public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBinding, PatronStatusViewModel> implements NavigationListener, View
+        .OnClickListener, UpdateItemUIListener, BarcodeReader.BarcodeListener {
 
     private PatronStatusViewModel mViewModel;
 
     private FragmentPatronStatusBinding mBinding;
 
     private PatronInfo mPatronInfo;
-
+    
+    private BarcodeReader mBarcodeReader;
+    
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mBarcodeReader = mActivity.getBarcodeReader();
+    }
+    
     @Override
     public int getLayoutId() {
         return R.layout.fragment_patron_status;
@@ -97,7 +109,6 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
                 getPatronInfo(AppUtils.getInstance()
                         .getEditTextValue(mBinding.patronEntryIncludeLayout.patronEntry));
         }
-
         setListener();
     }
 
@@ -107,7 +118,8 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
             mBinding.patronDetailLayout.setVisibility(View.GONE);
             getPatronInfo(AppUtils.getInstance()
                     .getEditTextValue(mBinding.patronEntryIncludeLayout.patronEntry));
-
+        } else if (v == mBinding.patronEntryIncludeLayout.scanButton) {
+            mViewModel.triggerSoftwareScanner(mBarcodeReader);
         } else if (v == mBinding.closeBtn) {
             AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_SELECTED_BARCODE, "");
             mBinding.patronDetailLayout.setVisibility(View.GONE);
@@ -159,6 +171,7 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
                 @Override
                 public void run() {
                     if (patronInfo != null && patronInfo.getSuccess()) {
+                        mBinding.patronErrorMsg.setVisibility(View.GONE);
                         if (patronInfo.getPatronList() != null) {
                             navigateToPatronListFragment(patronInfo.getPatronList());
                         } else {
@@ -168,6 +181,7 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
                     } else if (patronInfo != null && !patronInfo.getSuccess()) {
                         String msg = getString(R.string.double_quote) + AppUtils.getInstance()
                                 .getEditTextValue(mBinding.patronEntryIncludeLayout.patronEntry) + getString(R.string.double_quote);
+                        mBinding.patronErrorMsg.setVisibility(View.VISIBLE);
                         mBinding.patronErrorMsg.setText(getString(R.string.patron_not_found, msg));
                     }
                 }
@@ -203,8 +217,9 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
     }
 
     private void setListener() {
-
+        mBarcodeReader.addBarcodeListener(this);
         mBinding.patronEntryIncludeLayout.patronGoBtn.setOnClickListener(this);
+        mBinding.patronEntryIncludeLayout.scanButton.setOnClickListener(this);
         mBinding.itemRelativeLayout.setOnClickListener(this);
         mBinding.closeBtn.setOnClickListener(this);
         mBinding.holdRelativeLayout.setOnClickListener(this);
@@ -292,5 +307,45 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
         mPatronInfo = (PatronInfo) value;
         updateUI(mPatronInfo);
     }
-
+    
+    @Override
+    public void onBarcodeEvent(final BarcodeReadEvent event) {
+        mViewModel.onBarcodeFailureEvent(mBarcodeReader);
+        getBaseActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (event != null) {
+                    mBinding.patronDetailLayout.setVisibility(View.GONE);
+                    String barcode = event.getBarcodeData();
+                    mBinding.patronEntryIncludeLayout.patronEntry.setText(barcode);
+                    getPatronInfo(barcode);
+                }
+            }
+        });
     }
+    
+    @Override
+    public void onFailureEvent(BarcodeFailureEvent barcodeFailureEvent) {
+        mViewModel.onBarcodeFailureEvent(mBarcodeReader);
+    }
+    
+    @Override
+    public void onResume() {
+        super.onResume();
+        mViewModel.onResumeScanner(mBarcodeReader);
+    }
+    
+    @Override
+    public void onPause() {
+        super.onPause();
+        mViewModel.onPauseScanner(mBarcodeReader);
+    }
+    
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mBarcodeReader != null) {
+            mBarcodeReader.removeBarcodeListener(this);
+        }
+    }
+}
