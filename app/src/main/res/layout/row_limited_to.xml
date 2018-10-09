@@ -33,13 +33,15 @@
                 android:layout_toLeftOf="@id/itemLimitedToRadioBtn"
                 android:fontFamily="@font/opensans_regular"
                 android:padding="10dp"
-                android:text="@{limitedToParentData.limitedToParentName}" />
+                android:text="@{limitedToParentData.limitedToParentName}"
+                android:textColor="@color/black" />
 
             <RadioButton
                 android:id="@+id/itemLimitedToRadioBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:buttonTint="@color/blueLabel"
                 android:layout_centerVertical="true"
                 android:checked="@{limitedToParentData.selected}"
                 android:padding="10dp" />

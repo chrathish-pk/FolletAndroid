@@ -5,12 +5,13 @@ import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
@@ -19,6 +20,8 @@ import com.follett.fsc.mobile.circdesk.feature.inventory.model.LimitedToParentDa
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class LimitedToAdapter extends RecyclerView.Adapter<LimitedToAdapter.LimitedToViewHolder> implements View.OnClickListener {
 
@@ -57,16 +60,21 @@ public class LimitedToAdapter extends RecyclerView.Adapter<LimitedToAdapter.Limi
         if (noOfChild > 0) {
             holder.rowLimitedToBinding.itemLimitedToChildLayout.removeAllViews();
             for (int indexView = 0; indexView < noOfChild; indexView++) {
-                TextView textView = new TextView(context);
-                textView.setId(indexView);
-                textView.setPadding(0, 20, 0, 20);
-                textView.setGravity(Gravity.CENTER);
-                textView.setBackground(ContextCompat.getDrawable(context, R.drawable.background_sub_module_text));
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                //textView.setOnClickListener(this);
 
-                textView.setText(limitedToParentDataList.get(position).getSubLocation().getSublocationList().get(indexView).getSublocationName());
-                holder.rowLimitedToBinding.itemLimitedToChildLayout.addView(textView, layoutParams);
+                CheckBox checkBox = (CheckBox) ((LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.right_checkbox, null);
+                checkBox.setText(limitedToParentDataList.get(position).getSubLocation().getSublocationList().get(indexView).getSublocationName());
+                checkBox.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        String msg = "You have " + (isChecked ? "checked" : "unchecked") + buttonView.getText();
+                        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                checkBox.setBackground(ContextCompat.getDrawable(context, R.drawable.background_sub_module_text));
+                holder.rowLimitedToBinding.itemLimitedToChildLayout.addView(checkBox, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             }
         } else
             holder.rowLimitedToBinding.itemLimitedToChildLayout.removeAllViews();
