@@ -9,6 +9,7 @@ package com.follett.fsc.mobile.circdesk.feature.iteminfo.view;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
 import com.follett.fsc.mobile.circdesk.app.base.LegalActivity;
+import com.follett.fsc.mobile.circdesk.app.base.ScannerViewModel;
 import com.follett.fsc.mobile.circdesk.databinding.ActivityMoreDetailsBinding;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.AdditionalInfoRecord;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;

@@ -29,15 +29,20 @@ import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.InventoryView
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
+import com.honeywell.aidc.BarcodeFailureEvent;
+import com.honeywell.aidc.BarcodeReadEvent;
+import com.honeywell.aidc.BarcodeReader;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_IS_LIBRARY_SELECTED;
 
-public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, InventoryViewModel> implements ItemClickListener, View.OnClickListener, UpdateUIListener {
+public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, InventoryViewModel> implements ItemClickListener, View.OnClickListener, UpdateUIListener,BarcodeReader.BarcodeListener {
 
     private InventoryViewModel inventoryViewModel;
     private FragmentInventoryBinding fragmentInventoryBinding;
     private InProgressInventoryResults inProgressInventoryResults;
     private InventoryDetails inventoryDetails;
+    private BarcodeReader mBarcodeReader;
+
 
     @Override
     public int getLayoutId() {
@@ -65,6 +70,14 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
         initViews();
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mBarcodeReader = mActivity.getBarcodeReader();
+
+
+    }
+
     private void initViews() {
         final Activity activity = getBaseActivity();
         if (activity == null) {
@@ -77,7 +90,8 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
         } else {
             isInventoryLibrary(false);
         }
-
+        mBarcodeReader.addBarcodeListener(this);
+        fragmentInventoryBinding.patronEntryIncludeLayout.scanButton.setOnClickListener(this);
         fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn.setOnClickListener(this);
         fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn.setOnClickListener(this);
 
@@ -133,6 +147,9 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                 break;
             case R.id.patronGoBtn:
                 inventoryViewModel.inventoryScan(AppUtils.getInstance().getEditTextValue(fragmentInventoryBinding.patronEntryIncludeLayout.patronEntry));
+                break;
+            case R.id.scanButton:
+                inventoryViewModel.triggerSoftwareScanner(mBarcodeReader);
                 break;
             default:
                 break;
@@ -206,6 +223,47 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
             mActivity.pushFragment(selectInventoryFragment, R.id.loginContainer, getString(R.string.selectInventory), true, true);
         } else if (view.getId() == R.id.inventoryLocation) {
             mActivity.pushFragment(new InventoryLocationFragment(), R.id.loginContainer, getString(R.string.inventoryLocation), true, true);
+        }
+    }
+
+
+    @Override
+    public void onBarcodeEvent(final BarcodeReadEvent event) {
+        inventoryViewModel.onBarcodeFailureEvent(mBarcodeReader);
+        getBaseActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (event != null) {
+                    String barcode = event.getBarcodeData();
+                    fragmentInventoryBinding.patronEntryIncludeLayout.patronEntry.setText(barcode);
+                    inventoryViewModel.inventoryScan(AppUtils.getInstance().getEditTextValue(fragmentInventoryBinding.patronEntryIncludeLayout.patronEntry));
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onFailureEvent(BarcodeFailureEvent barcodeFailureEvent) {
+        inventoryViewModel.onBarcodeFailureEvent(mBarcodeReader);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        inventoryViewModel.onResumeScanner(mBarcodeReader);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        inventoryViewModel.onPauseScanner(mBarcodeReader);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mBarcodeReader != null) {
+            mBarcodeReader.removeBarcodeListener(this);
         }
     }
 }

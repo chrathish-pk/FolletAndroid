@@ -26,13 +26,18 @@ import com.follett.fsc.mobile.circdesk.feature.checkoutcheckin.model.ScanPatron;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.view.TitleInfoActivity;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
+import com.honeywell.aidc.BarcodeFailureEvent;
+import com.honeywell.aidc.BarcodeReadEvent;
+import com.honeywell.aidc.BarcodeReader;
 
-public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, CheckoutViewModel> implements View.OnClickListener, UpdateUIListener, AlertDialogListener {
+public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, CheckoutViewModel> implements View.OnClickListener, UpdateUIListener, AlertDialogListener,BarcodeReader.BarcodeListener {
 
     private CheckoutViewModel checkoutViewModel;
     private FragmentCheckoutBinding fragmentCheckoutBinding;
     private ScanPatron scanPatron = null;
     private CheckoutResult checkoutResult = null;
+    private BarcodeReader mBarcodeReader;
+
 
     @Override
     public int getLayoutId() {
@@ -62,8 +67,9 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
             return;
         }
         fragmentCheckoutBinding = getViewDataBinding();
-
+        mBarcodeReader.addBarcodeListener(this);
         fragmentCheckoutBinding.patronEntryIncludeLayout.patronGoBtn.setOnClickListener(this);
+        fragmentCheckoutBinding.patronEntryIncludeLayout.scanButton.setOnClickListener(this);
         fragmentCheckoutBinding.patronDetailIncludeLayout.checkoutCloseBtn.setOnClickListener(this);
         fragmentCheckoutBinding.checkoutDetailIncludeLayout.checkedoutInfoBtn.setOnClickListener(this);
 
@@ -76,40 +82,22 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mBarcodeReader = mActivity.getBarcodeReader();
+
+    }
+
+    @Override
     public void onClick(View v) {
-
-        Activity activity = getBaseActivity();
-        if (activity == null) {
-            return;
-        }
-
         if (v.getId() == R.id.patronGoBtn) {
-            AppUtils.getInstance()
-                    .hideKeyBoard(activity, fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry);
-            if (AppUtils.getInstance().isEditTextNotEmpty(fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry)) {
-                String barcode = AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SELECTED_BARCODE);
-                if (TextUtils.isEmpty(barcode)) {
-                    if (!isNetworkConnected()) {
-                        AppUtils.getInstance()
-                                .showNoInternetAlertDialog(activity);
-                        return;
-                    }
-                    checkoutViewModel.getScanPatron(fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.getText().toString().trim());
-                } else {
-                    if (!isNetworkConnected()) {
-                        AppUtils.getInstance()
-                                .showNoInternetAlertDialog(activity);
-                        return;
-                    }
-                    int collectionType = AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED) ? 0 : 4;
-                    checkoutViewModel.getCheckoutResult(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_PATRON_ID),
-                            fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.getText().toString().trim(), String.valueOf(collectionType), false);
-                }
-            } else {
-                AppUtils.getInstance()
-                        .showShortToastMessages(activity, getString(R.string.errorPatronEntry));
-            }
-        } else if (v.getId() == R.id.checkoutCloseBtn && fragmentCheckoutBinding.patronDetailIncludeLayout.patronDetailLayout.getVisibility() == View.VISIBLE) {
+           getCheckoutItem();
+        }
+        else if(v.getId() == R.id.scanButton)
+        {
+            checkoutViewModel.triggerSoftwareScanner(mBarcodeReader);
+        }
+        else if (v.getId() == R.id.checkoutCloseBtn && fragmentCheckoutBinding.patronDetailIncludeLayout.patronDetailLayout.getVisibility() == View.VISIBLE) {
             AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_PATRON_ID, null);
             AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_SELECTED_BARCODE, null);
             fragmentCheckoutBinding.patronDetailIncludeLayout.patronDetailLayout.setVisibility(View.GONE);
@@ -120,13 +108,44 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
         } else if (v.getId() == R.id.checkedoutInfoBtn) {
             if (!isNetworkConnected()) {
                 AppUtils.getInstance()
-                        .showNoInternetAlertDialog(activity);
+                        .showNoInternetAlertDialog(mActivity);
                 return;
             }
-            Intent titleIntent = new Intent(activity, TitleInfoActivity.class);
+            Intent titleIntent = new Intent(mActivity, TitleInfoActivity.class);
             titleIntent.putExtra("bibID", checkoutResult.getInfo().getBibID());
             startActivity(titleIntent);
 
+        }
+    }
+
+    private void getCheckoutItem() {
+        if (getBaseActivity() == null) {
+            return;
+        }
+        AppUtils.getInstance()
+                .hideKeyBoard(mActivity, fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry);
+        if (AppUtils.getInstance().isEditTextNotEmpty(fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry)) {
+            String barcode = AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SELECTED_BARCODE);
+            if (TextUtils.isEmpty(barcode)) {
+                if (!isNetworkConnected()) {
+                    AppUtils.getInstance()
+                            .showNoInternetAlertDialog(mActivity);
+                    return;
+                }
+                checkoutViewModel.getScanPatron(fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.getText().toString().trim());
+            } else {
+                if (!isNetworkConnected()) {
+                    AppUtils.getInstance()
+                            .showNoInternetAlertDialog(mActivity);
+                    return;
+                }
+                int collectionType = AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED) ? 0 : 4;
+                checkoutViewModel.getCheckoutResult(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_PATRON_ID),
+                        fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.getText().toString().trim(), String.valueOf(collectionType), false);
+            }
+        } else {
+            AppUtils.getInstance()
+                    .showShortToastMessages(mActivity, getString(R.string.errorPatronEntry));
         }
     }
 
@@ -271,5 +290,46 @@ public class CheckoutFragment extends BaseFragment<FragmentCheckoutBinding, Chec
     @Override
     public void onNegativeButtonClick(int statusCode) {
         //Do Nothing
+    }
+
+    @Override
+    public void onBarcodeEvent(final BarcodeReadEvent event) {
+        checkoutViewModel.onBarcodeFailureEvent(mBarcodeReader);
+        getBaseActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (event != null) {
+                    //fragmentCheckoutBinding.patronDetailLayout.setVisibility(View.GONE);
+                    String barcode = event.getBarcodeData();
+                    fragmentCheckoutBinding.patronEntryIncludeLayout.patronEntry.setText(barcode);
+                    getCheckoutItem();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onFailureEvent(BarcodeFailureEvent barcodeFailureEvent) {
+        checkoutViewModel.onBarcodeFailureEvent(mBarcodeReader);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        checkoutViewModel.onResumeScanner(mBarcodeReader);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        checkoutViewModel.onPauseScanner(mBarcodeReader);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mBarcodeReader != null) {
+            mBarcodeReader.removeBarcodeListener(this);
+        }
     }
 }

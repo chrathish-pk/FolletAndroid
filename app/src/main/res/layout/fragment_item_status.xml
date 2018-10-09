@@ -28,7 +28,6 @@
         android:clickable="true">
 
         <android.support.v4.widget.ContentLoadingProgressBar
-            android:id="@+id/progressBarItem"
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,7 +36,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:visibility="gone"
+            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -100,6 +99,7 @@
                         </LinearLayout>
 
                         <TextView
+                            android:id="@+id/itemScanBtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
@@ -159,6 +159,7 @@
                     android:fontFamily="@font/opensans_bold"
                     android:text="@{itemDetailsViewModel.title}"
                     android:textColor="@color/black"
+                    android:singleLine="true"
                     android:textSize="@dimen/text_size_16sp" />
 
                 <TextView
@@ -270,6 +271,7 @@
                     android:inputType="textCapWords"
                     android:text="@{itemDetailsViewModel.currentCheckout.checkedOutToName}"
                     android:textColor="@color/text_color"
+                    android:singleLine="true"
                     android:textSize="@dimen/text_size_16sp" />
 
                 <TextView

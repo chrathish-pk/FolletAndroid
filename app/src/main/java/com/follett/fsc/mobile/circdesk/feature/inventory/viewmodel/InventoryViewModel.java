@@ -10,6 +10,7 @@ import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.CTAButtonListener;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
+import com.follett.fsc.mobile.circdesk.app.base.ScannerViewModel;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
@@ -40,7 +41,7 @@ import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiCo
 import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.INVENTORY_DETAILS_REQUEST_CODE;
 import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.INVENTORY_SCAN_REQUEST_CODE;
 
-public class InventoryViewModel extends BaseViewModel<CTAButtonListener> implements NetworkInterface {
+public class InventoryViewModel extends ScannerViewModel implements NetworkInterface {
 
     private ItemClickListener itemClickListener;
     public MutableLiveData<InProgressInventoryResults> inventoryListMutableLiveData = new MutableLiveData<>();
