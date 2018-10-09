@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+~ /*
+ ~  * Copyright (c) 2018 Follett. All rights reserved.
+ ~  */
+ -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="mismatchLocationList"
+            type="com.follett.fsc.mobile.circdesk.feature.inventory.model.MismatchedItemLocation" />
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/locationItemChecklistLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true">
+
+        <TextView
+            android:id="@+id/mismatchedItemLocName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/opensans_regular"
+            android:padding="10dp"
+            android:text="@{mismatchLocationList.mismatchedItemLocationName}"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/mismatchedItemLocCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="10dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/mismatchedItemLocCheckbox"
+            android:layout_marginTop="10dp"
+            android:background="@color/editTextBorderColor" />
+
+    </RelativeLayout>
+
+</layout>

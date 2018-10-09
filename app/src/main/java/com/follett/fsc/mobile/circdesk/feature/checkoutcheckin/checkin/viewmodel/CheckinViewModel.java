@@ -11,6 +11,7 @@ import android.arch.lifecycle.MutableLiveData;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
+import com.follett.fsc.mobile.circdesk.app.base.ScannerViewModel;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
@@ -25,7 +26,7 @@ import android.arch.lifecycle.MutableLiveData;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
 
-public class CheckinViewModel extends BaseViewModel implements NetworkInterface {
+public class CheckinViewModel extends ScannerViewModel implements NetworkInterface {
 
     private Application mApplication;
     private UpdateUIListener updateUIListener;

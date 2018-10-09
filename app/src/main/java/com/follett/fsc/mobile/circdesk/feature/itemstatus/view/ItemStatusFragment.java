@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,7 +13,9 @@ import android.util.Log;
 import android.view.View;
 
 import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.app.base.ScannerViewModel;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentItemStatusBinding;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.view.TitleInfoActivity;
@@ -21,12 +24,19 @@ import com.follett.fsc.mobile.circdesk.feature.itemstatus.viewmodel.ItemStatusVi
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.NavigationListener;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 import com.follett.fsc.mobile.circdesk.utils.FollettLog;
+import com.honeywell.aidc.BarcodeFailureEvent;
+import com.honeywell.aidc.BarcodeReadEvent;
+import com.honeywell.aidc.BarcodeReader;
 
-public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, ItemStatusViewModel> implements View.OnClickListener {
+import static com.follett.fsc.mobile.circdesk.utils.AppConstants.BARCODE_READER_NOT_AVAILABLE;
 
+public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, ItemStatusViewModel> implements View.OnClickListener, BarcodeReader.BarcodeListener {
+
+    private static final String TAG = ScannerViewModel.class.getSimpleName();
     private ItemDetails itemDetailsinfo;
     private FragmentItemStatusBinding fragmentItemStatusBinding;
     private ItemStatusViewModel itemStatusViewModel;
+    private BarcodeReader mBarcodeReader;
 
 
     public ItemStatusFragment() {
@@ -38,6 +48,12 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
         ItemStatusFragment fragment = new ItemStatusFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mBarcodeReader = mActivity.getBarcodeReader();
     }
 
     @Override
@@ -76,6 +92,11 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
         final Activity activity = getBaseActivity();
         if (activity == null) {
             return;
+        }
+
+        if (AppUtils.brandName(mActivity)) {
+            mBarcodeReader.addBarcodeListener(this);
+            fragmentItemStatusBinding.itemScanBtn.setOnClickListener(this);
         }
 
         fragmentItemStatusBinding.itemStatusPatronGoBtn.setOnClickListener(this);
@@ -119,7 +140,6 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
             public void run() {
                 if (itemDetails != null) {
                     itemDetailsinfo = itemDetails;
-                    fragmentItemStatusBinding.progressBarItem.setVisibility(View.GONE);
                     if (itemDetailsinfo.getSuccess()) {
                         fragmentItemStatusBinding.itemErrorMsgLayout.setVisibility(View.GONE);
                         titleInfoBtnShow(itemDetailsinfo);
@@ -129,11 +149,9 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
                         fragmentItemStatusBinding.itemStatusCheckoutDetailsLayout.setVisibility(View.GONE);
                         String itemErrorMsg = getString(R.string.double_quote) + AppUtils.getInstance()
                                 .getEditTextValue(fragmentItemStatusBinding.itemStatusPatronEntry) + getString(R.string.double_quote);
-                        if(AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED)) {
+                        if (AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED)) {
                             fragmentItemStatusBinding.itemErrorMsg.setText(getString(R.string.item_not_found, itemErrorMsg));
-                        }
-                        else
-                        {
+                        } else {
                             fragmentItemStatusBinding.itemErrorMsg.setText(getString(R.string.copyitem_not_found, itemErrorMsg));
 
                         }
@@ -144,19 +162,16 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
         });
     }
 
+
     private void titleInfoBtnShow(ItemDetails itemDetails) {
         fragmentItemStatusBinding.setItemDetailsViewModel(itemDetailsinfo);
         if (AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED)) {
-            if(!itemDetails.getCurrentCheckout().isEmpty()) {
+            if (!itemDetails.getCurrentCheckout().isEmpty()) {
                 fragmentItemStatusBinding.itemStatusCheckedoutInfoBtn.setVisibility(View.VISIBLE);
-            }
-            else
-            {
+            } else {
                 fragmentItemStatusBinding.itemStatusCheckedoutInfoBtn.setVisibility(View.GONE);
             }
-        }
-        else
-        {
+        } else {
             fragmentItemStatusBinding.itemStatusCheckedoutInfoBtn.setVisibility(View.GONE);
 
         }
@@ -164,62 +179,66 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
 
     @Override
     public int getBindingVariable() {
-        return 0;
+        return BR.viewModel;
     }
 
 
     @Override
     public void onClick(View v) {
-        
-        Activity activity = getBaseActivity();
-        if (activity == null) {
-            return;
-        }
+
 
         if (v.getId() == R.id.itemStatusPatronGoBtn) {
-            AppUtils.getInstance()
-                    .hideKeyBoard(activity, fragmentItemStatusBinding.itemStatusPatronEntry);
-            if (AppUtils.getInstance().isEditTextNotEmpty(fragmentItemStatusBinding.itemStatusPatronEntry)) {
-                fragmentItemStatusBinding.progressBarItem.setVisibility(View.VISIBLE);
-                if (!isNetworkConnected()) {
-                    AppUtils.getInstance()
-                            .showNoInternetAlertDialog(activity);
-                    fragmentItemStatusBinding.progressBarItem.setVisibility(View.GONE);
-                    return;
-                }
-                int collectionType = AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED) ? 0 : 4;
-                itemStatusViewModel.getScanItem(fragmentItemStatusBinding.itemStatusPatronEntry.getText().toString().trim(), String.valueOf(collectionType));
-            } else {
-                AppUtils.getInstance()
-                        .showShortToastMessages(activity, getString(R.string.errorPatronEntry));
-            }
+            getScanItem();
+
+        } else if (v == fragmentItemStatusBinding.itemScanBtn) {
+            itemStatusViewModel.triggerSoftwareScanner(mBarcodeReader);
         } else if (v.getId() == R.id.itemStatusCheckedoutInfoBtn) {
             if (!isNetworkConnected()) {
                 AppUtils.getInstance()
-                        .showNoInternetAlertDialog(activity);
+                        .showNoInternetAlertDialog(mActivity);
                 return;
             }
-            Intent titleIntent = new Intent(activity, TitleInfoActivity.class);
+            Intent titleIntent = new Intent(mActivity, TitleInfoActivity.class);
             String bidID = Integer.toString(itemDetailsinfo.getBibID());
             titleIntent.putExtra("bibID", bidID);
             Log.i("TAG", "BIDID :" + bidID);
             startActivity(titleIntent);
 
         } else if (v.getId() == R.id.libraryBtn) {
-            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(activity, R.color.blueLabel));
-            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(activity, R.color.white));
-            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(activity, R.color.white));
-            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(activity, R.color.blueLabel));
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(mActivity, R.color.blueLabel));
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(mActivity, R.color.white));
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(mActivity, R.color.white));
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(mActivity, R.color.blueLabel));
             AppSharedPreferences.getInstance().setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, true);
             disableItemStatusView();
 
         } else if (v.getId() == R.id.resourceBtn) {
-            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(activity, R.color.blueLabel));
-            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(activity, R.color.white));
-            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(activity, R.color.white));
-            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(activity, R.color.blueLabel));
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setBackgroundColor(ContextCompat.getColor(mActivity, R.color.blueLabel));
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.resourceBtn.setTextColor(ContextCompat.getColor(mActivity, R.color.white));
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setBackgroundColor(ContextCompat.getColor(mActivity, R.color.white));
+            fragmentItemStatusBinding.libraryResourceIncludeLayout.libraryBtn.setTextColor(ContextCompat.getColor(mActivity, R.color.blueLabel));
             AppSharedPreferences.getInstance().setBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED, false);
             disableItemStatusView();
+        }
+    }
+
+    private void getScanItem() {
+        if (getBaseActivity() == null) {
+            return;
+        }
+        AppUtils.getInstance()
+                .hideKeyBoard(mActivity, fragmentItemStatusBinding.itemStatusPatronEntry);
+        if (AppUtils.getInstance().isEditTextNotEmpty(fragmentItemStatusBinding.itemStatusPatronEntry)) {
+            if (!isNetworkConnected()) {
+                AppUtils.getInstance()
+                        .showNoInternetAlertDialog(mActivity);
+                return;
+            }
+            int collectionType = AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED) ? 0 : 4;
+            itemStatusViewModel.getScanItem(fragmentItemStatusBinding.itemStatusPatronEntry.getText().toString().trim(), String.valueOf(collectionType));
+        } else {
+            AppUtils.getInstance()
+                    .showShortToastMessages(mActivity, getString(R.string.errorPatronEntry));
         }
     }
 
@@ -231,4 +250,44 @@ public class ItemStatusFragment extends BaseFragment<FragmentItemStatusBinding, 
     }
 
 
+    @Override
+    public void onBarcodeEvent(final BarcodeReadEvent event) {
+        itemStatusViewModel.onBarcodeFailureEvent(mBarcodeReader);
+        getBaseActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (event != null) {
+                    String barcode = event.getBarcodeData();
+                    fragmentItemStatusBinding.itemStatusPatronEntry.setText(barcode);
+                    getScanItem();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onFailureEvent(BarcodeFailureEvent barcodeFailureEvent) {
+        itemStatusViewModel.onBarcodeFailureEvent(mBarcodeReader);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        itemStatusViewModel.onResumeScanner(mBarcodeReader);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        itemStatusViewModel.onPauseScanner(mBarcodeReader);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mBarcodeReader != null) {
+            mBarcodeReader.removeBarcodeListener(this);
+        }
+    }
 }
