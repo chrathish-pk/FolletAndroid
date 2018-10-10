@@ -9,11 +9,11 @@ public class CreateInventoryLibRequest {
     private String accountedForSince;
     private String callNumberFrom;
     private String callNumberTo;
-    private List<SubLocationID> sublocationList;
-    private List<CirculationID> circTypeList;
+    private List<Integer> sublocationList;
+    private List<Integer> circTypeList;
 
 
-    public CreateInventoryLibRequest(int collectionType, String inventoryName, String accountedForSince, String callNumberFrom, String callNumberTo, List<SubLocationID> sublocationList, List<CirculationID> circTypeList) {
+    public CreateInventoryLibRequest(int collectionType, String inventoryName, String accountedForSince, String callNumberFrom, String callNumberTo, List<Integer> sublocationList, List<Integer> circTypeList) {
         this.collectionType = collectionType;
         this.inventoryName = inventoryName;
         this.accountedForSince = accountedForSince;
@@ -63,19 +63,19 @@ public class CreateInventoryLibRequest {
         this.callNumberTo = callNumberTo;
     }
 
-    public List<SubLocationID> getSublocationList() {
+    public List<Integer> getSublocationList() {
         return sublocationList;
     }
 
-    public void setSublocationList(List<SubLocationID> sublocationList) {
+    public void setSublocationList(List<Integer> sublocationList) {
         this.sublocationList = sublocationList;
     }
 
-    public List<CirculationID> getCircTypeList() {
+    public List<Integer> getCircTypeList() {
         return circTypeList;
     }
 
-    public void setCircTypeList(List<CirculationID> circTypeList) {
+    public void setCircTypeList(List<Integer> circTypeList) {
         this.circTypeList = circTypeList;
     }
 }

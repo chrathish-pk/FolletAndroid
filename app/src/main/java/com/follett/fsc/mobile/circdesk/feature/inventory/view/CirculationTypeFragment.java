@@ -6,6 +6,12 @@
 
 package com.follett.fsc.mobile.circdesk.feature.inventory.view;
 
+import android.arch.lifecycle.Observer;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
+
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
@@ -14,17 +20,10 @@ import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentCirculationtypeLayoutBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CircTypeList;
-import com.follett.fsc.mobile.circdesk.feature.inventory.model.CirculationID;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CirculationTypeList;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.CirculationTypeViewModel;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
 import com.google.gson.Gson;
-
-import android.arch.lifecycle.Observer;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +82,7 @@ public class CirculationTypeFragment extends BaseFragment<FragmentCirculationtyp
     public void onClick(View v) {
         if (v.getId() == R.id.backBtn) {
             String selectedCirculationTypes = null;
-            List<CirculationID> circulationIDList = new ArrayList<>();
+            List<Integer> circulationIDList = new ArrayList<>();
             for (CircTypeList circTypeList : circulationTypeListData.getCircTypeList()) {
                 if (circTypeList.isSelected()) {
                     if (selectedCirculationTypes == null) {
@@ -91,7 +90,7 @@ public class CirculationTypeFragment extends BaseFragment<FragmentCirculationtyp
                     } else {
                         selectedCirculationTypes = selectedCirculationTypes + "," + circTypeList.getCircTypeDescription();
                     }
-                    circulationIDList.add(new CirculationID(circTypeList.getCircTypeID()));
+                    circulationIDList.add(circTypeList.getCircTypeID());
                 }
             }
             AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_CIRCULATION_TYPE_LIST, selectedCirculationTypes);

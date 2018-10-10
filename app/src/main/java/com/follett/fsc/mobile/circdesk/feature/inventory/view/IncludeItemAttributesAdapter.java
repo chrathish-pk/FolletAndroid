@@ -47,7 +47,6 @@ public class IncludeItemAttributesAdapter extends RecyclerView.Adapter<IncludeIt
         holder.rowIncludeitemListBinding.includeitemName.setOnClickListener(this);
         includeItemsList.get(position).setSelected(holder.rowIncludeitemListBinding.includeitemCheckbox.isChecked());
 
-
     }
 
     @Override

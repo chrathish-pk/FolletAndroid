@@ -2,8 +2,13 @@ package com.follett.fsc.mobile.circdesk.feature.inventory.model;
 
 public class PurchasePriceItem {
 
-    public PurchasePriceItem(String priceValueText) {
+    private String priceValueText;
+    private int priceTypeID;
+
+    public PurchasePriceItem(String priceValueText, int priceTypeID) {
         this.priceValueText = priceValueText;
+        this.priceTypeID = priceTypeID;
+
     }
 
     public String getPriceValueText() {
@@ -14,5 +19,11 @@ public class PurchasePriceItem {
         this.priceValueText = priceValueText;
     }
 
-    private String priceValueText;
+    public int getPriceTypeID() {
+        return priceTypeID;
+    }
+
+    public void setPriceTypeID(int priceTypeID) {
+        this.priceTypeID = priceTypeID;
+    }
 }

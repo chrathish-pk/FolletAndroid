@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
-import com.follett.fsc.mobile.circdesk.feature.inventory.model.IncludeItem;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.MismatchedItemLocation;
 
 import java.util.ArrayList;

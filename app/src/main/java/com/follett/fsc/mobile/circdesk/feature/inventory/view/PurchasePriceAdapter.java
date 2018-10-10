@@ -10,17 +10,14 @@ import android.view.ViewGroup;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.RowPurchasepriceItemBinding;
-import com.follett.fsc.mobile.circdesk.feature.inventory.model.IncludeItem;
-import com.follett.fsc.mobile.circdesk.feature.inventory.model.LocationList;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.PurchasePriceItem;
 
 import java.util.List;
 
-import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SELECTED_PRICE_ITEM;
-import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.SCANNING_LOCATION_ID;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SELECTED_PRICE_LIMITER_OPTION;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SELECTED_PRICE_LIMITER_OPTION_Value;
 
 class PurchasePriceAdapter extends RecyclerView.Adapter<PurchasePriceAdapter.PurchasePriceViewHolder> {
 
@@ -30,7 +27,7 @@ class PurchasePriceAdapter extends RecyclerView.Adapter<PurchasePriceAdapter.Pur
     private List<PurchasePriceItem> priceItemList;
     private int lastSelectedPosition = -1;
 
-    public PurchasePriceAdapter(Context context, List<PurchasePriceItem> priceItemList,ItemClickListener itemClickListener) {
+    public PurchasePriceAdapter(Context context, List<PurchasePriceItem> priceItemList, ItemClickListener itemClickListener) {
         this.context = context;
         this.itemClickListener = itemClickListener;
         this.priceItemList = priceItemList;
@@ -66,7 +63,7 @@ class PurchasePriceAdapter extends RecyclerView.Adapter<PurchasePriceAdapter.Pur
             this.rowPurchasepriceItemBinding = rowPurchasepriceItemBinding;
 
             for (int i = 0; i < priceItemList.size(); i++) {
-                if (priceItemList.get(i).getPriceValueText() == AppRemoteRepository.getInstance().getString(KEY_SELECTED_PRICE_ITEM)) {
+                if (priceItemList.get(i).getPriceTypeID() == AppRemoteRepository.getInstance().getInt(KEY_SELECTED_PRICE_LIMITER_OPTION)) {
                     lastSelectedPosition = i;
                 }
             }
@@ -75,13 +72,9 @@ class PurchasePriceAdapter extends RecyclerView.Adapter<PurchasePriceAdapter.Pur
                 @Override
                 public void onClick(View v) {
                     lastSelectedPosition = getAdapterPosition();
+                    AppRemoteRepository.getInstance().setInt(KEY_SELECTED_PRICE_LIMITER_OPTION, priceItemList.get(lastSelectedPosition).getPriceTypeID());
+                    AppRemoteRepository.getInstance().setString(KEY_SELECTED_PRICE_LIMITER_OPTION_Value, priceItemList.get(lastSelectedPosition).getPriceValueText());
                     notifyDataSetChanged();
-                    AppRemoteRepository.getInstance()
-                            .setString(KEY_SELECTED_PRICE_ITEM, priceItemList
-                                    .get(lastSelectedPosition)
-                                    .getPriceValueText());
-
-                    itemClickListener.onItemClick(v, lastSelectedPosition);
 
                 }
             });

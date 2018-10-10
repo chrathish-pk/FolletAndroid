@@ -2,11 +2,13 @@ package com.follett.fsc.mobile.circdesk.feature.inventory.model;
 
 public class LimitedToParentData {
     private String limitedToParentName;
+    private int limitedToParentID;
     private SubLocation location;
     private boolean isSelected;
 
-    public LimitedToParentData(String limitedToParentName, SubLocation location, boolean isSelected) {
+    public LimitedToParentData(String limitedToParentName,int limitedToParentID, SubLocation location, boolean isSelected) {
         this.limitedToParentName = limitedToParentName;
+        this.limitedToParentID=limitedToParentID;
         this.location = location;
         this.isSelected = isSelected;
     }
@@ -33,5 +35,21 @@ public class LimitedToParentData {
 
     public void setSelected(boolean selected) {
         isSelected = selected;
+    }
+
+    public int getLimitedToParentID() {
+        return limitedToParentID;
+    }
+
+    public void setLimitedToParentID(int limitedToParentID) {
+        this.limitedToParentID = limitedToParentID;
+    }
+
+    public SubLocation getLocation() {
+        return location;
+    }
+
+    public void setLocation(SubLocation location) {
+        this.location = location;
     }
 }

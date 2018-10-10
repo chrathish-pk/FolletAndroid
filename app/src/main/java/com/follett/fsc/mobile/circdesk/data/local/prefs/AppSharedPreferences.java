@@ -72,11 +72,20 @@ public class AppSharedPreferences {
     public static final String KEY_SEEN_FORMAT_DATE = "seenFormatDate";
     public static final String KEY_SELECTED_MISMATCHED_ITEM = "selectedMistmatchedItem";
     public static final String KEY_SELECTED_LOCATION_ITEM = "selectedLocationItem";
-    public static final String KEY_SELECTED_PRICE_ITEM = "selectedPriceItem";
-    public static final String KEY_PURCHASEPRICE_VALUE = "purchasePriceValue";
 
 
-
+    public static final String KEY_IS_INCLUDE_BARCODED_SELECTED = "isIncludeBarcodedSelected";
+    public static final String KEY_IS_INCLUDE_UNBARCODED_SELECTED = "isIncludeUnbarcodedSelected";
+    public static final String KEY_IS_INCLUDE_CONSUMMABLE_SELECTED = "isIncludeConsummableSelected";
+    public static final String KEY_IS_CHECKOUT_HANDLING_UNACCOUNTED_SELECTED = "isCheckoutHandlingUnaccountedSelected";
+    public static final String KEY_IS_CHECKOUT_HANDLING_ITEMS_IN_CIRCULATION_SELECTED = "isCheckoutHandlingItemsInCirculationSelected";
+    public static final String KEY_SELECTED_PRICE_LIMITER_VALUE = "selectedPriceLimiterValue";
+    public static final String KEY_SELECTED_PRICE_LIMITER_OPTION = "selectedPriceLimiterOption";
+    public static final String KEY_SELECTED_PRICE_LIMITER_OPTION_Value = "selectedPriceLimiterOptionValue";
+    public static final String KEY_SELECTED_LIMITED_TO_LIST = "selectedPriceLimiterValueList";
+    public static final String KEY_SELECTED_LIMITED_TO_LIST_JSON = "selectedPriceLimiterValueListJson";
+    public static final String KEY_SELECTED_LIMITED_TO_ID = "selectedLimitedToID";
+    public static final String KEY_IS_UNLIMITED_SELECTED = "isUnlimitedSelected";
 
     private static AppSharedPreferences mSessionInstance = null;
     private SharedPreferences prefs;

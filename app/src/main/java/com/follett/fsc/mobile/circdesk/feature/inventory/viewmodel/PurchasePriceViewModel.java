@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseViewModel;
-import com.follett.fsc.mobile.circdesk.feature.inventory.model.IncludeItem;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.PurchasePriceItem;
 
 import java.util.ArrayList;
@@ -23,10 +22,14 @@ public class PurchasePriceViewModel extends BaseViewModel {
 
     public void setPriceItemData() {
 
-        String[] array = {mApplication.getString(R.string.priceGreater),mApplication.getString(R.string.priceLess)};
-        ArrayList<PurchasePriceItem> priceList = new ArrayList();
+        String[] array = {mApplication.getString(R.string.priceGreater), mApplication.getString(R.string.priceLess)};
+        List<PurchasePriceItem> priceList = new ArrayList();
         for (int i = 0; i < array.length; i++) {
-            priceList.add(new PurchasePriceItem(array[i]));
+            if (i == 0) {
+                priceList.add(new PurchasePriceItem(array[i], 2));
+            } else {
+                priceList.add(new PurchasePriceItem(array[i], 1));
+            }
         }
         priceItemListMutableLiveData.postValue(priceList);
 

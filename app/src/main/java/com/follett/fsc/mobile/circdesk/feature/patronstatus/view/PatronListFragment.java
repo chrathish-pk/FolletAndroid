@@ -7,7 +7,6 @@
 package com.follett.fsc.mobile.circdesk.feature.patronstatus.view;
 
 import android.app.Application;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -23,7 +22,6 @@ import com.follett.fsc.mobile.circdesk.databinding.FragmentPatronListBinding;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.NavigationListener;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.model.PatronList;
 import com.follett.fsc.mobile.circdesk.feature.patronstatus.viewmodel.PatronListViewModel;
-import com.follett.fsc.mobile.circdesk.utils.FollettLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +32,6 @@ public class PatronListFragment extends BaseFragment<FragmentPatronListBinding, 
 
     private static final String TAG = PatronListFragment.class.getSimpleName();
 
-    private NavigationListener navigationListener;
 
     public static PatronListFragment newInstance(List<PatronList> patronList) {
         Bundle args = new Bundle();
@@ -42,16 +39,6 @@ public class PatronListFragment extends BaseFragment<FragmentPatronListBinding, 
         PatronListFragment fragment = new PatronListFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            navigationListener = (NavigationListener) context;
-        } catch (ClassCastException ex) {
-            FollettLog.e(TAG, "ClassCastException");
-        }
     }
 
     @Override
@@ -82,7 +69,7 @@ public class PatronListFragment extends BaseFragment<FragmentPatronListBinding, 
     }
 
     public void inItView(final FragmentPatronListBinding lBinding) {
-        
+
         if (getBaseActivity() == null) {
             return;
         }
@@ -90,22 +77,15 @@ public class PatronListFragment extends BaseFragment<FragmentPatronListBinding, 
         if (arguments != null) {
             List<PatronList> patronList = arguments.getParcelableArrayList(PATRON_LIST_KEY);
             lBinding.patronListRecyclerview.setLayoutManager(new LinearLayoutManager(getBaseActivity()));
-            PatronListAdapter adapter = new PatronListAdapter(getBaseActivity(), patronList,this);
+            PatronListAdapter adapter = new PatronListAdapter(getBaseActivity(), patronList, this);
             lBinding.patronListRecyclerview.setAdapter(adapter);
         }
     }
 
     @Override
-    public void onDetach() {
-        //navigationListener.setToolBarTitle(getString(R.string.patron_status_label));
-        super.onDetach();
-    }
-
-
-    @Override
     public void onClick(View v) {
         if (v.getId() == R.id.backBtn) {
-           mActivity.onBackPressed();
+            mActivity.onBackPressed();
         }
     }
 
@@ -122,7 +102,7 @@ public class PatronListFragment extends BaseFragment<FragmentPatronListBinding, 
     @Override
     public void onNavigation(Object model, int position) {
         if (position == 1 && model != null) {  // pop patron list
-            AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_SELECTED_BARCODE,((PatronList)model).getBarcode());
+            AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_SELECTED_BARCODE, ((PatronList) model).getBarcode());
             mActivity.onBackPressed();
         }
     }
