@@ -94,13 +94,16 @@ public class NewInventoryViewModel extends BaseViewModel implements NetworkInter
 
 
         newInventoryDataList.add(new NewInventoryData(application.getString(R.string.resourceTypesLabel), "All Resource Types"));
-        newInventoryDataList.add(new NewInventoryData(application.getString(R.string.purchasePriceLabel), "All Resource Types"));
+
+        if (AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_PURCHASEPRICE_VALUE).isEmpty())
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.purchasePrice), "Any Value"));
+        else
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.purchasePrice), AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_PRICE_ITEM)+" "+AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_PURCHASEPRICE_VALUE)));
 
         if (AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_INCLUDE_ITEMS).isEmpty())
             newInventoryDataList.add(new NewInventoryData(application.getString(R.string.includeItemsLabel), "With all tracking attributes"));
         else
             newInventoryDataList.add(new NewInventoryData(application.getString(R.string.includeItemsLabel), AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_INCLUDE_ITEMS)));
-
 
         if (AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_CHECKOUT_HANDLING).isEmpty())
             newInventoryDataList.add(new NewInventoryData(application.getString(R.string.checkoutHandlingLabel), "Checked Out, In Circulation"));

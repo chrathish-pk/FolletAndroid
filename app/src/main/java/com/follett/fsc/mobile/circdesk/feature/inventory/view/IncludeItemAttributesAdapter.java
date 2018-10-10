@@ -45,7 +45,6 @@ public class IncludeItemAttributesAdapter extends RecyclerView.Adapter<IncludeIt
         holder.rowIncludeitemListBinding.locationItemChecklistLayout.setOnClickListener(this);
         holder.rowIncludeitemListBinding.includeitemCheckbox.setOnClickListener(this);
         holder.rowIncludeitemListBinding.includeitemName.setOnClickListener(this);
-
         includeItemsList.get(position).setSelected(holder.rowIncludeitemListBinding.includeitemCheckbox.isChecked());
 
 

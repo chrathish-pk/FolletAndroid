@@ -71,6 +71,12 @@ public class AppSharedPreferences {
     public static final String KEY_SEEN_DATE = "seenDate";
     public static final String KEY_SEEN_FORMAT_DATE = "seenFormatDate";
     public static final String KEY_SELECTED_MISMATCHED_ITEM = "selectedMistmatchedItem";
+    public static final String KEY_SELECTED_LOCATION_ITEM = "selectedLocationItem";
+    public static final String KEY_SELECTED_PRICE_ITEM = "selectedPriceItem";
+    public static final String KEY_PURCHASEPRICE_VALUE = "purchasePriceValue";
+
+
+
 
     private static AppSharedPreferences mSessionInstance = null;
     private SharedPreferences prefs;

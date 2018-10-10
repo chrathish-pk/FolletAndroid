@@ -8,58 +8,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!--<data>-->
+    <data>
 
-    <!--<import type="android.view.View" />-->
+        <import type="android.view.View" />
 
-    <!--<variable-->
-    <!--name="viewModel"-->
-    <!--type="com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.SubLocationViewModel" />-->
-    <!--</data>-->
+        <variable
+            name="viewModel"
+            type="com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.PurchasePriceViewModel" />
+    </data>
+
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true">
 
-        <RadioGroup
-            android:layout_width="fill_parent"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview_priceItem"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="?android:attr/dividerHorizontal"
-            android:showDividers="middle">
-
-            <RadioButton
-                android:id="@+id/radioButton"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginLeft="@dimen/layout_size_15"
-                android:layout_marginRight="@dimen/layout_size_15"
-                android:layout_weight="1"
-                android:button="@null"
-                android:drawableRight="@drawable/customradiobtn"
-                android:fontFamily="@font/opensans_regular"
-                android:text="Greater than or Equal to "
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-
-            <RadioButton
-                android:id="@+id/radioButton2"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginLeft="@dimen/layout_size_15"
-                android:layout_marginRight="@dimen/layout_size_15"
-                android:layout_weight="1"
-                android:button="@null"
-                android:drawableRight="@drawable/customradiobtn"
-                android:fontFamily="@font/opensans_regular"
-                android:text="Less than"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-
-        </RadioGroup>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/itemStatusPatronEntry"
+            android:id="@+id/purchasePriceEntry"
             style="@style/EditTextTheme"
             android:layout_width="match_parent"
             android:layout_height="57dp"
@@ -72,6 +45,7 @@
             android:padding="15dp"
             android:singleLine="true"
             android:textSize="@dimen/text_size_16sp"
+            android:inputType="number"
             app:layout_constraintBottom_toTopOf="@+id/progressBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

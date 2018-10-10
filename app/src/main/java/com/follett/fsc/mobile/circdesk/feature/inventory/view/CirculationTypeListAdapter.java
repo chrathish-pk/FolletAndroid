@@ -36,8 +36,6 @@ public class CirculationTypeListAdapter extends RecyclerView.Adapter<Circulation
     public void onBindViewHolder(@NonNull CirculationTypeListViewHolder holder, int position) {
 
         holder.rowCommonChecklistBinding.setCircTypeList(circulationTypeList.getCircTypeList().get(position));
-
-
         holder.rowCommonChecklistBinding.itemChecklistLayout.setTag(position);
         holder.rowCommonChecklistBinding.itemCheckbox.setTag(position);
         holder.rowCommonChecklistBinding.itemChecklistName.setTag(position);
@@ -46,6 +44,7 @@ public class CirculationTypeListAdapter extends RecyclerView.Adapter<Circulation
         holder.rowCommonChecklistBinding.itemChecklistName.setOnClickListener(this);
 
         circulationTypeList.getCircTypeList().get(position).setSelected(holder.rowCommonChecklistBinding.itemCheckbox.isChecked());
+
 
     }
 
