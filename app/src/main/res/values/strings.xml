@@ -211,6 +211,12 @@
 
     <string name="priceGreater">Greater than or Equal to</string>
     <string name="priceLess">Less than</string>
+    <string name="all">All</string>
+    <string name="checkedOutInCirculation">Checked Out, In Circulation</string>
+    <string name="withAllTrackingAttributes">With all tracking attributes</string>
+    <string name="allResourceTypes">All Resource Types</string>
+    <string name="allCirculationTypes">All Ciruculation Types</string>
+    <string name="noExclusions">No exclustions</string>
 
     <string name="newInventory">NEW INVENTORY</string>
     <string name="newInventoryName">New Inventory Name</string>

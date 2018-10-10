@@ -60,6 +60,7 @@ public class AppSharedPreferences {
 
     public static final String KEY_INVENTORY_NAME = "inventoryName";
     public static final String KEY_SELECTED_INVENTORY_PARTIAL_ID = "selectedInventoryPartialID";
+    public static final String KEY_CREATED_INVENTORY_PARTIAL_ID = "createdInventoryPartialID";
     public static final String KEY_SELECTED_SUB_LOCATION = "selectedSubLocation";
     public static final String KEY_SELECTED_SUB_LOCATION_JSON = "selectedSubLocationJson";
     public static final String KEY_SELECTED_INCLUDE_ITEMS = "selectedIncludeItems";

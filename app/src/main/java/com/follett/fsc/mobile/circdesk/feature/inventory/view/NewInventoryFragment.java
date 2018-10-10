@@ -82,13 +82,16 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
         newInventoryViewModel.createInventoryResultMutableLiveData.observeForever(new Observer<CreateInventoryResult>() {
             @Override
             public void onChanged(@Nullable CreateInventoryResult createInventoryResult) {
-                if (createInventoryResult != null && !createInventoryResult.getSuccess()) {
-                    AppUtils.getInstance().showAlertDialog(getActivity(), "", createInventoryResult.getMessage().toString(), getString(R.string.ok), "", NewInventoryFragment.this, 0);
-                } else {
-                    //mActivity.popFragment();
-                }
+                if (createInventoryResult != null) {
+                    if (!createInventoryResult.getSuccess()) {
+                        AppUtils.getInstance().showAlertDialog(getActivity(), "", createInventoryResult.getMessage().toString(), getString(R.string.ok), "", NewInventoryFragment.this, 0);
+                    } else {
+                        AppSharedPreferences.getInstance().setInt(AppSharedPreferences.KEY_CREATED_INVENTORY_PARTIAL_ID, createInventoryResult.getPartialID());
+                        mActivity.popFragment(null);
+                        mActivity.pushFragment(new InventoryFragment(), R.id.loginContainer, getString(R.string.inventory), true, true);
+                    }
 
-               //mActivity.onBackPressed();
+                }
             }
         });
 

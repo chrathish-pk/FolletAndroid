@@ -34,6 +34,7 @@ import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferen
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CIRCULATION_TYPE_LIST;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_IS_LIBRARY_SELECTED;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SELECTED_LIMITED_TO_LIST;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SELECTED_SUB_LOCATION;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
 
@@ -60,24 +61,24 @@ public class NewInventoryViewModel extends BaseViewModel implements NetworkInter
     public List<NewInventoryData> getNewInventoryDataForLibrary() {
         List<NewInventoryData> newInventoryDataList = new ArrayList<>();
         if (AppRemoteRepository.getInstance().getString(KEY_CALL_NUMBER_FROM).isEmpty() && AppRemoteRepository.getInstance().getString(KEY_CALL_NUMBER_TO).isEmpty())
-            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.callNumbersLabel), "All"));
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.callNumbersLabel), application.getString(R.string.all)));
         else
             newInventoryDataList.add(new NewInventoryData(application.getString(R.string.callNumbersLabel), AppRemoteRepository.getInstance().getString(KEY_CALL_NUMBER_FROM) + " - " + AppRemoteRepository.getInstance().getString(KEY_CALL_NUMBER_TO)));
 
         if (AppRemoteRepository.getInstance().getString(KEY_CIRCULATION_TYPE_LIST).isEmpty())
-            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.circulationTypeLabel), "All Ciruculation Types"));
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.circulationTypeLabel), application.getString(R.string.allCirculationTypes)));
         else
             newInventoryDataList.add(new NewInventoryData(application.getString(R.string.circulationTypeLabel), AppRemoteRepository.getInstance().getString(KEY_CIRCULATION_TYPE_LIST)));
 
 
         if (AppRemoteRepository.getInstance().getString(KEY_SELECTED_SUB_LOCATION).isEmpty())
-            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.subLocationLabel), "Sub Location"));
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.subLocationLabel), application.getString(R.string.subLocationLabel)));
         else
             newInventoryDataList.add(new NewInventoryData(application.getString(R.string.subLocationLabel), AppRemoteRepository.getInstance().getString(KEY_SELECTED_SUB_LOCATION)));
 
 
         if (AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SEEN_DATE).isEmpty())
-            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.excludeItems), "No exclustions"));
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.excludeItems), application.getString(R.string.noExclusions)));
         else
             newInventoryDataList.add(new NewInventoryData(application.getString(R.string.excludeItems), AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SEEN_DATE)));
         return newInventoryDataList;
@@ -86,17 +87,17 @@ public class NewInventoryViewModel extends BaseViewModel implements NetworkInter
     public List<NewInventoryData> getNewInventoryDataForResource() {
         List<NewInventoryData> newInventoryDataList = new ArrayList<>();
 
-        if (AppRemoteRepository.getInstance().getString(KEY_SELECTED_SUB_LOCATION).isEmpty())
-            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.limitedToLabel), "Unlimited"));
+        if (AppRemoteRepository.getInstance().getString(KEY_SELECTED_LIMITED_TO_LIST).isEmpty())
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.limitedToLabel), application.getString(R.string.unlimited)));
         else
-            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.limitedToLabel), AppRemoteRepository.getInstance().getString(KEY_SELECTED_SUB_LOCATION)));
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.limitedToLabel), AppRemoteRepository.getInstance().getString(KEY_SELECTED_LIMITED_TO_LIST)));
 
 
-        newInventoryDataList.add(new NewInventoryData(application.getString(R.string.resourceTypesLabel), "All Resource Types"));
+        newInventoryDataList.add(new NewInventoryData(application.getString(R.string.resourceTypesLabel), application.getString(R.string.allResourceTypes)));
 
         if (AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_PRICE_LIMITER_OPTION_Value).isEmpty() &&
                 AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_PRICE_LIMITER_VALUE).isEmpty())
-            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.purchasePriceLabel), "All Resource Types"));
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.purchasePriceLabel), application.getString(R.string.allResourceTypes)));
         else
             newInventoryDataList.add(new NewInventoryData(application.getString(R.string.purchasePriceLabel),
                     AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_PRICE_LIMITER_OPTION_Value) + " " +
@@ -104,22 +105,22 @@ public class NewInventoryViewModel extends BaseViewModel implements NetworkInter
 
 
         if (AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_INCLUDE_ITEMS).isEmpty())
-            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.includeItemsLabel), "With all tracking attributes"));
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.includeItemsLabel), application.getString(R.string.withAllTrackingAttributes)));
         else
             newInventoryDataList.add(new NewInventoryData(application.getString(R.string.includeItemsLabel), AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_INCLUDE_ITEMS)));
 
         if (AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_CHECKOUT_HANDLING).isEmpty())
-            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.checkoutHandlingLabel), "Checked Out, In Circulation"));
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.checkoutHandlingLabel), application.getString(R.string.checkedOutInCirculation)));
         else
             newInventoryDataList.add(new NewInventoryData(application.getString(R.string.checkoutHandlingLabel), AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_CHECKOUT_HANDLING)));
 
         if (AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SEEN_DATE).isEmpty())
-            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.excludeItems), "No exclustions"));
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.excludeItems), application.getString(R.string.noExclusions)));
         else
             newInventoryDataList.add(new NewInventoryData(application.getString(R.string.excludeItems), AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SEEN_DATE)));
 
         if (AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_MISMATCHED_ITEM).isEmpty())
-            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.mismatchedItemLocationLabel), "Do Nothing"));
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.mismatchedItemLocationLabel), application.getString(R.string.doNothing)));
         else
             newInventoryDataList.add(new NewInventoryData(application.getString(R.string.mismatchedItemLocationLabel), AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_MISMATCHED_ITEM)));
 

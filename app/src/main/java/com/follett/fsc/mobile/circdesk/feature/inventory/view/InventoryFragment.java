@@ -8,7 +8,6 @@ package com.follett.fsc.mobile.circdesk.feature.inventory.view;
 
 import android.app.Activity;
 import android.arch.lifecycle.Observer;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -36,7 +35,7 @@ import com.honeywell.aidc.BarcodeReader;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_IS_LIBRARY_SELECTED;
 
-public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, InventoryViewModel> implements ItemClickListener, View.OnClickListener, UpdateUIListener,BarcodeReader.BarcodeListener {
+public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, InventoryViewModel> implements ItemClickListener, View.OnClickListener, UpdateUIListener, BarcodeReader.BarcodeListener {
 
     private InventoryViewModel inventoryViewModel;
     private FragmentInventoryBinding fragmentInventoryBinding;
@@ -196,11 +195,23 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                         if (!inProgressInventoryResults.getInventoryList().isEmpty()) {
                             fragmentInventoryBinding.inventorySelection.setVisibility(View.VISIBLE);
                             inProgressInventoryResults.getInventoryList().get(0).setSelected(true);
-                            AppSharedPreferences.getInstance().setInt(AppSharedPreferences.KEY_SELECTED_INVENTORY_PARTIAL_ID, inProgressInventoryResults.getInventoryList().get(0).getPartialID());
-                            if (inProgressInventoryResults.getInventoryList().get(0).getName().isEmpty())
-                                fragmentInventoryBinding.inventorySelection.setText(inProgressInventoryResults.getInventoryList().get(0).getDateStarted());
-                            else
-                                fragmentInventoryBinding.inventorySelection.setText(inProgressInventoryResults.getInventoryList().get(0).getName() + getString(R.string.started) + inProgressInventoryResults.getInventoryList().get(0).getDateStarted());
+
+                            if (AppSharedPreferences.getInstance().getInt(AppSharedPreferences.KEY_CREATED_INVENTORY_PARTIAL_ID) == 0) {
+                                AppSharedPreferences.getInstance().setInt(AppSharedPreferences.KEY_SELECTED_INVENTORY_PARTIAL_ID, inProgressInventoryResults.getInventoryList().get(0).getPartialID());
+
+                                if (inProgressInventoryResults.getInventoryList().get(0).getName().isEmpty())
+                                    fragmentInventoryBinding.inventorySelection.setText(inProgressInventoryResults.getInventoryList().get(0).getDateStarted());
+                                else
+                                    fragmentInventoryBinding.inventorySelection.setText(inProgressInventoryResults.getInventoryList().get(0).getName() + getString(R.string.started) + inProgressInventoryResults.getInventoryList().get(0).getDateStarted());
+                            } else {
+                                AppSharedPreferences.getInstance().setInt(AppSharedPreferences.KEY_SELECTED_INVENTORY_PARTIAL_ID, AppSharedPreferences.getInstance().getInt(AppSharedPreferences.KEY_CREATED_INVENTORY_PARTIAL_ID));
+
+                                if (inProgressInventoryResults.getInventoryList().stream().filter(p -> p.getPartialID() == AppSharedPreferences.getInstance().getInt(AppSharedPreferences.KEY_CREATED_INVENTORY_PARTIAL_ID)))
+                                    fragmentInventoryBinding.inventorySelection.setText(inProgressInventoryResults.getInventoryList().get(0).getDateStarted());
+                                else
+                                    fragmentInventoryBinding.inventorySelection.setText(inProgressInventoryResults.getInventoryList().get(0).getName() + getString(R.string.started) + inProgressInventoryResults.getInventoryList().get(0).getDateStarted());
+
+                            }
                         } else {
                             fragmentInventoryBinding.inventorySelection.setVisibility(View.GONE);
                         }
