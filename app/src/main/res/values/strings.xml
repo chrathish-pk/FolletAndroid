@@ -242,8 +242,7 @@
     <string name="alertButDoNothing">Alert but do nothing</string>
     <string name="promptForChange">Prompt for change</string>
     <string name="automaticallyChangeHomeLocation">Automatically change home location</string>
-    <string name="priceGreater">Greater than or Equal to</string>
-    <string name="priceLess">Less than</string>
+    <string name="defaultLocation">Location - Unspecified</string>
 
     <string name="legalTitle">Legal</string>
     <string name="legal_text">LIMITED USER LICENSE AGREEMENT\n
