@@ -22,6 +22,7 @@ import com.follett.fsc.mobile.circdesk.databinding.FragmentInventoryListBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InProgressInventoryResults;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.SelectInventoryViewModel;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 
 public class SelectInventoryFragment extends BaseFragment<FragmentInventoryListBinding, SelectInventoryViewModel> implements ItemClickListener, View.OnClickListener {
 
@@ -99,20 +100,7 @@ public class SelectInventoryFragment extends BaseFragment<FragmentInventoryListB
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.newInventoryBtn) {
-
-            AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_CALL_NUMBER_FROM);
-            AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_CALL_NUMBER_TO);
-            AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_CIRCULATION_TYPE_LIST);
-            AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_CIRCULATION_TYPE_LIST_JSON);
-            AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SELECTED_SUB_LOCATION);
-            AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SELECTED_SUB_LOCATION_JSON);
-            AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SEEN_FORMAT_DATE);
-            AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SEEN_DATE);
-            AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_INVENTORY_NAME);
-            AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SELECTED_INCLUDE_ITEMS);
-            AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SELECTED_CHECKOUT_HANDLING);
-            AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SELECTED_MISMATCHED_ITEM);
-
+            AppUtils.getInstance().removeInventorySelectedData();
             mActivity.pushFragment(new NewInventoryFragment(), R.id.loginContainer, getString(R.string.newInventoryTitle), true, true);
         }
     }

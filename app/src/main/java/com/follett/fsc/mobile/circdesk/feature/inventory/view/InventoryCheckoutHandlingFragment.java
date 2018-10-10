@@ -19,11 +19,11 @@ import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
 import java.util.List;
 
 
-public class InventoryCheckoutHandlingFragment extends BaseFragment<FragmentInventoryCheckoutHandlingBinding,InventoryCheckoutHandlingViewModel> implements ItemClickListener, View.OnClickListener {
+public class InventoryCheckoutHandlingFragment extends BaseFragment<FragmentInventoryCheckoutHandlingBinding, InventoryCheckoutHandlingViewModel> implements ItemClickListener, View.OnClickListener {
 
-   private FragmentInventoryCheckoutHandlingBinding fragmentInventoryCheckoutHandlingBinding;
-   private InventoryCheckoutHandlingViewModel inventoryCheckoutHandlingViewModel;
-   private List<CheckoutHandling> checkoutHandlingList;
+    private FragmentInventoryCheckoutHandlingBinding fragmentInventoryCheckoutHandlingBinding;
+    private InventoryCheckoutHandlingViewModel inventoryCheckoutHandlingViewModel;
+    private List<CheckoutHandling> checkoutHandlingList;
 
     public InventoryCheckoutHandlingFragment() {
         // Required empty public constructor
@@ -37,7 +37,8 @@ public class InventoryCheckoutHandlingFragment extends BaseFragment<FragmentInve
     @Override
     public InventoryCheckoutHandlingViewModel getViewModel() {
         inventoryCheckoutHandlingViewModel = new InventoryCheckoutHandlingViewModel(getBaseActivity().getApplication());
-        return inventoryCheckoutHandlingViewModel;    }
+        return inventoryCheckoutHandlingViewModel;
+    }
 
     @Override
     public int getBindingVariable() {
@@ -54,7 +55,7 @@ public class InventoryCheckoutHandlingFragment extends BaseFragment<FragmentInve
             @Override
             public void onChanged(@Nullable List<CheckoutHandling> checkoutHandlings) {
                 checkoutHandlingList = checkoutHandlings;
-                InventoryCheckoutHandlingAdapter inventoryCheckoutHandlingAdapter = new InventoryCheckoutHandlingAdapter(getActivity(),checkoutHandlings,InventoryCheckoutHandlingFragment.this);
+                InventoryCheckoutHandlingAdapter inventoryCheckoutHandlingAdapter = new InventoryCheckoutHandlingAdapter(getActivity(), checkoutHandlings, InventoryCheckoutHandlingFragment.this);
                 fragmentInventoryCheckoutHandlingBinding.recyclerviewCheckouthandling.setAdapter(inventoryCheckoutHandlingAdapter);
             }
         });
@@ -74,10 +75,21 @@ public class InventoryCheckoutHandlingFragment extends BaseFragment<FragmentInve
             String selectedSubLocation = null;
             for (CheckoutHandling checkoutHandling : checkoutHandlingList) {
                 if (checkoutHandling.isSelected()) {
+                    if (checkoutHandling.getCheckoutHandlingID() == 0) {
+                        AppSharedPreferences.getInstance().setBoolean(AppSharedPreferences.KEY_IS_CHECKOUT_HANDLING_UNACCOUNTED_SELECTED, true);
+                    } else {
+                        AppSharedPreferences.getInstance().setBoolean(AppSharedPreferences.KEY_IS_CHECKOUT_HANDLING_ITEMS_IN_CIRCULATION_SELECTED, true);
+                    }
                     if (selectedSubLocation == null) {
                         selectedSubLocation = checkoutHandling.getCheckoutHandlingName();
                     } else {
                         selectedSubLocation = selectedSubLocation + "," + checkoutHandling.getCheckoutHandlingName();
+                    }
+                } else {
+                    if (checkoutHandling.getCheckoutHandlingID() == 0) {
+                        AppSharedPreferences.getInstance().setBoolean(AppSharedPreferences.KEY_IS_CHECKOUT_HANDLING_UNACCOUNTED_SELECTED, false);
+                    } else {
+                        AppSharedPreferences.getInstance().setBoolean(AppSharedPreferences.KEY_IS_CHECKOUT_HANDLING_ITEMS_IN_CIRCULATION_SELECTED, false);
                     }
                 }
             }

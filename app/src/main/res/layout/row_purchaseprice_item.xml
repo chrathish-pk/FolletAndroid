@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+~ /*
+ ~  * Copyright (c) 2018 Follett. All rights reserved.
+ ~  */
+ -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="PurchasePriceList"
+            type="com.follett.fsc.mobile.circdesk.feature.inventory.model.PurchasePriceItem"/>
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/purchasePriceListLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:paddingTop="@dimen/layout_size_13">
+
+        <TextView
+            android:id="@+id/purchasePriceListName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/opensans_regular"
+            android:paddingLeft="@dimen/layout_size_16"
+            android:text="@{PurchasePriceList.priceValueText}"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+
+        <RadioButton
+            android:id="@+id/purchasePriceRadioButton"
+            android:layout_width="@dimen/layout_size_24"
+            android:layout_height="@dimen/layout_size_24"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/layout_size_16"
+            android:layout_marginRight="@dimen/layout_size_16"
+            android:button="@null"
+            android:drawableRight="@drawable/customradiobtn"
+            android:textSize="16sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/purchasePriceRadioButton"
+            android:layout_marginTop="@dimen/layout_size_17"
+            android:background="@color/editTextBorderColor"/>
+
+    </RelativeLayout>
+
+</layout>

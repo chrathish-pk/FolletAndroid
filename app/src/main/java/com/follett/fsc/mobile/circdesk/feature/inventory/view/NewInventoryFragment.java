@@ -68,7 +68,6 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
             ((SetupActivity) getActivity()).selectedData.observe(getActivity(), new Observer<Boolean>() {
                 @Override
                 public void onChanged(@Nullable Boolean aBoolean) {
-                    isLibrarySelected = AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED);
                     if (isLibrarySelected)
                         newInventoryListAdapter = new NewInventoryListAdapter(getActivity(), newInventoryViewModel.getNewInventoryDataForLibrary(), NewInventoryFragment.this);
                     else
@@ -85,7 +84,11 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
             public void onChanged(@Nullable CreateInventoryResult createInventoryResult) {
                 if (createInventoryResult != null && !createInventoryResult.getSuccess()) {
                     AppUtils.getInstance().showAlertDialog(getActivity(), "", createInventoryResult.getMessage().toString(), getString(R.string.ok), "", NewInventoryFragment.this, 0);
+                } else {
+                    //mActivity.popFragment();
                 }
+
+               //mActivity.onBackPressed();
             }
         });
 
@@ -135,13 +138,14 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
                 break;
 
             case 101:
-                AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_CALL_NUMBER_FROM);
-                AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_CALL_NUMBER_TO);
-                AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_CIRCULATION_TYPE_LIST);
-                AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SEEN_FORMAT_DATE);
-                AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SEEN_DATE);
-                AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_INVENTORY_NAME);
+                AppUtils.getInstance().removeInventorySelectedData();
                 fragmentNewInventoryBinding.newInventoryName.setText("");
+                if (isLibrarySelected)
+                    newInventoryListAdapter = new NewInventoryListAdapter(getActivity(), newInventoryViewModel.getNewInventoryDataForLibrary(), NewInventoryFragment.this);
+                else
+                    newInventoryListAdapter = new NewInventoryListAdapter(getActivity(), newInventoryViewModel.getNewInventoryDataForResource(), NewInventoryFragment.this);
+
+                fragmentNewInventoryBinding.inventoryRecyclerView.setAdapter(newInventoryListAdapter);
                 break;
         }
     }

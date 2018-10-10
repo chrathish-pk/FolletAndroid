@@ -25,7 +25,7 @@ public class InventoryCheckoutHandlingViewModel extends BaseViewModel {
         String[] checkoutHandlingArray = {"Make these items unaccounted for", "Check In Items In-Circulation"};
         ArrayList<CheckoutHandling> checkoutHandlingList = new ArrayList();
         for (int i = 0; i < checkoutHandlingArray.length; i++) {
-            checkoutHandlingList.add(new CheckoutHandling(checkoutHandlingArray[i]));
+            checkoutHandlingList.add(new CheckoutHandling(checkoutHandlingArray[i], i));
         }
         checkoutHnadlingListMutableLiveData.postValue(checkoutHandlingList);
     }
