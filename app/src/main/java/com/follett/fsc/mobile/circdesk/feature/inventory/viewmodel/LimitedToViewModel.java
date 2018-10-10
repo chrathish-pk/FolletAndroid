@@ -56,10 +56,10 @@ public class LimitedToViewModel extends BaseViewModel implements NetworkInterfac
     public List<LimitedToParentData> getLimitedToParentData() {
         List<LimitedToParentData> limitedToParentDataList = new ArrayList<>();
 
-        limitedToParentDataList.add(new LimitedToParentData(application.getString(R.string.limitedTo), null, false));
-        limitedToParentDataList.add(new LimitedToParentData(application.getString(R.string.homeLocation), subLocation, false));
-        limitedToParentDataList.add(new LimitedToParentData(application.getString(R.string.custodian), null, false));
-        limitedToParentDataList.add(new LimitedToParentData(application.getString(R.string.department), null, false));
+        limitedToParentDataList.add(new LimitedToParentData(application.getString(R.string.unlimited), 0, null, false));
+        limitedToParentDataList.add(new LimitedToParentData(application.getString(R.string.homeLocation), 1, subLocation, false));
+        limitedToParentDataList.add(new LimitedToParentData(application.getString(R.string.custodian), 2, null, false));
+        limitedToParentDataList.add(new LimitedToParentData(application.getString(R.string.department), 3, null, false));
 
         return limitedToParentDataList;
     }

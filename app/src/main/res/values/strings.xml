@@ -204,9 +204,13 @@
     <string name="call_to">To:</string>
     <string name="enter_date">Enter Date</string>
     <string name="limitedTo">Limited To</string>
+    <string name="unlimited">Unlimited</string>
     <string name="homeLocation">Home Location</string>
     <string name="custodian">Custodian</string>
     <string name="department">Department</string>
+
+    <string name="priceGreater">Greater than or Equal to</string>
+    <string name="priceLess">Less than</string>
 
     <string name="newInventory">NEW INVENTORY</string>
     <string name="newInventoryName">New Inventory Name</string>

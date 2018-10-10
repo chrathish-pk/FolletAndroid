@@ -25,10 +25,11 @@ public class IncludeItemAttributesViewModel extends BaseViewModel {
         String[] array = {"Barcoded", "Unbarcoded", "Consummable"};
         ArrayList<IncludeItem> includeList = new ArrayList();
         for (int i = 0; i < array.length; i++) {
-            includeList.add(new IncludeItem(array[i]));
+            includeList.add(new IncludeItem(array[i], i));
+
         }
         includeItemListMutableLiveData.postValue(includeList);
 
 
-}
+    }
 }

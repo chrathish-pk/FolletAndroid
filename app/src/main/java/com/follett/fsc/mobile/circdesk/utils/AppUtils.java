@@ -4,17 +4,6 @@
 
 package com.follett.fsc.mobile.circdesk.utils;
 
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.AlertDialogListener;
-import com.follett.fsc.mobile.circdesk.app.CustomAlert;
-import com.follett.fsc.mobile.circdesk.app.GlideApp;
-import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
-import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
-import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
-
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
@@ -35,6 +24,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.AlertDialogListener;
+import com.follett.fsc.mobile.circdesk.app.CustomAlert;
+import com.follett.fsc.mobile.circdesk.app.GlideApp;
+import com.follett.fsc.mobile.circdesk.app.base.BaseActivity;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -360,5 +360,33 @@ public class AppUtils {
         } else {
             return false;
         }
+    }
+
+    public void removeInventorySelectedData() {
+        AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_INVENTORY_NAME);
+        AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SELECTED_SUB_LOCATION);
+        AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SELECTED_SUB_LOCATION_JSON);
+        AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SELECTED_INCLUDE_ITEMS);
+        AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SELECTED_CHECKOUT_HANDLING);
+        AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_CALL_NUMBER_FROM);
+        AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_CALL_NUMBER_TO);
+        AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_CIRCULATION_TYPE_LIST);
+        AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_CIRCULATION_TYPE_LIST_JSON);
+        AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SEEN_FORMAT_DATE);
+        AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SEEN_DATE);
+        AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SELECTED_MISMATCHED_ITEM);
+
+        AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_IS_INCLUDE_BARCODED_SELECTED);
+        AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_IS_INCLUDE_UNBARCODED_SELECTED);
+        AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_IS_INCLUDE_CONSUMMABLE_SELECTED);
+        AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_IS_CHECKOUT_HANDLING_UNACCOUNTED_SELECTED);
+        AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_IS_CHECKOUT_HANDLING_ITEMS_IN_CIRCULATION_SELECTED);
+        AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SELECTED_PRICE_LIMITER_VALUE);
+        AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SELECTED_PRICE_LIMITER_OPTION);
+        AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SELECTED_PRICE_LIMITER_OPTION_Value);
+        AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SELECTED_LIMITED_TO_LIST);
+        AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SELECTED_LIMITED_TO_LIST_JSON);
+        AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_SELECTED_LIMITED_TO_ID);
+        AppSharedPreferences.getInstance().removeValues(AppSharedPreferences.KEY_IS_UNLIMITED_SELECTED);
     }
 }

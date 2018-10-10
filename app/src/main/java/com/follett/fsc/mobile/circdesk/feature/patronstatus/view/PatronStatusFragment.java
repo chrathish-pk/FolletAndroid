@@ -6,6 +6,16 @@
 
 package com.follett.fsc.mobile.circdesk.feature.patronstatus.view;
 
+import android.app.Activity;
+import android.arch.lifecycle.Observer;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
@@ -25,17 +35,6 @@ import com.google.gson.Gson;
 import com.honeywell.aidc.BarcodeFailureEvent;
 import com.honeywell.aidc.BarcodeReadEvent;
 import com.honeywell.aidc.BarcodeReader;
-
-import android.app.Activity;
-import android.arch.lifecycle.Observer;
-import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -245,7 +244,7 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
     @Override
     public void onNavigation(Object model, int position) {
         if (position == 0 && model != null) {  //Show patron list
-            navigateToPatronList((ArrayList<PatronList>) model, true);
+            navigateToPatronList((List<PatronList>) model, true);
         } else if (position == 1 && model != null) {  // pop patron list
             mActivity.popFragment("PatronListFrgment");
             requestPatronId((PatronList) model);
@@ -285,7 +284,7 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
         }
     }
 
-    private void navigateToPatronList(ArrayList<PatronList> patronList, boolean isAddToBackStack) {
+    private void navigateToPatronList(List<PatronList> patronList, boolean isAddToBackStack) {
         PatronListFragment mPatronListFragment = PatronListFragment.newInstance(patronList);
         // setToolBarTitle(getString(R.string.selectPatron));
         mActivity.replaceFragment(mPatronListFragment, R.id.loginContainer, getString(R.string.patron_status_label), true, true);

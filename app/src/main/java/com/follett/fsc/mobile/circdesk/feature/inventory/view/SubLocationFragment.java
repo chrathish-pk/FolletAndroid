@@ -1,5 +1,11 @@
 package com.follett.fsc.mobile.circdesk.feature.inventory.view;
 
+import android.arch.lifecycle.Observer;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
+
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
@@ -8,17 +14,10 @@ import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentSubLocationBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.SubLocation;
-import com.follett.fsc.mobile.circdesk.feature.inventory.model.SubLocationID;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.SublocationList;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.SubLocationViewModel;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
 import com.google.gson.Gson;
-
-import android.arch.lifecycle.Observer;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +78,7 @@ public class SubLocationFragment extends BaseFragment<FragmentSubLocationBinding
     public void onClick(View v) {
         if (v.getId() == R.id.backBtn) {
             String selectedSubLocation = null;
-            List<SubLocationID> subLocationIDList = new ArrayList<>();
+            List<Integer> subLocationIDList = new ArrayList<>();
             for (SublocationList subLocationList : subLocationData.getSublocationList()) {
                 if (subLocationList.isSelected()) {
                     if (selectedSubLocation == null) {
@@ -87,7 +86,7 @@ public class SubLocationFragment extends BaseFragment<FragmentSubLocationBinding
                     } else {
                         selectedSubLocation = selectedSubLocation + "," + subLocationList.getSublocationName();
                     }
-                    subLocationIDList.add(new SubLocationID(subLocationList.getSublocationID()));
+                    subLocationIDList.add(subLocationList.getSublocationID());
                 }
             }
             AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_SELECTED_SUB_LOCATION, selectedSubLocation);

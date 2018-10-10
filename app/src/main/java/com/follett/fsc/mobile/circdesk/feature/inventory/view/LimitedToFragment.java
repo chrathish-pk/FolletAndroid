@@ -13,7 +13,6 @@ import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentLimitedToBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.LimitedToParentData;
-import com.follett.fsc.mobile.circdesk.feature.inventory.model.SubLocationID;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.SublocationList;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.LimitedToViewModel;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.view.UpdateItemUIListener;
@@ -62,11 +61,17 @@ public class LimitedToFragment extends BaseFragment<FragmentLimitedToBinding, Li
     @Override
     public void onItemClick(View view, int position) {
         if (view.getId() == R.id.itemLimitedToRadioBtn) {
-            selectedParentPostion=position;
+            selectedParentPostion = position;
             for (int i = 0; i < limitedToParentDataList.size(); i++) {
-                if (i == position)
+                if (i == position) {
+                    if (i == 0) {
+                        AppSharedPreferences.getInstance().setBoolean(AppSharedPreferences.KEY_IS_UNLIMITED_SELECTED, false);
+                    } else {
+                        AppSharedPreferences.getInstance().setBoolean(AppSharedPreferences.KEY_IS_UNLIMITED_SELECTED, true);
+                    }
+                    AppSharedPreferences.getInstance().setInt(AppSharedPreferences.KEY_SELECTED_LIMITED_TO_ID, limitedToParentDataList.get(i).getLimitedToParentID());
                     limitedToParentDataList.get(i).setSelected(true);
-                else
+                } else
                     limitedToParentDataList.get(i).setSelected(false);
             }
 
@@ -85,21 +90,23 @@ public class LimitedToFragment extends BaseFragment<FragmentLimitedToBinding, Li
     public void onClick(View v) {
         if (v.getId() == R.id.backBtn) {
             String selectedSubLocation = null;
-            List<SubLocationID> subLocationIDList = new ArrayList<>();
-            for (SublocationList subLocationList : limitedToParentDataList.get(selectedParentPostion).getSubLocation().getSublocationList()) {
-                if (subLocationList.isSelected()) {
-                    if (selectedSubLocation == null) {
-                        selectedSubLocation = subLocationList.getSublocationName();
-                    } else {
-                        selectedSubLocation = selectedSubLocation + "," + subLocationList.getSublocationName();
+            List<Integer> selectedLimitedValueIDList = new ArrayList<>();
+            if (selectedParentPostion == 1) {
+                for (SublocationList subLocationList : limitedToParentDataList.get(selectedParentPostion).getSubLocation().getSublocationList()) {
+                    if (subLocationList.isSelected()) {
+                        if (selectedSubLocation == null) {
+                            selectedSubLocation = subLocationList.getSublocationName();
+                        } else {
+                            selectedSubLocation = selectedSubLocation + "," + subLocationList.getSublocationName();
+                        }
+                        selectedLimitedValueIDList.add(subLocationList.getSublocationID());
                     }
-                    subLocationIDList.add(new SubLocationID(subLocationList.getSublocationID()));
                 }
             }
-            AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_SELECTED_SUB_LOCATION, selectedSubLocation);
+            AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_SELECTED_LIMITED_TO_LIST, selectedSubLocation);
 
-            String subLocationJSONString = new Gson().toJson(subLocationIDList);
-            AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_SELECTED_SUB_LOCATION_JSON, subLocationJSONString);
+            String subLocationJSONString = new Gson().toJson(selectedLimitedValueIDList);
+            AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_SELECTED_LIMITED_TO_LIST_JSON, subLocationJSONString);
 
             if (getActivity() != null) {
                 ((SetupActivity) getActivity()).selectedData.postValue(true);
