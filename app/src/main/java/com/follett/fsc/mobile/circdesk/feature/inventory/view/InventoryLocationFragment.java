@@ -82,7 +82,6 @@ public class InventoryLocationFragment extends BaseFragment<FragmentInventoryLoc
                 AppSharedPreferences.getInstance().setString(KEY_SELECTED_LOCATION_ITEM,AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SELECTED_LOCATION_ITEM));
             } else {
                 AppSharedPreferences.getInstance().setString(KEY_SELECTED_LOCATION_ITEM, selectedLocationItem);
-
             }
 
             if (getActivity() != null) {
