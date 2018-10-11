@@ -3,7 +3,7 @@ package com.follett.fsc.mobile.circdesk.feature.inventory.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.Parcelable.Creator;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -22,32 +22,40 @@ public class LocationList implements Parcelable
     @SerializedName("locationID")
     @Expose
     private Integer locationID;
-    public final static Creator<LocationList> CREATOR = new Creator<LocationList>() {
 
+    private boolean isSelected;
 
-        @SuppressWarnings({
-            "unchecked"
-        })
+    public LocationList(String name, Object message, Boolean success, Integer locationID, boolean isSelected) {
+        this.name = name;
+        this.message = message;
+        this.success = success;
+        this.locationID = locationID;
+        this.isSelected = isSelected;
+    }
+
+    protected LocationList(Parcel in) {
+        name = in.readString();
+        byte tmpSuccess = in.readByte();
+        success = tmpSuccess == 0 ? null : tmpSuccess == 1;
+        if (in.readByte() == 0) {
+            locationID = null;
+        } else {
+            locationID = in.readInt();
+        }
+        isSelected = in.readByte() != 0;
+    }
+
+    public static final Creator<LocationList> CREATOR = new Creator<LocationList>() {
+        @Override
         public LocationList createFromParcel(Parcel in) {
             return new LocationList(in);
         }
 
+        @Override
         public LocationList[] newArray(int size) {
-            return (new LocationList[size]);
+            return new LocationList[size];
         }
-
-    }
-    ;
-
-    protected LocationList(Parcel in) {
-        this.name = ((String) in.readValue((String.class.getClassLoader())));
-        this.message = ((Object) in.readValue((Object.class.getClassLoader())));
-        this.success = ((Boolean) in.readValue((Boolean.class.getClassLoader())));
-        this.locationID = ((Integer) in.readValue((Integer.class.getClassLoader())));
-    }
-
-    public LocationList() {
-    }
+    };
 
     public String getName() {
         return name;
@@ -81,15 +89,29 @@ public class LocationList implements Parcelable
         this.locationID = locationID;
     }
 
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(name);
-        dest.writeValue(message);
-        dest.writeValue(success);
-        dest.writeValue(locationID);
+    public boolean isSelected() {
+        return isSelected;
     }
 
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    @Override
     public int describeContents() {
-        return  0;
+        return 0;
     }
 
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeByte((byte) (success == null ? 0 : success ? 1 : 2));
+        if (locationID == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(locationID);
+        }
+        dest.writeByte((byte) (isSelected ? 1 : 0));
+    }
 }

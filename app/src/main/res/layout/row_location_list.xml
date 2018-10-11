@@ -38,6 +38,7 @@
             android:layout_alignParentRight="true"
             android:checked="@{subLocationList.selected}"
             android:layout_centerVertical="true"
+            android:clickable="@{subLocationList.selected}"
             android:padding="10dp" />
 
         <View

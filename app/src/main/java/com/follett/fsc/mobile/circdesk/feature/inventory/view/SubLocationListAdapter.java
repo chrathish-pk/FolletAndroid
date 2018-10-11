@@ -5,7 +5,6 @@ import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
@@ -36,6 +35,7 @@ public class SubLocationListAdapter extends RecyclerView.Adapter<SubLocationList
     @Override
     public void onBindViewHolder(@NonNull SubLocationListViewHolder holder, final int position) {
         holder.rowLocationListBinding.setSubLocationList(subLocationList.getSublocationList().get(position));
+        holder.rowLocationListBinding.locationitemCheckbox.setChecked(subLocationList.getSublocationList().get(position).isSelected());
 
         holder.rowLocationListBinding.locationitemCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
