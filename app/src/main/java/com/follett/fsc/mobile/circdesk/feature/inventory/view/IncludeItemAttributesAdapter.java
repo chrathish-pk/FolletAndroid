@@ -52,8 +52,6 @@ public class IncludeItemAttributesAdapter extends RecyclerView.Adapter<IncludeIt
         holder.rowIncludeitemListBinding.includeitemCheckbox.setOnClickListener(this);
         holder.rowIncludeitemListBinding.includeitemName.setOnClickListener(this);
         includeItemsList.get(position).setSelected(holder.rowIncludeitemListBinding.includeitemCheckbox.isChecked());
-
-
     }
 
     @Override
@@ -71,10 +69,7 @@ public class IncludeItemAttributesAdapter extends RecyclerView.Adapter<IncludeIt
 
         public IncludeItemAttributesViewHolder(RowIncludeitemListBinding rowIncludeitemListBinding) {
             super(rowIncludeitemListBinding.getRoot());
-            //lastSelectedPosition = getAdapterPosition();
-
             this.rowIncludeitemListBinding = rowIncludeitemListBinding;
-
         }
     }
 }
