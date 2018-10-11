@@ -21,16 +21,6 @@
         android:layout_height="match_parent"
         android:clickable="true">
 
-        <View
-            android:id="@+id/view"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/radioButton"
-            android:layout_marginTop="20dp"
-            android:background="@color/editTextBorderColor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerViewLocationList"
@@ -39,7 +29,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view">
+            >
 
         </android.support.v7.widget.RecyclerView>
 

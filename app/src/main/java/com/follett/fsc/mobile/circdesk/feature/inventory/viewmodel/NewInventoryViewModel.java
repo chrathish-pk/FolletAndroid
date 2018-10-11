@@ -96,7 +96,7 @@ public class NewInventoryViewModel extends BaseViewModel implements NetworkInter
 
         if (AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_PRICE_LIMITER_OPTION_Value).isEmpty() &&
                 AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_PRICE_LIMITER_VALUE).isEmpty())
-            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.purchasePriceLabel), "All Resource Types"));
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.purchasePriceLabel), "Any Value"));
         else
             newInventoryDataList.add(new NewInventoryData(application.getString(R.string.purchasePriceLabel),
                     AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_PRICE_LIMITER_OPTION_Value) + " " +

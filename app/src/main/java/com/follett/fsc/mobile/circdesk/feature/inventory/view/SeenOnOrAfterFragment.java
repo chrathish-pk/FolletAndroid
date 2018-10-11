@@ -11,16 +11,18 @@ import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentCallNumbersExcludeItemsBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.SeenOnOrAfterViewModel;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class SeenOnOrAfterFragment extends BaseFragment<FragmentCallNumbersExcludeItemsBinding, SeenOnOrAfterViewModel> implements ItemClickListener {
+public class SeenOnOrAfterFragment extends BaseFragment<FragmentCallNumbersExcludeItemsBinding, SeenOnOrAfterViewModel> implements ItemClickListener,View.OnClickListener{
     private FragmentCallNumbersExcludeItemsBinding fragmentCallNumbersExcludeItemsBinding;
     private SeenOnOrAfterViewModel seenOnOrAfterViewModel;
 
@@ -46,6 +48,7 @@ public class SeenOnOrAfterFragment extends BaseFragment<FragmentCallNumbersExclu
         fragmentCallNumbersExcludeItemsBinding = getViewDataBinding();
 
         fragmentCallNumbersExcludeItemsBinding.enterDate.setVisibility(View.VISIBLE);
+        mActivity.baseBinding.backBtn.setOnClickListener(this);
 
         if (AppSharedPreferences.getInstance().getBoolean(AppSharedPreferences.KEY_IS_LIBRARY_SELECTED)) {
             fragmentCallNumbersExcludeItemsBinding.descriptionText.setText(getString(R.string.excludeItemsLibDescription));
@@ -66,6 +69,7 @@ public class SeenOnOrAfterFragment extends BaseFragment<FragmentCallNumbersExclu
                 public void onChanged(@Nullable String date) {
                     fragmentCallNumbersExcludeItemsBinding.enterDate.setText(date);
 
+
                 }
             });
         }
@@ -79,5 +83,15 @@ public class SeenOnOrAfterFragment extends BaseFragment<FragmentCallNumbersExclu
             dFragment.show(getActivity().getSupportFragmentManager(), "Date Picker");
         }
     }
-
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.backBtn) {
+            if (getActivity() != null) {
+                AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_SEEN_DATE, fragmentCallNumbersExcludeItemsBinding.enterDate.getText().toString());
+                //AppRemoteRepository.getInstance().setString(AppSharedPreferences.KEY_SEEN_FORMAT_DATE, AppUtils.getInstance().getFormatDate(formattedDate));
+                ((SetupActivity) getActivity()).selectedData.postValue(true);
+            }
+            mActivity.onBackPressed();
+        }
+    }
 }

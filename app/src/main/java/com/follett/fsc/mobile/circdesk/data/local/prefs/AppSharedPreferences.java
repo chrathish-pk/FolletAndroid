@@ -69,6 +69,7 @@ public class AppSharedPreferences {
     public static final String KEY_CIRCULATION_TYPE_LIST = "circulationTypeList";
     public static final String KEY_CIRCULATION_TYPE_LIST_JSON = "circulationTypeListJson";
     public static final String KEY_SEEN_DATE = "seenDate";
+    public static final String KEY_SEEN_DATE_NOW = "seenDateNow";
     public static final String KEY_SEEN_FORMAT_DATE = "seenFormatDate";
     public static final String KEY_SELECTED_MISMATCHED_ITEM = "selectedMistmatchedItem";
     public static final String KEY_SELECTED_LOCATION_ITEM = "selectedLocationItem";
