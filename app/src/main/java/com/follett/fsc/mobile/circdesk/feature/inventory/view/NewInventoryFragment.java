@@ -82,13 +82,16 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
         newInventoryViewModel.createInventoryResultMutableLiveData.observeForever(new Observer<CreateInventoryResult>() {
             @Override
             public void onChanged(@Nullable CreateInventoryResult createInventoryResult) {
-                if (createInventoryResult != null && !createInventoryResult.getSuccess()) {
-                    AppUtils.getInstance().showAlertDialog(getActivity(), "", createInventoryResult.getMessage().toString(), getString(R.string.ok), "", NewInventoryFragment.this, 0);
-                } else {
-                    //mActivity.popFragment();
-                }
+                if (createInventoryResult != null) {
+                    if (!createInventoryResult.getSuccess()) {
+                        AppUtils.getInstance().showAlertDialog(getActivity(), "", createInventoryResult.getMessage().toString(), getString(R.string.ok), "", NewInventoryFragment.this, 0);
+                    } else {
+                        //AppSharedPreferences.getInstance().setInt(AppSharedPreferences.KEY_CREATED_INVENTORY_PARTIAL_ID, createInventoryResult.getPartialID());
+                        mActivity.popFragment(null);
+                        mActivity.pushFragment(new InventoryFragment(), R.id.loginContainer, getString(R.string.inventory), true, true);
+                    }
 
-               //mActivity.onBackPressed();
+                }
             }
         });
 
@@ -111,14 +114,14 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
                 break;
             case 2:
                 if (isLibrarySelected) {
-                    mActivity.replaceFragment(new SubLocationFragment(), R.id.loginContainer, getString(R.string.subLocationLabel), true, true);
+                    mActivity.pushFragment(new SubLocationFragment(), R.id.loginContainer, getString(R.string.subLocationLabel), true, true);
                 } else {
-                    mActivity.replaceFragment(new PurchasePriceFragment(), R.id.loginContainer, getString(R.string.purchasePrice), true, true);
+                    mActivity.pushFragment(new PurchasePriceFragment(), R.id.loginContainer, getString(R.string.purchasePrice), true, true);
                 }
                 break;
             case 3:
                 if (isLibrarySelected) {
-                    mActivity.replaceFragment(new SeenOnOrAfterFragment(), R.id.loginContainer, getString(R.string.seenOnOrAfter), true, true);
+                    mActivity.pushFragment(new SeenOnOrAfterFragment(), R.id.loginContainer, getString(R.string.seenOnOrAfter), true, true);
                 } else {
                     mActivity.pushFragment(new IncludeItemAttributesFragment(), R.id.loginContainer, getString(R.string.includeItemAttributes), true, true);
                 }

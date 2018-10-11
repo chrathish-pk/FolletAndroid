@@ -285,7 +285,7 @@ public class AppUtils {
             }
             if (context != null) {
                 TextView messageView = alertDialog.findViewById(android.R.id.message);
-                messageView.setTextColor(ContextCompat.getColor(context, R.color.editTextBgColor));
+                messageView.setTextColor(ContextCompat.getColor(context, R.color.black));
 
                 Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
                 Button negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);

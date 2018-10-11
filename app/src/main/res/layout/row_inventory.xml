@@ -25,6 +25,7 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/itemInventoryRadioBtn"
             android:fontFamily="@font/opensans_regular"
+            android:textColor="@color/black"
             android:padding="10dp"
             android:text="@{inventory.name.empty ? inventory.dateStarted : inventory.name + ' ' + @string/started + ' ' + inventory.dateStarted}" />
 

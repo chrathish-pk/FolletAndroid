@@ -26,6 +26,7 @@ import com.follett.fsc.mobile.circdesk.feature.inventory.InventoryViewSelectionF
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InProgressInventoryResults;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryScan;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.NewInventoryData;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.InventoryViewModel;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
@@ -71,6 +72,7 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
         initViews();
     }
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,6 +116,15 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                 inventoryViewModel.getInventoryDetails();
             }
         });
+
+        ((SetupActivity)getActivity()).selectedLocationLiveData.observe(getActivity(), new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String selectedLocation) {
+
+                fragmentInventoryBinding.inventoryLocation.setText(selectedLocation);
+            }
+        });
+
         fragmentInventoryBinding.patronEntryIncludeLayout.patronGoBtn.setOnClickListener(this);
         inventoryViewModel.inventoryScanMutableLiveData.observe(this, new Observer<InventoryScan>() {
             @Override
@@ -128,6 +139,8 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                         .showAlertDialog(activity, getString(R.string.not_found_label), String.valueOf(s));
             }
         });
+
+
     }
 
     @Override
@@ -166,8 +179,10 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
             fragmentInventoryBinding.inventoryLocation.setVisibility(View.GONE);
             fragmentInventoryBinding.inventoryLocationBar.setVisibility(View.GONE);
         } else {
+
             fragmentInventoryBinding.inventoryLocation.setVisibility(View.VISIBLE);
             fragmentInventoryBinding.inventoryLocationBar.setVisibility(View.VISIBLE);
+
         }
         AppUtils.getInstance().updateLibResBg(mActivity, fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn, fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn);
 
@@ -201,6 +216,7 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                                 fragmentInventoryBinding.inventorySelection.setText(inProgressInventoryResults.getInventoryList().get(0).getDateStarted());
                             else
                                 fragmentInventoryBinding.inventorySelection.setText(inProgressInventoryResults.getInventoryList().get(0).getName() + getString(R.string.started) + inProgressInventoryResults.getInventoryList().get(0).getDateStarted());
+
                         } else {
                             fragmentInventoryBinding.inventorySelection.setVisibility(View.GONE);
                         }

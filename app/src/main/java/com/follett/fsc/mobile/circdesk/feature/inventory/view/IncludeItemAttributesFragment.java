@@ -50,6 +50,9 @@ public class IncludeItemAttributesFragment extends BaseFragment<FragmentIncludeI
             @Override
             public void onChanged(@Nullable List<IncludeItem> includeItems) {
                 includeItemList = includeItems;
+
+
+
                 IncludeItemAttributesAdapter includeItemAttributesAdapter = new IncludeItemAttributesAdapter(getActivity(), includeItems, IncludeItemAttributesFragment.this);
                 fragmentIncludeItemAttributesBinding.recyclerviewIncludeItem.setAdapter(includeItemAttributesAdapter);
             }

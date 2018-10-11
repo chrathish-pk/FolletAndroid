@@ -23,6 +23,8 @@ public class SetupActivity extends BaseActivity<ScannerViewModel> implements Nav
 
     public MutableLiveData<String> selectedDateLiveData = new MutableLiveData<>();
     public MutableLiveData<String> selectedInventoryNameLiveData = new MutableLiveData<>();
+    public MutableLiveData<String> selectedLocationLiveData = new MutableLiveData<>();
+
     public MutableLiveData<Boolean> selectedData = new MutableLiveData<>();
 
     @Override

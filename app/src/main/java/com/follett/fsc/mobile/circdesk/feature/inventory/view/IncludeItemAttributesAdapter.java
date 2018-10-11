@@ -10,17 +10,23 @@ import android.view.ViewGroup;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.databinding.RowIncludeitemListBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.IncludeItem;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-public class IncludeItemAttributesAdapter extends RecyclerView.Adapter<IncludeItemAttributesViewHolder> implements View.OnClickListener {
+public class IncludeItemAttributesAdapter extends RecyclerView.Adapter<IncludeItemAttributesAdapter.IncludeItemAttributesViewHolder> implements View.OnClickListener {
 
     private Context context;
     private IncludeItem includeItem;
     private ItemClickListener itemClickListener;
     private List<IncludeItem> includeItemsList;
+    private int lastSelectedPosition = -1;
+
 
     public IncludeItemAttributesAdapter(Context context, List<IncludeItem> includeItemsList, ItemClickListener itemClickListener) {
         this.context = context;
@@ -45,9 +51,7 @@ public class IncludeItemAttributesAdapter extends RecyclerView.Adapter<IncludeIt
         holder.rowIncludeitemListBinding.locationItemChecklistLayout.setOnClickListener(this);
         holder.rowIncludeitemListBinding.includeitemCheckbox.setOnClickListener(this);
         holder.rowIncludeitemListBinding.includeitemName.setOnClickListener(this);
-
         includeItemsList.get(position).setSelected(holder.rowIncludeitemListBinding.includeitemCheckbox.isChecked());
-
     }
 
     @Override
@@ -58,5 +62,14 @@ public class IncludeItemAttributesAdapter extends RecyclerView.Adapter<IncludeIt
     @Override
     public void onClick(View v) {
         notifyDataSetChanged();
+    }
+    class IncludeItemAttributesViewHolder extends RecyclerView.ViewHolder {
+
+        RowIncludeitemListBinding rowIncludeitemListBinding;
+
+        public IncludeItemAttributesViewHolder(RowIncludeitemListBinding rowIncludeitemListBinding) {
+            super(rowIncludeitemListBinding.getRoot());
+            this.rowIncludeitemListBinding = rowIncludeitemListBinding;
+        }
     }
 }

@@ -71,6 +71,9 @@ public class AppSharedPreferences {
     public static final String KEY_SEEN_DATE = "seenDate";
     public static final String KEY_SEEN_FORMAT_DATE = "seenFormatDate";
     public static final String KEY_SELECTED_MISMATCHED_ITEM = "selectedMistmatchedItem";
+    public static final String KEY_SELECTED_LOCATION_ITEM = "selectedLocationItem";
+
+
     public static final String KEY_IS_INCLUDE_BARCODED_SELECTED = "isIncludeBarcodedSelected";
     public static final String KEY_IS_INCLUDE_UNBARCODED_SELECTED = "isIncludeUnbarcodedSelected";
     public static final String KEY_IS_INCLUDE_CONSUMMABLE_SELECTED = "isIncludeConsummableSelected";
