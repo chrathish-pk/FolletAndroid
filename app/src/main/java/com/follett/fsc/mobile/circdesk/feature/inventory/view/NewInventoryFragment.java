@@ -110,6 +110,8 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
             case 1:
                 if (isLibrarySelected) {
                     mActivity.pushFragment(new CirculationTypeFragment(), R.id.loginContainer, getString(R.string.circulationTypeLabel), true, true);
+                }else {
+                    mActivity.pushFragment(new ResourceTypeFragment(), R.id.loginContainer, getString(R.string.resourceTypes), true, true);
                 }
                 break;
             case 2:

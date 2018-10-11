@@ -206,11 +206,11 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                             } else {
                                 AppSharedPreferences.getInstance().setInt(AppSharedPreferences.KEY_SELECTED_INVENTORY_PARTIAL_ID, AppSharedPreferences.getInstance().getInt(AppSharedPreferences.KEY_CREATED_INVENTORY_PARTIAL_ID));
 
-                                if (inProgressInventoryResults.getInventoryList().stream().filter(p -> p.getPartialID() == AppSharedPreferences.getInstance().getInt(AppSharedPreferences.KEY_CREATED_INVENTORY_PARTIAL_ID)))
+                                /*if (inProgressInventoryResults.getInventoryList().stream().filter(p -> p.getPartialID() == AppSharedPreferences.getInstance().getInt(AppSharedPreferences.KEY_CREATED_INVENTORY_PARTIAL_ID)))
                                     fragmentInventoryBinding.inventorySelection.setText(inProgressInventoryResults.getInventoryList().get(0).getDateStarted());
                                 else
                                     fragmentInventoryBinding.inventorySelection.setText(inProgressInventoryResults.getInventoryList().get(0).getName() + getString(R.string.started) + inProgressInventoryResults.getInventoryList().get(0).getDateStarted());
-
+*/
                             }
                         } else {
                             fragmentInventoryBinding.inventorySelection.setVisibility(View.GONE);

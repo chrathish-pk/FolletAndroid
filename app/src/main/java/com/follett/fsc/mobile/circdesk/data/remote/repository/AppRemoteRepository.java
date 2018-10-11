@@ -25,6 +25,7 @@ import com.follett.fsc.mobile.circdesk.feature.inventory.model.InProgressInvento
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryScan;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.Location;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.ResourceType;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.SubLocation;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.model.ItemDetails;
@@ -58,6 +59,7 @@ import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiCo
 import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.INVENTORY_SCAN_REQUEST_CODE;
 import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.ITEM_STATUS_REQUEST_CODE;
 import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.PATRON_STATUS_REQUEST_CODE;
+import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.RESOURCE_TYPE_REQUEST_CODE;
 import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.SCAN_PATRON_REQUEST_CODE;
 import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.SERVICE_ISSUE;
 import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.TITLE_DETAILS_REQUEST_CODE;
@@ -399,8 +401,8 @@ public class AppRemoteRepository<T> {
                 });
     }
 
-    public void getSubLocationList(@Nullable final NetworkInterface networkInterface, Map<String, String> headers, String site, String contextName){
-        apiService.getSubLocationList(headers,site,contextName)
+    public void getSubLocationList(@Nullable final NetworkInterface networkInterface, Map<String, String> headers, String site, String contextName) {
+        apiService.getSubLocationList(headers, site, contextName)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribeWith(new DisposableObserverWrapper<SubLocation>() {
@@ -425,14 +427,14 @@ public class AppRemoteRepository<T> {
 
     }
 
-    public void getLocationList(@Nullable final NetworkInterface networkInterface, Map<String, String> headers, String site, String contextName){
-        apiService.getLocationList(headers,site,contextName)
+    public void getLocationList(@Nullable final NetworkInterface networkInterface, Map<String, String> headers, String site, String contextName) {
+        apiService.getLocationList(headers, site, contextName)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribeWith(new DisposableObserverWrapper<Location>() {
                     @Override
                     protected void onSuccess(Location location) {
-                        onSuccessResult(networkInterface,location);
+                        onSuccessResult(networkInterface, location);
                     }
 
                     @Override
@@ -446,7 +448,6 @@ public class AppRemoteRepository<T> {
                     }
                 });
     }
-
 
 
     public void createLibInventory(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, CreateInventoryLibRequest createInventoryLibRequest) {
@@ -501,23 +502,44 @@ public class AppRemoteRepository<T> {
 
     public void getInventoryScan(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, int
             collectionType, int partialID, String barcode, int scanningLocationID, int copyId, boolean checkShelfOrder) {
-        
+
         apiService.getInventoryScan(headers, contextName, site, collectionType, partialID, barcode, scanningLocationID, copyId, checkShelfOrder)
                 .subscribeWith(new DisposableObserverWrapper<InventoryScan>() {
                     @Override
                     protected void onSuccess(InventoryScan inventoryScan) {
                         onSuccessResult(networkInterface, inventoryScan);
                     }
-                    
+
                     @Override
                     protected void onFailed(Throwable throwable, String errorMessage) {
                         onFailedResult(networkInterface, throwable, errorMessage);
-                        
+
                     }
-                    
+
                     @Override
                     protected void onRefreshToken() {
                         onRefreshSession(networkInterface, INVENTORY_SCAN_REQUEST_CODE);
+                    }
+                });
+    }
+
+    public void getResourceTypeList(Map<String, String> headers, final NetworkInterface networkInterface, String contextName, String site) {
+        apiService.getResourceTypeList(headers, contextName, site)
+                .subscribeWith(new DisposableObserverWrapper<ResourceType>() {
+                    @Override
+                    protected void onSuccess(ResourceType resourceType) {
+                        onSuccessResult(networkInterface, resourceType);
+                    }
+
+                    @Override
+                    protected void onFailed(Throwable throwable, String errorMessage) {
+                        onFailedResult(networkInterface, throwable, errorMessage);
+
+                    }
+
+                    @Override
+                    protected void onRefreshToken() {
+                        onRefreshSession(networkInterface, RESOURCE_TYPE_REQUEST_CODE);
                     }
                 });
     }

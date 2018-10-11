@@ -201,6 +201,7 @@
     <string name="call_num">Call Number</string>
     <string name="callNumbers">Call Numbers</string>
     <string name="inventoryLimitedTo">Inventory Limited To</string>
+    <string name="resourceTypes">Resource Types</string>
     <string name="call_to">To:</string>
     <string name="enter_date">Enter Date</string>
     <string name="limitedTo">Limited To</string>

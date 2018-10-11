@@ -19,6 +19,7 @@ import com.follett.fsc.mobile.circdesk.feature.inventory.model.InProgressInvento
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryScan;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.Location;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.ResourceType;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.SubLocation;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.model.ItemDetails;
@@ -125,4 +126,9 @@ public interface APIInterface {
     Observable<InventoryScan> getInventoryScan(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site,
             @Query("collectionType") int collectionType, @Query("partialID") int partialID, @Query("barcode") String barcode, @Query("scanningLocationID")
             int scanningLocationID, @Query("lastCopyID") int lastCopyID, @Query("checkShelfOrder") boolean checkShelfOrder);
+
+    @GET("/rest/v6/circulation/resourcetypelist")
+    @JsonAndXmlConverters.Xml
+    Observable<ResourceType> getResourceTypeList(@HeaderMap Map<String, String> headers, @Query("site") String site, @Query("contextName") String contextName);
+
 }
