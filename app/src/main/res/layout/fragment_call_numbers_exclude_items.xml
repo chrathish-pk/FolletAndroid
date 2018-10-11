@@ -81,7 +81,6 @@
                 android:layout_below="@+id/call_from"
                 android:layout_marginTop="8dp"
                 android:hint="@string/call_num"
-                android:inputType="number"
                 android:letterSpacing="0.1"
                 android:singleLine="true" />
 
@@ -106,7 +105,6 @@
                 android:layout_below="@+id/call_to"
                 android:layout_marginTop="8dp"
                 android:hint="@string/call_num"
-                android:inputType="number"
                 android:letterSpacing="0.1"
                 android:singleLine="true" />
 

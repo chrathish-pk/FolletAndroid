@@ -246,7 +246,7 @@ public class PatronStatusFragment extends BaseFragment<FragmentPatronStatusBindi
         if (position == 0 && model != null) {  //Show patron list
             navigateToPatronList((List<PatronList>) model, true);
         } else if (position == 1 && model != null) {  // pop patron list
-            mActivity.popFragment("PatronListFrgment");
+            mActivity.popFragment(getString(R.string.patron_status_label));
             requestPatronId((PatronList) model);
         } else if (position == 2 && model != null) {    // PatronItemCheckoutFragment checkout
             navigateToPatronCheckout((PatronInfo) model, true, getString(R.string.item_checkout_label));

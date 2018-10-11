@@ -205,6 +205,7 @@ public class BaseActivity<V extends ScannerViewModel> extends AppCompatActivity 
         ft.commit();
     }
 
+
     @Override
     public void onClick(View v) {
 
