@@ -35,8 +35,6 @@ public class SubLocationListAdapter extends RecyclerView.Adapter<SubLocationList
     @Override
     public void onBindViewHolder(@NonNull SubLocationListViewHolder holder, final int position) {
         holder.rowLocationListBinding.setSubLocationList(subLocationList.getSublocationList().get(position));
-        holder.rowLocationListBinding.locationitemCheckbox.setChecked(subLocationList.getSublocationList().get(position).isSelected());
-
         holder.rowLocationListBinding.locationitemCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -45,7 +43,7 @@ public class SubLocationListAdapter extends RecyclerView.Adapter<SubLocationList
                 notifyDataSetChanged();
             }
         });
-        //subLocationList.getSublocationList().get(position).setSelected(holder.rowLocationListBinding.locationitemCheckbox.isChecked());
+
 
     }
 

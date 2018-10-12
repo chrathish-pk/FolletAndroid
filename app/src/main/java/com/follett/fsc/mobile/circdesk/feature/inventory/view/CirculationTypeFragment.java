@@ -65,6 +65,10 @@ public class CirculationTypeFragment extends BaseFragment<FragmentCirculationtyp
             @Override
             public void onChanged(@Nullable CirculationTypeList circulationTypeList) {
                 circulationTypeListData = circulationTypeList;
+
+
+
+
                 CirculationTypeListAdapter circulationTypeListAdapter = new CirculationTypeListAdapter(getActivity(), circulationTypeList, CirculationTypeFragment.this);
                 recyclerviewLayoutBinding.recyclerviewList.setAdapter(circulationTypeListAdapter);
             }

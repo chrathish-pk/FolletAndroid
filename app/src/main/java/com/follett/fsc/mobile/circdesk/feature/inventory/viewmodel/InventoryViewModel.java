@@ -110,8 +110,7 @@ public class InventoryViewModel extends ScannerViewModel implements NetworkInter
                 final List<LocationList> locationList = location.getLocationList();
                 if (!locationList.isEmpty()) {
                     AppRemoteRepository.getInstance()
-                            .setInt(SCANNING_LOCATION_ID, locationList.get(0)
-                                    .getLocationID());
+                            .setInt(SCANNING_LOCATION_ID, AppSharedPreferences.getInstance().getInt(AppSharedPreferences.SCANNING_LOCATION_ID));
                 }
             } else if (model instanceof InventoryScan) {
                 final InventoryScan inventoryScan = ((InventoryScan) model);
