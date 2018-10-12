@@ -34,6 +34,7 @@ import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferen
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CIRCULATION_TYPE_LIST;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_CONTEXT_NAME;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_IS_LIBRARY_SELECTED;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SELECTED_LIMITED_TO_LIST;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SELECTED_SUB_LOCATION;
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SITE_SHORT_NAME;
 
@@ -86,17 +87,17 @@ public class NewInventoryViewModel extends BaseViewModel implements NetworkInter
     public List<NewInventoryData> getNewInventoryDataForResource() {
         List<NewInventoryData> newInventoryDataList = new ArrayList<>();
 
-        if (AppRemoteRepository.getInstance().getString(KEY_SELECTED_SUB_LOCATION).isEmpty())
+        if (AppRemoteRepository.getInstance().getString(KEY_SELECTED_LIMITED_TO_LIST).isEmpty())
             newInventoryDataList.add(new NewInventoryData(application.getString(R.string.limitedToLabel), "Unlimited"));
         else
-            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.limitedToLabel), AppRemoteRepository.getInstance().getString(KEY_SELECTED_SUB_LOCATION)));
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.limitedToLabel), AppRemoteRepository.getInstance().getString(KEY_SELECTED_LIMITED_TO_LIST)));
 
 
         newInventoryDataList.add(new NewInventoryData(application.getString(R.string.resourceTypesLabel), "All Resource Types"));
 
         if (AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_PRICE_LIMITER_OPTION_Value).isEmpty() &&
                 AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_PRICE_LIMITER_VALUE).isEmpty())
-            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.purchasePriceLabel), "All Resource Types"));
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.purchasePriceLabel), "Any Value"));
         else
             newInventoryDataList.add(new NewInventoryData(application.getString(R.string.purchasePriceLabel),
                     AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_PRICE_LIMITER_OPTION_Value) + " " +

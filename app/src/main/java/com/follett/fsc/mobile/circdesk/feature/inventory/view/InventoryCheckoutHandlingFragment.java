@@ -11,12 +11,17 @@ import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentInventoryCheckoutHandlingBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.CheckoutHandling;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.InventoryCheckoutHandlingViewModel;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
+import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 
 import java.util.List;
+
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SELECTED_CHECKOUT_HANDLING;
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SELECTED_INCLUDE_ITEMS;
 
 
 public class InventoryCheckoutHandlingFragment extends BaseFragment<FragmentInventoryCheckoutHandlingBinding, InventoryCheckoutHandlingViewModel> implements ItemClickListener, View.OnClickListener {
@@ -55,6 +60,23 @@ public class InventoryCheckoutHandlingFragment extends BaseFragment<FragmentInve
             @Override
             public void onChanged(@Nullable List<CheckoutHandling> checkoutHandlings) {
                 checkoutHandlingList = checkoutHandlings;
+
+                String checkoutHandlingItem;
+
+                if(AppRemoteRepository.getInstance().getString(KEY_SELECTED_CHECKOUT_HANDLING).isEmpty()) {
+                    checkoutHandlingItem = getString(R.string.checkInItemsInCirculation);
+                }else{
+                    checkoutHandlingItem = AppRemoteRepository.getInstance().getString(KEY_SELECTED_CHECKOUT_HANDLING);
+                }
+                String[] checkoutHandlingItemArr = checkoutHandlingItem.split(",");
+                for (int i = 0; i < checkoutHandlingItemArr.length; i++) {
+                    for (int j = 0; j < checkoutHandlingList.size(); j++) {
+                        if (checkoutHandlingList.get(j).getCheckoutHandlingName().equalsIgnoreCase(checkoutHandlingItemArr[i])) {
+                            checkoutHandlingList.get(j).setSelected(true);
+                            break;
+                        }
+                    }
+                }
                 InventoryCheckoutHandlingAdapter inventoryCheckoutHandlingAdapter = new InventoryCheckoutHandlingAdapter(getActivity(), checkoutHandlings, InventoryCheckoutHandlingFragment.this);
                 fragmentInventoryCheckoutHandlingBinding.recyclerviewCheckouthandling.setAdapter(inventoryCheckoutHandlingAdapter);
             }
@@ -72,7 +94,7 @@ public class InventoryCheckoutHandlingFragment extends BaseFragment<FragmentInve
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.backBtn) {
-            String selectedSubLocation = null;
+            String selectedCheckoutHandling = null;
             for (CheckoutHandling checkoutHandling : checkoutHandlingList) {
                 if (checkoutHandling.isSelected()) {
                     if (checkoutHandling.getCheckoutHandlingID() == 0) {
@@ -80,10 +102,10 @@ public class InventoryCheckoutHandlingFragment extends BaseFragment<FragmentInve
                     } else {
                         AppSharedPreferences.getInstance().setBoolean(AppSharedPreferences.KEY_IS_CHECKOUT_HANDLING_ITEMS_IN_CIRCULATION_SELECTED, true);
                     }
-                    if (selectedSubLocation == null) {
-                        selectedSubLocation = checkoutHandling.getCheckoutHandlingName();
+                    if (selectedCheckoutHandling == null) {
+                        selectedCheckoutHandling = checkoutHandling.getCheckoutHandlingName();
                     } else {
-                        selectedSubLocation = selectedSubLocation + "," + checkoutHandling.getCheckoutHandlingName();
+                        selectedCheckoutHandling = selectedCheckoutHandling + "," + checkoutHandling.getCheckoutHandlingName();
                     }
                 } else {
                     if (checkoutHandling.getCheckoutHandlingID() == 0) {
@@ -93,12 +115,21 @@ public class InventoryCheckoutHandlingFragment extends BaseFragment<FragmentInve
                     }
                 }
             }
-            AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_SELECTED_CHECKOUT_HANDLING, selectedSubLocation);
+            AppSharedPreferences.getInstance().setString(KEY_SELECTED_CHECKOUT_HANDLING, selectedCheckoutHandling);
 
-            if (getActivity() != null) {
-                ((SetupActivity) getActivity()).selectedData.postValue(true);
+
+            if (AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_CHECKOUT_HANDLING).isEmpty())
+            {
+                AppUtils.getInstance()
+                        .showShortToastMessages(mActivity, getString(R.string.errorMsg));
+            } else {
+                if (getActivity() != null) {
+                    ((SetupActivity) getActivity()).selectedData.postValue(true);
+                }
+                mActivity.onBackPressed();
             }
-            mActivity.onBackPressed();
+
+
         }
     }
 }

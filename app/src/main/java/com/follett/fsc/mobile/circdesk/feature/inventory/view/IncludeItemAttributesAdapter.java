@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
@@ -19,13 +20,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class IncludeItemAttributesAdapter extends RecyclerView.Adapter<IncludeItemAttributesAdapter.IncludeItemAttributesViewHolder> implements View.OnClickListener {
+public class IncludeItemAttributesAdapter extends RecyclerView.Adapter<IncludeItemAttributesAdapter.IncludeItemAttributesViewHolder>  {
 
     private Context context;
     private IncludeItem includeItem;
     private ItemClickListener itemClickListener;
     private List<IncludeItem> includeItemsList;
-    private int lastSelectedPosition = -1;
+    private int SelectedPosition;
 
 
     public IncludeItemAttributesAdapter(Context context, List<IncludeItem> includeItemsList, ItemClickListener itemClickListener) {
@@ -42,16 +43,16 @@ public class IncludeItemAttributesAdapter extends RecyclerView.Adapter<IncludeIt
     }
 
     @Override
-    public void onBindViewHolder(@NonNull IncludeItemAttributesViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull IncludeItemAttributesViewHolder holder, final int position) {
         holder.rowIncludeitemListBinding.setIncludeItemList(includeItemsList.get(position));
 
-        holder.rowIncludeitemListBinding.locationItemChecklistLayout.setTag(position);
-        holder.rowIncludeitemListBinding.includeitemCheckbox.setTag(position);
-        holder.rowIncludeitemListBinding.includeitemName.setTag(position);
-        holder.rowIncludeitemListBinding.locationItemChecklistLayout.setOnClickListener(this);
-        holder.rowIncludeitemListBinding.includeitemCheckbox.setOnClickListener(this);
-        holder.rowIncludeitemListBinding.includeitemName.setOnClickListener(this);
-        includeItemsList.get(position).setSelected(holder.rowIncludeitemListBinding.includeitemCheckbox.isChecked());
+        holder.rowIncludeitemListBinding.includeitemCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                includeItemsList.get(position).setSelected(isChecked);
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
@@ -59,10 +60,6 @@ public class IncludeItemAttributesAdapter extends RecyclerView.Adapter<IncludeIt
         return includeItemsList != null ? includeItemsList.size() : 0;
     }
 
-    @Override
-    public void onClick(View v) {
-        notifyDataSetChanged();
-    }
     class IncludeItemAttributesViewHolder extends RecyclerView.ViewHolder {
 
         RowIncludeitemListBinding rowIncludeitemListBinding;

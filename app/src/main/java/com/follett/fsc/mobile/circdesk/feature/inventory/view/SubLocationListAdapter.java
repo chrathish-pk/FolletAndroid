@@ -5,15 +5,15 @@ import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.databinding.RowLocationListBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.SubLocation;
 
-public class SubLocationListAdapter extends RecyclerView.Adapter<SubLocationListViewHolder> implements View.OnClickListener {
+public class SubLocationListAdapter extends RecyclerView.Adapter<SubLocationListViewHolder> {
 
     private Context context;
     private SubLocation subLocationList;
@@ -33,17 +33,17 @@ public class SubLocationListAdapter extends RecyclerView.Adapter<SubLocationList
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SubLocationListViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SubLocationListViewHolder holder, final int position) {
         holder.rowLocationListBinding.setSubLocationList(subLocationList.getSublocationList().get(position));
+        holder.rowLocationListBinding.locationitemCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-        holder.rowLocationListBinding.locationitemCheckbox.setTag(position);
-        holder.rowLocationListBinding.locationItemChecklistLayout.setTag(position);
-        holder.rowLocationListBinding.locationitemChecklistName.setTag(position);
-        holder.rowLocationListBinding.locationitemCheckbox.setOnClickListener(this);
-        holder.rowLocationListBinding.locationItemChecklistLayout.setOnClickListener(this);
-        holder.rowLocationListBinding.locationitemChecklistName.setOnClickListener(this);
+                subLocationList.getSublocationList().get(position).setSelected(isChecked);
+                notifyDataSetChanged();
+            }
+        });
 
-        subLocationList.getSublocationList().get(position).setSelected(holder.rowLocationListBinding.locationitemCheckbox.isChecked());
 
     }
 
@@ -52,8 +52,4 @@ public class SubLocationListAdapter extends RecyclerView.Adapter<SubLocationList
         return subLocationList != null ? subLocationList.getSublocationList().size() : 0;
     }
 
-    @Override
-    public void onClick(View v) {
-        notifyDataSetChanged();
-    }
 }

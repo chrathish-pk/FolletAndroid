@@ -34,9 +34,9 @@
             android:id="@+id/includeitemCheckbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="@{includeItemList.selected}"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:checked="@{includeItemList.selected}"
             android:padding="10dp" />
 
         <View

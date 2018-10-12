@@ -17,17 +17,20 @@ import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
 import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentInventoryLocationBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.Location;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.InventoryLocationViewModel;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
+
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SELECTED_LOCATION_ITEM;
 
 public class InventoryLocationFragment extends BaseFragment<FragmentInventoryLocationBinding, InventoryLocationViewModel> implements ItemClickListener,View.OnClickListener{
 
     private FragmentInventoryLocationBinding fragmentInventoryLocationBinding;
     private InventoryLocationViewModel inventoryLocationViewModel;
     private Location locationList;
-    private String selectedLocationItem;
+    private String selectedLocationItem = "";
 
 
     @Override
@@ -75,7 +78,12 @@ public class InventoryLocationFragment extends BaseFragment<FragmentInventoryLoc
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.backBtn) {
-            AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_SELECTED_LOCATION_ITEM, selectedLocationItem);
+            if(selectedLocationItem.isEmpty()) {
+                AppSharedPreferences.getInstance().setString(KEY_SELECTED_LOCATION_ITEM,AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SELECTED_LOCATION_ITEM));
+            } else {
+                AppSharedPreferences.getInstance().setString(KEY_SELECTED_LOCATION_ITEM, selectedLocationItem);
+            }
+
             if (getActivity() != null) {
                 ((SetupActivity) getActivity()).selectedLocationLiveData.postValue(selectedLocationItem);
                 ((SetupActivity) getActivity()).selectedData.postValue(true);

@@ -54,21 +54,21 @@ public class LimitedToAdapter extends RecyclerView.Adapter<LimitedToAdapter.Limi
         int noOfChild = 0;
 
         if (position == 1)
-            noOfChild = holder.rowLimitedToBinding.getLimitedToParentData().getSubLocation().getSublocationList().size();
+            noOfChild = holder.rowLimitedToBinding.getLimitedToParentData().getSubLocation().getLocationList().size();
 
         if (noOfChild > 0) {
             holder.rowLimitedToBinding.itemLimitedToChildLayout.removeAllViews();
             for (int indexView = 0; indexView < noOfChild; indexView++) {
 
                 CheckBox checkBox = (CheckBox) ((LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.right_checkbox, null);
-                checkBox.setText(limitedToParentDataList.get(position).getSubLocation().getSublocationList().get(indexView).getSublocationName());
+                checkBox.setText(limitedToParentDataList.get(position).getSubLocation().getLocationList().get(indexView).getName());
                 checkBox.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
                 final int finalIndexView = indexView;
                 checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        limitedToParentDataList.get(position).getSubLocation().getSublocationList().get(finalIndexView).setSelected(isChecked);
+                        limitedToParentDataList.get(position).getSubLocation().getLocationList().get(finalIndexView).setSelected(isChecked);
                     }
                 });
 

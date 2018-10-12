@@ -94,7 +94,6 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
                 }
             }
         });
-
     }
 
     @Override

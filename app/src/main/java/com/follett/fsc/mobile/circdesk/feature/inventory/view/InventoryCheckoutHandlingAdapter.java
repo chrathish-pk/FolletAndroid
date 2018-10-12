@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import com.follett.fsc.mobile.circdesk.R;
 import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
@@ -15,7 +16,7 @@ import com.follett.fsc.mobile.circdesk.feature.inventory.model.CheckoutHandling;
 
 import java.util.List;
 
-public class InventoryCheckoutHandlingAdapter extends RecyclerView.Adapter<InventoryCheckoutHandlingViewHolder> implements View.OnClickListener {
+public class InventoryCheckoutHandlingAdapter extends RecyclerView.Adapter<InventoryCheckoutHandlingViewHolder> {
 
     private Context context;
     private ItemClickListener itemClickListener;
@@ -35,17 +36,18 @@ public class InventoryCheckoutHandlingAdapter extends RecyclerView.Adapter<Inven
     }
 
     @Override
-    public void onBindViewHolder(@NonNull InventoryCheckoutHandlingViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull InventoryCheckoutHandlingViewHolder holder, final int position) {
         holder.rowCheckouthandlingListBinding.setCheckoutHandlingList(checkoutHandlings.get(position));
 
-        holder.rowCheckouthandlingListBinding.locationItemChecklistLayout.setTag(position);
-        holder.rowCheckouthandlingListBinding.checkoutHandlingCheckbox.setTag(position);
-        holder.rowCheckouthandlingListBinding.checkoutHandlingName.setTag(position);
-        holder.rowCheckouthandlingListBinding.locationItemChecklistLayout.setOnClickListener(this);
-        holder.rowCheckouthandlingListBinding.checkoutHandlingCheckbox.setOnClickListener(this);
-        holder.rowCheckouthandlingListBinding.checkoutHandlingName.setOnClickListener(this);
+        holder.rowCheckouthandlingListBinding.checkoutHandlingCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                checkoutHandlings.get(position).setSelected(isChecked);
+                notifyDataSetChanged();
+            }
+        });
 
-        checkoutHandlings.get(position).setSelected(holder.rowCheckouthandlingListBinding.checkoutHandlingCheckbox.isChecked());
+        //checkoutHandlings.get(position).setSelected(holder.rowCheckouthandlingListBinding.checkoutHandlingCheckbox.isChecked());
     }
 
     @Override
@@ -53,8 +55,5 @@ public class InventoryCheckoutHandlingAdapter extends RecyclerView.Adapter<Inven
         return checkoutHandlings != null ? checkoutHandlings.size() : 0;
     }
 
-    @Override
-    public void onClick(View v) {
-        notifyDataSetChanged();
-    }
+
 }
