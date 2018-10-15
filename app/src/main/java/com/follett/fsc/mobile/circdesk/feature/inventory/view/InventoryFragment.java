@@ -29,7 +29,6 @@ import com.follett.fsc.mobile.circdesk.feature.inventory.InventoryViewSelectionF
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InProgressInventoryResults;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryScan;
-import com.follett.fsc.mobile.circdesk.feature.inventory.model.NewInventoryData;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.InventoryViewModel;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
@@ -126,16 +125,13 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
             }
         });
 
-        ((SetupActivity)getActivity()).selectedLocationLiveData.observe(getActivity(), new Observer<String>() {
+        ((SetupActivity) getActivity()).selectedLocationLiveData.observe(getActivity(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String selectedLocation) {
 
-                if(selectedLocation.isEmpty())
-                {
+                if (selectedLocation.isEmpty()) {
                     fragmentInventoryBinding.inventoryLocation.setText(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SELECTED_LOCATION_ITEM));
-                }
-                else
-                {
+                } else {
                     fragmentInventoryBinding.inventoryLocation.setText(selectedLocation);
 
                 }
@@ -157,9 +153,6 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
             }
         });
 
-        fragmentInventoryBinding.barcodedBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.blueLabel));
-        fragmentInventoryBinding.unBarcodedBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.black));
-        fragmentInventoryBinding.barcodedUnbarcodedRadioGroup.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -197,8 +190,14 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
         if (isInventoryLibrary) {
             fragmentInventoryBinding.inventoryLocation.setVisibility(View.GONE);
             fragmentInventoryBinding.inventoryLocationBar.setVisibility(View.GONE);
+            fragmentInventoryBinding.barcodedUnbarcodedLayout.setVisibility(View.GONE);
         } else {
-
+            fragmentInventoryBinding.barcodedUnbarcodedLayout.setVisibility(View.VISIBLE);
+            fragmentInventoryBinding.barcodedUnbarcodedRadioGroup.setOnCheckedChangeListener(this);
+            if (getActivity() != null) {
+                fragmentInventoryBinding.barcodedBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.blueLabel));
+                fragmentInventoryBinding.unBarcodedBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.black));
+            }
             fragmentInventoryBinding.inventoryLocation.setVisibility(View.VISIBLE);
             fragmentInventoryBinding.inventoryLocationBar.setVisibility(View.VISIBLE);
 
@@ -324,11 +323,15 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                 fragmentInventoryBinding.barcodedBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.blueLabel));
                 fragmentInventoryBinding.unBarcodedBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.black));
             }
+            fragmentInventoryBinding.inventoryLocation.setVisibility(View.VISIBLE);
+            fragmentInventoryBinding.inventoryLocationBar.setVisibility(View.VISIBLE);
         } else if (checkedId == R.id.unBarcodedBtn) {
             if (getActivity() != null) {
                 fragmentInventoryBinding.barcodedBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.black));
                 fragmentInventoryBinding.unBarcodedBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.blueLabel));
             }
+            fragmentInventoryBinding.inventoryLocation.setVisibility(View.GONE);
+            fragmentInventoryBinding.inventoryLocationBar.setVisibility(View.GONE);
         }
     }
 }

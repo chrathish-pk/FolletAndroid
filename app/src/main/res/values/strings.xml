@@ -216,6 +216,7 @@
     <string name="checkedOutInCirculation">Checked Out, In Circulation</string>
     <string name="withAllTrackingAttributes">With all tracking attributes</string>
     <string name="allResourceTypes">All Resource Types</string>
+    <string name="anyValue">Any Value</string>
     <string name="allCirculationTypes">All Ciruculation Types</string>
     <string name="noExclusions">No exclustions</string>
 
