@@ -9,7 +9,6 @@ import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.Location;
-import com.follett.fsc.mobile.circdesk.feature.inventory.model.SubLocation;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 
 public class InventoryLocationViewModel extends BaseViewModel implements NetworkInterface {
@@ -44,6 +43,8 @@ public class InventoryLocationViewModel extends BaseViewModel implements Network
 
     @Override
     public void onRefreshToken(int requestCode) {
-        //do nothing
+        AppRemoteRepository.getInstance().getLocationList(this, AppUtils.getInstance().getHeader(mApplication),
+                AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SITE_SHORT_NAME),
+                AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_CONTEXT_NAME));
     }
 }

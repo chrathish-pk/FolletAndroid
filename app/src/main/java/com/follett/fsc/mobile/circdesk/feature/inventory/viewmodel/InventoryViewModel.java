@@ -76,7 +76,7 @@ public class InventoryViewModel extends ScannerViewModel implements NetworkInter
                 .getString(AppSharedPreferences.KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
                 .getInt(KEY_SELECTED_INVENTORY_PARTIAL_ID));
     }
-    
+
     public void getLocationList() {
         AppRemoteRepository.getInstance().getLocationList(this, AppUtils.getInstance().getHeader(mApplication),
                 AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SITE_SHORT_NAME),
@@ -86,11 +86,11 @@ public class InventoryViewModel extends ScannerViewModel implements NetworkInter
     @Override
     public void onCallCompleted(Object model) {
         setIsLoding(false);
-        
+
         if (model == null) {
             return;
         }
-    
+
         try {
             if (model instanceof InProgressInventoryResults) {
                 inventoryListMutableLiveData.postValue((InProgressInventoryResults) model);
@@ -138,20 +138,27 @@ public class InventoryViewModel extends ScannerViewModel implements NetworkInter
 
     @Override
     public void onRefreshToken(int requestCode) {
-    
+
         switch (requestCode) {
             case INPROGRESS_INVENTORY_REQUEST_CODE:
-                getInProgressInventoryResults();
+                AppRemoteRepository.getInstance().getInProgressInventoryResults(AppUtils.getInstance().getHeader(mApplication), this, AppSharedPreferences.getInstance()
+                        .getString(AppSharedPreferences.KEY_SITE_SHORT_NAME), AppSharedPreferences.getInstance()
+                        .getString(AppSharedPreferences.KEY_CONTEXT_NAME), (AppRemoteRepository.getInstance().getBoolean(KEY_IS_LIBRARY_SELECTED)) ? 0 : 4);
                 break;
             case INVENTORY_DETAILS_REQUEST_CODE:
-                getInventoryDetails();
+                AppRemoteRepository.getInstance().getInventoryDetails(AppUtils.getInstance().getHeader(mApplication), this, AppSharedPreferences.getInstance()
+                        .getString(AppSharedPreferences.KEY_SITE_SHORT_NAME), AppSharedPreferences.getInstance()
+                        .getString(AppSharedPreferences.KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
+                        .getInt(KEY_SELECTED_INVENTORY_PARTIAL_ID));
                 break;
             case INVENTORY_SCAN_REQUEST_CODE:
-                getInventoryScanResults();
+                AppRemoteRepository.getInstance().getLocationList(this, AppUtils.getInstance().getHeader(mApplication),
+                        AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SITE_SHORT_NAME),
+                        AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_CONTEXT_NAME));
                 break;
         }
     }
-    
+
     public void inventoryScan(String enteredTextValue) {
         if (TextUtils.isEmpty(enteredTextValue)) {
             setErrorMessage(mApplication.getString(R.string.inventory_error));
@@ -161,7 +168,7 @@ public class InventoryViewModel extends ScannerViewModel implements NetworkInter
         mEnteredTextValue = enteredTextValue;
         getInventoryScanResults();
     }
-    
+
     private void getInventoryScanResults() {
         AppRemoteRepository.getInstance()
                 .getInventoryScan(AppUtils.getInstance()

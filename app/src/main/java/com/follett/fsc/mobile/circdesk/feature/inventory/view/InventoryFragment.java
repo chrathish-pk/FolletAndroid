@@ -11,7 +11,11 @@ import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.RadioGroup;
 
 import com.follett.fsc.mobile.circdesk.BR;
 import com.follett.fsc.mobile.circdesk.R;
@@ -35,7 +39,7 @@ import com.honeywell.aidc.BarcodeReader;
 
 import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_IS_LIBRARY_SELECTED;
 
-public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, InventoryViewModel> implements ItemClickListener, View.OnClickListener, UpdateUIListener, BarcodeReader.BarcodeListener {
+public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, InventoryViewModel> implements ItemClickListener, View.OnClickListener, UpdateUIListener, BarcodeReader.BarcodeListener, RadioGroup.OnCheckedChangeListener {
 
     private InventoryViewModel inventoryViewModel;
     private FragmentInventoryBinding fragmentInventoryBinding;
@@ -90,6 +94,7 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
         } else {
             isInventoryLibrary(false);
         }
+
         if (AppUtils.brandName(mActivity)) {
             mBarcodeReader.addBarcodeListener(this);
             fragmentInventoryBinding.patronEntryIncludeLayout.scanButton.setOnClickListener(this);
@@ -127,6 +132,10 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                         .showAlertDialog(activity, getString(R.string.not_found_label), String.valueOf(s));
             }
         });
+
+        fragmentInventoryBinding.barcodedBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.blueLabel));
+        fragmentInventoryBinding.unBarcodedBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.black));
+        fragmentInventoryBinding.barcodedUnbarcodedRadioGroup.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -139,11 +148,9 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                 isInventoryLibrary(false);
                 break;
             case R.id.finalizeInventoryBtn:
-              /*  DialogFragment fragment = new FinalizePopupFragment();
+                DialogFragment fragment = new FinalizePopupFragment();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                fragment.show(ft,"FinalizePopupFragment");
-                //mActivity.pushFragment(fragment, R.id.loginContainer, "FinalizePopupFragment", true);
-                break;*/
+                fragment.show(ft, "FinalizePopupFragment");
                 break;
             case R.id.inventoryViewSelectionsBtn:
                 mActivity.pushFragment(new InventoryViewSelectionFragment(), R.id.loginContainer, getString(R.string.inventorySelections), true, true);
@@ -279,6 +286,21 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
         super.onDestroy();
         if (mBarcodeReader != null) {
             mBarcodeReader.removeBarcodeListener(this);
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        if (checkedId == R.id.barcodedBtn) {
+            if (getActivity() != null) {
+                fragmentInventoryBinding.barcodedBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.blueLabel));
+                fragmentInventoryBinding.unBarcodedBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.black));
+            }
+        } else if (checkedId == R.id.unBarcodedBtn) {
+            if (getActivity() != null) {
+                fragmentInventoryBinding.barcodedBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.black));
+                fragmentInventoryBinding.unBarcodedBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.blueLabel));
+            }
         }
     }
 }

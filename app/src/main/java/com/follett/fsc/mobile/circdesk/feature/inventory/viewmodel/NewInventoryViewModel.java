@@ -196,7 +196,15 @@ public class NewInventoryViewModel extends BaseViewModel implements NetworkInter
 
     @Override
     public void onRefreshToken(int requestCode) {
-        getCreatedInventory();
+        if (AppSharedPreferences.getInstance().getBoolean(KEY_IS_LIBRARY_SELECTED)) {
+            AppRemoteRepository.getInstance().createLibInventory(AppUtils.getInstance().getHeader(application), this, AppSharedPreferences.getInstance()
+                    .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
+                    .getString(KEY_SITE_SHORT_NAME), constructLibJson());
+        } else {
+            AppRemoteRepository.getInstance().createResInventory(AppUtils.getInstance().getHeader(application), this, AppSharedPreferences.getInstance()
+                    .getString(KEY_CONTEXT_NAME), AppSharedPreferences.getInstance()
+                    .getString(KEY_SITE_SHORT_NAME), constructResJSon());
+        }
     }
 
 }

@@ -25,7 +25,6 @@ import com.follett.fsc.mobile.circdesk.feature.inventory.model.InProgressInvento
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryScan;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.Location;
-import com.follett.fsc.mobile.circdesk.feature.inventory.model.ResourceType;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.SubLocation;
 import com.follett.fsc.mobile.circdesk.feature.iteminfo.model.TitleDetails;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.model.ItemDetails;
@@ -59,7 +58,6 @@ import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiCo
 import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.INVENTORY_SCAN_REQUEST_CODE;
 import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.ITEM_STATUS_REQUEST_CODE;
 import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.PATRON_STATUS_REQUEST_CODE;
-import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.RESOURCE_TYPE_REQUEST_CODE;
 import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.SCAN_PATRON_REQUEST_CODE;
 import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.SERVICE_ISSUE;
 import static com.follett.fsc.mobile.circdesk.data.remote.apicommon.FollettApiConstants.TITLE_DETAILS_REQUEST_CODE;
@@ -523,7 +521,7 @@ public class AppRemoteRepository<T> {
                 });
     }
 
-    public void getResourceTypeList(Map<String, String> headers, final NetworkInterface networkInterface, String contextName, String site) {
+   /* public void getResourceTypeList(Map<String, String> headers, final NetworkInterface networkInterface, String contextName, String site) {
         apiService.getResourceTypeList(headers, contextName, site)
                 .subscribeWith(new DisposableObserverWrapper<ResourceType>() {
                     @Override
@@ -542,7 +540,7 @@ public class AppRemoteRepository<T> {
                         onRefreshSession(networkInterface, RESOURCE_TYPE_REQUEST_CODE);
                     }
                 });
-    }
+    }*/
 
     public void setString(String key, String value) {
         AppSharedPreferences.getInstance()

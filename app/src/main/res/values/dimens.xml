@@ -48,5 +48,8 @@
 
     <dimen name="spacing">23dp</dimen>
 
+    <dimen name="popup_width">300dp</dimen>
+    <dimen name="popup_height">280dp</dimen>
+
 
 </resources>
