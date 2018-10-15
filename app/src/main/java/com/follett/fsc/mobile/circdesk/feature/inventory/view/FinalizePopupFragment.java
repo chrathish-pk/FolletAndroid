@@ -1,17 +1,17 @@
 package com.follett.fsc.mobile.circdesk.feature.inventory.view;
 
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.databinding.InventoryPopupBinding;
-import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.FinalizeViewModel;
-
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.databinding.InventoryPopupBinding;
+import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.FinalizeViewModel;
 
 public class FinalizePopupFragment extends DialogFragment {
 
@@ -35,5 +35,13 @@ public class FinalizePopupFragment extends DialogFragment {
 
         return dialog;
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        int width = getResources().getDimensionPixelSize(R.dimen.popup_width);
+        int height = getResources().getDimensionPixelSize(R.dimen.popup_height);
+        getDialog().getWindow().setLayout(width, height);
     }
 }

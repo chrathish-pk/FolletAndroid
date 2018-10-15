@@ -125,4 +125,9 @@ public interface APIInterface {
     Observable<InventoryScan> getInventoryScan(@HeaderMap Map<String, String> headers, @Query("contextName") String contextName, @Query("site") String site,
             @Query("collectionType") int collectionType, @Query("partialID") int partialID, @Query("barcode") String barcode, @Query("scanningLocationID")
             int scanningLocationID, @Query("lastCopyID") int lastCopyID, @Query("checkShelfOrder") boolean checkShelfOrder);
+
+    /*@GET("/rest/v6/circulation/resourcetypelist")
+    @JsonAndXmlConverters.Xml
+    Observable<ResourceType> getResourceTypeList(@HeaderMap Map<String, String> headers, @Query("site") String site, @Query("contextName") String contextName);
+*/
 }

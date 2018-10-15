@@ -15,7 +15,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/transparent"
+        android:background="@color/white"
         android:clickable="true">
 
         <RelativeLayout
@@ -63,7 +63,7 @@
                     android:layout_marginEnd="@dimen/layout_size_11"
                     android:background="@drawable/rounded_border_blue"
                     android:fontFamily="@font/opensans_regular"
-                    android:gravity="center_horizontal"
+                    android:gravity="center"
                     android:maxHeight="@dimen/layout_size_36"
                     android:padding="@dimen/layout_size_10"
                     android:text="@string/mark_lost"
@@ -80,7 +80,7 @@
                     android:layout_marginEnd="@dimen/layout_size_11"
                     android:background="@drawable/rounded_border_blue"
                     android:fontFamily="@font/opensans_regular"
-                    android:gravity="center_horizontal"
+                    android:gravity="center"
                     android:maxHeight="@dimen/layout_size_36"
                     android:padding="@dimen/layout_size_10"
                     android:text="@string/ignore"
@@ -97,7 +97,7 @@
                     android:layout_marginEnd="@dimen/layout_size_11"
                     android:background="@drawable/rounded_border_blue"
                     android:fontFamily="@font/opensans_regular"
-                    android:gravity="center_horizontal"
+                    android:gravity="center"
                     android:maxHeight="@dimen/layout_size_36"
                     android:padding="@dimen/layout_size_10"
                     android:text="@string/cancel"

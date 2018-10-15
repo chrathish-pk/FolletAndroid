@@ -50,7 +50,9 @@ public class LimitedToViewModel extends BaseViewModel implements NetworkInterfac
 
     @Override
     public void onRefreshToken(int requestCode) {
-
+        AppRemoteRepository.getInstance().getSubLocationList(this, AppUtils.getInstance().getHeader(application),
+                AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SITE_SHORT_NAME),
+                AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_CONTEXT_NAME));
     }
 
     public List<LimitedToParentData> getLimitedToParentData() {

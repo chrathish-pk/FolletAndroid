@@ -399,8 +399,8 @@ public class AppRemoteRepository<T> {
                 });
     }
 
-    public void getSubLocationList(@Nullable final NetworkInterface networkInterface, Map<String, String> headers, String site, String contextName){
-        apiService.getSubLocationList(headers,site,contextName)
+    public void getSubLocationList(@Nullable final NetworkInterface networkInterface, Map<String, String> headers, String site, String contextName) {
+        apiService.getSubLocationList(headers, site, contextName)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribeWith(new DisposableObserverWrapper<SubLocation>() {
@@ -425,14 +425,14 @@ public class AppRemoteRepository<T> {
 
     }
 
-    public void getLocationList(@Nullable final NetworkInterface networkInterface, Map<String, String> headers, String site, String contextName){
-        apiService.getLocationList(headers,site,contextName)
+    public void getLocationList(@Nullable final NetworkInterface networkInterface, Map<String, String> headers, String site, String contextName) {
+        apiService.getLocationList(headers, site, contextName)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribeWith(new DisposableObserverWrapper<Location>() {
                     @Override
                     protected void onSuccess(Location location) {
-                        onSuccessResult(networkInterface,location);
+                        onSuccessResult(networkInterface, location);
                     }
 
                     @Override
@@ -446,7 +446,6 @@ public class AppRemoteRepository<T> {
                     }
                 });
     }
-
 
 
     public void createLibInventory(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, CreateInventoryLibRequest createInventoryLibRequest) {
@@ -501,26 +500,47 @@ public class AppRemoteRepository<T> {
 
     public void getInventoryScan(Map<String, String> headers, @Nullable final NetworkInterface networkInterface, String contextName, String site, int
             collectionType, int partialID, String barcode, int scanningLocationID, int copyId, boolean checkShelfOrder) {
-        
+
         apiService.getInventoryScan(headers, contextName, site, collectionType, partialID, barcode, scanningLocationID, copyId, checkShelfOrder)
                 .subscribeWith(new DisposableObserverWrapper<InventoryScan>() {
                     @Override
                     protected void onSuccess(InventoryScan inventoryScan) {
                         onSuccessResult(networkInterface, inventoryScan);
                     }
-                    
+
                     @Override
                     protected void onFailed(Throwable throwable, String errorMessage) {
                         onFailedResult(networkInterface, throwable, errorMessage);
-                        
+
                     }
-                    
+
                     @Override
                     protected void onRefreshToken() {
                         onRefreshSession(networkInterface, INVENTORY_SCAN_REQUEST_CODE);
                     }
                 });
     }
+
+   /* public void getResourceTypeList(Map<String, String> headers, final NetworkInterface networkInterface, String contextName, String site) {
+        apiService.getResourceTypeList(headers, contextName, site)
+                .subscribeWith(new DisposableObserverWrapper<ResourceType>() {
+                    @Override
+                    protected void onSuccess(ResourceType resourceType) {
+                        onSuccessResult(networkInterface, resourceType);
+                    }
+
+                    @Override
+                    protected void onFailed(Throwable throwable, String errorMessage) {
+                        onFailedResult(networkInterface, throwable, errorMessage);
+
+                    }
+
+                    @Override
+                    protected void onRefreshToken() {
+                        onRefreshSession(networkInterface, RESOURCE_TYPE_REQUEST_CODE);
+                    }
+                });
+    }*/
 
     public void setString(String key, String value) {
         AppSharedPreferences.getInstance()

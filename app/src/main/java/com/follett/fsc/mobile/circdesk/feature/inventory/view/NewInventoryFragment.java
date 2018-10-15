@@ -86,7 +86,7 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
                     if (!createInventoryResult.getSuccess()) {
                         AppUtils.getInstance().showAlertDialog(getActivity(), "", createInventoryResult.getMessage().toString(), getString(R.string.ok), "", NewInventoryFragment.this, 0);
                     } else {
-                        //AppSharedPreferences.getInstance().setInt(AppSharedPreferences.KEY_CREATED_INVENTORY_PARTIAL_ID, createInventoryResult.getPartialID());
+                        AppSharedPreferences.getInstance().setInt(AppSharedPreferences.KEY_CREATED_INVENTORY_PARTIAL_ID, createInventoryResult.getPartialID());
                         mActivity.popFragment(null);
                         mActivity.pushFragment(new InventoryFragment(), R.id.loginContainer, getString(R.string.inventory), true, true);
                     }
@@ -109,6 +109,8 @@ public class NewInventoryFragment extends BaseFragment<FragmentNewInventoryBindi
             case 1:
                 if (isLibrarySelected) {
                     mActivity.pushFragment(new CirculationTypeFragment(), R.id.loginContainer, getString(R.string.circulationTypeLabel), true, true);
+                }else {
+                    //mActivity.pushFragment(new ResourceTypeFragment(), R.id.loginContainer, getString(R.string.resourceTypes), true, true);
                 }
                 break;
             case 2:

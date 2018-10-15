@@ -45,7 +45,9 @@ public class SubLocationViewModel extends BaseViewModel implements NetworkInterf
 
     @Override
     public void onRefreshToken(int requestCode) {
-        //do nothing
+        AppRemoteRepository.getInstance().getSubLocationList(this, AppUtils.getInstance().getHeader(mApplication),
+                AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SITE_SHORT_NAME),
+                AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_CONTEXT_NAME));
     }
 
 
