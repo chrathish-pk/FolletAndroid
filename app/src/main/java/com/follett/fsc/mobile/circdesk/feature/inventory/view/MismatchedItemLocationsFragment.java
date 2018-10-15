@@ -71,7 +71,7 @@ public class MismatchedItemLocationsFragment extends BaseFragment<FragmentMismat
     public void onItemClick(View view, int position) {
         selectedMismatchedItem = mismatchedItemLocationList.get(position).getMismatchedItemLocationName();
 
-        Toast.makeText(getContext(), "Status" + mismatchedItemLocationsViewModel.mismatchedItemLocListMutableLiveData.getValue().get(position).getMismatchedItemLocationStatus(), Toast.LENGTH_LONG).show();
+        //Toast.makeText(getContext(), "Status" + mismatchedItemLocationsViewModel.mismatchedItemLocListMutableLiveData.getValue().get(position).getMismatchedItemLocationStatus(), Toast.LENGTH_LONG).show();
     }
 
     @Override

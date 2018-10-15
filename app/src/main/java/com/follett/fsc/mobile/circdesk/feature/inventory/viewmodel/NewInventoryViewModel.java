@@ -89,6 +89,8 @@ public class NewInventoryViewModel extends BaseViewModel implements NetworkInter
 
         if (AppRemoteRepository.getInstance().getString(KEY_SELECTED_LIMITED_TO_LIST).isEmpty())
             newInventoryDataList.add(new NewInventoryData(application.getString(R.string.limitedToLabel), application.getString(R.string.unlimited)));
+        if (AppRemoteRepository.getInstance().getString(KEY_SELECTED_LIMITED_TO_LIST).isEmpty())
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.limitedToLabel), "Unlimited"));
         else
             newInventoryDataList.add(new NewInventoryData(application.getString(R.string.limitedToLabel), AppRemoteRepository.getInstance().getString(KEY_SELECTED_LIMITED_TO_LIST)));
 
@@ -98,6 +100,7 @@ public class NewInventoryViewModel extends BaseViewModel implements NetworkInter
         if (AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_PRICE_LIMITER_OPTION_Value).isEmpty() &&
                 AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_PRICE_LIMITER_VALUE).isEmpty())
             newInventoryDataList.add(new NewInventoryData(application.getString(R.string.purchasePriceLabel), application.getString(R.string.allResourceTypes)));
+            newInventoryDataList.add(new NewInventoryData(application.getString(R.string.purchasePriceLabel), "Any Value"));
         else
             newInventoryDataList.add(new NewInventoryData(application.getString(R.string.purchasePriceLabel),
                     AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_PRICE_LIMITER_OPTION_Value) + " " +

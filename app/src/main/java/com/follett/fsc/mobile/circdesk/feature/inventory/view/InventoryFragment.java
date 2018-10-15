@@ -29,6 +29,7 @@ import com.follett.fsc.mobile.circdesk.feature.inventory.InventoryViewSelectionF
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InProgressInventoryResults;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryDetails;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.InventoryScan;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.NewInventoryData;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.InventoryViewModel;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
@@ -74,6 +75,7 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
         initViews();
     }
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,6 +111,11 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
         fragmentInventoryBinding.patronEntryIncludeLayout.patronEntry.setHint(getString(R.string.enterBarcode));
         fragmentInventoryBinding.patronEntryIncludeLayout.checkinLibRecordSwitch.setVisibility(View.GONE);
 
+        if (AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_LOCATION_ITEM).isEmpty())
+            fragmentInventoryBinding.inventoryLocation.setText(getString(R.string.defaultLocation));
+        else
+            fragmentInventoryBinding.inventoryLocation.setText(AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_LOCATION_ITEM));
+
         AppUtils.getInstance().updateLibResBg(mActivity, fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn, fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn);
 
         ((SetupActivity) getActivity()).selectedInventoryNameLiveData.observe(getActivity(), new Observer<String>() {
@@ -118,6 +125,23 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                 inventoryViewModel.getInventoryDetails();
             }
         });
+
+        ((SetupActivity)getActivity()).selectedLocationLiveData.observe(getActivity(), new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String selectedLocation) {
+
+                if(selectedLocation.isEmpty())
+                {
+                    fragmentInventoryBinding.inventoryLocation.setText(AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SELECTED_LOCATION_ITEM));
+                }
+                else
+                {
+                    fragmentInventoryBinding.inventoryLocation.setText(selectedLocation);
+
+                }
+            }
+        });
+
         fragmentInventoryBinding.patronEntryIncludeLayout.patronGoBtn.setOnClickListener(this);
         inventoryViewModel.inventoryScanMutableLiveData.observe(this, new Observer<InventoryScan>() {
             @Override
@@ -156,6 +180,8 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
                 mActivity.pushFragment(new InventoryViewSelectionFragment(), R.id.loginContainer, getString(R.string.inventorySelections), true, true);
                 break;
             case R.id.patronGoBtn:
+                AppUtils.getInstance()
+                        .hideKeyBoard(mActivity, fragmentInventoryBinding.patronEntryIncludeLayout.patronEntry);
                 inventoryViewModel.inventoryScan(AppUtils.getInstance().getEditTextValue(fragmentInventoryBinding.patronEntryIncludeLayout.patronEntry));
                 break;
             case R.id.scanButton:
@@ -172,8 +198,10 @@ public class InventoryFragment extends BaseFragment<FragmentInventoryBinding, In
             fragmentInventoryBinding.inventoryLocation.setVisibility(View.GONE);
             fragmentInventoryBinding.inventoryLocationBar.setVisibility(View.GONE);
         } else {
+
             fragmentInventoryBinding.inventoryLocation.setVisibility(View.VISIBLE);
             fragmentInventoryBinding.inventoryLocationBar.setVisibility(View.VISIBLE);
+
         }
         AppUtils.getInstance().updateLibResBg(mActivity, fragmentInventoryBinding.libraryResourceIncludeLayout.libraryBtn, fragmentInventoryBinding.libraryResourceIncludeLayout.resourceBtn);
 

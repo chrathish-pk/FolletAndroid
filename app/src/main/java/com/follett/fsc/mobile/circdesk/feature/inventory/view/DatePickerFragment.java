@@ -58,8 +58,6 @@ public class DatePickerFragment extends DialogFragment implements View.OnClickLi
         // Format the date using style and locale
         DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.US);
         formattedDate = df.format(chosenDate);
-
-
     }
 
     @Override

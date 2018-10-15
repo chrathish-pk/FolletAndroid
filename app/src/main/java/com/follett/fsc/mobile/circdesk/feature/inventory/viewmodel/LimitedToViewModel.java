@@ -9,7 +9,7 @@ import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.api.NetworkInterface;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.LimitedToParentData;
-import com.follett.fsc.mobile.circdesk.feature.inventory.model.SubLocation;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.Location;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.view.UpdateItemUIListener;
 import com.follett.fsc.mobile.circdesk.utils.AppUtils;
 
@@ -18,7 +18,7 @@ import java.util.List;
 
 public class LimitedToViewModel extends BaseViewModel implements NetworkInterface {
 
-    private SubLocation subLocation;
+    private Location subLocation;
     private Application application;
     private UpdateItemUIListener updateItemUIListener;
 
@@ -30,7 +30,7 @@ public class LimitedToViewModel extends BaseViewModel implements NetworkInterfac
 
     public void fetchSubLocationList() {
         setIsLoding(true);
-        AppRemoteRepository.getInstance().getSubLocationList(this, AppUtils.getInstance().getHeader(application),
+        AppRemoteRepository.getInstance().getLocationList(this, AppUtils.getInstance().getHeader(application),
                 AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SITE_SHORT_NAME),
                 AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_CONTEXT_NAME));
     }
@@ -38,7 +38,7 @@ public class LimitedToViewModel extends BaseViewModel implements NetworkInterfac
     @Override
     public void onCallCompleted(Object model) {
         setIsLoding(false);
-        subLocation = ((SubLocation) model);
+        subLocation = ((Location) model);
         updateItemUIListener.updateUI(model);
     }
 

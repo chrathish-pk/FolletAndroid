@@ -27,7 +27,9 @@
             android:layout_toLeftOf="@id/itemCheckbox"
             android:fontFamily="@font/opensans_regular"
             android:padding="10dp"
-            android:text="@{circTypeList.circTypeDescription}" />
+            android:text="@{circTypeList.circTypeDescription}"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
 
         <CheckBox
             android:id="@+id/itemCheckbox"

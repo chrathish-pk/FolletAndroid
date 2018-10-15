@@ -6,24 +6,32 @@
 
 package com.follett.fsc.mobile.circdesk.feature.inventory.view;
 
-import com.follett.fsc.mobile.circdesk.BR;
-import com.follett.fsc.mobile.circdesk.R;
-import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
-import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
-import com.follett.fsc.mobile.circdesk.databinding.FragmentInventoryLocationBinding;
-import com.follett.fsc.mobile.circdesk.feature.inventory.model.Location;
-import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.InventoryLocationViewModel;
-
 import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
-public class InventoryLocationFragment extends BaseFragment<FragmentInventoryLocationBinding, InventoryLocationViewModel> implements ItemClickListener {
+import com.follett.fsc.mobile.circdesk.BR;
+import com.follett.fsc.mobile.circdesk.R;
+import com.follett.fsc.mobile.circdesk.app.ItemClickListener;
+import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
+import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
+import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
+import com.follett.fsc.mobile.circdesk.databinding.FragmentInventoryLocationBinding;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.Location;
+import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.InventoryLocationViewModel;
+import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
+
+import static com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences.KEY_SELECTED_LOCATION_ITEM;
+
+public class InventoryLocationFragment extends BaseFragment<FragmentInventoryLocationBinding, InventoryLocationViewModel> implements ItemClickListener,View.OnClickListener{
 
     private FragmentInventoryLocationBinding fragmentInventoryLocationBinding;
     private InventoryLocationViewModel inventoryLocationViewModel;
+    private Location locationList;
+    private String selectedLocationItem = "";
+
 
     @Override
     public int getLayoutId() {
@@ -47,10 +55,12 @@ public class InventoryLocationFragment extends BaseFragment<FragmentInventoryLoc
         super.onActivityCreated(savedInstanceState);
         fragmentInventoryLocationBinding = getViewDataBinding();
         fragmentInventoryLocationBinding.recyclerViewLocationList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mActivity.baseBinding.backBtn.setOnClickListener(this);
         inventoryLocationViewModel.fetchLocationList();
         inventoryLocationViewModel.locationListMutableLiveData.observeForever(new Observer<Location>() {
             @Override
             public void onChanged(@Nullable Location location) {
+                locationList = location;
                 InventoryLocationAdapter inventoryLocationAdapter = new InventoryLocationAdapter(getActivity(), location, InventoryLocationFragment.this);
                 fragmentInventoryLocationBinding.recyclerViewLocationList.setAdapter(inventoryLocationAdapter);
             }
@@ -61,8 +71,24 @@ public class InventoryLocationFragment extends BaseFragment<FragmentInventoryLoc
 
     @Override
     public void onItemClick(View view, int position) {
-        if (view.getId() == R.id.newInventoryBtn) {
-            //mActivity.pushFragment(new InventoryLocationFragment(), R.id.loginContainer, "InventoryLocationFragment", true);
+
+        selectedLocationItem = locationList.getLocationList().get(position).getName();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.backBtn) {
+            if(selectedLocationItem.isEmpty()) {
+                AppSharedPreferences.getInstance().setString(KEY_SELECTED_LOCATION_ITEM,AppSharedPreferences.getInstance().getString(AppSharedPreferences.KEY_SELECTED_LOCATION_ITEM));
+            } else {
+                AppSharedPreferences.getInstance().setString(KEY_SELECTED_LOCATION_ITEM, selectedLocationItem);
+            }
+
+            if (getActivity() != null) {
+                ((SetupActivity) getActivity()).selectedLocationLiveData.postValue(selectedLocationItem);
+                ((SetupActivity) getActivity()).selectedData.postValue(true);
+            }
+            mActivity.onBackPressed();
         }
     }
 }

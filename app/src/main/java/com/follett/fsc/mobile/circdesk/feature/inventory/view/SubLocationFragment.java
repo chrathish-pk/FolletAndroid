@@ -47,6 +47,19 @@ public class SubLocationFragment extends BaseFragment<FragmentSubLocationBinding
             @Override
             public void onChanged(@Nullable SubLocation subLocation) {
                 subLocationData = subLocation;
+                String subLocationItem = AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_SELECTED_SUB_LOCATION);
+                if(!subLocationItem.isEmpty()) {
+                    String[] includeItemArr = subLocationItem.split(",");
+                    for (int i = 0; i < includeItemArr.length; i++) {
+                        for (int j = 0; j < subLocationData.getSublocationList().size(); j++) {
+                            if (subLocationData.getSublocationList().get(j).getSublocationName().equalsIgnoreCase(includeItemArr[i])) {
+                                subLocationData.getSublocationList().get(j).setSelected(true);
+                                break;
+                            }
+                        }
+                    }
+                }
+
                 SubLocationListAdapter subLocationListAdapter = new SubLocationListAdapter(getActivity(), subLocation, SubLocationFragment.this);
                 fragmentSubLocationBinding.recyclerviewSublocationlist.setAdapter(subLocationListAdapter);
             }

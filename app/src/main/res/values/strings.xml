@@ -165,7 +165,7 @@
     <string name="on_hold_label">Hold</string>
     <string name="fine_label">Fines</string>
     <string name="overdue_label">Overdue</string>
-    <string name="notes">Please Note</string>
+    <string name="notes">Notes</string>
 
     <!-- Info Screen-->
     <string name="info">Follett Destiny Version %1$s</string>
@@ -196,7 +196,7 @@
     <string name="unaccounted_copies">%1$d copies unaccounted</string>
     <string name="mark_lost">MARK LOST</string>
     <string name="ignore">IGNORE</string>
-    <string name="callNumbersDescription">To specify a call number range, enter at least the first 3 digits of each Dewy number or a complete call number prefix.</string>
+    <string name="callNumbersDescription">To specify a call number range, enter at least the first 3 digits of each Dewey number or a complete call number prefix.</string>
     <string name="call_from">Call Numbers from:</string>
     <string name="call_num">Call Number</string>
     <string name="callNumbers">Call Numbers</string>
@@ -226,7 +226,7 @@
     <string name="purchasePriceLabel">Purchase Price</string>
     <string name="includeItemsLabel">Include Items</string>
     <string name="checkoutHandlingLabel">Checkout Handling</string>
-    <string name="excludeItems">Exclude Items Seen On or After</string>
+    <string name="excludeItems">Account for Items Seen On or After</string>
     <string name="mismatchedItemLocationLabel">Mismatched Item Location</string>
     <string name="startInventory">Start Inventory</string>
     <string name="inventoryLocation">Inventory Location</string>
@@ -249,8 +249,8 @@
     <string name="alertButDoNothing">Alert but do nothing</string>
     <string name="promptForChange">Prompt for change</string>
     <string name="automaticallyChangeHomeLocation">Automatically change home location</string>
-    String[] array = {"Do nothing", "Alert but do nothing", "Prompt for change","Automatically change home location"};
-
+    <string name="defaultLocation">Location - Unspecified</string>
+    <string name="errorMsg">Please select any option</string>
 
 
     <string name="legalTitle">Legal</string>

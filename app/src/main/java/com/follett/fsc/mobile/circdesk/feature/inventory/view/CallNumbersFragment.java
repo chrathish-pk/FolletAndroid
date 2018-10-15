@@ -6,6 +6,7 @@ import com.follett.fsc.mobile.circdesk.app.base.BaseFragment;
 import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentCallNumbersExcludeItemsBinding;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.NewInventoryData;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.CallNumbersViewModel;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
 
@@ -49,8 +50,15 @@ public class CallNumbersFragment extends BaseFragment<FragmentCallNumbersExclude
 
         fragmentCallNumbersExcludeItemsBinding.callNumbersLayout.setVisibility(View.VISIBLE);
         fragmentCallNumbersExcludeItemsBinding.descriptionText.setText(getString(R.string.callNumbersDescription));
+        if (AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_CALL_NUMBER_FROM).isEmpty())
+            fragmentCallNumbersExcludeItemsBinding.callFromEdittext.setText("");
+        else
+            fragmentCallNumbersExcludeItemsBinding.callFromEdittext.setText(AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_CALL_NUMBER_FROM));
 
-
+        if (AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_CALL_NUMBER_TO).isEmpty())
+            fragmentCallNumbersExcludeItemsBinding.callToEdittext.setText("");
+        else
+            fragmentCallNumbersExcludeItemsBinding.callToEdittext.setText(AppRemoteRepository.getInstance().getString(AppSharedPreferences.KEY_CALL_NUMBER_TO));
     }
 
     @Override

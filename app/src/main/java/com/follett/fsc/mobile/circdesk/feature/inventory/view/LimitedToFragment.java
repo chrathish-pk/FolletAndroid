@@ -13,7 +13,7 @@ import com.follett.fsc.mobile.circdesk.data.local.prefs.AppSharedPreferences;
 import com.follett.fsc.mobile.circdesk.data.remote.repository.AppRemoteRepository;
 import com.follett.fsc.mobile.circdesk.databinding.FragmentLimitedToBinding;
 import com.follett.fsc.mobile.circdesk.feature.inventory.model.LimitedToParentData;
-import com.follett.fsc.mobile.circdesk.feature.inventory.model.SublocationList;
+import com.follett.fsc.mobile.circdesk.feature.inventory.model.LocationList;
 import com.follett.fsc.mobile.circdesk.feature.inventory.viewmodel.LimitedToViewModel;
 import com.follett.fsc.mobile.circdesk.feature.itemstatus.view.UpdateItemUIListener;
 import com.follett.fsc.mobile.circdesk.feature.loginsetup.view.SetupActivity;
@@ -92,16 +92,19 @@ public class LimitedToFragment extends BaseFragment<FragmentLimitedToBinding, Li
             String selectedSubLocation = null;
             List<Integer> selectedLimitedValueIDList = new ArrayList<>();
             if (selectedParentPostion == 1) {
-                for (SublocationList subLocationList : limitedToParentDataList.get(selectedParentPostion).getSubLocation().getSublocationList()) {
+                for (LocationList subLocationList : limitedToParentDataList.get(selectedParentPostion).getSubLocation().getLocationList()) {
                     if (subLocationList.isSelected()) {
                         if (selectedSubLocation == null) {
-                            selectedSubLocation = subLocationList.getSublocationName();
+                            selectedSubLocation = subLocationList.getName();
                         } else {
-                            selectedSubLocation = selectedSubLocation + "," + subLocationList.getSublocationName();
+                            selectedSubLocation = selectedSubLocation + "," + subLocationList.getName();
                         }
-                        selectedLimitedValueIDList.add(subLocationList.getSublocationID());
+                        selectedLimitedValueIDList.add(subLocationList.getLocationID());
                     }
                 }
+            } else {
+                selectedSubLocation = limitedToParentDataList.get(selectedParentPostion).getLimitedToParentName();
+                selectedLimitedValueIDList.add(limitedToParentDataList.get(selectedParentPostion).getLimitedToParentID());
             }
             AppSharedPreferences.getInstance().setString(AppSharedPreferences.KEY_SELECTED_LIMITED_TO_LIST, selectedSubLocation);
 
